@@ -1,5 +1,5 @@
 
-name: Java CI
+name: Check code validity
 
 on:
   push:
