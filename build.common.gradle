@@ -21,7 +21,7 @@ apply plugin: 'com.android.application'
 
 android {
 
-    compileSdkVersion 29
+    compileSdkVersion 33
 
     signingConfigs {
         release {
@@ -104,6 +104,7 @@ android {
             }
         }
     }
+
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
