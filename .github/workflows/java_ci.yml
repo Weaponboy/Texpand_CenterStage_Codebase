@@ -2,7 +2,7 @@
 name: Check code validity
 
 on:
-  push:
+  commit:
     branches:
       - main
 jobs:
