@@ -68,8 +68,6 @@ public class Scrimmage_Bot_Auto extends LinearOpMode {
 
         encoderDrive(0.4, -70);
 
-
-
     }
 
     public void encoderDrive(double speed, double TargetCm) {
