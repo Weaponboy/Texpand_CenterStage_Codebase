@@ -1,3 +1,10 @@
+
+name: Java CI
+
+on:
+  push:
+    branches:
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,10 +21,9 @@ jobs:
 
     - name: Make gradlew executable
       run: chmod +x ./gradlew
-
+      
     - name: Build with Gradle
       run: ./gradlew build
 
     - name: Run tests
       run: ./gradlew test
-      
