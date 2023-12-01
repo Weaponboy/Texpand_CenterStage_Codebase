@@ -13,9 +13,7 @@ public class buildRobotBoundary {
     public Vector2D backRightCorner = new Vector2D();
     public Vector2D backLeftCorner = new Vector2D();
 
-    public buildRobotBoundary(){
-
-    }
+    public buildRobotBoundary(){}
 
     public enum Side{
         first,
