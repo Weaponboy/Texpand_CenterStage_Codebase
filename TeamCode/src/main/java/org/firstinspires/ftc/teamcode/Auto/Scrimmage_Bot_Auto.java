@@ -27,8 +27,6 @@ public class Scrimmage_Bot_Auto extends LinearOpMode {
 
     public BNO055IMU imu = null;
 
-
-
     @Override
     public void runOpMode() throws InterruptedException {
 
