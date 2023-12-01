@@ -1,8 +1,5 @@
 package org.firstinspires.ftc.teamcode.hardware.Odometry.Pathing.Testing;
 
-import static org.firstinspires.ftc.teamcode.hardware.Odometry.ObjectAvoidance.ObstacleMap.SetMap;
-import static org.firstinspires.ftc.teamcode.hardware.Odometry.ObjectAvoidance.ObstacleMap.buildRobotPosition;
-
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -29,6 +26,8 @@ public class testObstacleAvoidance extends OpMode {
 
     Vector2D robotPos = new Vector2D();
 
+    ObstacleMap obstacleMap = new ObstacleMap();
+
     int counter;
 
     public static double X = 0;
@@ -40,8 +39,6 @@ public class testObstacleAvoidance extends OpMode {
 
     @Override
     public void init() {
-
-        SetMap();
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }
@@ -60,7 +57,7 @@ public class testObstacleAvoidance extends OpMode {
 
         robotPos.set(X, Y);
 
-        buildRobotPosition(robotPos, 0);
+        obstacleMap.buildRobotPosition(robotPos, 0);
 
 //        double xPower = horizontal * Math.sin(Math.toRadians(ConvertedHeadingForPosition)) + vertical * Math.cos(Math.toRadians(ConvertedHeadingForPosition));
 //        double yPower = horizontal * Math.cos(Math.toRadians(ConvertedHeadingForPosition)) - vertical * Math.sin(Math.toRadians(ConvertedHeadingForPosition));
@@ -72,7 +69,7 @@ public class testObstacleAvoidance extends OpMode {
 //        drive.LF.setPower((pivot + (xPower + yPower)) / denominator);
 //        drive.LB.setPower((pivot + (xPower - yPower)) / denominator);
 
-        telemetry.addData("closestPos", ObstacleMap.robotPosition.get(10));
+        telemetry.addData("closestPos", obstacleMap.robotPosition.get(10));
         telemetry.addData("robot pos", robotPos);
         telemetry.update();
 

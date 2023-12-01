@@ -1,16 +1,23 @@
 package org.firstinspires.ftc.teamcode.hardware.Odometry.ObjectAvoidance;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 
 public class ObstacleMap {
 
-    public static ArrayList<Vector2D> positionList = new ArrayList<>();
+    public ArrayList<Vector2D> positionList = new ArrayList<>();
 
-    public static ArrayList<Vector2D> robotPosition = new ArrayList<>();
+    public ArrayList<Vector2D> robotPosition = new ArrayList<>();
 
-    //Quad quadTree = new QuadTree(new Rectangle(0, 0, 365, 365)); // Define the bounding box of your field
+    //QuadTree quadTree = new QuadTree(new Rectangle(0, 0, 365, 365)); // Define the bounding box of your field
 
-    public static Vector2D findClosestPosition(Vector2D currentPos) {
+    public ObstacleMap() {
+        SetMap();
+    }
+
+    public Vector2D findClosestPosition(Vector2D currentPos) {
         Vector2D closest = null;
         double minDistance = Double.MAX_VALUE;
 
@@ -29,7 +36,34 @@ public class ObstacleMap {
         return closest;
     }
 
-    public static void buildRobotPosition(Vector2D robotCenterPos, double heading){
+    public Vector2D findClosestPositions(ArrayList<Vector2D> robotPosition) {
+
+        Vector2D closest1 = null;
+        Vector2D closest2 = null;
+
+        double distanceToOb = 0;
+
+        double minDistance = Double.MAX_VALUE;
+
+        for (Vector2D pos1 : robotPosition) {
+            for (Vector2D pos2 : positionList) {
+                double distance = Math.abs(pos1.getX() - pos2.getX());
+
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closest1 = pos1;
+                    closest2 = pos2;
+                    distanceToOb = distance;
+                }
+
+
+            }
+        }
+
+        return closest2;
+    }
+
+    public void buildRobotPosition(Vector2D robotCenterPos, double heading){
 
         double robotOffsetToLeft = -21;
         double robotOffsetToRight = 21;
@@ -57,45 +91,65 @@ public class ObstacleMap {
 
     }
 
-    public static Vector2D findClosestYPosition(Vector2D currentPos) {
-        Vector2D closest = null;
+    public Vector2D findClosestYPosition(ArrayList<Vector2D> robotPosition) {
+        int size1 = robotPosition.size();
+        int size2 = positionList.size();
+
+        Collections.sort(positionList, Comparator.comparingDouble(Vector2D::getY));
+
+        Vector2D closest1 = null;
+        Vector2D closest2 = null;
         double minDistance = Double.MAX_VALUE;
 
-        for (Vector2D pos : positionList) {
-            double distance = Math.sqrt(
-                    Math.pow(currentPos.getX() - pos.getX(), 2) +
-                            Math.pow(currentPos.getY() - pos.getY(), 2)
-            );
+        for (int i = 0; i < size1; i++) {
+            Vector2D pos1 = robotPosition.get(i);
 
-            if (distance < minDistance) {
-                minDistance = distance;
-                closest = pos;
+            for (int j = 0; j < size2; j++) {
+                Vector2D pos2 = positionList.get(j);
+                double distance = Math.abs(pos1.getY() - pos2.getY());
+
+                if (distance == 0) {
+                    // Found minimum distance, exit early
+                    return new Vector2D(pos1.getY(), pos2.getY());
+                }
+
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closest1 = pos1;
+                    closest2 = pos2;
+                }
             }
         }
 
-        return closest;
+        return new Vector2D(closest1.getY(), closest2.getY());
     }
 
-    public static Vector2D findClosestXPosition(Vector2D currentPos) {
-        Vector2D closest = null;
+    public Vector2D findClosestXPosition(ArrayList<Vector2D> robotPosition) {
+
+        Vector2D closest1 = null;
+        Vector2D closest2 = null;
+
+        double distanceToOb = 0;
+
         double minDistance = Double.MAX_VALUE;
 
-        for (Vector2D pos : positionList) {
-            double distance = Math.sqrt(
-                    Math.pow(currentPos.getX() - pos.getX(), 2) +
-                            Math.pow(currentPos.getY() - pos.getY(), 2)
-            );
+        for (Vector2D pos1 : robotPosition) {
+            for (Vector2D pos2 : positionList) {
+                double distance = Math.abs(pos1.getX() - pos2.getX());
 
-            if (distance < minDistance) {
-                minDistance = distance;
-                closest = pos;
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closest2 = new Vector2D(pos1.getX(), pos2.getX());
+                }
+
+
             }
         }
 
-        return closest;
+        return closest2;
     }
 
-    public static void SetMap(){
+    public void SetMap(){
 
         // wall blue truss
         Rectangle(117, 0, 183, 5);
@@ -117,14 +171,14 @@ public class ObstacleMap {
 
     }
 
-    public static void Rectangle(double xStart, double yStart, double xEnd, double yEnd){
+    public void Rectangle(double xStart, double yStart, double xEnd, double yEnd){
 
         double xPosition = xStart;
         double yPosition = yStart;
 
         for (int i =0; i < ((xEnd - xStart)*2); i++){
             positionList.add(new Vector2D(xPosition, yPosition));
-            xPosition++;
+            xPosition += 2;
             if (xPosition == xEnd){
                 xPosition = xStart;
                 yPosition = yEnd;
@@ -136,7 +190,7 @@ public class ObstacleMap {
 
         for (int i =0; i < ((yEnd - yStart)*2); i++){
             positionList.add(new Vector2D(xPosition, yPosition));
-            yPosition++;
+            yPosition += 2;
             if (yPosition == yEnd){
                 yPosition = yStart;
                 xPosition = xEnd;
@@ -152,7 +206,7 @@ public class ObstacleMap {
         forth
     }
 
-    public static void buildRobot(double corner1_x, double corner1_y, double corner2_x, double corner2_y, double corner3_x, double corner3_y, double corner4_x, double corner4_y) {
+    public void buildRobot(double corner1_x, double corner1_y, double corner2_x, double corner2_y, double corner3_x, double corner3_y, double corner4_x, double corner4_y) {
 
         Side side = Side.first;
 
