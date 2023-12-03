@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Auto;
 
+import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -112,6 +113,11 @@ public class Scrimmage_Bot_Auto extends LinearOpMode {
 
     public void turnToHeadingWithImu(BNO055IMU imu, double targetHeading, LinearOpMode opMode){
 
+        double p = 0.05;
+        double d = 0;
+
+        PIDFController turnSpeedPID = new PIDFController(p, 0, d, 0);
+
         double headingError = targetHeading - imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
 
         while (opMode.opModeIsActive() && (Math.abs(headingError) > 0.8)) {
@@ -125,7 +131,9 @@ public class Scrimmage_Bot_Auto extends LinearOpMode {
             }
 
             // Determine required steering to keep on heading
-            double turnSpeed = Range.clip(headingError * 0.009, -0.2, 0.2);
+//            double turnSpeed = Range.clip(headingError * 0.009, -0.2, 0.2);
+
+            double turnSpeed = turnSpeedPID.calculate(headingError);
 
             LF.setPower(-turnSpeed);
             RF.setPower(turnSpeed);

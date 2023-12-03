@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.hardware.Odometry.ObjectAvoidance;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class ObstacleMap {
@@ -91,39 +93,6 @@ public class ObstacleMap {
 
     }
 
-    public Vector2D findClosestYPosition(ArrayList<Vector2D> robotPosition) {
-        int size1 = robotPosition.size();
-        int size2 = positionList.size();
-
-        Collections.sort(positionList, Comparator.comparingDouble(Vector2D::getY));
-
-        Vector2D closest1 = null;
-        Vector2D closest2 = null;
-        double minDistance = Double.MAX_VALUE;
-
-        for (int i = 0; i < size1; i++) {
-            Vector2D pos1 = robotPosition.get(i);
-
-            for (int j = 0; j < size2; j++) {
-                Vector2D pos2 = positionList.get(j);
-                double distance = Math.abs(pos1.getY() - pos2.getY());
-
-                if (distance == 0) {
-                    // Found minimum distance, exit early
-                    return new Vector2D(pos1.getY(), pos2.getY());
-                }
-
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    closest1 = pos1;
-                    closest2 = pos2;
-                }
-            }
-        }
-
-        return new Vector2D(closest1.getY(), closest2.getY());
-    }
-
     public Vector2D findClosestXPosition(ArrayList<Vector2D> robotPosition) {
 
         Vector2D closest1 = null;
@@ -140,6 +109,31 @@ public class ObstacleMap {
                 if (distance < minDistance) {
                     minDistance = distance;
                     closest2 = new Vector2D(pos1.getX(), pos2.getX());
+                }
+
+
+            }
+        }
+
+        return closest2;
+    }
+
+    public Vector2D findClosestYPosition(ArrayList<Vector2D> robotPosition) {
+
+        Vector2D closest1 = null;
+        Vector2D closest2 = null;
+
+        double distanceToOb = 0;
+
+        double minDistance = Double.MAX_VALUE;
+
+        for (Vector2D pos1 : robotPosition) {
+            for (Vector2D pos2 : positionList) {
+                double distance = Math.abs(pos1.getY() - pos2.getY());
+
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closest2 = new Vector2D(pos1.getY(), pos2.getY());
                 }
 
 
