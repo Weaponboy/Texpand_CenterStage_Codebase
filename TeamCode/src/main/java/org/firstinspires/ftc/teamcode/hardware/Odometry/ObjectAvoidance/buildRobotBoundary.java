@@ -4,7 +4,10 @@ import java.util.ArrayList;
 
 public class buildRobotBoundary {
 
-    public ArrayList<Vector2D> robotPosition = new ArrayList<>();
+    public ArrayList<Vector2D> xTop = new ArrayList<>();
+    public ArrayList<Vector2D> xbottom = new ArrayList<>();
+    public ArrayList<Vector2D> yRight = new ArrayList<>();
+    public ArrayList<Vector2D> yLeft = new ArrayList<>();
 
     public Vector2D robotPos = new Vector2D();
 
@@ -51,7 +54,7 @@ public class buildRobotBoundary {
 
         Side side = Side.first;
 
-        robotPosition.clear();
+        xTop.clear();
 
         Vector2D PointToAdd = new Vector2D();
 
@@ -91,7 +94,7 @@ public class buildRobotBoundary {
 
                         PointToAdd = new Vector2D(XFirst, YFirst);
 
-                        robotPosition.add(PointToAdd);
+                        yRight.add(PointToAdd);
 
                     }
 
@@ -118,7 +121,7 @@ public class buildRobotBoundary {
 
                         PointToAdd = new Vector2D(XFirst, YFirst);
 
-                        robotPosition.add(PointToAdd);
+                        xbottom.add(PointToAdd);
 
                     }
 
@@ -143,7 +146,7 @@ public class buildRobotBoundary {
 
                         PointToAdd = new Vector2D(XFirst, YFirst);
 
-                        robotPosition.add(PointToAdd);
+                        yLeft.add(PointToAdd);
 
                     }
 
@@ -170,7 +173,7 @@ public class buildRobotBoundary {
 
                         PointToAdd = new Vector2D(XFirst, YFirst);
 
-                        robotPosition.add(PointToAdd);
+                        xTop.add(PointToAdd);
 
                     }
 

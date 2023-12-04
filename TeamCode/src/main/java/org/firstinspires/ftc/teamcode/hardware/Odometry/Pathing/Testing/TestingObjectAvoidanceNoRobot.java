@@ -14,7 +14,9 @@ import org.firstinspires.ftc.teamcode.hardware.Odometry.ObjectAvoidance.KDTreeEx
 import org.firstinspires.ftc.teamcode.hardware.Odometry.ObjectAvoidance.ObstacleMap;
 import org.firstinspires.ftc.teamcode.hardware.Odometry.ObjectAvoidance.Vector2D;
 import org.firstinspires.ftc.teamcode.hardware.Odometry.ObjectAvoidance.buildRobotBoundary;
+import org.firstinspires.ftc.teamcode.hardware.Odometry.Pathing.PathingPower.PathingPower;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,7 +72,7 @@ public class TestingObjectAvoidanceNoRobot extends OpMode {
 
         robotPos.set(X, Y);
 
-        Vector2D closestPos = kdTreeExample.buildRobot(robotPos, obstacleMap.positionList);
+        buildrobotboundary.buildRobotPosition(robotPos, 0);
 
         dashboardTelemetry.addData("position", kdTreeExample.buildRobot(robotPos, obstacleMap.positionList));
         dashboardTelemetry.addData("loop time", loopTime);
@@ -78,6 +80,16 @@ public class TestingObjectAvoidanceNoRobot extends OpMode {
 
     }
 
-
+//    public PathingPower getAdjustedPowers(double vertical, double horizontal, double heading){
+//
+//        PathingPower returnPowers;
+//
+//        double xPower = horizontal * Math.sin(Math.toRadians(heading)) - vertical * Math.cos(Math.toRadians(heading));
+//        double yPower = horizontal * Math.cos(Math.toRadians(heading)) + vertical * Math.sin(Math.toRadians(heading));
+//
+//        Vector2D closestPos = kdTreeExample.buildRobot(robotPos, obstacleMap.positionList);
+//
+//        return returnPowers;
+//    }
 
 }
