@@ -1,11 +1,12 @@
 package org.firstinspires.ftc.teamcode.hardware.Odometry.ObjectAvoidance;
 
-import java.util.ArrayList;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 import java.util.List;
 
 public class KDTreeExample {
 
-    public Vector2D buildRobot(Vector2D queryPoint, List<Vector2D> staticCoordinates) {
+    public Vector2D findClosestPoint(Vector2D queryPoint, List<Vector2D> staticCoordinates) {
         return findNearestNeighbor(staticCoordinates, queryPoint);
     }
 
@@ -17,6 +18,43 @@ public class KDTreeExample {
             double distance = calculateDistance(point, queryPoint);
 
             if (distance < minDistance) {
+                minDistance = distance;
+                nearestNeighbor = point;
+            }
+        }
+
+        return nearestNeighbor;
+    }
+
+    public Vector2D findInlineNeighborX(List<Vector2D> staticCoordinates, Vector2D queryPoint, Telemetry telemetry) {
+
+        double minDistance = Double.MAX_VALUE;
+        Vector2D nearestNeighbor = null;
+        double epsilon = 0.6;
+
+        for (Vector2D point : staticCoordinates) {
+
+            double distance = calculateDistance(point, queryPoint);
+
+            if (Math.abs(point.getY() - queryPoint.getY()) < epsilon && distance < minDistance) {
+                minDistance = distance;
+                nearestNeighbor = point;
+            }
+        }
+
+        return nearestNeighbor;
+    }
+
+    public Vector2D findInlineNeighborY(List<Vector2D> staticCoordinates, Vector2D queryPoint) {
+        double minDistance = Double.MAX_VALUE;
+        Vector2D nearestNeighbor = null;
+        double epsilon = 0.6;
+
+        for (Vector2D point : staticCoordinates) {
+
+            double distance = calculateDistance(point, queryPoint);
+
+            if (Math.abs(point.getX() - queryPoint.getX()) < epsilon && distance < minDistance) {
                 minDistance = distance;
                 nearestNeighbor = point;
             }
