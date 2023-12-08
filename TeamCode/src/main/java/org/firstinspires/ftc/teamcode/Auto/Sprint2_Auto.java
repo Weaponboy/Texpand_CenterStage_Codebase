@@ -17,6 +17,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount;
 import org.firstinspires.ftc.teamcode.hardware.SubSystems.Delivery;
 import org.firstinspires.ftc.teamcode.hardware.SubSystems.Delivery_Slides;
 import org.firstinspires.ftc.teamcode.hardware.SubSystems.Drivetrain;
@@ -162,7 +163,7 @@ public class Sprint2_Auto extends LinearOpMode {
         odometry.init(hardwareMap);
         drive.init(hardwareMap);
 
-//        frontCam = hardwareMap.get(WebcamName.class, "frontCam");
+        frontCam = hardwareMap.get(WebcamName.class, "frontCam");
 
         Slide_Power = new PIDFController(pivot_p, pivot_i, pivot_d, 0);
 
@@ -183,9 +184,6 @@ public class Sprint2_Auto extends LinearOpMode {
         DepositServoRotate.setPosition(0.5);
         DepositPivot.setPosition(1);
 
-//        propDetecterRed = new PropDetecterByHeight(PropDetecterByHeight.color.red);
-//
-//        portal = VisionPortal.easyCreateWithDefaults(frontCam, propDetecterRed);
     }
 
     public void dropYellowPixel() {
