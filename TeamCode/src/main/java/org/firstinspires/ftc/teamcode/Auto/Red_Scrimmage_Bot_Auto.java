@@ -173,6 +173,7 @@ public class Red_Scrimmage_Bot_Auto extends LinearOpMode {
 
             Pivot2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
+
             Pivot2.setPower(-0.7);
 
             sleep(1000);
