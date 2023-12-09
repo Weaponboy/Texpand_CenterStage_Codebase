@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers;
 
-import static org.opencv.core.Core.inRange;
+import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.propPos;
 import static org.opencv.core.CvType.CV_8U;
 import static org.opencv.imgproc.Imgproc.dilate;
 import static org.opencv.imgproc.Imgproc.erode;
@@ -34,23 +34,29 @@ public class propDetectionByAmount implements VisionProcessor {
         red
     }
 
+    public enum Side{
+        right,
+        left
+    }
+
     private final propDetectionByAmount.color color;
 
-    public propDetectionByAmount(Telemetry telemetry, boolean debugging, color propColor){
+    private final propDetectionByAmount.Side side;
+
+    public propDetectionByAmount(Telemetry telemetry, Side startSide, color propColor){
         this.telemetry = telemetry;
         this.color = propColor;
+        this.side = startSide;
     }
 
     public Scalar MIN_THRESH_BLUE = new Scalar(5, 90, 110);
     public Scalar MAX_THRESH_BLUE = new Scalar(40, 255, 255);
 
-    public Scalar MIN_THRESH_RED = new Scalar(140, 50, 50);
+    public Scalar MIN_THRESH_RED = new Scalar(110, 50, 50);
     public Scalar MAX_THRESH_RED = new Scalar(220, 255, 255);
 
     static final Rect rightOfScreen = new Rect(new Point(320, 0), new Point(640, 480));
     static final Rect leftOfScreen = new Rect(new Point(0, 0), new Point(320, 480));
-
-    int propPos;
 
     public double position1 = 0;
     public double position2 = 0;
@@ -74,12 +80,12 @@ public class propDetectionByAmount implements VisionProcessor {
 
         switch (color) {
             case blue:
-                Core.inRange(RightSide, MIN_THRESH_RED, MAX_THRESH_RED, modifiedRight);
-                Core.inRange(LeftSide, MIN_THRESH_RED, MAX_THRESH_RED, modifiedLeft);
-                break;
-            case red:
                 Core.inRange(RightSide, MIN_THRESH_BLUE, MAX_THRESH_BLUE, modifiedRight);
                 Core.inRange(LeftSide, MIN_THRESH_BLUE, MAX_THRESH_BLUE, modifiedLeft);
+                break;
+            case red:
+                Core.inRange(RightSide, MIN_THRESH_RED, MAX_THRESH_RED, modifiedRight);
+                Core.inRange(LeftSide, MIN_THRESH_RED, MAX_THRESH_RED, modifiedLeft);
                 break;
             default:
         }
@@ -93,12 +99,26 @@ public class propDetectionByAmount implements VisionProcessor {
         int RightPixels = Core.countNonZero(modifiedRight);
         int LeftPixels = Core.countNonZero(modifiedLeft);
 
-        if (RightPixels - LeftPixels > 200){
-            position2++;
-        }else if (LeftPixels - RightPixels > 200){
-            position1++;
-        }else{
-            position3++;
+        switch (side) {
+            case right:
+                if (RightPixels - LeftPixels > 1000){
+                    position3++;
+                }else if (LeftPixels - RightPixels > 1000){
+                    position2++;
+                }else{
+                    position1++;
+                }
+                break;
+            case left:
+                if (RightPixels - LeftPixels > 1000){
+                    position2++;
+                }else if (LeftPixels - RightPixels > 1000){
+                    position1++;
+                }else{
+                    position3++;
+                }
+                break;
+            default:
         }
 
         if (position1 > position2 && position1 > position3){

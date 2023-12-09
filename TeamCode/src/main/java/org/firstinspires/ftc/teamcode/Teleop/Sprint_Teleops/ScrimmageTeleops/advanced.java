@@ -1,11 +1,11 @@
 package org.firstinspires.ftc.teamcode.Teleop.Sprint_Teleops.ScrimmageTeleops;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp
@@ -15,9 +15,12 @@ public class advanced extends OpMode {
 
     DcMotor LeftDrive;
 
+    DcMotor Climb;
     DcMotor Pivot;
 
     Servo Gripper;
+
+    Servo planelauncher;
 
     Servo PivotServo;
 
@@ -32,7 +35,8 @@ public class advanced extends OpMode {
 
     public Gamepad previousGamepad1;
 
-    ColorSensor right_Pixel;
+    private int maxClimbheight = -6600;
+
     float[] hsvval = new float[3];
 
     private static final double MIN_HUE = 0; // Minimum hue value for the target color
@@ -50,16 +54,23 @@ public class advanced extends OpMode {
         LeftDrive = hardwareMap.get(DcMotor.class,"LeftDrive");
         Pivot = hardwareMap.get(DcMotor.class,"Pivot");
         Gripper = hardwareMap.get(Servo.class,"Gripper");
+        planelauncher = hardwareMap.get(Servo.class,"planelauncher");
         PivotServo = hardwareMap.get(Servo.class,"PivotServo");
+
         RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         LeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Pivot.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Pivot.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Climb = hardwareMap.get(DcMotor.class,"Climb");
+
+        Climb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        Climb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         currentGamepad1 = new Gamepad();
         previousGamepad1 = new Gamepad();
-        right_Pixel = hardwareMap.get(ColorSensor.class, "right_Pixel");
-
+        PivotServo.setPosition(0.3);
+        planelauncher.setPosition(0);
     }
 
     @Override
@@ -69,8 +80,12 @@ public class advanced extends OpMode {
 
         currentGamepad1.copy(gamepad1);
 
-        double vertical = gamepad1.left_stick_y*1.2*Slow;
-        double pivot = -gamepad1.right_stick_x*1.2*Slow;
+        double vertical = -gamepad1.left_stick_y*1.2*Slow;
+        double pivot = -gamepad1.right_stick_x*1.2*0.3;
+//        if (pivot == 0){
+//            pivot = -gamepad1.left_stick_x*1.2*0.3;
+//        }
+
 
         double denominator = Math.max(Math.abs(vertical) + Math.abs(pivot), 1);
 
@@ -90,15 +105,17 @@ public class advanced extends OpMode {
         }
 
 
-        if (currentGamepad1.a && !previousGamepad1.a && Slow == 1.0) {
+        if (gamepad1.a && Slow == 1.0 && runtime.milliseconds() > buttondelaytime) {
             Slow = 0.3;
             runtime.reset();
+
         }
 
-        else if (currentGamepad1.a && !previousGamepad1.a && Slow == 0.3){
+        else if (gamepad1.a && Slow == 0.3 && runtime.milliseconds() > buttondelaytime){
             Slow = 1.0;
             runtime.reset();
         }
+
 
         RightDrive.setPower(0.6*((vertical - pivot)/denominator));
         LeftDrive.setPower(0.6*((vertical + pivot)/denominator));
@@ -112,12 +129,12 @@ public class advanced extends OpMode {
             Pivot.setPower(0.7);
         }
 
-        if (gamepad1.b && Pivot.getCurrentPosition() < 1400) {
-            Pivot.setTargetPosition(1400);
+        if (gamepad1.b && Pivot.getCurrentPosition() < 1300) {
+            Pivot.setTargetPosition(1300);
             Pivot.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             Pivot.setPower(0.7);
-        } else if (gamepad1.b && Pivot.getCurrentPosition() > 1400) {
-            Pivot.setTargetPosition(1400);
+        } else if (gamepad1.b && Pivot.getCurrentPosition() > 1300) {
+            Pivot.setTargetPosition(1300);
             Pivot.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             Pivot.setPower(-0.7);
         }
@@ -131,12 +148,12 @@ public class advanced extends OpMode {
         }
 
         if (gamepad1.y) {
-            Pivot.setTargetPosition(1020);
+            Pivot.setTargetPosition(900);
             Pivot.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            if (Pivot.getCurrentPosition()>971) {
+            if (Pivot.getCurrentPosition()>871) {
                 Pivot.setPower(-0.7);
             }
-            if (Pivot.getCurrentPosition()<971) {
+            if (Pivot.getCurrentPosition()<871) {
                 Pivot.setPower(0.7);
             }
         }
@@ -145,40 +162,50 @@ public class advanced extends OpMode {
             Pivot.setTargetPosition(Pivot.getCurrentPosition()+10);
             Pivot.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             Pivot.setPower(0.4);
-
         }
+
         if (gamepad1.dpad_up && Pivot.getCurrentPosition() > 900){
             Pivot.setTargetPosition(Pivot.getCurrentPosition()-10);
             Pivot.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             Pivot.setPower(0.4);
-
         }
-        if( Pivot.getCurrentPosition() < 1040) {
-            PivotServoposition = 0.63;
-            PivotServo.setPosition(PivotServoposition);
-            telemetry.addData("PivotServoposition 1040", Pivot.getCurrentPosition());
-        }else if( Pivot.getCurrentPosition() > 1400){
-            PivotServoposition= 0.63;
-            PivotServo.setPosition(PivotServoposition);
-            telemetry.addData("PivotServoposition 1400", Pivot.getCurrentPosition());
 
-        }else if( Pivot.getCurrentPosition() > 1300){
-            PivotServoposition= 0.75;
+        if( Pivot.getCurrentPosition() < 800) {
+            PivotServoposition = 0.3;
             PivotServo.setPosition(PivotServoposition);
-            telemetry.addData("PivotServoposition 1300", Pivot.getCurrentPosition());
-
+            telemetry.addData("PivotServoposition 800", Pivot.getCurrentPosition());
         }else if( Pivot.getCurrentPosition() > 1200) {
-            PivotServoposition = 0.70;
+            PivotServoposition = 0.3;
             PivotServo.setPosition(PivotServoposition);
             telemetry.addData("PivotServoposition 1200", Pivot.getCurrentPosition());
-
-        }else if( Pivot.getCurrentPosition() > 1100) {
-            PivotServoposition = 0.67;
+        }else if( Pivot.getCurrentPosition() > 1000) {
+            PivotServoposition = 0.5;
             PivotServo.setPosition(PivotServoposition);
-            telemetry.addData("PivotServoposition 1100", Pivot.getCurrentPosition());
-
+            telemetry.addData("PivotServoposition 1000", Pivot.getCurrentPosition());
+        }else if( Pivot.getCurrentPosition() > 900) {
+            PivotServoposition = 0.4;
+            PivotServo.setPosition(PivotServoposition);
+            telemetry.addData("PivotServoposition 900", Pivot.getCurrentPosition());
         }
+
+        telemetry.addData("Climbposition", Climb.getCurrentPosition());
         telemetry.update();
+
+        if (gamepad1.right_bumper){
+            Climb.setTargetPosition(maxClimbheight);
+            Climb.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Climb.setPower(-0.8);
+        }
+
+        if (gamepad1.left_bumper) {
+            Climb.setTargetPosition(0);
+            Climb.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Climb.setPower(0.5);
+        }
+
+        if (gamepad1.left_stick_button && gamepad1.right_stick_button){
+            planelauncher.setPosition(0.5);
+        }
     }
 }
 
