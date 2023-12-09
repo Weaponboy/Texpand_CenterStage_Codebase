@@ -181,33 +181,17 @@ public class Red_Scrimmage_Bot_Auto extends LinearOpMode {
         } else if (propPos == 3) {
 
             encoderDrive(0.4, 40);
-            turnToHeadingWithImu(imu, 10, this);
-            encoderDrive(0.4, 5);
-            turnToHeadingWithImu(imu, 20, this);
-            encoderDrive(0.4, 5);
             turnToHeadingWithImu(imu, 30, this);
-            encoderDrive(0.4, 5);
-            turnToHeadingWithImu(imu, 40, this);
-            encoderDrive(0.4, 5);
-            turnToHeadingWithImu(imu, 50, this);
-            encoderDrive(0.4, 5);
-            turnToHeadingWithImu(imu, 60, this);
-            encoderDrive(0.4, 5);
-            turnToHeadingWithImu(imu, 70, this);
-            encoderDrive(0.4, 3);
-            turnToHeadingWithImu(imu, 80, this);
-            encoderDrive(0.4, 3);
-            turnToHeadingWithImu(imu, 90, this);
 
-            encoderDrive(0.4, -13);
+            encoderDrive(0.4, 40);
 
-            turnToHeadingWithImu(imu, 140, this);
+            encoderDrive(0.4, -20);
 
-            encoderDrive(0.4, 25);
+            turnToHeadingWithImu(imu, 100, this);
+
+            encoderDrive(0.4, 89);
 
             turnToHeadingWithImu(imu, 90, this);
-
-            encoderDrive(0.4, 65);
 
             Pivot2.setTargetPosition(1200);
 
