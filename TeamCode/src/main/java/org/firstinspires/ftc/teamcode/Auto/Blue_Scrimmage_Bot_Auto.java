@@ -198,6 +198,7 @@ public class Blue_Scrimmage_Bot_Auto extends LinearOpMode {
             sleep(1000);
 
         } else if (propPos == 3) {
+
             encoderDrive(0.4, 40);
             turnToHeadingWithImu(imu, 10, this);
             encoderDrive(0.4, 5);
