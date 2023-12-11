@@ -290,7 +290,7 @@ public class mecanumFollower {
             vertical = correctivePower.getVertical() + pathingPower.getVertical();
             horizontal = correctivePower.getHorizontal() + pathingPower.getHorizontal();
 
-            if (Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 0.8 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 0.8){
+            if (Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 1.2 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 1.2){
                 reachedTarget = false;
             }else {
                 reachedTarget = true;
@@ -328,8 +328,8 @@ public class mecanumFollower {
                 dashboardTelemetry.addData("target velo y", targetvelo.getYVelocity());
 
                 dashboardTelemetry.addLine();
-                dashboardTelemetry.addData("vertical", Math.abs(pathingPower.getVertical()));
-                dashboardTelemetry.addData("horizontal", Math.abs(pathingPower.getHorizontal()));
+                dashboardTelemetry.addData("vertical", pathingPower.getVertical());
+                dashboardTelemetry.addData("horizontal", pathingPower.getHorizontal());
 //                dashboardTelemetry.addData("power", pathing);
                 dashboardTelemetry.update();
             }else {

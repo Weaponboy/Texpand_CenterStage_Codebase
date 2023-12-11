@@ -30,7 +30,7 @@ public class TestingNewGen extends LinearOpMode {
 
     Drivetrain drive = new Drivetrain();
 
-    Vector2D robotposition = new Vector2D();
+    Vector2D robotPosition = new Vector2D();
 
     ElapsedTime elapsedTime = new ElapsedTime();
 

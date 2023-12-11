@@ -4,10 +4,32 @@ import org.firstinspires.ftc.teamcode.hardware.Odometry.ObjectAvoidance.Vector2D
 
 public class controlPoints {
 
-    /**blue right start to backboard*/
-    public Vector2D sPFirstSeg = new Vector2D(93, 23);
-    public Vector2D ePFirstSeg = new Vector2D(90, 90);
+    /**
+     * Drop purple position control points
+     * */
 
+    /**blue right start*/
+    public Vector2D dropPurpleBlueRightStartPosition = new Vector2D(90, 23);
+    public Vector2D dropPurpleBlueRightEndPosition = new Vector2D(90, 90);
+
+    /**blue right start*/
+    public Vector2D dropPurpleBlueLeftStartPosition = new Vector2D(93, 23);
+    public Vector2D dropPurpleBlueLeftEndPosition = new Vector2D(90, 90);
+
+    /**red right start*/
+    public Vector2D dropPurpleRedRightStartPosition = new Vector2D(210, 337);
+    public Vector2D dropPurpleRedRightEndPosition = new Vector2D(210, 267);
+
+
+    /**blue right start*/
+    public Vector2D dropPurpleRedLeftStartPosition = new Vector2D(93, 23);
+    public Vector2D dropPurpleRedLeftEndPosition = new Vector2D(90, 90);
+
+    /**
+     * Drop yellow position control points
+     * */
+
+    /**blue right*/
     public Vector2D sPSecondSeg = new Vector2D(90, 90);
     public Vector2D cPSecondSeg = new Vector2D(90, 160);
     public Vector2D ePSecondSeg = new Vector2D(154, 157);
@@ -15,6 +37,17 @@ public class controlPoints {
     public Vector2D sPThirdSeg = new Vector2D(ePSecondSeg.getX(), ePSecondSeg.getY());
     public Vector2D cPThirdSeg = new Vector2D(302, 154);
     public static Vector2D ePThirdSeg = new Vector2D(305, 90);
+
+    /**red right*/
+    public Vector2D dropYellowRedRightStartPosition = new Vector2D(210, 267);
+    public Vector2D dropYellowRedRightEndPosition = new Vector2D(298, 267);
+
+    public Vector2D driveToCollectionRedRightStartPositionFirstSegment = new Vector2D(298, 267);
+    public Vector2D driveToCollectionRedRightControlPositionFirstSegment = new Vector2D(290, 180);
+    public Vector2D driveToCollectionRedRightEndPositionFirstSegment = new Vector2D(180, 210);
+
+    public Vector2D driveToCollectionRedRightStartPositionSecondSegment = new Vector2D(180, 210);
+    public Vector2D driveToCollectionRedRightEndPositionSecondSegment = new Vector2D(43, 210);
 
     /**test curve*/
     public Vector2D sPTest = new Vector2D(0, 0);

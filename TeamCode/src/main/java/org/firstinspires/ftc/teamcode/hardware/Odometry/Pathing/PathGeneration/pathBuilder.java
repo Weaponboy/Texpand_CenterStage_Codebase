@@ -28,6 +28,103 @@ public class pathBuilder {
 
     Vector2D secondPoint = new Vector2D();
 
+    public enum PropPosition{
+        first,
+        second,
+        third
+    }
+
+    public enum StartPosition{
+        redLeft,
+        redRight,
+        blueLeft,
+        blueRight
+    }
+
+    public enum DropPurplePath{
+        redLeft,
+        redRight,
+        blueLeft,
+        blueRight
+    }
+
+    public enum CollectPath{
+        redLeft,
+        redRight,
+        blueLeft,
+        blueRight
+    }
+
+    public void buildPath(StartPosition startPosition){
+
+        switch (startPosition) {
+            case redLeft:
+                dropPurpleRedLeft();
+            break;
+            case redRight:
+                dropPurpleRedRight();
+                break;
+            case blueLeft:
+                dropPurpleBlueLeft();
+                break;
+            case blueRight:
+                dropPurpleBlueRight();
+                break;
+            default:
+        }
+
+        pathBuilder(originalPath);
+
+        motionProfile();
+    }
+
+    public void buildPath(DropPurplePath dropPurplePath){
+
+        switch (dropPurplePath) {
+            case redLeft:
+                blueRightLongCurve();
+                break;
+            case redRight:
+                redRightToBackBoard();
+                break;
+            case blueLeft:
+                redLeftLongCurve();
+                break;
+            case blueRight:
+                blueLeftLongCurve();
+                break;
+            default:
+        }
+
+        pathBuilder(originalPath);
+
+        motionProfile();
+    }
+
+    public void buildPath(CollectPath collectPath){
+
+        switch (collectPath) {
+            case redLeft:
+                blueRightLongCurve();
+                break;
+            case redRight:
+                redRightToCollection();
+                break;
+            case blueLeft:
+                redLeftLongCurve();
+                break;
+            case blueRight:
+                blueLeftLongCurve();
+                break;
+            default:
+        }
+
+        pathBuilder(originalPath);
+
+        motionProfile();
+    }
+
+
     public void buildPath(whatPath path){
 
         switch (path) {
@@ -38,7 +135,7 @@ public class pathBuilder {
                 System.out.println("not ready yet");
                 break;
             case testCurve:
-                dropPurple();
+                dropPurpleBlueRight();
                 break;
             case testCurveReverse:
                 testCurveReverse();
@@ -141,15 +238,6 @@ public class pathBuilder {
     public void PathToCollection(Vector2D startPoint, Vector2D TargetPoint){
         buildLineSegment(startPoint, controlPoints.intermediatePointToCollection);
         buildCurveSegment(controlPoints.intermediatePointToCollection, controlPoints.intermediateControlToCollection, TargetPoint);
-    }
-
-    private void dropPurple(){
-        buildLineSegment(controlPoints.sPFirstSeg, controlPoints.ePFirstSeg);
-    }
-
-    private void blueRightLongCurve(){
-        buildCurveSegment(controlPoints.sPSecondSeg, controlPoints.cPSecondSeg, controlPoints.ePSecondSeg);
-        buildCurveSegment(controlPoints.sPThirdSeg, controlPoints.cPThirdSeg, ePThirdSeg);
     }
 
     private void testCurve(){
@@ -399,5 +487,62 @@ public class pathBuilder {
     private Vector2D getPointOnFollowable(int index){
         return followablePath.get(index);
     }
+
+
+    /**
+     * Drop purple pixel path options
+     * */
+
+    //done correct positions
+    private void dropPurpleRedLeft(){
+        buildLineSegment(controlPoints.dropPurpleBlueRightStartPosition, controlPoints.dropPurpleBlueRightEndPosition);
+    }
+
+    private void dropPurpleRedRight(){
+        buildLineSegment(controlPoints.dropPurpleRedRightStartPosition, controlPoints.dropPurpleRedRightEndPosition);
+    }
+
+    private void dropPurpleBlueLeft(){
+        buildLineSegment(controlPoints.dropPurpleBlueRightStartPosition, controlPoints.dropPurpleBlueRightEndPosition);
+    }
+
+    //done correct Positions
+    private void dropPurpleBlueRight(){
+        buildLineSegment(controlPoints.dropPurpleBlueRightStartPosition, controlPoints.dropPurpleBlueRightEndPosition);
+    }
+
+    /**
+     * Drop yellow pixel path options
+     **/
+
+    private void blueRightLongCurve(){
+        buildCurveSegment(controlPoints.sPSecondSeg, controlPoints.cPSecondSeg, controlPoints.ePSecondSeg);
+        buildCurveSegment(controlPoints.sPThirdSeg, controlPoints.cPThirdSeg, ePThirdSeg);
+    }
+
+    private void blueLeftLongCurve(){
+        buildCurveSegment(controlPoints.sPSecondSeg, controlPoints.cPSecondSeg, controlPoints.ePSecondSeg);
+        buildCurveSegment(controlPoints.sPThirdSeg, controlPoints.cPThirdSeg, ePThirdSeg);
+    }
+
+    private void redRightToBackBoard(){
+        buildLineSegment(controlPoints.dropYellowRedRightStartPosition, controlPoints.dropYellowRedRightEndPosition);
+    }
+
+    private void redLeftLongCurve(){
+        buildCurveSegment(controlPoints.sPSecondSeg, controlPoints.cPSecondSeg, controlPoints.ePSecondSeg);
+        buildCurveSegment(controlPoints.sPThirdSeg, controlPoints.cPThirdSeg, ePThirdSeg);
+    }
+
+    /**
+     * Collect pixels from stack
+     **/
+
+    private void redRightToCollection(){
+        buildCurveSegment(controlPoints.driveToCollectionRedRightStartPositionFirstSegment, controlPoints.driveToCollectionRedRightControlPositionFirstSegment, controlPoints.driveToCollectionRedRightEndPositionFirstSegment);
+        buildLineSegment(controlPoints.driveToCollectionRedRightStartPositionSecondSegment, controlPoints.driveToCollectionRedRightEndPositionSecondSegment);
+    }
+
+
 
 }

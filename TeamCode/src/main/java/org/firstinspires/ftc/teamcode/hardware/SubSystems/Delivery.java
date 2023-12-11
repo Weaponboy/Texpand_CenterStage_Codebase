@@ -13,6 +13,7 @@ import com.qualcomm.robotcore.hardware.ServoImplEx;
 public class Delivery {
 
     public DcMotorEx Pivot;
+
     public PIDFController pivot_controllers;
 
     ServoImplEx pivot1;
@@ -23,8 +24,10 @@ public class Delivery {
 
     public ServoImplEx RotateClaw;
 
-    Servo LeftRotate;
-    Servo RightRotate;
+    Servo mainPivotLeft;
+    Servo mainPivotRight;
+
+    public ServoImplEx secondRotate;
 
     public static double pivot_p = 0.004, pivot_i = 0, pivot_d = 0.0001;
 
@@ -52,39 +55,45 @@ public class Delivery {
 
         pivot2.setDirection(Servo.Direction.REVERSE);
 
-        pivot1.setPwmRange(new PwmControl.PwmRange(600, 2400));
-        pivot2.setPwmRange(new PwmControl.PwmRange(600, 2400));
+        pivot1.setPwmRange(new PwmControl.PwmRange(600, 2500));
+        pivot2.setPwmRange(new PwmControl.PwmRange(600, 2500));
 
         RightClaw = hardwareMap.get(ServoImplEx.class, "RightClaw");
         LeftClaw = hardwareMap.get(ServoImplEx.class, "LeftClaw");
 
-        RightClaw.setDirection(Servo.Direction.REVERSE);
-        LeftClaw.setDirection(Servo.Direction.FORWARD);
+        RightClaw.setDirection(Servo.Direction.FORWARD);
+        LeftClaw.setDirection(Servo.Direction.REVERSE);
 
-        RightClaw.setPwmRange(new PwmControl.PwmRange(600, 900));
-        LeftClaw.setPwmRange(new PwmControl.PwmRange(2100, 2400));
+        RightClaw.setPwmRange(new PwmControl.PwmRange(600, 2000));
+        LeftClaw.setPwmRange(new PwmControl.PwmRange(1000, 2400));
 
-        LeftRotate = hardwareMap.get(ServoImplEx.class, "LeftRotate");
-        RightRotate = hardwareMap.get(ServoImplEx.class, "RightRotate");
+        mainPivotLeft = hardwareMap.get(ServoImplEx.class, "leftmain");
+        mainPivotRight = hardwareMap.get(ServoImplEx.class, "rightmain");
 
-        LeftRotate.setDirection(Servo.Direction.REVERSE);
+        mainPivotLeft.setDirection(Servo.Direction.REVERSE);
 
         RotateClaw = hardwareMap.get(ServoImplEx.class, "ClawRotate");
 
         RotateClaw.setDirection(Servo.Direction.FORWARD);
 
-        RotateClaw.setPwmRange(new PwmControl.PwmRange(600, 2400));
+        RotateClaw.setPwmRange(new PwmControl.PwmRange(700, 2400));
+
+        secondRotate = hardwareMap.get(ServoImplEx.class, "secondRotate");
+
+        secondRotate.setPwmRange(new PwmControl.PwmRange(750, 2400));
+
+        secondRotate.setPosition(0.5);
 
     }
 
-    public void setTopPivot(double position){
+    public void setSecondPivot(double position){
         pivot1.setPosition(position);
         pivot2.setPosition(position);
     }
 
-    public void setSecondPivot(double position){
-        LeftRotate.setPosition(position);
-        RightRotate.setPosition(position);
+    public void setMainPivot(double position){
+        mainPivotLeft.setPosition(position);
+        mainPivotRight.setPosition(position);
     }
 
     public void setClaws(double position){
@@ -97,7 +106,7 @@ public class Delivery {
     }
 
     public double getSecondPivotPosition(){
-        return LeftRotate.getPosition();
+        return mainPivotLeft.getPosition();
     }
 
 }
