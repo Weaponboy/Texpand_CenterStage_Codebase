@@ -35,7 +35,7 @@ public class TestMaxVelocity extends LinearOpMode {
 
         waitForStart();
 
-        getAcc();
+//        getAcc();
 
         while (opModeIsActive()){
             telemetry.addData("Distance", maxVecticalAcc);
@@ -127,4 +127,5 @@ public class TestMaxVelocity extends LinearOpMode {
         lastTime = elapsedTime.seconds();
 
     }
+
 }

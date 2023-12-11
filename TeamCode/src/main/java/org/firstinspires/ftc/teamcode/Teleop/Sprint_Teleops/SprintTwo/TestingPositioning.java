@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.hardware.SubSystems.Odometry;
 @TeleOp
 public class TestingPositioning extends OpMode {
 
-    Odometry odometry = new Odometry(93, 23, 270);
+    Odometry odometry = new Odometry(210, 337, 90);
 
     @Override
     public void init() {

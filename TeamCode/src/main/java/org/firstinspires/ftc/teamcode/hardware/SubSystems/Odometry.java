@@ -350,10 +350,13 @@ public class Odometry {
     }
 
     public void reset(Vector2D newPos){
+
         leftPod.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightPod.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         centerPod.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         X = newPos.getX();
         Y = newPos.getY();
+
     }
 }
