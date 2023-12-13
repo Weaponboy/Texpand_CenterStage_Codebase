@@ -50,12 +50,17 @@ public class Sprint_3_teleop extends OpMode {
     //!!!!
 
     double collectTopPivotPos = 0.1;
-    double deliveryTopPivot = 1;
+    double deliveryTopPivot = 0.7;
+    double lowdeliveryTopPivot = 1;
     double safeTopPivot = 0.3;
+    static final double servoPosPerTick = 0.00004100;
 
     double avoidIntakeSecondPivot = 0.8;
     double collectSecondPivot = 0.97;
-    double deliverySecondPivot = 0.3;
+    double deliverySecondPivot = 0.13 ;
+    double lowdeliverySecondPivot = 0.55;
+
+    static final double mainToSecondConst = 0.5/0.3;
 
     double clawOpen = 0.25;
     double clawClosed = 0;
@@ -66,7 +71,8 @@ public class Sprint_3_teleop extends OpMode {
     double timeToWait;
 
     boolean closeToCollection;
-
+    double mainPivotOffSet = 0;
+    double targetMainPivot = 0;
     ElapsedTime pivotMoveTime = new ElapsedTime();
 
     public enum SlideState{
@@ -244,6 +250,21 @@ public class Sprint_3_teleop extends OpMode {
                     delivery.RotateClaw.setPosition(rotateCollect);
 
                 }
+                if(gamepad1.dpad_right && delivery.mainPivotRight.getPosition() < lowdeliveryTopPivot){
+                    mainPivotOffSet = mainPivotOffSet + 0.005;
+//                    delivery.setMainPivot(delivery.mainPivotRight.getPosition() + 0.005);
+//                    delivery.setSecondPivot(delivery.pivot1.getPosition() + 0.005 * mainToSecondConst);
+                }
+                if(gamepad1.dpad_left && delivery.mainPivotRight.getPosition() > deliveryTopPivot) {
+                    mainPivotOffSet = mainPivotOffSet - 0.005;
+//                    delivery.setMainPivot(delivery.mainPivotRight.getPosition() - 0.005);
+//                    delivery.setSecondPivot(delivery.pivot1.getPosition() - 0.005 * mainToSecondConst);
+                }
+
+                targetMainPivot = deliveryTopPivot - deliverySlides.getCurrentposition() * servoPosPerTick + mainPivotOffSet;
+                delivery.setMainPivot(targetMainPivot);
+                delivery.setSecondPivot(deliverySecondPivot + (-deliverySlides.getCurrentposition() * servoPosPerTick + mainPivotOffSet) * mainToSecondConst);
+
 
                 break;
             case transitioning:
@@ -321,7 +342,10 @@ public class Sprint_3_teleop extends OpMode {
 //            delivery.LeftClaw.setPosition(clawClosed);
 //        }
 
-        telemetry.addData("power intake", collection.Intake.getPower());
+
+        telemetry.addData("Slide height", deliverySlides.Left_Slide.getCurrentPosition());
+        telemetry.addData("Base Pivot", delivery.mainPivotLeft.getPosition());
+        telemetry.addData("Second Pivot", delivery.pivot1.getPosition());
 //        telemetry.addData("right claw", RightClaw.getDistance(DistanceUnit.MM));
 //        telemetry.addData("left claw", LeftClaw.getDistance(DistanceUnit.MM));
         telemetry.update();
@@ -342,7 +366,7 @@ public class Sprint_3_teleop extends OpMode {
 
         pivotMoveTime.reset();
 
-        delivery.setMainPivot(0.1);
+        delivery.setMainPivot(0);
 
         delivery.setSecondPivot(1);
 
