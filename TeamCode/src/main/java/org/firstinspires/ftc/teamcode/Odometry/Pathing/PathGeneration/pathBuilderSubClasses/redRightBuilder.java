@@ -10,7 +10,7 @@ public class redRightBuilder extends pathBuilderMain {
     /** control point naming key
      * don't need start position because i have sub classes for each one
      * DP = drop purple pixel, DY = drop yellow pixel, C = collect pixels, D = deliver pixels from stack
-     * S = start point, C = control point, E = end point
+     * S = start point, C = control point, CT = control point two, E = end point
      * 1 = first segment, 2 = second segment, 3 = third segment
      * F = first prop pos, S = second prop pos, T = third prop pos
      * */
@@ -31,7 +31,7 @@ public class redRightBuilder extends pathBuilderMain {
 
     //third pos
     Vector2D DPS1T = new Vector2D(getRealCoords(210), getRealCoords(337));
-    Vector2D DPC1T = new Vector2D(getRealCoords(229), getRealCoords(208));
+    Vector2D DPC1T = new Vector2D(getRealCoords(210), getRealCoords(208));
     Vector2D DPE1T = new Vector2D(getRealCoords(229), getRealCoords(297));
 
     /**drop yellow pixel*/
@@ -46,9 +46,10 @@ public class redRightBuilder extends pathBuilderMain {
     Vector2D DYC1S = new Vector2D(getRealCoords(261), getRealCoords(306));
     Vector2D DYE1S = new Vector2D(getRealCoords(300), getRealCoords(270));
 
-    //drop yellow pixel
+    //drop yellow pixel third
     Vector2D DYS1T = new Vector2D(DPE1T.getX(), DPE1T.getY());
     Vector2D DYC1T = new Vector2D(getRealCoords(224), getRealCoords(325));
+    Vector2D DYC21T = new Vector2D(getRealCoords(224), getRealCoords(325));
     Vector2D DYE1T = new Vector2D(getRealCoords(300), getRealCoords(286));
 
     /**collect white pixels from stack, These are also for delivering the white pixels but just reversed*/
