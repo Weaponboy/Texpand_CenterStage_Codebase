@@ -38,7 +38,7 @@ public class blueLeftBuilder extends pathBuilderMain {
         dropWhite
     }
 
-    public void buildPath(redRightBuilder.TargetPoint targetPoint){
+    public void buildPath(TargetPoint targetPoint){
 
         switch (targetPoint) {
             case dropPurple:
