@@ -1,8 +1,5 @@
 package org.firstinspires.ftc.teamcode.Teleop.Sprint_Teleops.SprintThree;
 
-import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.horizontal;
-import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.pivot;
-import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.vertical;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Non_Hardware_Objects.currentGamepad1;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Non_Hardware_Objects.previousGamepad1;
 
@@ -12,12 +9,11 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.hardware.SubSystems.Collection;
-import org.firstinspires.ftc.teamcode.hardware.SubSystems.Delivery;
-import org.firstinspires.ftc.teamcode.hardware.SubSystems.Delivery_Slides;
-import org.firstinspires.ftc.teamcode.hardware.SubSystems.Drivetrain;
-import org.firstinspires.ftc.teamcode.hardware.SubSystems.Odometry;
+import org.firstinspires.ftc.teamcode.hardware.Collection;
+import org.firstinspires.ftc.teamcode.hardware.Delivery;
+import org.firstinspires.ftc.teamcode.hardware.Delivery_Slides;
+import org.firstinspires.ftc.teamcode.hardware.Drivetrain;
+import org.firstinspires.ftc.teamcode.hardware.Odometry;
 
 @TeleOp
 public class Sprint_3_teleop extends OpMode {

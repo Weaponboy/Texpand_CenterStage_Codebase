@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.hardware.Odometry;
 
 @Autonomous
 /**start red right*/
-public class Sprint_3_Auto extends LinearOpMode {
+public class Sprint_3_Auto_Pathing extends LinearOpMode {
 
     /**hardware objects*/
     Odometry odometry = new Odometry(210, 337, 90);
@@ -150,6 +150,8 @@ public class Sprint_3_Auto extends LinearOpMode {
         sleep(1000);
 
         deliverySlides.DeliverySlides(0, -0.6);
+
+        sleep(500);
 
     }
 
