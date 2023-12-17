@@ -1,10 +1,6 @@
 package org.firstinspires.ftc.teamcode.Constants_and_Setpoints;
 
-import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.robotRadius;
-
-import org.firstinspires.ftc.teamcode.hardware.Odometry.ObjectAvoidance.ObstacleMap;
-import org.firstinspires.ftc.teamcode.hardware.Odometry.ObjectAvoidance.Vector2D;
-import org.firstinspires.ftc.teamcode.hardware.SubSystems.Odometry;
+import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
 
 public class UsefulMethods {
 
@@ -76,6 +72,17 @@ public class UsefulMethods {
 //
 //        return horizontalPower;
 //    }
+
+    /**convert to field size*/
+    public static double getRealCoords(double numberToConvert){
+
+        double matSize = 60;
+
+        numberToConvert = (numberToConvert/60)*matSize;
+
+        return numberToConvert;
+
+    }
 
     /**Check loop time*/
     public static double getLoopTime(double currentTime){

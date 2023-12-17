@@ -11,11 +11,11 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.hardware.SubSystems.Collection;
-import org.firstinspires.ftc.teamcode.hardware.SubSystems.Delivery;
-import org.firstinspires.ftc.teamcode.hardware.SubSystems.Delivery_Slides;
-import org.firstinspires.ftc.teamcode.hardware.SubSystems.Drivetrain;
-import org.firstinspires.ftc.teamcode.hardware.SubSystems.Odometry;
+import org.firstinspires.ftc.teamcode.hardware.Collection;
+import org.firstinspires.ftc.teamcode.hardware.Delivery;
+import org.firstinspires.ftc.teamcode.hardware.Delivery_Slides;
+import org.firstinspires.ftc.teamcode.hardware.Drivetrain;
+import org.firstinspires.ftc.teamcode.hardware.Odometry;
 
 import java.util.List;
 

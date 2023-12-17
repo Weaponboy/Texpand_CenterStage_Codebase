@@ -17,11 +17,11 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.hardware.SubSystems.Delivery;
-import org.firstinspires.ftc.teamcode.hardware.SubSystems.Delivery_Slides;
-import org.firstinspires.ftc.teamcode.hardware.SubSystems.Drivetrain;
-import org.firstinspires.ftc.teamcode.hardware.SubSystems.Odometry;
-import org.firstinspires.ftc.teamcode.hardware.SubSystems.Sensors;
+import org.firstinspires.ftc.teamcode.hardware.Delivery;
+import org.firstinspires.ftc.teamcode.hardware.Delivery_Slides;
+import org.firstinspires.ftc.teamcode.hardware.Drivetrain;
+import org.firstinspires.ftc.teamcode.hardware.Odometry;
+import org.firstinspires.ftc.teamcode.hardware.Sensors;
 import org.firstinspires.ftc.vision.VisionPortal;
 
 import java.util.List;

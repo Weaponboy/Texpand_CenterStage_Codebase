@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Auto_Control_Points;
 
-import org.firstinspires.ftc.teamcode.hardware.Odometry.ObjectAvoidance.Vector2D;
+import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
 
 public class controlPoints {
 
@@ -19,7 +19,6 @@ public class controlPoints {
     /**red right start*/
     public Vector2D dropPurpleRedRightStartPosition = new Vector2D(210, 337);
     public Vector2D dropPurpleRedRightEndPosition = new Vector2D(210, 267);
-
 
     /**blue right start*/
     public Vector2D dropPurpleRedLeftStartPosition = new Vector2D(93, 23);
@@ -66,5 +65,9 @@ public class controlPoints {
     public Vector2D intermediateControlToCollection = new Vector2D(248, 182);
     public Vector2D collectAtRed = new Vector2D(61, 61);
     public Vector2D collectAtBlue = new Vector2D(61, 304);
+
+    /**critical positions*/
+
+    double backBoardX = 298;
 
 }
