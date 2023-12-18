@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Auto;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower.mecanumFollower;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.Old.pathBuilder;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.redRightBuilder;
@@ -99,7 +100,9 @@ public class Sprint_3_Auto_Pathing extends LinearOpMode {
 
         waitForStart();
 
-        follower.followPath(true, 90, false, odometry, drive, telemetry);
+        //change target heading after dropping the purple pixel
+        Vector2D point;
+        follower.followPath(90, odometry, drive, point = new Vector2D(236, 302), 180);
 
         odometry.update();
 

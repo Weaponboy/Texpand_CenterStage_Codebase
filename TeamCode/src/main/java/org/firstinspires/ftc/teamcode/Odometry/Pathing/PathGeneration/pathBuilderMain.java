@@ -280,6 +280,11 @@ public class pathBuilderMain {
         originalPath.addAll(segmentGenerator.copyPath());
     }
 
+    public void buildCurveSegment(Vector2D start, Vector2D control1, Vector2D control2, Vector2D end){
+        segmentGenerator.buildPath(start, control1, control2, end);
+        originalPath.addAll(segmentGenerator.copyPath());
+    }
+
     public void buildLineSegment(Vector2D start, Vector2D end){
         segmentGenerator.buildPath(start, end);
         originalPath.addAll(segmentGenerator.copyPath());
