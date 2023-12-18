@@ -47,6 +47,21 @@ public class SegmentGenerator {
 
     }
 
+    public void buildPath( Vector2D startPoint, Vector2D controlPoint1, Vector2D controlPoint2, Vector2D endPoint){
+        Segment.clear();
+        t = 0;
+
+        do{
+            onTheCurve = calculateQuadraticBezier(startPoint, controlPoint1, controlPoint2, endPoint, t);
+
+            t += 0.001;
+
+            Segment.add(onTheCurve);
+
+        }while (t <= 1.0);
+
+    }
+
     public void buildPathAvoidance( Vector2D startPoint, Vector2D controlPoint, Vector2D endPoint){
 
         Segment.clear();
