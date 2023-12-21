@@ -70,17 +70,6 @@ public class testObstacleAvoidance extends OpMode {
 
         lastLoopTime = elapsedTime.milliseconds();
 
-        robotPos.set(X, Y);
-
-        counter++;
-
-        if (counter > 50){
-            counter = 0;
-            loopTime = elapsedTime.milliseconds() - lastLoopTime;
-        }
-
-        lastLoopTime = elapsedTime.milliseconds();
-
         odometry.update();
 
         robotPos.set(odometry.X, odometry.Y);
@@ -106,26 +95,26 @@ public class testObstacleAvoidance extends OpMode {
 
     }
 
-    public double getXInLine(Vector2D closestObstacleToRobotPosition, List<Vector2D> robotPosition, double inputVertical, double inputHorizontal, double heading){
+    public double getXInLine(Vector2D closestObstacle, List<Vector2D> robotPosition, double inputVertical, double inputHorizontal, double heading){
 
-        Vector2D returnPosition = kdTreeExample.findInlineNeighborX(robotPosition, closestObstacleToRobotPosition, dashboardTelemetry);
+        Vector2D closestRobotPosition = kdTreeExample.findInlineNeighborX(robotPosition, closestObstacle, dashboardTelemetry);
 
         double vertical = inputVertical * Math.cos(Math.toRadians(360 - heading)) - inputHorizontal * Math.sin(Math.toRadians(360 - heading));
 
         double horizontal = inputVertical * Math.sin(Math.toRadians(360 - heading)) + inputHorizontal * Math.cos(Math.toRadians(360 - heading));
 
-        if (returnPosition == null){
+        if (closestRobotPosition == null){
 
         }else{
-            if (closestObstacleToRobotPosition.getX() - returnPosition.getX() < 5 && closestObstacleToRobotPosition.getX() - returnPosition.getX() > 0){
+            if (closestObstacle.getX() - closestRobotPosition.getX() < 5 && closestObstacle.getX() - closestRobotPosition.getX() > 0 && inputVertical > 0){
                 vertical = 0;
-            } else if (closestObstacleToRobotPosition.getX() - returnPosition.getX() > -5 && closestObstacleToRobotPosition.getX() - returnPosition.getX() < 0) {
+            } else if (closestObstacle.getX() - closestRobotPosition.getX() > -5 && closestObstacle.getX() - closestRobotPosition.getX() < 0 && inputVertical < 0) {
                 vertical = 0;
             }
 
-            if (closestObstacleToRobotPosition.getX() - returnPosition.getX() < 10 && closestObstacleToRobotPosition.getX() - returnPosition.getX() > 0 && odometry.getVerticalVelocity() > 20){
+            if (closestObstacle.getX() - closestRobotPosition.getX() < 10 && closestObstacle.getX() - closestRobotPosition.getX() > 0 && odometry.getVerticalVelocity() > 10 && inputVertical > 0){
                 vertical = 0;
-            } else if (closestObstacleToRobotPosition.getX() - returnPosition.getX() > -10 && closestObstacleToRobotPosition.getX() - returnPosition.getX() < 0 && odometry.getVerticalVelocity() < -20) {
+            } else if (closestObstacle.getX() - closestRobotPosition.getX() > -10 && closestObstacle.getX() - closestRobotPosition.getX() < 0 && odometry.getVerticalVelocity() < -10 && inputVertical < 0) {
                 vertical = 0;
             }
         }
@@ -133,25 +122,25 @@ public class testObstacleAvoidance extends OpMode {
         return horizontal * Math.sin(Math.toRadians(360 - heading)) + vertical * Math.cos(Math.toRadians(360 - heading));
     }
 
-    public double getYInLine(Vector2D closestObstacleToRobotPosition, List<Vector2D> robotPosition, double inputVertical, double inputHorizontal, double heading){
+    public double getYInLine(Vector2D closestObstacle, List<Vector2D> robotPosition, double inputVertical, double inputHorizontal, double heading){
 
-        Vector2D returnPosition = kdTreeExample.findInlineNeighborY(robotPosition, closestObstacleToRobotPosition);
+        Vector2D closestRobotPosition = kdTreeExample.findInlineNeighborY(robotPosition, closestObstacle);
 
         double vertical = inputVertical * Math.cos(Math.toRadians(360 - heading)) - inputHorizontal * Math.sin(Math.toRadians(360 - heading));
         double horizontal = inputVertical * Math.sin(Math.toRadians(360 - heading)) + inputHorizontal * Math.cos(Math.toRadians(360 - heading));
 
-        if (returnPosition == null){
+        if (closestRobotPosition == null){
 
         }else{
-            if (closestObstacleToRobotPosition.getY() - returnPosition.getY() < 5 && closestObstacleToRobotPosition.getY() - returnPosition.getY() > 0){
+            if (closestObstacle.getY() - closestRobotPosition.getY() < 5 && closestObstacle.getY() - closestRobotPosition.getY() > 0 && inputHorizontal > 0){
                 horizontal = 0;
-            } else if (closestObstacleToRobotPosition.getY() - returnPosition.getY() > -5 && closestObstacleToRobotPosition.getY() - returnPosition.getY() < 0) {
+            } else if (closestObstacle.getY() - closestRobotPosition.getY() > -5 && closestObstacle.getY() - closestRobotPosition.getY() < 0 && inputHorizontal < 0) {
                 horizontal = 0;
             }
 
-            if (closestObstacleToRobotPosition.getY() - returnPosition.getY() < 10 && closestObstacleToRobotPosition.getY() - returnPosition.getY() > 0 && odometry.getHorizontalVelocity() > 20){
+            if (closestObstacle.getY() - closestRobotPosition.getY() < 10 && closestObstacle.getY() - closestRobotPosition.getY() > 0 && odometry.getHorizontalVelocity() > 10  && inputHorizontal > 0){
                 horizontal = 0;
-            } else if (closestObstacleToRobotPosition.getY() - returnPosition.getY() > -10 && closestObstacleToRobotPosition.getY() - returnPosition.getY() < 0 && odometry.getHorizontalVelocity() < -20) {
+            } else if (closestObstacle.getY() - closestRobotPosition.getY() > -10 && closestObstacle.getY() - closestRobotPosition.getY() < 0 && odometry.getHorizontalVelocity() < -10 && inputHorizontal < 0) {
                 horizontal = 0;
             }
 

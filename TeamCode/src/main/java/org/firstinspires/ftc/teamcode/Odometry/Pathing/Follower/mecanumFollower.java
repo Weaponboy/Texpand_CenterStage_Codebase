@@ -215,7 +215,6 @@ public class mecanumFollower {
                 dashboardTelemetry.addLine();
                 dashboardTelemetry.addData("vertical", pathingPower.getVertical());
                 dashboardTelemetry.addData("horizontal", pathingPower.getHorizontal());
-//                dashboardTelemetry.addData("power", pathing);
                 dashboardTelemetry.update();
             }else {
                 dashboardTelemetry.addData("x", odometry.X);
