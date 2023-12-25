@@ -176,7 +176,7 @@ public class ConceptAprilTag extends LinearOpMode {
                 // == CAMERA CALIBRATION ==
                 // If you do not manually specify calibration parameters, the SDK will attempt
                 // to load a predefined calibration for your camera.
-                //.setLensIntrinsics(578.272, 578.272, 402.145, 221.506)
+//                .setLensIntrinsics(822.317f, 822.317f, 319.495f, 242.502f)
 
                 // ... these parameters are fx, fy, cx, cy.
 
