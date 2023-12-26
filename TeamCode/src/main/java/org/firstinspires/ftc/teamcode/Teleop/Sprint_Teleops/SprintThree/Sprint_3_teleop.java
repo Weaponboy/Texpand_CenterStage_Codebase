@@ -37,9 +37,9 @@ public class Sprint_3_teleop extends OpMode {
     boolean SlideSafetyBottom = false;
 
     //in ms
-    double timePerDegreeTopPivot = 2.8;
+    double timePerDegreeTopPivot = 3;
 
-    double smallServoTimePerDegree = 1.6;
+    double smallServoTimePerDegree = 3;
 
     //!!!!!
     //tune these values
