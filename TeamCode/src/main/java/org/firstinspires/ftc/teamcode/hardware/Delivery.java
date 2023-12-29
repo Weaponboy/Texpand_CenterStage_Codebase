@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
-import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -8,37 +7,173 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoImplEx;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.Teleop.Sprint_Teleops.SprintThree.Sprint_3_teleop;
 
 
 public class Delivery {
 
-    public DcMotorEx Pivot;
+    DcMotorEx Pivot;
 
-    public PIDFController pivot_controllers;
+    ServoImplEx secondPivotLeft;
+    ServoImplEx secondPivotRight;
 
-    public ServoImplEx pivot1;
-    public ServoImplEx pivot2;
+    ServoImplEx RightClaw;
+    ServoImplEx LeftClaw;
 
-    public ServoImplEx RightClaw;
-    public ServoImplEx LeftClaw;
+    ServoImplEx RotateClaw;
 
-    public ServoImplEx RotateClaw;
+    Servo mainPivotLeft;
+    Servo mainPivotRight;
 
-    public Servo mainPivotLeft;
-    public Servo mainPivotRight;
+    ServoImplEx secondRotate;
 
-    public ServoImplEx secondRotate;
+    ElapsedTime pivotMoveTime = new ElapsedTime();
 
-    public static double pivot_p = 0.004, pivot_i = 0, pivot_d = 0.0001;
+    double timeToWait;
+
+    double timePerDegree = 7;
+
+    double collectTopPivotPos = 0.1;
+    double deliveryTopPivot = 1;
+    double safeTopPivot = 0.3;
+
+    double avoidIntakeSecondPivot = 0.8;
+    double collectSecondPivot = 0.97;
+    double deliverySecondPivot = 0.3;
+
+    double clawOpen = 0.25;
+    double clawClosed = 0;
+
+    double rotateCollect = 0.5;
+    double rotateRight = 1;
 
     HardwareMap hmap;
 
+    public enum armState{
+        delivery,
+        collect,
+        moving,
+    }
+
+    public enum gripperState{
+        bothOpen,
+        bothClosed,
+        leftOpen,
+        rightOpen
+    }
+
+    armState armstateTarget = armState.collect;
+    armState armstateCurrent = armState.collect;
+
+    gripperState gripperstate = gripperState.bothClosed;
+
+    public void updateArm (){
+
+        switch (armstateTarget){
+
+            case delivery:
+
+                switch (armstateCurrent){
+                    case moving:
+                        break;
+                    case collect:
+                        armstateCurrent = armState.moving;
+
+                        pivotMoveTime.reset();
+
+                        timeToWait = Math.max((Math.abs(getSecondPivotPosition() - collectSecondPivot) * 180) * timePerDegree, (Math.abs(getTopPivotPosition() - collectTopPivotPos) * 180) * timePerDegree);
+
+                        setClaws(clawClosed);
+
+                        setSecondPivot(collectSecondPivot);
+
+                        setMainPivot(collectTopPivotPos);
+
+                        RotateClaw.setPosition(rotateCollect);
+
+                        break;
+                    case delivery:
+                        break;
+                    default:
+                }
+
+                break;
+            case collect:
+
+                switch (armstateCurrent){
+                    case moving:
+                        break;
+                    case collect:
+                        break;
+                    case delivery:
+
+                        armstateCurrent = armState.moving;
+
+                        pivotMoveTime.reset();
+
+                        timeToWait = Math.max((Math.abs(getSecondPivotPosition()-deliverySecondPivot)*180)*timePerDegree, (Math.abs(getTopPivotPosition()-deliveryTopPivot)*180)*timePerDegree);
+
+                        setClaws(clawClosed);
+
+                        setSecondPivot(deliverySecondPivot);
+
+                        setMainPivot(deliveryTopPivot);
+
+                        RotateClaw.setPosition(rotateCollect);
+
+                        break;
+                    default:
+                }
+
+                break;
+            default:
+        }
+
+        switch (armstateCurrent){
+            case moving:
+                switch (armstateTarget){
+                    case delivery:
+                        if (pivotMoveTime.milliseconds() >= timeToWait){
+                            armstateCurrent = armState.delivery;
+                        }
+                        break;
+                    case collect:
+                        if (pivotMoveTime.milliseconds() >= timeToWait){
+                            armstateCurrent = armState.collect;
+                        }
+                        break;
+                    default:
+                }
+                break;
+            default:
+        }
+    }
+
+    public void updateGrippers (){
+
+        switch (gripperstate){
+
+            case bothOpen:
+                setClaws(clawOpen);
+                break;
+            case bothClosed:
+                setClaws(clawClosed);
+                break;
+            case leftOpen:
+                LeftClaw.setPosition(clawOpen);
+                break;
+            case rightOpen:
+                RightClaw.setPosition(clawOpen);
+                break;
+            default:
+        }
+
+    }
+
     public void init(HardwareMap hardwareMap){
         hmap = hardwareMap;
-
-        pivot_controllers = new PIDFController(pivot_p, pivot_i, pivot_d, 0.05);
-
-        pivot_controllers.setPIDF(pivot_p, pivot_i, pivot_d, 0.05);
 
         Pivot = hardwareMap.get(DcMotorEx.class, "pivot");
 
@@ -48,15 +183,17 @@ public class Delivery {
 
         Pivot.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        pivotMoveTime.reset();
+
         /**servos init*/
 
-        pivot1 = hardwareMap.get(ServoImplEx.class, "RightPivot");
-        pivot2 = hardwareMap.get(ServoImplEx.class, "LeftPivot");
+        secondPivotLeft = hardwareMap.get(ServoImplEx.class, "RightPivot");
+        secondPivotRight = hardwareMap.get(ServoImplEx.class, "LeftPivot");
 
-        pivot2.setDirection(Servo.Direction.REVERSE);
+        secondPivotRight.setDirection(Servo.Direction.REVERSE);
 
-        pivot1.setPwmRange(new PwmControl.PwmRange(600, 2500));
-        pivot2.setPwmRange(new PwmControl.PwmRange(600, 2500));
+        secondPivotLeft.setPwmRange(new PwmControl.PwmRange(600, 2500));
+        secondPivotRight.setPwmRange(new PwmControl.PwmRange(600, 2500));
 
         RightClaw = hardwareMap.get(ServoImplEx.class, "RightClaw");
         LeftClaw = hardwareMap.get(ServoImplEx.class, "LeftClaw");
@@ -82,18 +219,34 @@ public class Delivery {
 
         secondRotate.setPwmRange(new PwmControl.PwmRange(750, 2400));
 
+        setMainPivot(0);
+
         secondRotate.setPosition(0.5);
 
+        setSecondPivot(1);
+
+        RotateClaw.setPosition(0.5);
+
+        RightClaw.setPosition(clawClosed);
+        LeftClaw.setPosition(clawClosed);
+
     }
 
-    public void setSecondPivot(double position){
-        pivot1.setPosition(position);
-        pivot2.setPosition(position);
+    public double getSecondPivotPosition(){
+        return secondPivotLeft.getPosition() + secondPivotRight.getPosition()/2;
     }
 
-    public void setMainPivot(double position){
+    public double getMainPivotPosition(){
+        return mainPivotLeft.getPosition() + mainPivotRight.getPosition()/2;
+    }
+
+    private void setMainPivot(double position){
         mainPivotLeft.setPosition(position);
         mainPivotRight.setPosition(position);
+    }
+
+    public double getTopPivotPosition(){
+        return secondPivotLeft.getPosition();
     }
 
     public void setClaws(double position){
@@ -101,12 +254,21 @@ public class Delivery {
         RightClaw.setPosition(position);
     }
 
-    public double getTopPivotPosition(){
-        return pivot1.getPosition();
+    private void setSecondPivot(double position){
+        secondPivotLeft.setPosition(position);
+        secondPivotRight.setPosition(position);
     }
 
-    public double getSecondPivotPosition(){
-        return mainPivotLeft.getPosition();
+    public void setArmTargetState(armState targetState) {
+        this.armstateTarget = targetState;
+    }
+
+    public void setGripperState(gripperState gripperstate) {
+        this.gripperstate = gripperstate;
+    }
+
+    public armState getArmState() {
+        return armstateCurrent;
     }
 
 }

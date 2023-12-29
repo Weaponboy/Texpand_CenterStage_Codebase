@@ -8,16 +8,59 @@ import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.teamcode.Teleop.Sprint_Teleops.SprintThree.Sprint_3_teleop;
 
 public class  Delivery_Slides {
 
     HardwareMap hardwareMap;
 
-    public PIDFController Slide_Power;
+    DcMotorEx Left_Slide;
+    DcMotorEx Right_Slide;
 
-    public DcMotorEx Left_Slide;
-    public DcMotorEx Right_Slide;
+    boolean SlideSafetyHeight = false;
+    boolean SlideSafetyBottom = false;
+
+    enum SlideState{
+        manual,
+        moving,
+        targetReached;
+    }
+
+    SlideState slideState = SlideState.manual;
+
+    public void updateSlides(Gamepad gamepad1, Gamepad gamepad2){
+
+        SlideSafetyHeight = Left_Slide.getCurrentPosition() > 2200;
+        SlideSafetyBottom = Left_Slide.getCurrentPosition() < 5;
+
+        switch (slideState){
+
+            case manual:
+                if (gamepad1.x && !SlideSafetyHeight) {
+                    SlideSafetyHeight = Left_Slide.getCurrentPosition() > 2200;
+                    SlidesBothPower(0.3);
+                } else if (gamepad1.a && !SlideSafetyBottom) {
+                    SlideSafetyBottom = Left_Slide.getCurrentPosition() < 5;
+                    SlidesBothPower(-0.3);
+                }else {
+                    SlidesBothPower(0.0005);
+                }
+                break;
+            case moving:
+                if (Left_Slide.getCurrentPosition() > (Left_Slide.getTargetPosition()-10) && Left_Slide.getCurrentPosition() < (Left_Slide.getTargetPosition()+10) ){
+                    slideState = SlideState.targetReached;
+                }
+                break;
+            case targetReached:
+                slideState = SlideState.manual;
+                break;
+            default:
+
+        }
+    }
 
     public void init(HardwareMap Hmap){
 
@@ -33,8 +76,6 @@ public class  Delivery_Slides {
 
         Right_Slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Left_Slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        Slide_Power = new PIDFController(slide_p, slide_i, slide_d, 0);
     }
 
     public void DeliverySlides(int setpoint, double power){
@@ -57,6 +98,14 @@ public class  Delivery_Slides {
 
     public int getCurrentposition(){
         return Right_Slide.getCurrentPosition() + Left_Slide.getCurrentPosition()/2;
+    }
+
+    public SlideState getSlideState() {
+        return slideState;
+    }
+
+    public void setSlideState(SlideState slideState) {
+        this.slideState = slideState;
     }
 
 }
