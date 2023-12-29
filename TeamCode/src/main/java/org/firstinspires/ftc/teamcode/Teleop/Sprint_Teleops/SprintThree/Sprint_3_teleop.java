@@ -3,21 +3,27 @@ package org.firstinspires.ftc.teamcode.Teleop.Sprint_Teleops.SprintThree;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Non_Hardware_Objects.currentGamepad1;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Non_Hardware_Objects.previousGamepad1;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.hardware.Collection;
 import org.firstinspires.ftc.teamcode.hardware.Delivery;
 import org.firstinspires.ftc.teamcode.hardware.Delivery_Slides;
 import org.firstinspires.ftc.teamcode.hardware.Drivetrain;
 import org.firstinspires.ftc.teamcode.hardware.Odometry;
 
+
 @TeleOp
 public class Sprint_3_teleop extends OpMode {
-
+    public BNO055IMU imu = null;
     Drivetrain drive = new Drivetrain();
 
     //Leave at 0 start for now
@@ -29,8 +35,8 @@ public class Sprint_3_teleop extends OpMode {
 
     Collection collection = new Collection();
 
-    DistanceSensor RightClaw;
-    DistanceSensor LeftClaw;
+    DistanceSensor RightClawSensor;
+    DistanceSensor LeftClawSensor;
 
     boolean SlideSafetyHeight = false;
 
@@ -45,13 +51,18 @@ public class Sprint_3_teleop extends OpMode {
     //tune these values
     //!!!!
 
-    double collectTopPivotPos = 0.1;
-    double deliveryTopPivot = 1;
+    double collectTopPivotPos = 0.2;
+    double deliveryTopPivot = 0.7;
+    double lowdeliveryTopPivot = 1;
     double safeTopPivot = 0.3;
+    static final double servoPosPerTick = 0.00004100;
 
     double avoidIntakeSecondPivot = 0.8;
-    double collectSecondPivot = 0.97;
-    double deliverySecondPivot = 0.3;
+    double collectSecondPivot = 1;
+    double deliverySecondPivot = 0.13 ;
+    double lowdeliverySecondPivot = 0.55;
+
+    static final double mainToSecondConst = 0.5/0.3;
 
     double clawOpen = 0.25;
     double clawClosed = 0;
@@ -60,9 +71,11 @@ public class Sprint_3_teleop extends OpMode {
     double rotateRight = 1;
 
     double timeToWait;
-
+    double targetRotatePos;
+    static final double adjustFactor = 1.1;
     boolean closeToCollection;
-
+    double mainPivotOffSet = 0;
+    double targetMainPivot = 0;
     ElapsedTime pivotMoveTime = new ElapsedTime();
 
     public enum SlideState{
@@ -78,6 +91,7 @@ public class Sprint_3_teleop extends OpMode {
     }
 
     double pivotIntakePos;
+
 
     SlideState slideState = SlideState.manual;
     PivotState pivotState = PivotState.collect;
@@ -123,20 +137,31 @@ public class Sprint_3_teleop extends OpMode {
 
         //this is to toggle fully up and fully down on the intake
         if (currentGamepad1.left_bumper && !previousGamepad1.left_bumper && collection.IntakeHeight.getPosition() > 0){
-            pivotIntakePos = 0.15;
-            collection.IntakeHeight.setPosition(pivotIntakePos);
+            collection.IntakeHeight.setPosition(0.0);
         } else if (currentGamepad1.left_bumper && !previousGamepad1.left_bumper && collection.IntakeHeight.getPosition() < 0.5) {
-            pivotIntakePos = 0.7;
-            collection.IntakeHeight.setPosition(pivotIntakePos);
+            collection.IntakeHeight.setPosition(0.7);
         }
 
         if (currentGamepad1.right_trigger > 0 && !(previousGamepad1.right_trigger > 0)){
+            pivotIntakePos ++;
 
-            if (collection.IntakeHeight.getPosition() >= 0.7){
-
-            }else {
-                pivotIntakePos += 0.05;
-                collection.IntakeHeight.setPosition(pivotIntakePos);
+            if (pivotIntakePos == 5){
+                pivotIntakePos = 0;
+            }
+            if(pivotIntakePos == 0){
+                collection.IntakeHeight.setPosition(0.275);
+            }
+            else if(pivotIntakePos == 1){
+                collection.IntakeHeight.setPosition(0.25);
+            }
+            else if(pivotIntakePos == 2){
+                collection.IntakeHeight.setPosition(0.20);
+            }
+            else if(pivotIntakePos == 3){
+                collection.IntakeHeight.setPosition(0.175);
+            }
+            else if(pivotIntakePos == 4){
+                collection.IntakeHeight.setPosition(0);
             }
         }
 
@@ -187,6 +212,7 @@ public class Sprint_3_teleop extends OpMode {
         switch (pivotState){
             case collect:
 
+
                 //Move to delivery position
                 if (gamepad1.dpad_up && deliverySlides.getCurrentposition() > 150){
 
@@ -205,6 +231,7 @@ public class Sprint_3_teleop extends OpMode {
                     delivery.RotateClaw.setPosition(rotateCollect);
 
                 }
+
 //                else if (gamepad1.dpad_up && deliverySlides.getCurrentposition() < 150) {
 //
 //                    closeToCollection = true;
@@ -223,7 +250,7 @@ public class Sprint_3_teleop extends OpMode {
             case deposit:
 
                 //Move to collect position
-                if (gamepad1.dpad_down && deliverySlides.getCurrentposition() > 150) {
+                if (gamepad1.dpad_down && deliverySlides.getCurrentposition() > 100) {
 
                     pivotState = PivotState.transitioning;
 
@@ -240,6 +267,29 @@ public class Sprint_3_teleop extends OpMode {
                     delivery.RotateClaw.setPosition(rotateCollect);
 
                 }
+                if(deliverySlides.getCurrentposition() > 200) {
+
+                    if (gamepad1.dpad_right && delivery.mainPivotRight.getPosition() < lowdeliveryTopPivot) {
+                        mainPivotOffSet = mainPivotOffSet + 0.005;
+//                    delivery.setMainPivot(delivery.mainPivotRight.getPosition() + 0.005);
+//                    delivery.setSecondPivot(delivery.pivot1.getPosition() + 0.005 * mainToSecondConst);
+                    }
+                    if (gamepad1.dpad_left && delivery.mainPivotRight.getPosition() > deliveryTopPivot) {
+                        mainPivotOffSet = mainPivotOffSet - 0.005;
+//                    delivery.setMainPivot(delivery.mainPivotRight.getPosition() - 0.005);
+//                    delivery.setSecondPivot(delivery.pivot1.getPosition() - 0.005 * mainToSecondConst);
+                    }
+
+                    targetMainPivot = deliveryTopPivot - deliverySlides.getCurrentposition() * servoPosPerTick + mainPivotOffSet;
+                    delivery.setMainPivot(targetMainPivot);
+                    delivery.setSecondPivot(deliverySecondPivot + (-deliverySlides.getCurrentposition() * servoPosPerTick + mainPivotOffSet) * mainToSecondConst);
+
+                    targetRotatePos = 0.5 - (GetHeading() / 180) * adjustFactor;
+                    delivery.secondRotate.setPosition(targetRotatePos);
+                }
+
+
+
 
                 break;
             case transitioning:
@@ -287,11 +337,11 @@ public class Sprint_3_teleop extends OpMode {
 
         /**gripper code*/
 
-        if (currentGamepad1.dpad_left && !previousGamepad1.dpad_left && delivery.LeftClaw.getPosition() == clawClosed) {
-            delivery.LeftClaw.setPosition(clawOpen);
-        } else if (currentGamepad1.dpad_left && !previousGamepad1.dpad_left && delivery.LeftClaw.getPosition() == clawOpen) {
-            delivery.LeftClaw.setPosition(clawClosed);
-        }
+//        if (currentGamepad1.dpad_left && !previousGamepad1.dpad_left && delivery.LeftClaw.getPosition() == clawClosed) {
+//            delivery.LeftClaw.setPosition(clawOpen);
+//        } else if (currentGamepad1.dpad_left && !previousGamepad1.dpad_left && delivery.LeftClaw.getPosition() == clawOpen) {
+//            delivery.LeftClaw.setPosition(clawClosed);
+//        }
 
         if (gamepad1.start) {
             delivery.RightClaw.setPosition(clawClosed);
@@ -303,10 +353,18 @@ public class Sprint_3_teleop extends OpMode {
             delivery.LeftClaw.setPosition(clawOpen);
         }
 
-        if (currentGamepad1.dpad_right && !previousGamepad1.dpad_right && delivery.RightClaw.getPosition() == clawClosed) {
-            delivery.RightClaw.setPosition(clawOpen);
-        } else if (currentGamepad1.dpad_right && !previousGamepad1.dpad_right && delivery.RightClaw.getPosition() == clawOpen) {
-            delivery.RightClaw.setPosition(clawClosed);
+//        if (currentGamepad1.dpad_right && !previousGamepad1.dpad_right && delivery.RightClaw.getPosition() == clawClosed) {
+//            delivery.RightClaw.setPosition(clawOpen);
+//        } else if (currentGamepad1.dpad_right && !previousGamepad1.dpad_right && delivery.RightClaw.getPosition() == clawOpen) {
+//            delivery.RightClaw.setPosition(clawClosed);
+//        }
+        if(collection.Intake.getPower() > 0){
+            if(LeftClawSensor.getDistance(DistanceUnit.CM) < 7){
+                delivery.LeftClaw.setPosition(clawClosed);
+            }
+            if(RightClawSensor.getDistance(DistanceUnit.CM) < 7){
+                delivery.RightClaw.setPosition(clawClosed);
+            }
         }
 
 //        if (RightClaw.getDistance(DistanceUnit.MM) < 60 && intakePos){
@@ -317,9 +375,11 @@ public class Sprint_3_teleop extends OpMode {
 //            delivery.LeftClaw.setPosition(clawClosed);
 //        }
 
-        telemetry.addData("power intake", collection.Intake.getPower());
-//        telemetry.addData("right claw", RightClaw.getDistance(DistanceUnit.MM));
-//        telemetry.addData("left claw", LeftClaw.getDistance(DistanceUnit.MM));
+
+        telemetry.addData("Slide height", deliverySlides.getCurrentposition());
+        telemetry.addData("Base Pivot", delivery.mainPivotLeft.getPosition());
+        telemetry.addData("Second Pivot", delivery.pivot1.getPosition());
+        telemetry.addData("Intake Servo Position: ", pivotIntakePos);
         telemetry.update();
 
     }
@@ -338,7 +398,7 @@ public class Sprint_3_teleop extends OpMode {
 
         pivotMoveTime.reset();
 
-        delivery.setMainPivot(0.1);
+        delivery.setMainPivot(0);
 
         delivery.setSecondPivot(1);
 
@@ -347,11 +407,36 @@ public class Sprint_3_teleop extends OpMode {
         delivery.RightClaw.setPosition(clawClosed);
         delivery.LeftClaw.setPosition(clawClosed);
 
-        collection.IntakeHeight.setPosition(0.15);
+        collection.IntakeHeight.setPosition(0);
 
-        RightClaw = hardwareMap.get(DistanceSensor.class, "rightclaw");
-        LeftClaw = hardwareMap.get(DistanceSensor.class, "leftclaw");
+        RightClawSensor = hardwareMap.get(DistanceSensor.class, "rightclaw");
+        LeftClawSensor = hardwareMap.get(DistanceSensor.class, "leftclaw");
+
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.calibrationDataFile = "BNO055IMUCalibration.json";
+        parameters.loggingEnabled = true;
+        parameters.loggingTag = "IMU";
+
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
+
+        imu.initialize(parameters);
 
     }
 
+    private double GetHeading(){
+        double ConvertedHeading;
+
+        double heading = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
+
+        if (heading <= 0) {
+            ConvertedHeading = (360 + heading);
+            ConvertedHeading = (360-ConvertedHeading);
+        } else {
+            ConvertedHeading = (0 + heading);
+            ConvertedHeading = (360-ConvertedHeading);
+        }
+        return heading;
+    }
 }

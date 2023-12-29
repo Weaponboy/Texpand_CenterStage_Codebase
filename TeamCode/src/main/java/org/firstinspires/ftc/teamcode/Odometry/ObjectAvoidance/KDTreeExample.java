@@ -68,4 +68,5 @@ public class KDTreeExample {
         double dy = point1.getY() - point2.getY();
         return Math.sqrt(dx * dx + dy * dy);
     }
+
 }

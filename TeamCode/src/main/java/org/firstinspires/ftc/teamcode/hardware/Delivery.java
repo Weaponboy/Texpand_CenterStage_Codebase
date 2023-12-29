@@ -16,16 +16,16 @@ public class Delivery {
 
     public PIDFController pivot_controllers;
 
-    ServoImplEx pivot1;
-    ServoImplEx pivot2;
+    public ServoImplEx pivot1;
+    public ServoImplEx pivot2;
 
     public ServoImplEx RightClaw;
     public ServoImplEx LeftClaw;
 
     public ServoImplEx RotateClaw;
 
-    Servo mainPivotLeft;
-    Servo mainPivotRight;
+    public Servo mainPivotLeft;
+    public Servo mainPivotRight;
 
     public ServoImplEx secondRotate;
 
