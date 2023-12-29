@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.Teleop.Sprint_Teleops.SprintTwo;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.hardware.SubSystems.Odometry;
+import org.firstinspires.ftc.teamcode.hardware.Odometry;
 
 @TeleOp
 public class TestingPositioning extends OpMode {

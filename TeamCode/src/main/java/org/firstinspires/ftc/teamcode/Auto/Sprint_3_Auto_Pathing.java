@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Auto;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower.mecanumFollower;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.Old.pathBuilder;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.redRightBuilder;
@@ -14,7 +15,7 @@ import org.firstinspires.ftc.teamcode.hardware.Odometry;
 
 @Autonomous
 /**start red right*/
-public class Sprint_3_Auto extends LinearOpMode {
+public class Sprint_3_Auto_Pathing extends LinearOpMode {
 
     /**hardware objects*/
     Odometry odometry = new Odometry(210, 337, 90);
@@ -90,6 +91,8 @@ public class Sprint_3_Auto extends LinearOpMode {
         //build path to drop purple pixel
         firstPath.buildPath(redRightBuilder.Position.center, redRightBuilder.Section.preload);
 
+        secondPath.buildPath(redRightBuilder.Position.center, redRightBuilder.Section.collect);
+
         //give path to follower
         follower.setPath(firstPath.followablePath, firstPath.pathingVelocity);
 
@@ -97,59 +100,17 @@ public class Sprint_3_Auto extends LinearOpMode {
 
         waitForStart();
 
-        follower.followPath(true, 90, false, odometry, drive, telemetry);
-
-        drive.setAllPower(0.4);
-
-        sleep(400);
+        //change target heading after dropping the purple pixel
+        Vector2D point;
+        follower.followPath(90, odometry, drive, point = new Vector2D(236, 302), 180);
 
         odometry.update();
-
-        secondPath.buildPath(redRightBuilder.Position.center, redRightBuilder.Section.collect);
 
         follower.setPath(secondPath.followablePath, secondPath.pathingVelocity);
 
         odometry.update();
 
         follower.followPath(true, 180, false, odometry, drive, telemetry);
-
-        collection.IntakeHeight.setPosition(0.4);
-
-        sleep(200);
-
-        deliverySlides.DeliverySlides(250, 0.6);
-
-        while (deliverySlides.Left_Slide.isBusy()){}
-
-        timeToWait = (long) Math.max((Math.abs(delivery.getSecondPivotPosition()-deliverySecondPivot)*180)*timePerDegreeTopPivot, (Math.abs(delivery.getTopPivotPosition()-deliveryTopPivot)*180)*timePerDegreeTopPivot);
-
-        delivery.setClaws(clawClosed);
-
-        delivery.setSecondPivot(deliverySecondPivot);
-
-        delivery.setMainPivot(deliveryTopPivot);
-
-        delivery.RotateClaw.setPosition(rotateCollect);
-
-        sleep(2000);
-
-        delivery.setClaws(clawOpen);
-
-        sleep(1000);
-
-        timeToWait = (long) Math.max((Math.abs(delivery.getSecondPivotPosition() - collectSecondPivot) * 180) * timePerDegreeTopPivot, (Math.abs(delivery.getTopPivotPosition() - collectTopPivotPos) * 180) * timePerDegreeTopPivot);
-
-        delivery.setClaws(clawClosed);
-
-        delivery.setSecondPivot(collectSecondPivot);
-
-        delivery.setMainPivot(collectTopPivotPos);
-
-        delivery.RotateClaw.setPosition(rotateCollect);
-
-        sleep(1000);
-
-        deliverySlides.DeliverySlides(0, -0.6);
 
     }
 
