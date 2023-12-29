@@ -14,11 +14,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.hardware.SubSystems.Collection;
-import org.firstinspires.ftc.teamcode.hardware.SubSystems.Delivery;
-import org.firstinspires.ftc.teamcode.hardware.SubSystems.Delivery_Slides;
-import org.firstinspires.ftc.teamcode.hardware.SubSystems.Drivetrain;
-import org.firstinspires.ftc.teamcode.hardware.SubSystems.Odometry;
+import org.firstinspires.ftc.teamcode.hardware.Collection;
+import org.firstinspires.ftc.teamcode.hardware.Delivery;
+import org.firstinspires.ftc.teamcode.hardware.Delivery_Slides;
+import org.firstinspires.ftc.teamcode.hardware.Drivetrain;
+import org.firstinspires.ftc.teamcode.hardware.Odometry;
+
 
 @TeleOp
 public class Sprint_3_teleop extends OpMode {
