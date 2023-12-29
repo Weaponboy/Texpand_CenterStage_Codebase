@@ -215,7 +215,6 @@ public class mecanumFollower {
                 dashboardTelemetry.addLine();
                 dashboardTelemetry.addData("vertical", pathingPower.getVertical());
                 dashboardTelemetry.addData("horizontal", pathingPower.getHorizontal());
-//                dashboardTelemetry.addData("power", pathing);
                 dashboardTelemetry.update();
             }else {
                 dashboardTelemetry.addData("x", odometry.X);
@@ -325,7 +324,7 @@ public class mecanumFollower {
 
             robotPositionVector.set(odometry.X, odometry.Y);
 
-            if (Math.abs(pointForHeadingChange.getX() - odometry.X) < 5 && Math.abs(pointForHeadingChange.getY() - odometry.Y) < 5){
+            if (Math.abs(pointForHeadingChange.getX() - odometry.X) < 8 && Math.abs(pointForHeadingChange.getY() - odometry.Y) < 8){
                 targetHeading = secondHeading;
             }
 

@@ -17,45 +17,72 @@ public class SegmentGenerator {
         return Segment;
     }
 
+    /**Straight line gen method*/
     public void buildPath(Vector2D startPoint, Vector2D endPoint){
+
+        //Clear segment array of the last segment
         Segment.clear();
+
+        //reset t back to zero
         t = 0;
 
+        //Repeat while t is less than 1
         do{
+            //call method with equations, pass it the start and end point. as well as t
             onTheCurve = calculateLine(startPoint, endPoint, t);
 
+            //increment t slightly, i prefer having this very low just in increase accuracy
             t += 0.001;
 
+            //add the calculated point to the array
             Segment.add(onTheCurve);
 
         }while (t <= 1.0);
 
     }
 
+    /**Three point curve gen method*/
     public void buildPath( Vector2D startPoint, Vector2D controlPoint, Vector2D endPoint){
+
+        //Clear segment array of the last segment
         Segment.clear();
+
+        //reset t back to zero
         t = 0;
 
+        //Repeat while t is less than 1
         do{
+            //call method with equations, pass it the start, control and end point. as well as t
             onTheCurve = calculateQuadraticBezier(startPoint, controlPoint, endPoint, t);
 
+            //increment t slightly, i prefer having this very low just in increase accuracy
             t += 0.001;
 
+            //add the calculated point to the array
             Segment.add(onTheCurve);
 
         }while (t <= 1.0);
 
     }
 
+    /**Four point curve gen method*/
     public void buildPath( Vector2D startPoint, Vector2D controlPoint1, Vector2D controlPoint2, Vector2D endPoint){
+
+        //Clear segment array of the last segment
         Segment.clear();
+
+        //reset t back to zero
         t = 0;
 
+        //Repeat while t is less than 1
         do{
+            //call method with equations, pass it the start, control and end point. as well as t
             onTheCurve = calculateQuadraticBezier(startPoint, controlPoint1, controlPoint2, endPoint, t);
 
+            //increment t slightly, i prefer having this very low just in increase accuracy
             t += 0.001;
 
+            //add the calculated point to the array
             Segment.add(onTheCurve);
 
         }while (t <= 1.0);
@@ -79,78 +106,49 @@ public class SegmentGenerator {
 
     }
 
+    /**Three point curve gen equations method*/
     private Vector2D calculateQuadraticBezier(Vector2D start, Vector2D control, Vector2D end, double t) {
+        //Define t constants
         double u = 1 - t;
         double tt = t * t;
         double uu = u * u;
 
+        //calculate X and Y coordinates by incrementing t between the points
         double x = uu * start.getX() + 2 * u * t * control.getX() + tt * end.getX();
         double y = uu * start.getY() + 2 * u * t * control.getY() + tt * end.getY();
 
+        //return X and Y in a custom position class
         return new Vector2D(x, y);
     }
 
+    /**Four point curve gen equations method*/
     private Vector2D calculateQuadraticBezier(Vector2D start, Vector2D controlFirst, Vector2D controlSecond, Vector2D end, double t) {
+        //Define t constants
         double u = 1 - t;
         double tt = t * t;
         double ttt = t * t * t;
         double uu = u * u;
         double uuu = u * u * u;
 
+        //calculate X and Y coordinates by incrementing t between the points
         double x = uuu * start.getX() + 3 * uu * t * controlFirst.getX() + 3 * u * tt * controlSecond.getX() + ttt * end.getX();
         double y = uuu * start.getY() + 3 * uu * t * controlFirst.getY() + 3 * u * tt * controlSecond.getY() + ttt * end.getY();
 
+        //return X and Y in a custom position class
         return new Vector2D(x, y);
     }
 
+    /**Line gen equations method*/
     private Vector2D calculateLine(Vector2D start, Vector2D end, double t) {
+        //Define t constants
         double u = 1 - t;
 
+        //calculate X and Y coordinates by incrementing t between the points
         double x = start.getX() * u + end.getX() * t;
         double y = start.getY() * u + end.getY() * t;
 
+        //return X and Y in a custom position class
         return new Vector2D(x, y);
-    }
-
-    public double calculateTotalDistance(List<Vector2D> path) {
-        double totalDistance = 0.0;
-        for (int i = 0; i < path.size() - 1; i++) {
-            Vector2D point1 = path.get(i);
-            Vector2D point2 = path.get(i + 1);
-            totalDistance += calculateDistance(point1, point2);
-        }
-        return totalDistance;
-    }
-
-    public double calculateDistance(Vector2D point1, Vector2D point2) {
-        double dx = point2.getX() - point1.getX();
-        double dy = point2.getY() - point1.getY();
-        return Math.sqrt(dx * dx + dy * dy);
-    }
-
-    public void blueRightRandomization(){
-
-        Vector2D startPoint = new Vector2D();
-        Vector2D endPoint = new Vector2D();
-        Vector2D controlPoint = new Vector2D();
-
-        //drop off purple pixel
-        startPoint.set(93, 33);
-        endPoint.set(95, 85);
-        buildPath(startPoint, endPoint);
-
-        //curve to under door
-        startPoint.set(endPoint.getX(), endPoint.getY());
-        endPoint.set(154, 157);
-        controlPoint.set(90, 160);
-        buildPath(startPoint, controlPoint, endPoint);
-
-        //curve to backboard
-        startPoint.set(endPoint.getX(), endPoint.getY());
-        controlPoint.set(302, 154);
-        endPoint.set(314, 75);
-        buildPath(startPoint, controlPoint, endPoint);
-
     }
 
 }
