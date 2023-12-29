@@ -77,62 +77,60 @@ public class teleopPathBuilder extends pathBuilderMain {
         motionProfile();
     }
 
-    /**First Position*/
     private void buildTeleopBlueCollect(Vector2D startPos, Vector2D targetPos){
 
         Vector2D throughPosStart = null;
         Vector2D throughPosEnd = null;
 
-        if (startPos.getY() < 120 && startPos.getX() > 0){
+        if (startPos.getY() < 60 && startPos.getX() > 0){
+            throughPosStart = T1Start;
+            throughPosEnd = T1End;
+        } else if (startPos.getY() < 120 && startPos.getY() > 60) {
+            throughPosStart = T2Start;
+            throughPosEnd = T2End;
+        } else if (startPos.getY() < 180 && startPos.getY() > 120) {
             throughPosStart = T3Start;
             throughPosEnd = T3End;
-        } else if (startPos.getY() < 240 && startPos.getY() > 120) {
+        } else if (startPos.getY() < 360 && startPos.getY() > 180) {
             throughPosStart = T4Start;
             throughPosEnd = T4End;
-        } else if (startPos.getY() < 300 && startPos.getY() > 240) {
-            throughPosStart = T5Start;
-            throughPosEnd = T5End;
-        } else if (startPos.getY() < 360 && startPos.getY() > 300) {
-            throughPosStart = T6Start;
-            throughPosEnd = T6End;
         }
 
-        Vector2D controlForCollectSide = new Vector2D(startPos.getX() - ((startPos.getX() - 120)/2)-Math.abs((startPos.getY() - throughPosStart.getY())/2), throughPosStart.getY());
+        Vector2D controlForCollectSide = new Vector2D(targetPos.getX() - ((targetPos.getX() - 120)/2)-Math.abs((targetPos.getY() - throughPosStart.getY())/2), throughPosStart.getY());
 
         if (controlForCollectSide.getX() < 20){
             controlForCollectSide.setX(20);
         }
 
-        Vector2D controlForDeiverySide = new Vector2D(targetPos.getX() - ((targetPos.getX() - 180)/2)-Math.abs((targetPos.getY() - throughPosEnd.getY())/2), throughPosEnd.getY());
+        Vector2D controlForDeiverySide = new Vector2D(startPos.getX() - ((startPos.getX() - 180)/2)-Math.abs((startPos.getY() - throughPosEnd.getY())/2), throughPosEnd.getY());
 
-        if (controlForDeiverySide.getX() > 340){
-            controlForDeiverySide.setX(340);
+        if (controlForDeiverySide.getX() > 300){
+            controlForDeiverySide.setX(300);
         }
 
-        buildCurveSegment(startPos, controlForCollectSide, throughPosStart);
+        buildCurveSegment(startPos, controlForDeiverySide, throughPosEnd);
 
-        buildLineSegment(throughPosStart, throughPosEnd);
+        buildLineSegment(throughPosEnd, throughPosStart);
 
-        buildCurveSegment(throughPosEnd, controlForDeiverySide, targetPos);
+        buildCurveSegment(throughPosStart, controlForCollectSide, targetPos);
 
     }
 
-    /**First Position*/
     private void buildTeleopBlueDeliver(Vector2D startPos, Vector2D targetPos){
 
         Vector2D throughPosStart = null;
         Vector2D throughPosEnd = null;
 
-        if (startPos.getY() < 120 && startPos.getX() > 0){
+        if (startPos.getY() < 60 && startPos.getX() > 0){
             throughPosStart = T1Start;
             throughPosEnd = T1End;
-        } else if (startPos.getY() < 240 && startPos.getY() > 120) {
+        } else if (startPos.getY() < 120 && startPos.getY() > 60) {
             throughPosStart = T2Start;
             throughPosEnd = T2End;
-        } else if (startPos.getY() < 300 && startPos.getY() > 240) {
+        } else if (startPos.getY() < 180 && startPos.getY() > 120) {
             throughPosStart = T3Start;
             throughPosEnd = T3End;
-        } else if (startPos.getY() < 360 && startPos.getY() > 300) {
+        } else if (startPos.getY() < 360 && startPos.getY() > 180) {
             throughPosStart = T4Start;
             throughPosEnd = T4End;
         }
@@ -156,8 +154,7 @@ public class teleopPathBuilder extends pathBuilderMain {
         buildCurveSegment(throughPosEnd, controlForDeiverySide, targetPos);
 
     }
-
-    /**First Position*/
+    
     private void buildTeleopRedCollect(Vector2D startPos, Vector2D targetPos){
 
         Vector2D throughPosStart = null;
@@ -180,16 +177,16 @@ public class teleopPathBuilder extends pathBuilderMain {
             throughPosStart = T5End;
         }
 
-        Vector2D controlForCollectSide = new Vector2D(startPos.getX() - ((startPos.getX() - 120)/2)-Math.abs((startPos.getY() - throughPosStart.getY())/2), throughPosStart.getY());
+        Vector2D controlForCollectSide = new Vector2D(targetPos.getX() - ((targetPos.getX() - 120)/2)-Math.abs((targetPos.getY() - throughPosStart.getY())/2), throughPosStart.getY());
 
         if (controlForCollectSide.getX() < 20){
             controlForCollectSide.setX(20);
         }
 
-        Vector2D controlForDeiverySide = new Vector2D(targetPos.getX() - ((targetPos.getX() - 180)/2)-Math.abs((targetPos.getY() - throughPosEnd.getY())/2), throughPosEnd.getY());
+        Vector2D controlForDeiverySide = new Vector2D(startPos.getX() - ((startPos.getX() - 180)/2)-Math.abs((startPos.getY() - throughPosEnd.getY())/2), throughPosEnd.getY());
 
-        if (controlForDeiverySide.getX() > 340){
-            controlForDeiverySide.setX(340);
+        if (controlForDeiverySide.getX() > 300){
+            controlForDeiverySide.setX(300);
         }
 
         buildCurveSegment(startPos, controlForDeiverySide, throughPosEnd);
@@ -201,7 +198,6 @@ public class teleopPathBuilder extends pathBuilderMain {
 
     }
 
-    /**First Position*/
     private void buildTeleopRedDeliver(Vector2D startPos, Vector2D targetPos){
 
         Vector2D throughPosStart = null;

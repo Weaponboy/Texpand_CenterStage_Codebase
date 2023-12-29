@@ -132,7 +132,7 @@ public class Sprint_3_teleop extends OpMode {
         //update delivery state
         delivery.updateArm();
         delivery.updateGrippers();
-        
+
 
     }
 
