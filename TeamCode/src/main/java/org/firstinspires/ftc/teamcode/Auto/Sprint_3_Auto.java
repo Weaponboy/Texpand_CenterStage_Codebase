@@ -50,9 +50,9 @@ public class Sprint_3_Auto extends LinearOpMode {
     boolean SlideSafetyBottom = false;
 
     //in ms
-    double timePerDegreeTopPivot = 2.8;
+    double timePerDegreeTopPivot = 6;
 
-    double smallServoTimePerDegree = 1.6;
+    double smallServoTimePerDegree = 6;
 
     double collectTopPivotPos = 0.1;
     double deliveryTopPivot = 1;
@@ -157,18 +157,6 @@ public class Sprint_3_Auto extends LinearOpMode {
 
         deliverySlides.init(hardwareMap);
 
-        delivery.setMainPivot(0.1);
-
-        delivery.setSecondPivot(1);
-
-        delivery.RotateClaw.setPosition(0.5);
-
-        delivery.RightClaw.setPosition(clawClosed);
-
-        delivery.LeftClaw.setPosition(clawClosed);
-
-        collection.IntakeHeight.setPosition(intakeSafeInRobot);
-
         odometry.update();
 
         frontCam = hardwareMap.get(WebcamName.class, "frontCam");
@@ -179,41 +167,32 @@ public class Sprint_3_Auto extends LinearOpMode {
 
     private void dropYellowPixel(){
 
-        collection.IntakeHeight.setPosition(0.4);
+        collection.setIntakeHeight(Collection.intakeHeightState.letClawThrough);
+
+        collection.updateIntakeHeight();
 
         sleep(200);
 
         deliverySlides.DeliverySlides(250, 0.6);
 
-        while (deliverySlides.Left_Slide.isBusy()){}
+        while (deliverySlides.getCurrentposition() < 240){
 
-        timeToWait = (long) Math.max((Math.abs(delivery.getSecondPivotPosition()-deliverySecondPivot)*180)*timePerDegreeTopPivot, (Math.abs(delivery.getTopPivotPosition()-deliveryTopPivot)*180)*timePerDegreeTopPivot);
+        }
 
-        delivery.setClaws(clawClosed);
-
-        delivery.setSecondPivot(deliverySecondPivot);
-
-        delivery.setMainPivot(deliveryTopPivot);
-
-        delivery.RotateClaw.setPosition(rotateCollect);
-
-        sleep(2000);
-
-        delivery.setClaws(clawOpen);
+        delivery.setArmTargetState(Delivery.armState.delivery);
+        delivery.updateArm();
 
         sleep(1000);
 
-        timeToWait = (long) Math.max((Math.abs(delivery.getSecondPivotPosition() - collectSecondPivot) * 180) * timePerDegreeTopPivot, (Math.abs(delivery.getTopPivotPosition() - collectTopPivotPos) * 180) * timePerDegreeTopPivot);
-
-        delivery.setClaws(clawClosed);
-
-        delivery.setSecondPivot(collectSecondPivot);
-
-        delivery.setMainPivot(collectTopPivotPos);
-
-        delivery.RotateClaw.setPosition(rotateCollect);
+        delivery.setGripperState(Delivery.gripperState.rightOpen);
+        delivery.updateArm();
 
         sleep(1000);
+
+        delivery.setArmTargetState(Delivery.armState.collect);
+        delivery.updateArm();
+
+        sleep(100);
 
         deliverySlides.DeliverySlides(0, -0.6);
 

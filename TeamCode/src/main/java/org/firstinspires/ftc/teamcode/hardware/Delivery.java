@@ -14,8 +14,6 @@ import org.firstinspires.ftc.teamcode.Teleop.Sprint_Teleops.SprintThree.Sprint_3
 
 public class Delivery {
 
-    DcMotorEx Pivot;
-
     ServoImplEx secondPivotLeft;
     ServoImplEx secondPivotRight;
 
@@ -126,7 +124,6 @@ public class Delivery {
                         break;
                     default:
                 }
-
                 break;
             default:
         }
@@ -174,14 +171,6 @@ public class Delivery {
 
     public void init(HardwareMap hardwareMap){
         hmap = hardwareMap;
-
-        Pivot = hardwareMap.get(DcMotorEx.class, "pivot");
-
-        Pivot.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        Pivot.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        Pivot.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         pivotMoveTime.reset();
 
@@ -249,7 +238,7 @@ public class Delivery {
         return secondPivotLeft.getPosition();
     }
 
-    public void setClaws(double position){
+    private void setClaws(double position){
         LeftClaw.setPosition(position);
         RightClaw.setPosition(position);
     }

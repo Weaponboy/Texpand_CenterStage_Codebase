@@ -77,17 +77,6 @@ public class Sprint_3_Auto_Pathing extends LinearOpMode {
 
         deliverySlides.init(hardwareMap);
 
-        delivery.setMainPivot(0.1);
-
-        delivery.setSecondPivot(1);
-
-        delivery.RotateClaw.setPosition(0.5);
-
-        delivery.RightClaw.setPosition(clawClosed);
-        delivery.LeftClaw.setPosition(clawClosed);
-
-        collection.IntakeHeight.setPosition(intakeSafeInRobot);
-
         //build path to drop purple pixel
         firstPath.buildPath(redRightBuilder.Position.center, redRightBuilder.Section.preload);
 

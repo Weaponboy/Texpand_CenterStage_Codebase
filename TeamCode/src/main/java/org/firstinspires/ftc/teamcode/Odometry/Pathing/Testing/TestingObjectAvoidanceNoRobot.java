@@ -78,8 +78,8 @@ public class TestingObjectAvoidanceNoRobot extends OpMode {
 
         buildrobotboundary.buildRobotPosition(robotPos, Heading);
 
-        double outputVertical = getXInLine(kdTreeExample.findClosestPoint(robotPos, obstacleMap.positionList), buildrobotboundary.robotPosition, inputVertical, inputHorizontal, Heading);
-        double outputHorizontal = getYInLine(kdTreeExample.findClosestPoint(robotPos, obstacleMap.positionList), buildrobotboundary.robotPosition, inputVertical, inputHorizontal, Heading);
+        double outputVertical = getXInLine(kdTreeExample.findClosestPoint(robotPos, obstacleMap.realObstacles), buildrobotboundary.robotPosition, inputVertical, inputHorizontal, Heading);
+        double outputHorizontal = getYInLine(kdTreeExample.findClosestPoint(robotPos, obstacleMap.realObstacles), buildrobotboundary.robotPosition, inputVertical, inputHorizontal, Heading);
 
         dashboardTelemetry.addData("output vertical", outputVertical);
         dashboardTelemetry.addData("output horizontal", outputHorizontal);

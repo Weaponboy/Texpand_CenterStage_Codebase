@@ -80,8 +80,8 @@ public class testObstacleAvoidance extends OpMode {
         double inputHorizontal = gamepad1.right_stick_x;
         double inputRotation = gamepad1.left_stick_x;
 
-        double outputVertical = getXInLine(kdTreeExample.findClosestPoint(robotPos, obstacleMap.positionList), buildrobotboundary.robotPosition, inputVertical, inputHorizontal, odometry.heading);
-        double outputHorizontal = getYInLine(kdTreeExample.findClosestPoint(robotPos, obstacleMap.positionList), buildrobotboundary.robotPosition, inputVertical, inputHorizontal, odometry.heading);
+        double outputVertical = getXInLine(kdTreeExample.findClosestPoint(robotPos, obstacleMap.realObstacles), buildrobotboundary.robotPosition, inputVertical, inputHorizontal, odometry.heading);
+        double outputHorizontal = getYInLine(kdTreeExample.findClosestPoint(robotPos, obstacleMap.realObstacles), buildrobotboundary.robotPosition, inputVertical, inputHorizontal, odometry.heading);
 
         drive.RF.setPower((-inputRotation + (outputVertical - outputHorizontal)));
         drive.RB.setPower((-inputRotation + (outputVertical + outputHorizontal)));

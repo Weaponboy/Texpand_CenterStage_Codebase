@@ -154,7 +154,7 @@ public class teleopPathBuilder extends pathBuilderMain {
         buildCurveSegment(throughPosEnd, controlForDeiverySide, targetPos);
 
     }
-    
+
     private void buildTeleopRedCollect(Vector2D startPos, Vector2D targetPos){
 
         Vector2D throughPosStart = null;

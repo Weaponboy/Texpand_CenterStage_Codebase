@@ -5,12 +5,18 @@ import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.p
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.vertical;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Non_Hardware_Objects.currentGamepad1;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Non_Hardware_Objects.previousGamepad1;
+import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.UsefulMethods.getDriveToBackboardControlPoint;
+import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.UsefulMethods.getRealCoords;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
+import org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower.mecanumFollower;
+import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.Enums.TargetPoint;
+import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.teleopPathBuilder;
 import org.firstinspires.ftc.teamcode.hardware.Collection;
 import org.firstinspires.ftc.teamcode.hardware.Delivery;
 import org.firstinspires.ftc.teamcode.hardware.Delivery_Slides;
@@ -31,10 +37,22 @@ public class Sprint_3_teleop extends OpMode {
 
     Collection collection = new Collection();
 
+    teleopPathBuilder pathBuilder = new teleopPathBuilder();
+
+    Vector2D robotPos = new Vector2D();
+
+    mecanumFollower follower = new mecanumFollower();
+
     double pivotIntakePos = 0;
+
+    double targetHeading;
+
+    boolean pathing = false;
 
     @Override
     public void loop() {
+
+        robotPos.set(odometry.X, odometry.Y);
 
         //copy to gamepads
         previousGamepad1.copy(currentGamepad1);
@@ -43,16 +61,54 @@ public class Sprint_3_teleop extends OpMode {
 
         /**drive code*/
 
-        horizontal = -gamepad1.right_stick_x;
-        vertical = -gamepad1.right_stick_y;
-        pivot = gamepad1.left_stick_x;
+        //drive to backboard
+        if (gamepad1.b){
 
-        double denominator = Math.max(Math.abs(horizontal) + Math.abs(vertical) + Math.abs(pivot), 1);
+            Vector2D targetPoint = new Vector2D(getRealCoords(300), getRealCoords(270));
 
-        drive.RF.setPower((-pivot + (vertical - horizontal)) / denominator);
-        drive.RB.setPower((-pivot + (vertical + horizontal)) / denominator);
-        drive.LF.setPower((pivot + (vertical + horizontal)) / denominator);
-        drive.LB.setPower((pivot + (vertical - horizontal)) / denominator);
+            pathBuilder.buildPath(teleopPathBuilder.TeleopPath.red, robotPos, targetPoint);
+
+            targetHeading = 180;
+
+            pathing = true;
+
+            follower.setPath(pathBuilder.followablePath, pathBuilder.pathingVelocity);
+        }
+
+        //drive to collection
+        if (gamepad1.a){
+
+            Vector2D targetPoint = new Vector2D(getRealCoords(38), getRealCoords(88));
+
+            pathBuilder.buildPath(teleopPathBuilder.TeleopPath.red, robotPos, targetPoint);
+
+            targetHeading = 270;
+
+            pathing = true;
+
+            follower.setPath(pathBuilder.followablePath, pathBuilder.pathingVelocity);
+        }
+
+        if(gamepad1.right_stick_button && gamepad1.left_stick_button){
+            pathing = false;
+        }
+
+        if (pathing && gamepad1.atRest()){
+            follower.followPathTeleop(true, targetHeading, false, odometry, drive);
+        }else {
+
+            vertical = -gamepad1.right_stick_x;
+            horizontal = -gamepad1.right_stick_y;
+            pivot = gamepad1.left_stick_x;
+
+            double denominator = Math.max(Math.abs(horizontal) + Math.abs(vertical) + Math.abs(pivot), 1);
+
+            drive.RF.setPower((-pivot + (vertical - horizontal)) / denominator);
+            drive.RB.setPower((-pivot + (vertical + horizontal)) / denominator);
+            drive.LF.setPower((pivot + (vertical + horizontal)) / denominator);
+            drive.LB.setPower((pivot + (vertical - horizontal)) / denominator);
+
+        }
 
 
         /**intake code*/

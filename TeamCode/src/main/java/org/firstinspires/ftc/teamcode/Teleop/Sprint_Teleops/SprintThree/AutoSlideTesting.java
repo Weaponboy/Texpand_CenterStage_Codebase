@@ -30,11 +30,11 @@ public class AutoSlideTesting extends LinearOpMode {
             deliverySlides.SlidesBothPower(1);
         }
 
-        boolean SlideSafetyHeight = deliverySlides.Left_Slide.getCurrentPosition() > 2000;
-        boolean SlideSafetyBottom = deliverySlides.Left_Slide.getCurrentPosition() < 5;
+        boolean SlideSafetyHeight = deliverySlides.getCurrentposition() > 2000;
+        boolean SlideSafetyBottom = deliverySlides.getCurrentposition() < 5;
 
         while (!autoSlideHeight.stopSlides && !SlideSafetyHeight){
-            SlideSafetyHeight = deliverySlides.Left_Slide.getCurrentPosition() > 2000;
+            SlideSafetyHeight = deliverySlides.getCurrentposition() > 2000;
 
             deliverySlides.SlidesBothPower(1);
 
