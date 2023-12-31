@@ -33,23 +33,23 @@ public class redRightBuilder extends pathBuilderMain {
     //third pos
     Vector2D DPS1T = new Vector2D(getRealCoords(210), getRealCoords(337));
     Vector2D DPC1T = new Vector2D(getRealCoords(210), getRealCoords(208));
-    Vector2D DPE1T = new Vector2D(getRealCoords(229), getRealCoords(288));
+    Vector2D DPE1T = new Vector2D(getRealCoords(229), getRealCoords(284));
 
     /**drop yellow pixel*/
 
     //drop yellow pixel first
     Vector2D DYS1F = new Vector2D(DPE1F.getX(), DPE1F.getY());
-    Vector2D DYE1F = new Vector2D(getRealCoords(300), getRealCoords(255));
+    Vector2D DYE1F = new Vector2D(getRealCoords(290), getRealCoords(255));
 
     //drop yellow pixel second
     Vector2D DYS1S = new Vector2D(DPE1S.getX(), DPE1S.getY());
     Vector2D DYC1S = new Vector2D(getRealCoords(210), getRealCoords(325));
-    Vector2D DYE1S = new Vector2D(getRealCoords(300), getRealCoords(270));
+    Vector2D DYE1S = new Vector2D(getRealCoords(290), getRealCoords(270));
 
     //drop yellow pixel third
     Vector2D DYS1T = new Vector2D(DPE1T.getX(), DPE1T.getY());
     Vector2D DYC1T = new Vector2D(getRealCoords(233), getRealCoords(325));
-    Vector2D DYE1T = new Vector2D(getRealCoords(300), getRealCoords(286));
+    Vector2D DYE1T = new Vector2D(getRealCoords(290), getRealCoords(286));
 
     /**collect white pixels from stack, These are also for delivering the white pixels but just reversed*/
 
@@ -193,10 +193,6 @@ public class redRightBuilder extends pathBuilderMain {
 
         // drop yellow pixel
         buildCurveSegment(DYS1T, DYC1T, DYE1T);
-
-        buildCurveSegment(CS1T, CC1T, CE1T);
-
-        buildLineSegment(CS2T, CE2T);
 
     }
 

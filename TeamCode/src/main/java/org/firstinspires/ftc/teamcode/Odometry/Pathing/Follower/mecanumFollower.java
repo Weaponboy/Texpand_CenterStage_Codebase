@@ -112,6 +112,30 @@ public class mecanumFollower {
         return correctivePower;
     }
 
+    public PathingPower getCorrectivePowerAtEnd(Vector2D robotPos, Vector2D targetPos, double heading){
+
+        XCorrective = new PIDController(0.02, 0, 0.002);
+        YCorrective = new PIDController(0.03, 0, 0.002);
+
+        Vector2D error;
+        PathingPower correctivePower = new PathingPower();
+
+        error = new Vector2D( targetPos.getX() - robotPos.getX(),  targetPos.getY() - robotPos.getY());
+
+        double xDist = error.getX();
+        double yDist = error.getY();
+
+        double robotRelativeXError = yDist * Math.sin(Math.toRadians(heading)) + xDist * Math.cos(Math.toRadians(heading));
+        double robotRelativeYError = yDist * Math.cos(Math.toRadians(heading)) - xDist * Math.sin(Math.toRadians(heading));
+
+        double xPower = XCorrective.calculate(-robotRelativeXError)*1.2;
+        double yPower = YCorrective.calculate(-robotRelativeYError)*1.4;
+
+        correctivePower.set(xPower, yPower);
+
+        return correctivePower;
+    }
+
     public Vector2D getCorrectivePosition(Vector2D robotPos){
 
         Vector2D error;
@@ -338,6 +362,8 @@ public class mecanumFollower {
 
         boolean reachedTarget = false;
 
+        boolean closeToTarget = false;
+
         int counter = 0;
 
         do {
@@ -346,16 +372,18 @@ public class mecanumFollower {
 
             robotPositionVector.set(odometry.X, odometry.Y);
 
-            //use follower methods to get motor power
-            PathingPower correctivePower;
-            correctivePower = getCorrectivePowerOnPath(robotPositionVector, odometry.heading);
+            if (Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 1.2 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 1.2 && odometry.getVerticalVelocity() < 3 && odometry.getHorizontalVelocity() < 3){
+                reachedTarget = true;
+            }
 
-            Vector2D correctivePosition;
-            correctivePosition = getCorrectivePosition(robotPositionVector);
+            PathingPower correctivePower = null;
+            correctivePower = getCorrectivePowerOnPath(robotPositionVector, odometry.heading);
 
             PathingPower pathingPower;
 
-            if (!reachedTarget){
+            closeToTarget = Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 1.2 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 1.2;
+
+            if (!closeToTarget){
                 pathingPower = getPathingPower(robotPositionVector, odometry.heading);
             }else {
                 pathingPower = new PathingPower(0,0);
@@ -363,12 +391,6 @@ public class mecanumFollower {
 
             vertical = correctivePower.getVertical() + pathingPower.getVertical();
             horizontal = correctivePower.getHorizontal() + pathingPower.getHorizontal();
-
-            if (Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 1.2 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 1.2 && !reachedTarget){
-                reachedTarget = true;
-            }else {
-                reachedTarget = false;
-            }
 
             pivot = getTurnPower(targetHeading, odometry.heading);
 
@@ -385,7 +407,7 @@ public class mecanumFollower {
                 drive.LB.setPower(left_Back);
 
 
-        }while(reachedTarget);
+        }while(!reachedTarget);
 
         drive.RF.setPower(0);
         drive.RB.setPower(0);
@@ -420,6 +442,10 @@ public class mecanumFollower {
 
             PathingPower pathingPower;
 
+            if (Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 1.5 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 1.5){
+                reachedTarget = true;
+            }
+
             if (!reachedTarget){
                 pathingPower = getPathingPower(robotPositionVector, odometry.heading);
             }else {
@@ -428,12 +454,6 @@ public class mecanumFollower {
 
             vertical = correctivePower.getVertical() + pathingPower.getVertical();
             horizontal = correctivePower.getHorizontal() + pathingPower.getHorizontal();
-
-            if (Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 1.2 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 1.2 && !reachedTarget){
-                reachedTarget = true;
-            }else {
-                reachedTarget = false;
-            }
 
             pivot = getTurnPower(targetHeading, odometry.heading);
 
@@ -449,7 +469,7 @@ public class mecanumFollower {
             drive.LF.setPower(left_Front);
             drive.LB.setPower(left_Back);
 
-        }while(reachedTarget);
+        }while(!reachedTarget);
 
         drive.RF.setPower(0);
         drive.RB.setPower(0);

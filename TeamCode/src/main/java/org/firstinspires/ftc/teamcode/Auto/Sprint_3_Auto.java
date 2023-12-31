@@ -80,7 +80,11 @@ public class Sprint_3_Auto extends LinearOpMode {
 
         waitForStart();
 
+        propPos = 3;
+
         if (propPos == 1){
+
+            portal.close();
 
             firstPath.buildPath(redRightBuilder.Position.left, redRightBuilder.Section.preload);
 
@@ -94,13 +98,15 @@ public class Sprint_3_Auto extends LinearOpMode {
 
             odometry.update();
 
-            dropYellowPixel();
+//            dropYellowPixel();
 
             follower.setPath(secondPath.followablePath, secondPath.pathingVelocity);
 
             follower.followPath(180, odometry, drive);
 
         } else if (propPos == 2) {
+
+            portal.close();
 
             firstPath.buildPath(redRightBuilder.Position.center, redRightBuilder.Section.preload);
 
@@ -114,13 +120,15 @@ public class Sprint_3_Auto extends LinearOpMode {
 
             odometry.update();
 
-            dropYellowPixel();
+//            dropYellowPixel();
 
             follower.setPath(secondPath.followablePath, secondPath.pathingVelocity);
 
             follower.followPath(180, odometry, drive);
 
         } else if (propPos == 3) {
+
+            portal.close();
 
             firstPath.buildPath(redRightBuilder.Position.right, redRightBuilder.Section.preload);
 
@@ -134,12 +142,20 @@ public class Sprint_3_Auto extends LinearOpMode {
 
             odometry.update();
 
-            dropYellowPixel();
+//            dropYellowPixel();
 
             follower.setPath(secondPath.followablePath, secondPath.pathingVelocity);
 
             follower.followPath(180, odometry, drive);
 
+        }
+
+        while (opModeIsActive()){
+            odometry.update();
+            telemetry.addData("x", odometry.X);
+            telemetry.addData("y", odometry.Y);
+            telemetry.addData("heading", odometry.heading);
+            telemetry.update();
         }
 
     }
@@ -159,7 +175,7 @@ public class Sprint_3_Auto extends LinearOpMode {
 
         odometry.update();
 
-        frontCam = hardwareMap.get(WebcamName.class, "frontCam");
+        frontCam = hardwareMap.get(WebcamName.class, "frontcam");
 
         portal = VisionPortal.easyCreateWithDefaults(frontCam, propDetectionByAmount);
 
