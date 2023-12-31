@@ -37,6 +37,8 @@ public class Sprint_3_Auto extends LinearOpMode {
 
     redRightBuilder secondPath = new redRightBuilder();
 
+    redRightBuilder thridPath = new redRightBuilder();
+
     mecanumFollower follower = new mecanumFollower();
 
     Delivery delivery = new Delivery();
@@ -134,28 +136,38 @@ public class Sprint_3_Auto extends LinearOpMode {
 
             secondPath.buildPath(redRightBuilder.Position.right, redRightBuilder.Section.collect);
 
+            thridPath.buildPath(redRightBuilder.Position.right, redRightBuilder.Section.deliver);
+
             follower.setPath(firstPath.followablePath, firstPath.pathingVelocity);
 
             //change target heading after dropping the purple pixel
             Vector2D point;
-            follower.followPath(135, odometry, drive, point = new Vector2D(238, 302), 180);
+            follower.followPath(135, odometry, drive, point = new Vector2D(250, 302), 180);
 
             odometry.update();
 
-//            dropYellowPixel();
+            dropYellowPixel();
 
             follower.setPath(secondPath.followablePath, secondPath.pathingVelocity);
+
+            follower.followPath(180, odometry, drive);
+
+            sleep(1000);
+
+            follower.setPath(thridPath.followablePath, thridPath.pathingVelocity);
 
             follower.followPath(180, odometry, drive);
 
         }
 
         while (opModeIsActive()){
+
             odometry.update();
             telemetry.addData("x", odometry.X);
             telemetry.addData("y", odometry.Y);
             telemetry.addData("heading", odometry.heading);
             telemetry.update();
+
         }
 
     }
@@ -184,33 +196,35 @@ public class Sprint_3_Auto extends LinearOpMode {
     private void dropYellowPixel(){
 
         collection.setIntakeHeight(Collection.intakeHeightState.letClawThrough);
-
         collection.updateIntakeHeight();
 
         sleep(200);
 
-        deliverySlides.DeliverySlides(250, 0.6);
+        deliverySlides.DeliverySlides(500, 0.6);
 
-        while (deliverySlides.getCurrentposition() < 240){
+        while (deliverySlides.getCurrentposition() < 500){}
 
-        }
+        delivery.setArmTargetState(Delivery.armState.deliverAuto);
+        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry);
 
-        delivery.setArmTargetState(Delivery.armState.delivery);
-        delivery.updateArm();
+        sleep(1500);
 
-        sleep(1000);
+        delivery.setGripperState(Delivery.targetGripperState.openRight);
+        delivery.updateGrippers();
 
-        delivery.setGripperState(Delivery.gripperState.rightOpen);
-        delivery.updateArm();
-
-        sleep(1000);
+        sleep(1500);
 
         delivery.setArmTargetState(Delivery.armState.collect);
-        delivery.updateArm();
+        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry);
 
         sleep(100);
 
         deliverySlides.DeliverySlides(0, -0.6);
+
+        sleep(500);
+
+        collection.setIntakeHeight(Collection.intakeHeightState.stowed);
+        collection.updateIntakeHeight();
 
     }
 

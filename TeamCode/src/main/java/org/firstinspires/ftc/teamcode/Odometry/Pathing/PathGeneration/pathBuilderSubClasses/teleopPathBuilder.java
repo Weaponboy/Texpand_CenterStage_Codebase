@@ -217,7 +217,10 @@ public class teleopPathBuilder extends pathBuilderMain {
             throughPosEnd = T6End;
         }
 
-        Vector2D controlForCollectSide = new Vector2D(startPos.getX() - ((startPos.getX() - 120)/2)-Math.abs((startPos.getY() - throughPosStart.getY())/2), throughPosStart.getY());
+        Vector2D controlForCollectSide = null;
+        if (throughPosStart != null) {
+            controlForCollectSide = new Vector2D(startPos.getX() - ((startPos.getX() - 120)/2)-Math.abs((startPos.getY() - throughPosStart.getY())/2), throughPosStart.getY());
+        }
 
         if (controlForCollectSide.getX() < 20){
             controlForCollectSide.setX(20);

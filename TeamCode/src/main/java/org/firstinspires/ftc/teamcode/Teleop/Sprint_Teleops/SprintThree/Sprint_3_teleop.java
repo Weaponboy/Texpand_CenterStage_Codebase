@@ -4,18 +4,17 @@ import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.h
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.pivot;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.vertical;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Non_Hardware_Objects.currentGamepad1;
+import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Non_Hardware_Objects.currentGamepad2;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Non_Hardware_Objects.previousGamepad1;
-import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.UsefulMethods.getDriveToBackboardControlPoint;
+import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Non_Hardware_Objects.previousGamepad2;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.UsefulMethods.getRealCoords;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower.mecanumFollower;
-import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.Enums.TargetPoint;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.teleopPathBuilder;
 import org.firstinspires.ftc.teamcode.hardware.Collection;
 import org.firstinspires.ftc.teamcode.hardware.Delivery;
@@ -59,6 +58,10 @@ public class Sprint_3_teleop extends OpMode {
 
         currentGamepad1.copy(gamepad1);
 
+        previousGamepad2.copy(currentGamepad2);
+
+        currentGamepad2.copy(gamepad2);
+
         /**drive code*/
 
         //drive to backboard
@@ -75,19 +78,19 @@ public class Sprint_3_teleop extends OpMode {
             follower.setPath(pathBuilder.followablePath, pathBuilder.pathingVelocity);
         }
 
-        //drive to collection
-        if (gamepad1.a){
-
-            Vector2D targetPoint = new Vector2D(getRealCoords(38), getRealCoords(88));
-
-            pathBuilder.buildPath(teleopPathBuilder.TeleopPath.red, robotPos, targetPoint);
-
-            targetHeading = 270;
-
-            pathing = true;
-
-            follower.setPath(pathBuilder.followablePath, pathBuilder.pathingVelocity);
-        }
+//        //drive to collection
+//        if (gamepad1.a){
+//
+//            Vector2D targetPoint = new Vector2D(getRealCoords(38), getRealCoords(88));
+//
+//            pathBuilder.buildPath(teleopPathBuilder.TeleopPath.red, robotPos, targetPoint);
+//
+//            targetHeading = 270;
+//
+//            pathing = true;
+//
+//            follower.setPath(pathBuilder.followablePath, pathBuilder.pathingVelocity);
+//        }
 
         if(gamepad1.right_stick_button && gamepad1.left_stick_button){
             pathing = false;
@@ -97,8 +100,8 @@ public class Sprint_3_teleop extends OpMode {
             follower.followPathTeleop(true, targetHeading, false, odometry, drive);
         }else {
 
-            vertical = -gamepad1.right_stick_x;
-            horizontal = -gamepad1.right_stick_y;
+            vertical = -gamepad1.right_stick_y;
+            horizontal = -gamepad1.right_stick_x;
             pivot = gamepad1.left_stick_x;
 
             double denominator = Math.max(Math.abs(horizontal) + Math.abs(vertical) + Math.abs(pivot), 1);
@@ -170,15 +173,42 @@ public class Sprint_3_teleop extends OpMode {
             delivery.setArmTargetState(Delivery.armState.collect);
         }
 
-
         /**gripper code*/
 
         if (gamepad1.start) {
-            delivery.setGripperState(Delivery.gripperState.bothClosed);
+            delivery.setGripperState(Delivery.targetGripperState.closeBoth);
         }
 
         if (gamepad1.back) {
-            delivery.setGripperState(Delivery.gripperState.bothOpen);
+            delivery.setGripperState(Delivery.targetGripperState.openBoth);
+        }
+
+        switch (delivery.getLeftgripperstate()){
+            case closed:
+                if (currentGamepad2.start && !previousGamepad2.start) {
+                    delivery.setGripperState(Delivery.targetGripperState.openLeft);
+                }
+                break;
+            case open:
+                if (currentGamepad2.start && !previousGamepad2.start) {
+                    delivery.setGripperState(Delivery.targetGripperState.closeLeft);
+                }
+                break;
+            default:
+        }
+
+        switch (delivery.getRightgripperstate()){
+            case closed:
+                if (currentGamepad2.back && !previousGamepad2.back) {
+                    delivery.setGripperState(Delivery.targetGripperState.openRight);
+                }
+                break;
+            case open:
+                if (currentGamepad2.back && !previousGamepad2.back) {
+                    delivery.setGripperState(Delivery.targetGripperState.closeRight);
+                }
+                break;
+            default:
         }
 
         //update collection state
@@ -186,8 +216,13 @@ public class Sprint_3_teleop extends OpMode {
         collection.updateIntakeState();
 
         //update delivery state
-        delivery.updateArm();
+        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry);
         delivery.updateGrippers();
+
+        telemetry.addData("arm state", delivery.getArmState());
+        telemetry.addData("slide position", deliverySlides.getCurrentposition());
+        telemetry.addData("main pivot position", delivery.getMainPivotPosition());
+        telemetry.update();
 
 
     }
@@ -203,6 +238,9 @@ public class Sprint_3_teleop extends OpMode {
 
         previousGamepad1 = new Gamepad();
         currentGamepad1 = new Gamepad();
+
+        previousGamepad2 = new Gamepad();
+        currentGamepad2 = new Gamepad();
 
         collection.setIntakeHeight(Collection.intakeHeightState.collect);
     }

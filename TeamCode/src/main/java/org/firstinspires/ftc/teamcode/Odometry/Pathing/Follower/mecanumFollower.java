@@ -381,7 +381,7 @@ public class mecanumFollower {
 
             PathingPower pathingPower;
 
-            closeToTarget = Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 1.2 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 1.2;
+            closeToTarget = Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 3 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 3;
 
             if (!closeToTarget){
                 pathingPower = getPathingPower(robotPositionVector, odometry.heading);
@@ -426,27 +426,31 @@ public class mecanumFollower {
 
         boolean reachedTarget = false;
 
+        boolean closeToTarget = false;
+
         do {
 
             odometry.update();
 
             robotPositionVector.set(odometry.X, odometry.Y);
 
-            if (Math.abs(pointForHeadingChange.getX() - odometry.X) < 8 && Math.abs(pointForHeadingChange.getY() - odometry.Y) < 8){
+            if (Math.abs(pointForHeadingChange.getX() - odometry.X) < 10 && Math.abs(pointForHeadingChange.getY() - odometry.Y) < 10){
                 targetHeading = secondHeading;
             }
 
             //use follower methods to get motor power
-            PathingPower correctivePower;
+            if (Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 1.2 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 1.2 && odometry.getVerticalVelocity() < 3 && odometry.getHorizontalVelocity() < 3){
+                reachedTarget = true;
+            }
+
+            PathingPower correctivePower = null;
             correctivePower = getCorrectivePowerOnPath(robotPositionVector, odometry.heading);
 
             PathingPower pathingPower;
 
-            if (Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 1.5 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 1.5){
-                reachedTarget = true;
-            }
+            closeToTarget = Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 3 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 3;
 
-            if (!reachedTarget){
+            if (!closeToTarget){
                 pathingPower = getPathingPower(robotPositionVector, odometry.heading);
             }else {
                 pathingPower = new PathingPower(0,0);

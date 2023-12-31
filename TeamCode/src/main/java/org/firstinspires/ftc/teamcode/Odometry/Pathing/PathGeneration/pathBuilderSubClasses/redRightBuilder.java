@@ -33,23 +33,23 @@ public class redRightBuilder extends pathBuilderMain {
     //third pos
     Vector2D DPS1T = new Vector2D(getRealCoords(210), getRealCoords(337));
     Vector2D DPC1T = new Vector2D(getRealCoords(210), getRealCoords(208));
-    Vector2D DPE1T = new Vector2D(getRealCoords(229), getRealCoords(284));
+    Vector2D DPE1T = new Vector2D(getRealCoords(210), getRealCoords(320));
 
     /**drop yellow pixel*/
 
     //drop yellow pixel first
     Vector2D DYS1F = new Vector2D(DPE1F.getX(), DPE1F.getY());
-    Vector2D DYE1F = new Vector2D(getRealCoords(290), getRealCoords(255));
+    Vector2D DYE1F = new Vector2D(getRealCoords(294), getRealCoords(255));
 
     //drop yellow pixel second
     Vector2D DYS1S = new Vector2D(DPE1S.getX(), DPE1S.getY());
     Vector2D DYC1S = new Vector2D(getRealCoords(210), getRealCoords(325));
-    Vector2D DYE1S = new Vector2D(getRealCoords(290), getRealCoords(270));
+    Vector2D DYE1S = new Vector2D(getRealCoords(294), getRealCoords(270));
 
     //drop yellow pixel third
     Vector2D DYS1T = new Vector2D(DPE1T.getX(), DPE1T.getY());
     Vector2D DYC1T = new Vector2D(getRealCoords(233), getRealCoords(325));
-    Vector2D DYE1T = new Vector2D(getRealCoords(290), getRealCoords(286));
+    Vector2D DYE1T = new Vector2D(getRealCoords(294), getRealCoords(290));
 
     /**collect white pixels from stack, These are also for delivering the white pixels but just reversed*/
 
@@ -60,7 +60,7 @@ public class redRightBuilder extends pathBuilderMain {
 
     //first segment
     Vector2D CS2F = new Vector2D(getRealCoords(180), getRealCoords(210));
-    Vector2D CE2F = new Vector2D(getRealCoords(33), getRealCoords(210));
+    Vector2D CE2F = new Vector2D(getRealCoords(40), getRealCoords(210));
 
     /*second position*/
     Vector2D CS1S = new Vector2D(DYE1S.getX(), DYE1S.getY());
@@ -69,7 +69,7 @@ public class redRightBuilder extends pathBuilderMain {
 
     //second segment
     Vector2D CS2S = new Vector2D(getRealCoords(180), getRealCoords(210));
-    Vector2D CE2S = new Vector2D(getRealCoords(33), getRealCoords(210));
+    Vector2D CE2S = new Vector2D(getRealCoords(40), getRealCoords(210));
 
     /*third position*/
     Vector2D CS1T = new Vector2D(DYE1T.getX(), DYE1T.getY());
@@ -78,7 +78,7 @@ public class redRightBuilder extends pathBuilderMain {
 
     //third segment
     Vector2D CS2T = new Vector2D(getRealCoords(180), getRealCoords(210));
-    Vector2D CE2T = new Vector2D(getRealCoords(33), getRealCoords(210));
+    Vector2D CE2T = new Vector2D(getRealCoords(40), getRealCoords(210));
 
     public enum Position {
         left,
@@ -129,7 +129,7 @@ public class redRightBuilder extends pathBuilderMain {
                         firstPositionPreload();
                         break;
                     case right:
-                        thirdPositionPreload();
+                        thirdPositionDeliver();
                         break;
                     case center:
                         secondPositionPreload();
@@ -202,6 +202,14 @@ public class redRightBuilder extends pathBuilderMain {
         buildCurveSegment(CS1T, CC1T, CE1T);
 
         buildLineSegment(CS2T, CE2T);
+
+    }
+
+    private void thirdPositionDeliver(){
+
+        buildLineSegment(CE2T, CS2T);
+
+        buildCurveSegment(CE1T, CC1T, CS1S);
 
     }
 
