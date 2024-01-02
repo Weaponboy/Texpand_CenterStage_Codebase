@@ -19,16 +19,16 @@ public class Calibrate_Trackwidth extends OpMode {
 
     Telemetry dashboardTelemetry = dashboard.getTelemetry();
 
-    public double trackwidth = 36;
-    public double centerPodOffset = 17.5;
+    public double trackwidth = 35.2;
+    public double centerPodOffset = 15;
     public double wheelRadius = 1.75;
     public double podTicks = 8192;
 
     public double cm_per_tick = 2.0 * Math.PI * wheelRadius / podTicks;
 
-    public int currentRightPod = -20654;
-    public int currentLeftPod = 21654;
-    public int currentCenterPod = -19992;
+    public int currentRightPod = -21494;
+    public int currentLeftPod = 19695;
+    public int currentCenterPod = -17381;
 
     public int oldRightPod = 0;
     public int oldLeftPod = 0;

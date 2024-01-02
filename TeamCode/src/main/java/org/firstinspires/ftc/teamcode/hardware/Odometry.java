@@ -39,8 +39,8 @@ public class Odometry {
 
     HardwareMap hardwareMap;
 
-    public double trackwidth = 36;
-    public double centerPodOffset = 17;
+    public double trackwidth = 35.2;
+    public double centerPodOffset = 15;
     public double wheelRadius = 1.75;
     public double podTicks = 8192;
 
@@ -276,18 +276,14 @@ public class Odometry {
         strafePID.setPIDF(strafeP, 0, strafeD, strafeF);
         PivotPID.setPIDF(rotationP, 0, rotationD, rotationF);
 
+        boolean targetReached;
+
         do {
 
             update();
 
             Xdist = (targetX - X);
             Ydist = (targetY - Y);
-
-            if (botHeading <= 0) {
-                ConvertedHeading = (360 + botHeading);
-            } else {
-                ConvertedHeading = (0 + botHeading);
-            }
 
             rotdist = (targetRot - ConvertedHeading);
 
@@ -297,8 +293,8 @@ public class Odometry {
                 rotdist = (rotdist - 360);
             }
 
-            RRXdist = Ydist * Math.sin(Math.toRadians(ConvertedHeading)) + Xdist * Math.cos(Math.toRadians(ConvertedHeading));
-            RRYdist = Ydist * Math.cos(Math.toRadians(ConvertedHeading)) - Xdist * Math.sin(Math.toRadians(ConvertedHeading));
+            RRXdist = Ydist * Math.sin(Math.toRadians(heading)) + Xdist * Math.cos(Math.toRadians(heading));
+            RRYdist = Ydist * Math.cos(Math.toRadians(heading)) - Xdist * Math.sin(Math.toRadians(heading));
 
             Vertical = drivePID.calculate(-RRXdist);
             Horizontal = strafePID.calculate(-RRYdist);
@@ -322,6 +318,60 @@ public class Odometry {
         drive.RB.setPower(0);
         drive.LF.setPower(0);
         drive.LB.setPower(0);
+
+    }
+
+    public boolean Odo_Drive_Teleop(double targetX, double targetY, double targetRot) {
+
+        double driveP = 0.1;
+        double driveD = 0.007;
+        double driveF = 0;
+
+        double strafeP = 0.1;
+        double strafeD = 0.005;
+        double strafeF = 0;
+
+        double rotationP = 0.04;
+        double rotationD = 0.001;
+        double rotationF = 0;
+
+        drivePID.setPIDF(driveP, 0, driveD, driveF);
+        strafePID.setPIDF(strafeP, 0, strafeD, strafeF);
+        PivotPID.setPIDF(rotationP, 0, rotationD, rotationF);
+
+        update();
+
+        Xdist = (targetX - X);
+        Ydist = (targetY - Y);
+
+        rotdist = (targetRot - ConvertedHeading);
+
+        if (rotdist < -180) {
+            rotdist = (360 + rotdist);
+        } else if (rotdist > 360) {
+            rotdist = (rotdist - 360);
+        }
+
+        RRXdist = Ydist * Math.sin(Math.toRadians(heading)) + Xdist * Math.cos(Math.toRadians(heading));
+        RRYdist = Ydist * Math.cos(Math.toRadians(heading)) - Xdist * Math.sin(Math.toRadians(heading));
+
+        Vertical = drivePID.calculate(-RRXdist);
+        Horizontal = strafePID.calculate(-RRYdist);
+        Pivot = PivotPID.calculate(-rotdist);
+
+        double denominator = Math.max(Math.abs(Vertical) + Math.abs(Horizontal) + Math.abs(Pivot), 1);
+
+        double left_Front = (Vertical + Horizontal + Pivot) / denominator;
+        double left_Back = (Vertical - Horizontal + Pivot) / denominator;
+        double right_Front = (Vertical - Horizontal - Pivot) / denominator;
+        double right_Back = (Vertical + Horizontal - Pivot) / denominator;
+
+        drive.RF.setPower(right_Front);
+        drive.RB.setPower(right_Back);
+        drive.LF.setPower(left_Front);
+        drive.LB.setPower(left_Back);
+
+        return Math.abs(Xdist) > 1.2 || Math.abs(Ydist) > 1.2 || Math.abs(rotdist) > 1.2;
 
     }
 

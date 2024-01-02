@@ -1,11 +1,22 @@
 package org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance;
 
+import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.scaleFactor;
+
+import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathingUtility.PathingPower;
+
 import java.util.ArrayList;
 
 
 public class ObstacleMap {
 
-    public ArrayList<Vector2D> positionList = new ArrayList<>();
+    public ArrayList<Vector2D> realObstacles = new ArrayList<>();
+
+    public ArrayList<Vector2D> InnerRing = new ArrayList<>();
+
+    public ArrayList<PathingPower> InnerRingVectors = new ArrayList<>();
+
+    public ArrayList<Vector2D> oneObstacle = new ArrayList<>();
+    public ArrayList<Vector2D> oneObstacleOuter = new ArrayList<>();
 
     public ArrayList<Vector2D> robotPosition = new ArrayList<>();
 
@@ -19,7 +30,26 @@ public class ObstacleMap {
         Vector2D closest = null;
         double minDistance = Double.MAX_VALUE;
 
-        for (Vector2D pos : positionList) {
+        for (Vector2D pos : realObstacles) {
+            double distance = Math.sqrt(
+                    Math.pow(currentPos.getX() - pos.getX(), 2) +
+                            Math.pow(currentPos.getY() - pos.getY(), 2)
+            );
+
+            if (distance < minDistance) {
+                minDistance = distance;
+                closest = pos;
+            }
+        }
+
+        return closest;
+    }
+
+    public Vector2D findClosestPositionInner(Vector2D currentPos) {
+        Vector2D closest = null;
+        double minDistance = Double.MAX_VALUE;
+
+        for (Vector2D pos : oneObstacle) {
             double distance = Math.sqrt(
                     Math.pow(currentPos.getX() - pos.getX(), 2) +
                             Math.pow(currentPos.getY() - pos.getY(), 2)
@@ -44,7 +74,7 @@ public class ObstacleMap {
         double minDistance = Double.MAX_VALUE;
 
         for (Vector2D pos1 : robotPosition) {
-            for (Vector2D pos2 : positionList) {
+            for (Vector2D pos2 : realObstacles) {
                 double distance = Math.abs(pos1.getX() - pos2.getX());
 
                 if (distance < minDistance) {
@@ -99,7 +129,7 @@ public class ObstacleMap {
         double minDistance = Double.MAX_VALUE;
 
         for (Vector2D pos1 : robotPosition) {
-            for (Vector2D pos2 : positionList) {
+            for (Vector2D pos2 : realObstacles) {
                 double distance = Math.abs(pos1.getX() - pos2.getX());
 
                 if (distance < minDistance) {
@@ -124,7 +154,7 @@ public class ObstacleMap {
         double minDistance = Double.MAX_VALUE;
 
         for (Vector2D pos1 : robotPosition) {
-            for (Vector2D pos2 : positionList) {
+            for (Vector2D pos2 : realObstacles) {
                 double distance = Math.abs(pos1.getY() - pos2.getY());
 
                 if (distance < minDistance) {
@@ -142,22 +172,50 @@ public class ObstacleMap {
     public void SetMap(){
 
         // wall blue truss
-        Rectangle(117, 0, 183, 5);
+        Rectangle(118, 0, 182, 5);
 
         // middle blue truss
-        Rectangle(117, 57, 183, 63);
+        Rectangle(118, 57, 182, 63);
 
         // door blue truss
-        Rectangle(117, 117, 183, 123);
+        Rectangle(118, 117, 182, 123);
 
         // door red truss
-        Rectangle(117, 241, 183, 247);
+        Rectangle(118, 241, 182, 247);
 
         // middle red truss
-        Rectangle(117, 301, 183, 307);
+        Rectangle(118, 301, 182, 307);
 
         // wall red truss
-        Rectangle(117, 360, 183, 365);
+        Rectangle(118, 360, 182, 365);
+
+    }
+
+    public void SetMapVectorBased(){
+
+        // wall blue truss
+        RectangleOne(118, 0, 182, 4);
+        RectangleInnerRing(97, 0, 203, 25);
+
+        // middle blue truss
+        RectangleOne(118, 58, 182, 62);
+        RectangleInnerRing(97, 37, 203, 83);
+
+        // door blue truss
+        RectangleOne(118, 118, 182, 122);
+        RectangleInnerRing(97, 97, 203, 143);
+
+        // door red truss
+        RectangleOne(118, 238, 182, 242);
+        RectangleInnerRing(118, 217, 182, 221);
+
+        // middle red truss
+        RectangleOne(118, 298, 182, 302);
+        RectangleInnerRing(118, 277, 182, 323);
+
+        // wall red truss
+        RectangleOne(118, 356, 182, 360);
+        RectangleInnerRing(118, 335, 182, 360);
 
     }
 
@@ -167,7 +225,7 @@ public class ObstacleMap {
         double yPosition = yStart;
 
         for (int i =0; i < ((xEnd - xStart)*2); i++){
-            positionList.add(new Vector2D(xPosition, yPosition));
+            realObstacles.add(new Vector2D(xPosition, yPosition));
             xPosition += 2;
             if (xPosition == xEnd){
                 xPosition = xStart;
@@ -179,12 +237,99 @@ public class ObstacleMap {
         yPosition = yStart;
 
         for (int i =0; i < ((yEnd - yStart)*2); i++){
-            positionList.add(new Vector2D(xPosition, yPosition));
+            realObstacles.add(new Vector2D(xPosition, yPosition));
             yPosition += 2;
             if (yPosition == yEnd){
                 yPosition = yStart;
                 xPosition = xEnd;
             }
+        }
+
+    }
+
+    public void RectangleOne(double xStart, double yStart, double xEnd, double yEnd){
+
+        oneObstacle.clear();
+
+        double xPosition = xStart;
+        double yPosition = yStart;
+
+        for (int i =0; i < ((xEnd - xStart)*2); i++){
+            oneObstacle.add(new Vector2D(xPosition, yPosition));
+            xPosition += 2;
+            if (xPosition == xEnd){
+                xPosition = xStart;
+                yPosition = yEnd;
+            }
+        }
+
+        xPosition = xStart;
+        yPosition = yStart;
+
+        for (int i =0; i < ((yEnd - yStart)*2); i++){
+            oneObstacle.add(new Vector2D(xPosition, yPosition));
+            yPosition += 2;
+            if (yPosition == yEnd){
+                yPosition = yStart;
+                xPosition = xEnd;
+            }
+        }
+
+    }
+
+    public void RectangleInnerRing(double xStart, double yStart, double xEnd, double yEnd){
+
+        double xPosition = xStart;
+        double yPosition = yStart;
+
+        for (int i =0; i < ((xEnd - xStart)*2); i++){
+            oneObstacleOuter.add(new Vector2D(xPosition, yPosition));
+            xPosition += 2;
+            if (xPosition == xEnd){
+                xPosition = xStart;
+                yPosition = yEnd;
+            }
+        }
+
+        xPosition = xStart;
+        yPosition = yStart;
+
+        for (int i =0; i < ((yEnd - yStart)*2); i++){
+            oneObstacleOuter.add(new Vector2D(xPosition, yPosition));
+            yPosition += 2;
+            if (yPosition == yEnd){
+                yPosition = yStart;
+                xPosition = xEnd;
+            }
+        }
+
+    }
+
+    public void findVectors(){
+
+        Vector2D positionToAdd;
+        PathingPower powerToAdd;
+
+        for (int i = 0; i < oneObstacleOuter.size(); i++){
+
+            Vector2D currentPos = oneObstacleOuter.get(i);
+
+            Vector2D closestInside = findClosestPositionInner(currentPos);
+
+            double dx = currentPos.getX() - closestInside.getX();
+            double dy = currentPos.getY() - closestInside.getY();
+
+            if (dy == 0){
+                double dxfactor = 1/dx;
+                powerToAdd = new PathingPower((dxfactor*dx)*scaleFactor, 0);
+            } else if (dx == 0) {
+
+            } else {
+
+            }
+
+            double factor = 1/dx;
+
         }
 
     }

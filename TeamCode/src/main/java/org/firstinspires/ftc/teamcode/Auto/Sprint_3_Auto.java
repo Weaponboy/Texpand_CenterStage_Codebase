@@ -37,6 +37,8 @@ public class Sprint_3_Auto extends LinearOpMode {
 
     redRightBuilder secondPath = new redRightBuilder();
 
+    redRightBuilder thridPath = new redRightBuilder();
+
     mecanumFollower follower = new mecanumFollower();
 
     Delivery delivery = new Delivery();
@@ -50,9 +52,9 @@ public class Sprint_3_Auto extends LinearOpMode {
     boolean SlideSafetyBottom = false;
 
     //in ms
-    double timePerDegreeTopPivot = 2.8;
+    double timePerDegreeTopPivot = 6;
 
-    double smallServoTimePerDegree = 1.6;
+    double smallServoTimePerDegree = 6;
 
     double collectTopPivotPos = 0.1;
     double deliveryTopPivot = 1;
@@ -80,7 +82,11 @@ public class Sprint_3_Auto extends LinearOpMode {
 
         waitForStart();
 
+        propPos = 3;
+
         if (propPos == 1){
+
+            portal.close();
 
             firstPath.buildPath(redRightBuilder.Position.left, redRightBuilder.Section.preload);
 
@@ -94,13 +100,15 @@ public class Sprint_3_Auto extends LinearOpMode {
 
             odometry.update();
 
-            dropYellowPixel();
+//            dropYellowPixel();
 
             follower.setPath(secondPath.followablePath, secondPath.pathingVelocity);
 
             follower.followPath(180, odometry, drive);
 
         } else if (propPos == 2) {
+
+            portal.close();
 
             firstPath.buildPath(redRightBuilder.Position.center, redRightBuilder.Section.preload);
 
@@ -114,7 +122,7 @@ public class Sprint_3_Auto extends LinearOpMode {
 
             odometry.update();
 
-            dropYellowPixel();
+//            dropYellowPixel();
 
             follower.setPath(secondPath.followablePath, secondPath.pathingVelocity);
 
@@ -122,15 +130,19 @@ public class Sprint_3_Auto extends LinearOpMode {
 
         } else if (propPos == 3) {
 
+            portal.close();
+
             firstPath.buildPath(redRightBuilder.Position.right, redRightBuilder.Section.preload);
 
             secondPath.buildPath(redRightBuilder.Position.right, redRightBuilder.Section.collect);
+
+            thridPath.buildPath(redRightBuilder.Position.right, redRightBuilder.Section.deliver);
 
             follower.setPath(firstPath.followablePath, firstPath.pathingVelocity);
 
             //change target heading after dropping the purple pixel
             Vector2D point;
-            follower.followPath(135, odometry, drive, point = new Vector2D(238, 302), 180);
+            follower.followPath(130, odometry, drive, point = new Vector2D(250, 302), 180);
 
             odometry.update();
 
@@ -140,7 +152,48 @@ public class Sprint_3_Auto extends LinearOpMode {
 
             follower.followPath(180, odometry, drive);
 
+            delivery.setGripperState(Delivery.targetGripperState.openBoth);
+            delivery.updateGrippers();
+
+            collection.setIntakeHeight(Collection.intakeHeightState.fifthPixel);
+            collection.updateIntakeHeight();
+
+            collection.setState(Collection.intakePowerState.on);
+            collection.updateIntakeState();
+
+            sleep(1500);
+
+            collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
+            collection.updateIntakeHeight();
+
+            sleep(1500);
+
+            collection.setState(Collection.intakePowerState.off);
+            collection.updateIntakeState();
+
+            delivery.setGripperState(Delivery.targetGripperState.closeBoth);
+            delivery.updateGrippers();
+
+            sleep(500);
+
+            collection.setState(Collection.intakePowerState.reversed);
+            collection.updateIntakeState();
+
+            sleep(200);
+
+            collection.setState(Collection.intakePowerState.off);
+            collection.updateIntakeState();
+
+            follower.setPath(thridPath.followablePath, thridPath.pathingVelocity);
+
+            follower.followPath(180, odometry, drive);
+
+            dropWhitePixels();
+
+            sleep(200);
+
         }
+
 
     }
 
@@ -157,21 +210,9 @@ public class Sprint_3_Auto extends LinearOpMode {
 
         deliverySlides.init(hardwareMap);
 
-        delivery.setMainPivot(0.1);
-
-        delivery.setSecondPivot(1);
-
-        delivery.RotateClaw.setPosition(0.5);
-
-        delivery.RightClaw.setPosition(clawClosed);
-
-        delivery.LeftClaw.setPosition(clawClosed);
-
-        collection.IntakeHeight.setPosition(intakeSafeInRobot);
-
         odometry.update();
 
-        frontCam = hardwareMap.get(WebcamName.class, "frontCam");
+        frontCam = hardwareMap.get(WebcamName.class, "frontcam");
 
         portal = VisionPortal.easyCreateWithDefaults(frontCam, propDetectionByAmount);
 
@@ -179,43 +220,71 @@ public class Sprint_3_Auto extends LinearOpMode {
 
     private void dropYellowPixel(){
 
-        collection.IntakeHeight.setPosition(0.4);
+        collection.setIntakeHeight(Collection.intakeHeightState.letClawThrough);
+        collection.updateIntakeHeight();
 
         sleep(200);
 
-        deliverySlides.DeliverySlides(250, 0.6);
+        deliverySlides.DeliverySlides(500, 0.6);
 
-        while (deliverySlides.Left_Slide.isBusy()){}
+        while (deliverySlides.getCurrentposition() < 500){}
 
-        timeToWait = (long) Math.max((Math.abs(delivery.getSecondPivotPosition()-deliverySecondPivot)*180)*timePerDegreeTopPivot, (Math.abs(delivery.getTopPivotPosition()-deliveryTopPivot)*180)*timePerDegreeTopPivot);
+        delivery.setArmTargetState(Delivery.armState.deliverAuto);
+        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
 
-        delivery.setClaws(clawClosed);
+        sleep(1500);
 
-        delivery.setSecondPivot(deliverySecondPivot);
-
-        delivery.setMainPivot(deliveryTopPivot);
-
-        delivery.RotateClaw.setPosition(rotateCollect);
-
-        sleep(2000);
-
-        delivery.setClaws(clawOpen);
+        delivery.setGripperState(Delivery.targetGripperState.openRight);
+        delivery.updateGrippers();
 
         sleep(1000);
 
-        timeToWait = (long) Math.max((Math.abs(delivery.getSecondPivotPosition() - collectSecondPivot) * 180) * timePerDegreeTopPivot, (Math.abs(delivery.getTopPivotPosition() - collectTopPivotPos) * 180) * timePerDegreeTopPivot);
+        delivery.setArmTargetState(Delivery.armState.collect);
+        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
 
-        delivery.setClaws(clawClosed);
-
-        delivery.setSecondPivot(collectSecondPivot);
-
-        delivery.setMainPivot(collectTopPivotPos);
-
-        delivery.RotateClaw.setPosition(rotateCollect);
-
-        sleep(1000);
+        sleep(100);
 
         deliverySlides.DeliverySlides(0, -0.6);
+
+        sleep(500);
+
+        collection.setIntakeHeight(Collection.intakeHeightState.stowed);
+        collection.updateIntakeHeight();
+
+    }
+
+    private void dropWhitePixels(){
+
+        collection.setIntakeHeight(Collection.intakeHeightState.letClawThrough);
+        collection.updateIntakeHeight();
+
+        sleep(200);
+
+        deliverySlides.DeliverySlides(700, 0.6);
+
+        while (deliverySlides.getCurrentposition() < 680){}
+
+        delivery.setArmTargetState(Delivery.armState.deliverAuto);
+        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
+
+        sleep(1500);
+
+        delivery.setGripperState(Delivery.targetGripperState.openBoth);
+        delivery.updateGrippers();
+
+        sleep(1000);
+
+        delivery.setArmTargetState(Delivery.armState.collect);
+        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
+
+        sleep(100);
+
+        deliverySlides.DeliverySlides(0, -0.6);
+
+        sleep(500);
+
+        collection.setIntakeHeight(Collection.intakeHeightState.stowed);
+        collection.updateIntakeHeight();
 
     }
 

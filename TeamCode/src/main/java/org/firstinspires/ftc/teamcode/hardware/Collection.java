@@ -8,16 +8,93 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class Collection {
 
-    public DcMotorEx Intake;
+    DcMotorEx Intake;
 
-    public Servo IntakeHeight;
-
-    public static double pivot_p = 0.004, pivot_i = 0, pivot_d = 0.0001;
+    Servo IntakeHeight;
 
     HardwareMap hmap;
 
+    //get the correct values when Ethan pushes
+    double collect = 0;
+    double stowed = 0.55;
+    double letClawThrough = 0.2;
+    double firstPixel = 0;
+    double secondPixel = 0.175;
+    double thirdPixel = 0.20;
+    double forthPixel = 0.27;
+    double fifthPixel = 0.29;
+
+    intakePowerState statePower = intakePowerState.off;
+    intakeHeightState heightState = intakeHeightState.stowed;
+
+    public enum intakePowerState{
+        on,
+        off,
+        reversed
+    }
+
+    public enum intakeHeightState{
+        collect,
+        stowed,
+        letClawThrough,
+        firstPixel,
+        secondPixel,
+        thirdPixel,
+        forthPixel,
+        fifthPixel
+    }
+
+    public void updateIntakeState(){
+
+        switch (statePower){
+            case on:
+                Intake.setPower(1);
+                break;
+            case off:
+                Intake.setPower(0);
+                break;
+            case reversed:
+                Intake.setPower(-1);
+                break;
+            default:
+        }
+
+    }
+
+    public void updateIntakeHeight(){
+
+        switch (heightState){
+            case stowed:
+                IntakeHeight.setPosition(stowed);
+                break;
+            case collect:
+                IntakeHeight.setPosition(collect);
+                break;
+            case letClawThrough:
+                IntakeHeight.setPosition(letClawThrough);
+                break;
+            case firstPixel:
+                IntakeHeight.setPosition(firstPixel);
+                break;
+            case secondPixel:
+                IntakeHeight.setPosition(secondPixel);
+                break;
+            case thirdPixel:
+                IntakeHeight.setPosition(thirdPixel);
+                break;
+            case forthPixel:
+                IntakeHeight.setPosition(forthPixel);
+                break;
+            case fifthPixel:
+                IntakeHeight.setPosition(fifthPixel);
+                break;
+            default:
+        }
+
+    }
+
     public void init(HardwareMap hardwareMap){
-        
+
         hmap = hardwareMap;
 
         Intake = hardwareMap.get(DcMotorEx.class, "Intake");
@@ -32,5 +109,29 @@ public class Collection {
 
         Intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+    }
+
+    public intakePowerState getPowerState() {
+        return statePower;
+    }
+
+    public void setState(intakePowerState statePower) {
+        this.statePower = statePower;
+    }
+
+    public intakeHeightState getHeightState() {
+        return heightState;
+    }
+
+    public void setIntakeHeight(intakeHeightState heightState) {
+        this.heightState = heightState;
+    }
+
+    public double getIntakePower() {
+        return Intake.getPower();
+    }
+
+    public double getIntakeHeight() {
+        return IntakeHeight.getPosition();
     }
 }

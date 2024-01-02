@@ -23,16 +23,6 @@ public class TestingNewGenWithoutRobot extends LinearOpMode {
 
     pathBuilder pathFirst = new pathBuilder();
 
-    pathBuilder pathSecond = new pathBuilder();
-
-    Odometry odometry = new Odometry(93,23, 270);
-
-    Drivetrain drive = new Drivetrain();
-
-    ElapsedTime elapsedTime = new ElapsedTime();
-
-    robotPos botFullPos = new robotPos();
-
     mecanumFollower follower = new mecanumFollower();
 
     @Override
@@ -40,35 +30,19 @@ public class TestingNewGenWithoutRobot extends LinearOpMode {
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        odometry.init(hardwareMap);
-        drive.init(hardwareMap);
-
         //build path
-        pathFirst.buildPath(whatPath.testCurve);
+        pathFirst.buildPath(whatPath.blueRight);
 
         follower.setPath(pathFirst.followablePath, pathFirst.pathingVelocity);
 
         waitForStart();
 
-        odometry.update(0);
-
-        follower.followPath(false, 180, false, odometry, drive, telemetry);
-
-        odometry.update(0);
-
-//        pathSecond.buildPath(whatPath.blueRight);
-//
-//        follower.setPath(pathSecond.followablePath, pathSecond.pathingVelocity);
-//
-//        botFullPos.set(X, Y, Heading);
-//
-//        follower.followPath(botFullPos, false, 180, true, odometry);
 
         while (opModeIsActive()){
 
-            dashboardTelemetry.addData("x opmode", odometry.X);
-            dashboardTelemetry.addData("y opmode", odometry.Y);
-            dashboardTelemetry.addData("heading opmode", odometry.heading);
+            dashboardTelemetry.addData("x opmode", pathFirst.followablePath.get(200));
+            dashboardTelemetry.addData("x velo", pathFirst.pathingVelocity.get(200).getXVelocity());
+            dashboardTelemetry.addData("y velo", pathFirst.pathingVelocity.get(200).getYVelocity());
             dashboardTelemetry.update();
 
         }
