@@ -114,94 +114,16 @@ public class Delivery {
     rightGripperState rightgripperstate = rightGripperState.closed;
     leftGripperState leftgripperstate = leftGripperState.closed;
 
-    public void updateArm (double slidesPos, Odometry odometry, Gamepad gamepad1){
+    public void updateArm (double slidesPos, Odometry odometry, Gamepad gamepad1, Telemetry telemetry, Gamepad gamepad2){
 
         switch (armstateTarget){
 
             case collect:
 
-                armstateCurrent = armState.moving;
-
-                pivotMoveTimeDelivery.reset();
-
-                timeToWaitDelivery = Math.max((Math.abs(getSecondPivotPosition() - collectSecondPivot) * 180) * timePerDegree, (Math.abs(getTopPivotPosition() - collectTopPivotPos) * 180) * timePerDegree);
-
                 setClaws(clawClosed);
+                setGripperState(Delivery.targetGripperState.closeBoth);
 
-                setSecondPivot(collectSecondPivot);
-
-                setMainPivot(collectTopPivotPos);
-
-                RotateClaw.setPosition(rotateCollect);
-
-                break;
-            case delivery:
-
-                armstateCurrent = armState.moving;
-
-                pivotMoveTimeDelivery.reset();
-
-                timeToWaitDelivery = Math.max((Math.abs(getSecondPivotPosition()-deliverySecondPivot)*180)*timePerDegree, (Math.abs(getTopPivotPosition()-deliveryTopPivot)*180)*timePerDegree);
-
-                setClaws(clawClosed);
-
-                setSecondPivot(deliverySecondPivot);
-
-                setMainPivot(deliveryTopPivot);
-
-                RotateClaw.setPosition(rotateCollect);
-
-                break;
-            default:
-        }
-
-        switch (armstateCurrent){
-            case moving:
-                switch (armstateTarget){
-                    case delivery:
-                        if (pivotMoveTimeDelivery.milliseconds() >= timeToWaitDelivery){
-                            armstateCurrent = armState.delivery;
-                        }
-                        break;
-                    case collect:
-                        if (pivotMoveTimeDelivery.milliseconds() >= timeToWaitDelivery){
-                            armstateCurrent = armState.collect;
-                        }
-                        break;
-                    default:
-                }
-                break;
-            case delivery:
-
-                if (slidesPos > 200) {
-
-                    if (gamepad1.dpad_right && mainPivotRight.getPosition() < lowdeliveryTopPivot) {
-                        mainPivotOffSet = mainPivotOffSet + 0.005;
-                    }
-
-                    if (gamepad1.dpad_left && mainPivotRight.getPosition() > deliveryTopPivot) {
-                        mainPivotOffSet = mainPivotOffSet - 0.005;
-                    }
-
-                    targetMainPivot = deliveryTopPivot - slidesPos * servoPosPerTick + mainPivotOffSet;
-                    setMainPivot(targetMainPivot);
-                    setSecondPivot(deliverySecondPivot + (-slidesPos * servoPosPerTick + mainPivotOffSet) * mainToSecondConst);
-
-                    targetRotatePos = 0.5 - (odometry.heading / 180) * adjustFactor;
-                    secondRotate.setPosition(targetRotatePos);
-
-                }
-
-                break;
-            default:
-        }
-    }
-
-    public void updateArm (double slidesPos, Odometry odometry, Gamepad gamepad1, Telemetry telemetry){
-
-        switch (armstateTarget){
-
-            case collect:
+                mainPivotOffSet = 0;
 
                 secondRotate.setPosition(secondRotateMiddle);
 
@@ -214,8 +136,6 @@ public class Delivery {
                 CollectionMoving = true;
 
                 timeToWaitCollection = Math.max((Math.abs(getSecondPivotPosition() - collectSecondPivot) * 180) * timePerDegree, (Math.abs(getTopPivotPosition() - collectTopPivotPos) * 180) * timePerDegree);
-
-                setClaws(clawClosed);
 
                 setSecondPivot(collectSecondPivot);
 
@@ -239,6 +159,7 @@ public class Delivery {
                 timeToWaitDelivery = Math.max((Math.abs(getSecondPivotPosition()-deliverySecondPivot)*180)*timePerDegree, (Math.abs(getTopPivotPosition()-deliveryTopPivot)*180)*timePerDegree);
 
                 setClaws(clawClosed);
+                setGripperState(Delivery.targetGripperState.closeBoth);
 
                 setSecondPivot(deliverySecondPivot);
 
@@ -262,6 +183,7 @@ public class Delivery {
                 timeToWaitDelivery = Math.max((Math.abs(getSecondPivotPosition()-deliverySecondPivotAuto)*180)*timePerDegree, (Math.abs(getTopPivotPosition()-deliveryTopPivotAuto)*180)*timePerDegree);
 
                 setClaws(clawClosed);
+                setGripperState(Delivery.targetGripperState.closeBoth);
 
                 setSecondPivot(deliverySecondPivotAuto);
 
@@ -302,11 +224,11 @@ public class Delivery {
 
                     odometry.update();
 
-                    if (gamepad1.dpad_right && mainPivotRight.getPosition() < lowdeliveryTopPivot) {
+                    if (gamepad2.dpad_right || gamepad1.dpad_right && mainPivotRight.getPosition() < lowdeliveryTopPivot) {
                         mainPivotOffSet = mainPivotOffSet + 0.005;
                     }
 
-                    if (gamepad1.dpad_left && mainPivotRight.getPosition() > deliveryTopPivot) {
+                    if (gamepad2.dpad_right || gamepad1.dpad_left && mainPivotRight.getPosition() > deliveryTopPivot) {
                         mainPivotOffSet = mainPivotOffSet - 0.005;
                     }
 
@@ -417,7 +339,7 @@ public class Delivery {
 
         secondRotate = hardwareMap.get(ServoImplEx.class, "secondRotate");
 
-        secondRotate.setPwmRange(new PwmControl.PwmRange(650, 2500));
+        secondRotate.setPwmRange(new PwmControl.PwmRange(650, 2400));
 
         setMainPivot(0);
 

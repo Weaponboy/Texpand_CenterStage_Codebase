@@ -21,8 +21,8 @@ public class Collection {
     double firstPixel = 0;
     double secondPixel = 0.175;
     double thirdPixel = 0.20;
-    double forthPixel = 0.25;
-    double fifthPixel = 0.275;
+    double forthPixel = 0.27;
+    double fifthPixel = 0.29;
 
     intakePowerState statePower = intakePowerState.off;
     intakeHeightState heightState = intakeHeightState.stowed;

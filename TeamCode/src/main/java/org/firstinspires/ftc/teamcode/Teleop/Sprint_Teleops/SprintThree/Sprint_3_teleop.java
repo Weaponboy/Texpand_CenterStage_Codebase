@@ -11,8 +11,11 @@ import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.UsefulMetho
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower.mecanumFollower;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.teleopPathBuilder;
@@ -21,6 +24,9 @@ import org.firstinspires.ftc.teamcode.hardware.Delivery;
 import org.firstinspires.ftc.teamcode.hardware.Delivery_Slides;
 import org.firstinspires.ftc.teamcode.hardware.Drivetrain;
 import org.firstinspires.ftc.teamcode.hardware.Odometry;
+import org.firstinspires.ftc.teamcode.hardware.Sensors;
+
+import java.util.Objects;
 
 
 @TeleOp
@@ -28,7 +34,7 @@ public class Sprint_3_teleop extends OpMode {
 
     Drivetrain drive = new Drivetrain();
 
-    Odometry odometry = new Odometry();
+    Odometry odometry = new Odometry(210, 337, 90);
 
     Delivery delivery = new Delivery();
 
@@ -42,11 +48,21 @@ public class Sprint_3_teleop extends OpMode {
 
     mecanumFollower follower = new mecanumFollower();
 
+    Sensors sensors = new Sensors();
+
     double pivotIntakePos = 0;
 
     double targetHeading;
 
     boolean pathing = false;
+
+    double autoDropLastTime;
+    boolean autoDrop = false;
+
+    String backboardPosition;
+    boolean Confirmed = false;
+
+    ElapsedTime elapsedTime = new ElapsedTime();
 
     @Override
     public void loop() {
@@ -67,7 +83,7 @@ public class Sprint_3_teleop extends OpMode {
         //drive to backboard
         if (gamepad1.b){
 
-            Vector2D targetPoint = new Vector2D(getRealCoords(300), getRealCoords(270));
+            Vector2D targetPoint = new Vector2D(getRealCoords(220), getRealCoords(270));
 
             pathBuilder.buildPath(teleopPathBuilder.TeleopPath.red, robotPos, targetPoint);
 
@@ -76,12 +92,13 @@ public class Sprint_3_teleop extends OpMode {
             pathing = true;
 
             follower.setPath(pathBuilder.followablePath, pathBuilder.pathingVelocity);
+
         }
 
 //        //drive to collection
-//        if (gamepad1.a){
+//        if (gamepad2.a){
 //
-//            Vector2D targetPoint = new Vector2D(getRealCoords(38), getRealCoords(88));
+//            Vector2D targetPoint = new Vector2D(getRealCoords(55), getRealCoords(88));
 //
 //            pathBuilder.buildPath(teleopPathBuilder.TeleopPath.red, robotPos, targetPoint);
 //
@@ -92,16 +109,41 @@ public class Sprint_3_teleop extends OpMode {
 //            follower.setPath(pathBuilder.followablePath, pathBuilder.pathingVelocity);
 //        }
 
+        //set target position for backboard
+        if (gamepad2.dpad_up ){
+            backboardPosition = "Center";
+        }else if (gamepad2.dpad_left){
+            backboardPosition = "Left";
+        }else if (gamepad2.dpad_right){
+            backboardPosition = "Right";
+        }
+
+        //confirm target
+        if (gamepad2.left_trigger > 0){
+            Confirmed = true;
+        }
+
+        if (!pathing){
+            if (Confirmed && Objects.equals(backboardPosition, "Left") && odometry.Y > 180 && odometry.X > 260){
+                odometry.Odo_Drive_Teleop(295, 250, 180);
+            }else if (Confirmed && Objects.equals(backboardPosition, "Center") && odometry.Y > 180 && odometry.X > 260){
+                odometry.Odo_Drive_Teleop(295, 270, 180);
+            }else if (Confirmed && Objects.equals(backboardPosition, "Right") && odometry.Y > 180 && odometry.X > 260){
+                odometry.Odo_Drive_Teleop(295, 290, 180);
+            }
+        }
+
         if(gamepad1.right_stick_button && gamepad1.left_stick_button){
             pathing = false;
+            Confirmed = false;
         }
 
         if (pathing && gamepad1.atRest()){
-            follower.followPathTeleop(true, targetHeading, false, odometry, drive);
+            pathing = follower.followPathTeleop(true, targetHeading, true, odometry, drive, telemetry);
         }else {
 
             vertical = -gamepad1.right_stick_y;
-            horizontal = -gamepad1.right_stick_x;
+            horizontal = gamepad1.right_stick_x;
             pivot = gamepad1.left_stick_x;
 
             double denominator = Math.max(Math.abs(horizontal) + Math.abs(vertical) + Math.abs(pivot), 1);
@@ -112,7 +154,6 @@ public class Sprint_3_teleop extends OpMode {
             drive.LB.setPower((pivot + (vertical - horizontal)) / denominator);
 
         }
-
 
         /**intake code*/
 
@@ -211,16 +252,48 @@ public class Sprint_3_teleop extends OpMode {
             default:
         }
 
+        if(collection.getIntakePower() > 0){
+
+            if (sensors.RightClawSensor.getDistance(DistanceUnit.MM) < 75 && sensors.LeftClawSensor.getDistance(DistanceUnit.MM) < 75) {
+                delivery.setGripperState(Delivery.targetGripperState.closeBoth);
+            }else {
+                if(sensors.LeftClawSensor.getDistance(DistanceUnit.MM) < 75){
+                    delivery.setGripperState(Delivery.targetGripperState.closeLeft);
+                } else if(sensors.RightClawSensor.getDistance(DistanceUnit.MM) < 75){
+                    delivery.setGripperState(Delivery.targetGripperState.closeRight);
+                }
+            }
+        }
+
+        if (gamepad2.right_trigger > 0){
+            autoDropLastTime = elapsedTime.milliseconds();
+            autoDrop = true;
+            delivery.setGripperState(Delivery.targetGripperState.openBoth);
+        }
+
+        if (elapsedTime.milliseconds() - autoDropLastTime > 500 && autoDrop){
+
+            delivery.setArmTargetState(Delivery.armState.collect);
+
+            deliverySlides.DeliverySlides(0, -0.5);
+
+            autoDrop = false;
+
+        }
+
+        odometry.update();
+
         //update collection state
         collection.updateIntakeHeight();
         collection.updateIntakeState();
 
         //update delivery state
-        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry);
+        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
         delivery.updateGrippers();
 
         telemetry.addData("arm state", delivery.getArmState());
-        telemetry.addData("slide position", deliverySlides.getCurrentposition());
+        telemetry.addData("Y", odometry.Y);
+        telemetry.addData("X", odometry.X);
         telemetry.addData("main pivot position", delivery.getMainPivotPosition());
         telemetry.update();
 
@@ -229,12 +302,15 @@ public class Sprint_3_teleop extends OpMode {
 
     @Override
     public void init() {
+        elapsedTime.reset();
+
         collection.init(hardwareMap);
         delivery.init(hardwareMap);
         deliverySlides.init(hardwareMap);
 
         drive.init(hardwareMap);
         odometry.init(hardwareMap);
+        sensors.init(hardwareMap);
 
         previousGamepad1 = new Gamepad();
         currentGamepad1 = new Gamepad();

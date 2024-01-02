@@ -99,7 +99,7 @@ public class TestingPathingGenForTeleop extends OpMode {
         }
 
         if (pathing && gamepad1.atRest()){
-            follower.followPathTeleop(true, targetHeading, false, odometry, drive);
+            follower.followPathTeleop(true, targetHeading, false, odometry, drive, telemetry);
         }else {
 
             vertical = -gamepad1.right_stick_x;
