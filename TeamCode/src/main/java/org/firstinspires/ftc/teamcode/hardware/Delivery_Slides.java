@@ -1,17 +1,10 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
-import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.slide_d;
-import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.slide_i;
-import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.slide_p;
-
-import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-
-import org.firstinspires.ftc.teamcode.Teleop.Sprint_Teleops.SprintThree.Sprint_3_teleop;
 
 public class  Delivery_Slides {
 
@@ -23,7 +16,7 @@ public class  Delivery_Slides {
     boolean SlideSafetyHeight = false;
     boolean SlideSafetyBottom = false;
 
-    enum SlideState{
+    public enum SlideState{
         manual,
         moving,
         targetReached;
@@ -31,7 +24,9 @@ public class  Delivery_Slides {
 
     SlideState slideState = SlideState.manual;
 
-    public void updateSlides(Gamepad gamepad1, Gamepad gamepad2){
+    public Delivery.targetGripperState updateSlides(Gamepad gamepad1, Gamepad gamepad2){
+
+        Delivery.targetGripperState targetGripperState = null;
 
         SlideSafetyHeight = Left_Slide.getCurrentPosition() > 2200;
         SlideSafetyBottom = Left_Slide.getCurrentPosition() < 5;
@@ -39,20 +34,30 @@ public class  Delivery_Slides {
         switch (slideState){
 
             case manual:
-                if (gamepad1.x && !SlideSafetyHeight) {
+
+                if (gamepad2.right_stick_y < -0.5 || gamepad1.x && !SlideSafetyHeight) {
                     SlideSafetyHeight = Left_Slide.getCurrentPosition() > 2200;
                     SlidesBothPower(0.3);
-                } else if (gamepad1.a && !SlideSafetyBottom) {
+                    targetGripperState = Delivery.targetGripperState.closeBoth;
+                } else if (gamepad2.right_stick_y > 0.5  || gamepad1.a && !SlideSafetyBottom) {
                     SlideSafetyBottom = Left_Slide.getCurrentPosition() < 5;
                     SlidesBothPower(-0.3);
+                    targetGripperState = Delivery.targetGripperState.closeBoth;
                 }else {
                     SlidesBothPower(0.0005);
                 }
+
                 break;
             case moving:
-                if (Left_Slide.getCurrentPosition() > (Left_Slide.getTargetPosition()-10) && Left_Slide.getCurrentPosition() < (Left_Slide.getTargetPosition()+10) ){
+
+                targetGripperState = Delivery.targetGripperState.closeBoth;
+
+                if (Math.abs(Left_Slide.getVelocity()) < 2){
                     slideState = SlideState.targetReached;
+                    Left_Slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                    Right_Slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 }
+
                 break;
             case targetReached:
                 slideState = SlideState.manual;
@@ -60,6 +65,8 @@ public class  Delivery_Slides {
             default:
 
         }
+
+        return targetGripperState;
     }
 
     public void init(HardwareMap Hmap){
@@ -69,7 +76,7 @@ public class  Delivery_Slides {
         Left_Slide = hardwareMap.get(DcMotorEx.class, "Left_Slide");
         Right_Slide = hardwareMap.get(DcMotorEx.class, "Right_Slide");
 
-        Left_Slide.setDirection(DcMotorSimple.Direction.REVERSE);
+        Right_Slide.setDirection(DcMotorSimple.Direction.REVERSE);
 
         Right_Slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Left_Slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

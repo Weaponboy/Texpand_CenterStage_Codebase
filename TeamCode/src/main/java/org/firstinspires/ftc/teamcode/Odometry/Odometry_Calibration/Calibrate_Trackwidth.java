@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Odometry.Odometry_Calibration;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -19,16 +20,16 @@ public class Calibrate_Trackwidth extends OpMode {
 
     Telemetry dashboardTelemetry = dashboard.getTelemetry();
 
-    public double trackwidth = 35.2;
-    public double centerPodOffset = 15;
+    public static double trackwidth = 35.96864350492449;
+    public static double centerPodOffset = 17.57500474911514;
     public double wheelRadius = 1.75;
     public double podTicks = 8192;
 
     public double cm_per_tick = 2.0 * Math.PI * wheelRadius / podTicks;
 
-    public int currentRightPod = -21494;
-    public int currentLeftPod = 19695;
-    public int currentCenterPod = -17381;
+    public int currentRightPod = -85437;
+    public int currentLeftPod = 84105;
+    public int currentCenterPod = -78319;
 
     public int oldRightPod = 0;
     public int oldLeftPod = 0;
@@ -73,47 +74,29 @@ public class Calibrate_Trackwidth extends OpMode {
     Orientation YawAngle;
 
     @Override
-    public void init() {
-        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-
-        oldCenterPod = currentCenterPod;
-        oldLeftPod = currentLeftPod;
-        oldRightPod = currentRightPod;
-
-        currentCenterPod = 0;
-        currentLeftPod = 0;
-        currentRightPod = 0;
-
-        int dn1 = currentLeftPod - oldLeftPod;
-        int dn2 = currentRightPod - oldRightPod;
-        int dn3 = currentCenterPod - oldCenterPod;
-
-        dtheta = cm_per_tick * ((dn2-dn1) / trackwidth);
-        dx = cm_per_tick * (dn2+dn1)/2.0;
-        dy = cm_per_tick * (dn3 - (dn2-dn1) * centerPodOffset / trackwidth);
-
-        double theta = heading + (dtheta / 2.0);
-        X += dx * Math.cos(theta) - dy * Math.sin(theta);
-        Y += dx * Math.sin(theta) + dy * Math.cos(theta);
-        heading += dtheta;
-
-        factor = heading/360;
-
-        if(factor > 1) {
-            heading = heading - 360*(int)factor;
-        }
-    }
+    public void init() {}
 
     @Override
     public void loop() {
 
-        telemetry.addData("right", currentRightPod);
-        telemetry.addData("left", currentLeftPod);
-        telemetry.addData("center", currentCenterPod);
-        telemetry.addData("X", X);
-        telemetry.addData("Y", Y);
-        telemetry.addData("Heading", Math.toDegrees(heading));
-        telemetry.update();
+        dx = cm_per_tick * (currentRightPod+currentLeftPod)/2.0;
+        dy = cm_per_tick * (currentCenterPod - (currentRightPod-currentLeftPod) * centerPodOffset / trackwidth);
+
+        X = dx * Math.cos(0) - dy * Math.sin(0);
+        Y = dx * Math.sin(0) + dy * Math.cos(0);
+
+        dashboardTelemetry.addData("track", trackwidth);
+        dashboardTelemetry.addData("centerPodOffset", centerPodOffset);
+        dashboardTelemetry.addData("X", dx);
+        dashboardTelemetry.addData("Y", dy);
+        dashboardTelemetry.update();
+
+//        packet.put("trackwidth", trackwidth);
+//        packet.put("centerPodOffset", centerPodOffset);
+//        packet.put("X", X);
+//        packet.put("Y", Y);
+//
+//        dashboard.sendTelemetryPacket(packet);
         
     }
 

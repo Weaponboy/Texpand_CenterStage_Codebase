@@ -65,7 +65,6 @@ public class Testing_Apriltag_Reseting extends OpMode {
 
             if(rightTag.id == 4) {
 
-
                 double NewY;
 
                 Vector2D newPosition;
@@ -130,7 +129,6 @@ public class Testing_Apriltag_Reseting extends OpMode {
     private void telemetryAprilTag() {
 
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
-        telemetry.addData("# AprilTags Detected", currentDetections.size());
 
         // Step through the list of detections and display info for each one.
         for (AprilTagDetection detection : currentDetections) {

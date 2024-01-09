@@ -13,6 +13,7 @@ import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.s
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.strafeP;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Hardware_objects.drive;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -20,6 +21,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
@@ -39,8 +41,8 @@ public class Odometry {
 
     HardwareMap hardwareMap;
 
-    public double trackwidth = 35.2;
-    public double centerPodOffset = 15;
+    public double trackwidth = 34.498;
+    public double centerPodOffset = 15.94;
     public double wheelRadius = 1.75;
     public double podTicks = 8192;
 
@@ -381,6 +383,8 @@ public class Odometry {
 
         if (StartHeading == 270){
             correctedStart = -90;
+        }else if (StartHeading == 180) {
+            correctedStart = -180;
         } else if (StartHeading == 90) {
             correctedStart = 90;
         }

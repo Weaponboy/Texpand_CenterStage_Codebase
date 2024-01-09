@@ -52,7 +52,7 @@ public class propDetectionByAmount implements VisionProcessor {
     public Scalar MIN_THRESH_BLUE = new Scalar(5, 90, 110);
     public Scalar MAX_THRESH_BLUE = new Scalar(40, 255, 255);
 
-    public Scalar MIN_THRESH_RED = new Scalar(110, 50, 50);
+    public Scalar MIN_THRESH_RED = new Scalar(120, 90, 90);
     public Scalar MAX_THRESH_RED = new Scalar(220, 255, 255);
 
     static final Rect rightOfScreen = new Rect(new Point(320, 0), new Point(640, 480));
@@ -101,7 +101,7 @@ public class propDetectionByAmount implements VisionProcessor {
 
         switch (side) {
             case right:
-                if (RightPixels - LeftPixels > 1000){
+                if (RightPixels - LeftPixels > 1200){
                     position3++;
                 }else if (LeftPixels - RightPixels > 1000){
                     position2++;
@@ -110,12 +110,12 @@ public class propDetectionByAmount implements VisionProcessor {
                 }
                 break;
             case left:
-                if (RightPixels - LeftPixels > 1000){
+                if (RightPixels - LeftPixels > 4000){
                     position2++;
-                }else if (LeftPixels - RightPixels > 1000){
-                    position1++;
-                }else{
+                }else if (LeftPixels - RightPixels > 4000){
                     position3++;
+                }else{
+                    position1++;
                 }
                 break;
             default:
@@ -129,10 +129,14 @@ public class propDetectionByAmount implements VisionProcessor {
             propPos = 3;
         }
 
-        telemetry.addData("prop Pos 1", position1);
-        telemetry.addData("prop Pos 2", position2);
-        telemetry.addData("prop Pos 3", position3);
-        telemetry.addData("modifyefLeft", modifiedLeft.width());
+        RightSide.release();
+        LeftSide.release();
+
+
+//        telemetry.addData("prop Pos 1", position1);
+//        telemetry.addData("prop Pos 2", position2);
+//        telemetry.addData("prop Pos 3", position3);
+//        telemetry.addData("modifyefLeft", modifiedLeft.width());
         telemetry.addData("prop Pos", propPos);
         telemetry.addData("contoursRight.size()", RightPixels);
         telemetry.addData("contoursLeft.size()", LeftPixels);

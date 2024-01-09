@@ -6,11 +6,13 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
+
 public class Collection {
 
     DcMotorEx Intake;
 
-    Servo IntakeHeight;
+    public Servo IntakeHeight;
 
     HardwareMap hmap;
 
@@ -19,10 +21,10 @@ public class Collection {
     double stowed = 0.55;
     double letClawThrough = 0.2;
     double firstPixel = 0;
-    double secondPixel = 0.175;
-    double thirdPixel = 0.20;
-    double forthPixel = 0.27;
-    double fifthPixel = 0.29;
+    double secondPixel = 0.17;
+    double thirdPixel = 0.19;
+    double forthPixel = 0.23;
+    double fifthPixel = 0.26;
 
     intakePowerState statePower = intakePowerState.off;
     intakeHeightState heightState = intakeHeightState.stowed;
@@ -133,5 +135,9 @@ public class Collection {
 
     public double getIntakeHeight() {
         return IntakeHeight.getPosition();
+    }
+
+    public double getIntakeCurrentUse(){
+        return Intake.getCurrent(CurrentUnit.MILLIAMPS);
     }
 }
