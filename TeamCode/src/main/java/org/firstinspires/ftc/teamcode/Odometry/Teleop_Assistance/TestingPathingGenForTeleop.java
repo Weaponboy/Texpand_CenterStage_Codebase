@@ -7,6 +7,7 @@ import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.UsefulMetho
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -16,10 +17,11 @@ import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower.mecanumFollower;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.Enums.TargetPoint;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.Old.pathBuilder;
-import org.firstinspires.ftc.teamcode.hardware.Drivetrain;
-import org.firstinspires.ftc.teamcode.hardware.Odometry;
+import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Drivetrain;
+import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry;
 
 @TeleOp
+@Disabled
 public class TestingPathingGenForTeleop extends OpMode {
 
     FtcDashboard dashboard = FtcDashboard.getInstance();

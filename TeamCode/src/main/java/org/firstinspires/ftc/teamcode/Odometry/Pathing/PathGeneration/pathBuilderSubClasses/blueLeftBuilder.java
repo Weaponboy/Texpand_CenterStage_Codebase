@@ -56,16 +56,16 @@ public class blueLeftBuilder extends pathBuilderMain {
      * collect white pixels from stack
      * */
 
-    /*first position*/
+    /**first position*/
     Vector2D CS1F = new Vector2D(DYE1F.getX(), DYE1F.getY());
     Vector2D CC1F = new Vector2D(getRealCoords(292), getRealCoords(166));
     Vector2D CE1F = new Vector2D(getRealCoords(180), getRealCoords(150));
 
-    //first segment
+    //second segment
     Vector2D CS2F = new Vector2D(getRealCoords(180), getRealCoords(150));
     Vector2D CE2F = new Vector2D(getRealCoords(33), getRealCoords(150));
 
-    /*second position*/
+    /**second position*/
     Vector2D CS1S = new Vector2D(DYE1S.getX(), DYE1S.getY());
     Vector2D CC1S = new Vector2D(getRealCoords(292), getRealCoords(166));
     Vector2D CE1S = new Vector2D(getRealCoords(180), getRealCoords(150));
@@ -74,12 +74,12 @@ public class blueLeftBuilder extends pathBuilderMain {
     Vector2D CS2S = new Vector2D(getRealCoords(180), getRealCoords(150));
     Vector2D CE2S = new Vector2D(getRealCoords(33), getRealCoords(150));
 
-    /*third position*/
+    /**third position*/
     Vector2D CS1T = new Vector2D(DYE1T.getX(), DYE1T.getY());
     Vector2D CC1T = new Vector2D(getRealCoords(294), getRealCoords(149));
     Vector2D CE1T = new Vector2D(getRealCoords(181), getRealCoords(193));
 
-    //third segment
+    //second segment
     Vector2D CS2T = new Vector2D(CE1T.getX(), CE1T.getY());
     Vector2D CC2T = new Vector2D(getRealCoords(30), getRealCoords(249));
     Vector2D CE2T = new Vector2D(getRealCoords(41), getRealCoords(135));

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Auto.Old;
+package org.firstinspires.ftc.teamcode.Auto.OtherAuto.Scrim_Autos;
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.propPos;
 
@@ -19,12 +19,13 @@ import org.firstinspires.ftc.vision.VisionPortal;
 
 @Autonomous
 @Disabled
-public class Blue_Scrimmage_Bot_Auto extends LinearOpMode {
+public class Red_Scrimmage_Bot_Auto extends LinearOpMode {
 
     DcMotor LF;
     DcMotor RF;
-    DcMotor Povit2;
+    DcMotor Pivot2;
     Servo PivotLeft;
+
 
     public WebcamName frontCam;
 
@@ -40,22 +41,22 @@ public class Blue_Scrimmage_Bot_Auto extends LinearOpMode {
 
     Servo PivotServo;
 
-    propDetectionByAmount propDetectionByAmount = new propDetectionByAmount(telemetry, org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount.Side.left, org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount.color.blue);
+    propDetectionByAmount propDetectionByAmount = new propDetectionByAmount(telemetry, org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount.Side.right, org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount.color.red);
 
     @Override
     public void runOpMode() throws InterruptedException {
 
         RF = hardwareMap.get(DcMotor.class,"RightDrive");
         LF = hardwareMap.get(DcMotor.class,"LeftDrive");
-        Povit2 = hardwareMap.get(DcMotor.class, "Pivot");
+        Pivot2 = hardwareMap.get(DcMotor.class, "Pivot");
         PivotLeft = hardwareMap.get(Servo.class, "Gripper");
         PivotServo = hardwareMap.get(Servo.class,"PivotServo");
 
-        Povit2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Pivot2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         LF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         RF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        Povit2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Pivot2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         LF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         RF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
@@ -79,34 +80,7 @@ public class Blue_Scrimmage_Bot_Auto extends LinearOpMode {
 
         waitForStart();
 
-//        while (opModeIsActive()){
-//            double heading = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
-//
-//            double ConvertedHeading;
-//
-//            if (heading <= 0) {
-//                ConvertedHeading = (360 + heading);
-//            } else {
-//                ConvertedHeading = (0 + heading);
-//            }
-//
-//            double rotdist = (90 - ConvertedHeading);
-//
-//            if (rotdist < -180) {
-//                rotdist = (360 + rotdist);
-//            } else if (rotdist > 360) {
-//                rotdist = (rotdist - 360);
-//            }
-//
-//            telemetry.addData("heading", 360 - ConvertedHeading);
-//            telemetry.addData("rotdist", rotdist);
-//            telemetry.update();
-//        }
-
-        //start code#
-//        propPos = 4;
-
-        if (propPos == 1) {
+        if (propPos ==1) {
 
             encoderDrive(0.4, 40);
             turnToHeadingWithImu(imu, 350, this);
@@ -124,30 +98,32 @@ public class Blue_Scrimmage_Bot_Auto extends LinearOpMode {
             turnToHeadingWithImu(imu, 290, this);
             encoderDrive(0.4, 5);
             turnToHeadingWithImu(imu, 280, this);
-            encoderDrive(0.4, 5);
+            encoderDrive(0.4, 10);
             turnToHeadingWithImu(imu, 270, this);
 
             encoderDrive(0.4, -10);
 
-            turnToHeadingWithImu(imu, 215, this);
+            turnToHeadingWithImu(imu, 260, this);
 
-            encoderDrive(0.4, 22);
 
-            turnToHeadingWithImu(imu, 270, this);
 
-            encoderDrive(0.4, 80);
+//            turnToHeadingWithImu(imu, 270, this);
+//
+//            encoderDrive(0.4, 95);
 
             sleep(200);
 
-            Povit2.setTargetPosition(1200);
+            Pivot2.setTargetPosition(200);
 
-            Povit2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Pivot2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            Povit2.setPower(0.7);
+            Pivot2.setPower(0.7);
 
-            PivotServo.setPosition(0.2);
+            PivotServo.setPosition(1);
 
-            while (Povit2.isBusy()) {}
+            while (Pivot2.isBusy()) {}
+
+            encoderDrive(0.4, -105);
 
             sleep(1000);
 
@@ -155,11 +131,13 @@ public class Blue_Scrimmage_Bot_Auto extends LinearOpMode {
 
             sleep(1500);
 
-            Povit2.setTargetPosition(0);
+            encoderDrive(0.4, 10);
 
-            Povit2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Pivot2.setTargetPosition(0);
 
-            Povit2.setPower(-0.7);
+            Pivot2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            Pivot2.setPower(-0.7);
 
             sleep(1000);
 
@@ -171,19 +149,19 @@ public class Blue_Scrimmage_Bot_Auto extends LinearOpMode {
 
             sleep(500);
 
-            encoderDrive(0.4, 96);
-
             sleep(200);
 
-            Povit2.setTargetPosition(1000);
+            Pivot2.setTargetPosition(350);
 
-            Povit2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Pivot2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            Povit2.setPower(0.7);
+            Pivot2.setPower(0.7);
 
-            PivotServo.setPosition(0.2);
+            PivotServo.setPosition(0.8);
 
-            while (Povit2.isBusy()) {}
+            while (Pivot2.isBusy()) {}
+
+            encoderDrive(0.4, -88);
 
             sleep(1000);
 
@@ -191,55 +169,41 @@ public class Blue_Scrimmage_Bot_Auto extends LinearOpMode {
 
             sleep(1500);
 
-            Povit2.setTargetPosition(0);
+            encoderDrive(0.4, 10);
 
-            Povit2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Pivot2.setTargetPosition(0);
 
-            Povit2.setPower(-0.7);
+            Pivot2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+            Pivot2.setPower(-0.7);
 
             sleep(1000);
 
         } else if (propPos == 3) {
 
             encoderDrive(0.4, 40);
-            turnToHeadingWithImu(imu, 10, this);
-            encoderDrive(0.4, 5);
-            turnToHeadingWithImu(imu, 20, this);
-            encoderDrive(0.4, 5);
             turnToHeadingWithImu(imu, 30, this);
-            encoderDrive(0.4, 5);
-            turnToHeadingWithImu(imu, 40, this);
-            encoderDrive(0.4, 5);
-            turnToHeadingWithImu(imu, 50, this);
-            encoderDrive(0.4, 5);
-            turnToHeadingWithImu(imu, 60, this);
-            encoderDrive(0.4, 5);
-            turnToHeadingWithImu(imu, 70, this);
-            encoderDrive(0.4, 5);
-            turnToHeadingWithImu(imu, 80, this);
-            encoderDrive(0.4, 10);
+
+            encoderDrive(0.4, 40);
+
+            encoderDrive(0.4, -20);
+
+            turnToHeadingWithImu(imu, 100, this);
+
+            encoderDrive(0.4, 89);
+
             turnToHeadingWithImu(imu, 90, this);
 
-            encoderDrive(0.4, -12);
+            Pivot2.setTargetPosition(1200);
 
-            turnToHeadingWithImu(imu, 0, this);
+            Pivot2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            turnToHeadingWithImu(imu, 280, this);
-
-            encoderDrive(0.4, 105);
-
-            turnToHeadingWithImu(imu, 275, this);
-            sleep(200);
-
-            Povit2.setTargetPosition(1200);
-
-            Povit2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            Povit2.setPower(0.7);
+            Pivot2.setPower(0.7);
 
             PivotServo.setPosition(0.2);
 
-            while (Povit2.isBusy()) {
+            while (Pivot2.isBusy()) {
 
             }
 
@@ -249,13 +213,14 @@ public class Blue_Scrimmage_Bot_Auto extends LinearOpMode {
 
             sleep(1500);
 
-            Povit2.setTargetPosition(0);
+            Pivot2.setTargetPosition(0);
 
-            Povit2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Pivot2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            Povit2.setPower(-0.7);
+            Pivot2.setPower(-0.7);
 
             sleep(1000);
+
         } else if (propPos == 4) {
             turnToHeadingWithImu(imu, 270, this);
 
@@ -368,3 +333,4 @@ public class Blue_Scrimmage_Bot_Auto extends LinearOpMode {
     }
 
 }
+

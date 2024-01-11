@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower;
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.maxYAcceleration;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.velocityDecreasePerPoint;
-import static org.firstinspires.ftc.teamcode.hardware.Odometry.getMaxVelocity;
+import static org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry.getMaxVelocity;
 
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathingUtility.PathingVelocity;

@@ -22,9 +22,9 @@ import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.robotPos;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathingUtility.PathingPower;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathingUtility.PathingVelocity;
-import org.firstinspires.ftc.teamcode.hardware.Collection;
-import org.firstinspires.ftc.teamcode.hardware.Drivetrain;
-import org.firstinspires.ftc.teamcode.hardware.Odometry;
+import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Collection;
+import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Drivetrain;
+import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry;
 
 import java.util.ArrayList;
 

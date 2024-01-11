@@ -1,44 +1,50 @@
-package org.firstinspires.ftc.teamcode.Auto;
+package org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Red_Auto.Right;
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.propPos;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower.mecanumFollower;
-import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.blueLeftBuilder;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.redRightBuilder;
 import org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount;
-import org.firstinspires.ftc.teamcode.hardware.Collection;
-import org.firstinspires.ftc.teamcode.hardware.Delivery;
-import org.firstinspires.ftc.teamcode.hardware.Delivery_Slides;
-import org.firstinspires.ftc.teamcode.hardware.Drivetrain;
-import org.firstinspires.ftc.teamcode.hardware.Odometry;
+import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Collection;
+import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Delivery;
+import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Delivery_Slides;
+import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Drivetrain;
+import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry;
 import org.firstinspires.ftc.vision.VisionPortal;
 
 @Autonomous
 /**start red right*/
-public class BlueLeftAuto extends LinearOpMode {
+public class Red_Right_Preload extends LinearOpMode {
+
+    FtcDashboard dashboard = FtcDashboard.getInstance();
+
+    Telemetry dashboardTelemetry = dashboard.getTelemetry();
 
     public WebcamName frontCam;
 
     public VisionPortal portal;
 
-    org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount propDetectionByAmount = new propDetectionByAmount(telemetry, org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount.Side.left, org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount.color.blue);
+    org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount propDetectionByAmount = new propDetectionByAmount(dashboardTelemetry, org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount.Side.left, org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount.color.red);
 
     /**hardware objects*/
-    Odometry odometry = new Odometry(210, 23, 270);
+    Odometry odometry = new Odometry(210, 337, 90);
 
     Drivetrain drive = new Drivetrain();
 
     /**pathing objects*/
-    blueLeftBuilder firstPath = new blueLeftBuilder();
+    redRightBuilder firstPath = new redRightBuilder();
 
-    blueLeftBuilder secondPath = new blueLeftBuilder();
+    redRightBuilder secondPath = new redRightBuilder();
 
-    blueLeftBuilder thridPath = new blueLeftBuilder();
+    redRightBuilder thridPath = new redRightBuilder();
 
     mecanumFollower follower = new mecanumFollower();
 
@@ -48,6 +54,33 @@ public class BlueLeftAuto extends LinearOpMode {
 
     Collection collection = new Collection();
 
+    boolean SlideSafetyHeight = false;
+
+    boolean SlideSafetyBottom = false;
+
+    //in ms
+    double timePerDegreeTopPivot = 6;
+
+    double smallServoTimePerDegree = 6;
+
+    double collectTopPivotPos = 0.1;
+    double deliveryTopPivot = 1;
+    double safeTopPivot = 0.3;
+
+    double avoidIntakeSecondPivot = 0.8;
+    double collectSecondPivot = 1;
+    double deliverySecondPivot = 0.3;
+
+    double clawOpen = 0.5;
+    double clawClosed = 0;
+
+    double rotateCollect = 0.5;
+    double rotateRight = 1;
+
+    double intakeSafeInRobot = 0.6;
+    double intakeCollect = 0.15;
+
+    long timeToWait;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -60,60 +93,79 @@ public class BlueLeftAuto extends LinearOpMode {
 
             portal.close();
 
-            firstPath.buildPath(blueLeftBuilder.Position.left, blueLeftBuilder.Section.preload);
+            firstPath.buildPath(redRightBuilder.Position.left, redRightBuilder.Section.preload, redRightBuilder.pathSplit.first);
+
+            secondPath.buildPath(redRightBuilder.Position.left, redRightBuilder.Section.preload, redRightBuilder.pathSplit.second);
 
             follower.setPath(firstPath.followablePath, firstPath.pathingVelocity);
 
             //change target heading after dropping the purple pixel
             Vector2D point;
-            follower.followPath(240, odometry, drive, point = new Vector2D(250, 46), 180);
-
-            odometry.update();
-
-            dropYellowPixel();
-
-        } else if (propPos == 2) {
-
-            portal.close();
-
-            firstPath.buildPath(blueLeftBuilder.Position.center, blueLeftBuilder.Section.preload);
-
-            follower.setPath(firstPath.followablePath, firstPath.pathingVelocity);
-
-            //change target heading after dropping the purple pixel
-            Vector2D point;
-            follower.followPath(270, odometry, drive, point = new Vector2D(236, 60), 180);
-
-            odometry.update();
-
-            dropYellowPixel();
-
-        } else if (propPos == 3) {
-
-            portal.close();
-
-            firstPath.buildPath(blueLeftBuilder.Position.right, blueLeftBuilder.Section.preload, redRightBuilder.pathSplit.first);
-
-            secondPath.buildPath(blueLeftBuilder.Position.right, blueLeftBuilder.Section.preload, redRightBuilder.pathSplit.second);
-
-            follower.setPath(firstPath.followablePath, firstPath.pathingVelocity);
-
-            follower.setPath(firstPath.followablePath, firstPath.pathingVelocity);
-
-            //change target heading after dropping the purple pixel
-            Vector2D point;
-            follower.followPath(270, odometry, drive, point = new Vector2D(210, 70), 0);
+            follower.followPath(90, odometry, drive, point = new Vector2D(210, 290), 0);
 
             odometry.update();
 
             follower.setPath(secondPath.followablePath, secondPath.pathingVelocity);
 
-            follower.followPath(0, odometry, drive, point = new Vector2D(250, 90), 180);
+            follower.followPath(0, odometry, drive, point = new Vector2D(250, 270), 180);
 
             odometry.update();
 
             dropYellowPixel();
 
+//            follower.setPath(secondPath.followablePath, secondPath.pathingVelocity);
+//
+//            follower.followPath(180, odometry, drive);
+
+        } else if (propPos == 2) {
+
+            portal.close();
+
+            firstPath.buildPath(redRightBuilder.Position.center, redRightBuilder.Section.preload);
+//
+//            secondPath.buildPath(redRightBuilder.Position.center, redRightBuilder.Section.collect);
+
+            follower.setPath(firstPath.followablePath, firstPath.pathingVelocity);
+
+            //change target heading after dropping the purple pixel
+            Vector2D point;
+            follower.followPath(90, odometry, drive, point = new Vector2D(236, 300), 180);
+
+            odometry.update();
+
+            dropYellowPixel();
+
+//            follower.setPath(secondPath.followablePath, secondPath.pathingVelocity);
+//
+//            follower.followPath(180, odometry, drive);
+
+        } else if (propPos == 3) {
+
+            portal.close();
+
+            firstPath.buildPath(redRightBuilder.Position.right, redRightBuilder.Section.preload);
+//            secondPath.buildPath(redRightBuilder.Position.right, redRightBuilder.Section.collect);
+//
+//            thridPath.buildPath(redRightBuilder.Position.right, redRightBuilder.Section.deliver);
+            follower.setPath(firstPath.followablePath, firstPath.pathingVelocity);
+
+            //change target heading after dropping the purple pixel
+            Vector2D point;
+            follower.followPath(120, odometry, drive, point = new Vector2D(250, 314), 180);
+
+            odometry.update();
+
+            dropYellowPixel();
+
+//            follower.setPath(secondPath.followablePath, secondPath.pathingVelocity);
+//
+//            follower.followPath(180, odometry, drive);
+//
+//            sleep(5000);
+
+//            follower.setPath(thridPath.followablePath, thridPath.pathingVelocity);
+//
+//            follower.followPath(180, odometry, drive);
 //
 //            delivery.setGripperState(Delivery.targetGripperState.openBoth);
 //            delivery.updateGrippers();
@@ -157,21 +209,11 @@ public class BlueLeftAuto extends LinearOpMode {
 
         }
 
-        while (opModeIsActive()){
-
-            odometry.update();
-
-            telemetry.addData("X", odometry.X);
-            telemetry.addData("Y", odometry.Y);
-            telemetry.addData("heading", odometry.heading);
-            telemetry.update();
-
-        }
-
-
     }
 
     private void initialize(){
+
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         //init hardware
         odometry.init(hardwareMap);

@@ -1,14 +1,16 @@
 package org.firstinspires.ftc.teamcode.Teleop.Sprint_Teleops.SprintThree;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.Auto_Slide_Height;
-import org.firstinspires.ftc.teamcode.hardware.Delivery_Slides;
+import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Delivery_Slides;
 import org.firstinspires.ftc.vision.VisionPortal;
 
 @TeleOp
+@Disabled
 public class AutoSlideTesting extends LinearOpMode {
 
     Delivery_Slides deliverySlides = new Delivery_Slides();
