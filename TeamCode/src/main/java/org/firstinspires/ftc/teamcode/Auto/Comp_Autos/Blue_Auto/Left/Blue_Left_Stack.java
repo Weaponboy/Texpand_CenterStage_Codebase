@@ -246,9 +246,11 @@ public class Blue_Left_Stack extends LinearOpMode{
         boolean armInPosition = false;
 
         while (!armInPosition){
+
             if (Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.deliverAuto) {
                 armInPosition = true;
             }
+            delivery.updateArm(deliverySlides.getCurrentposition());
         }
 
         sleep(200);
