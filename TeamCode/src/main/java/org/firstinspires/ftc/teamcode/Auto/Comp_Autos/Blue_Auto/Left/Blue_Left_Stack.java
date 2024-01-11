@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Blue_Auto.Left;
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.propPos;
 
+import static java.lang.Thread.sleep;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -19,9 +21,11 @@ import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry;
 import org.firstinspires.ftc.teamcode.hardware.Method_Interfaces.Auto_Methods;
 import org.firstinspires.ftc.vision.VisionPortal;
 
+import java.util.Objects;
+
 @Autonomous
 /**start red right*/
-public class Blue_Left_Stack extends LinearOpMode implements Auto_Methods {
+public class Blue_Left_Stack extends LinearOpMode{
 
     public WebcamName frontCam;
 
@@ -149,7 +153,7 @@ public class Blue_Left_Stack extends LinearOpMode implements Auto_Methods {
 
     }
 
-    public void stackPixels() throws InterruptedException {
+    public void stackPixels() {
 
         follower.setPath(secondPath.followablePath, secondPath.pathingVelocity);
 
@@ -183,6 +187,90 @@ public class Blue_Left_Stack extends LinearOpMode implements Auto_Methods {
         follower.followPath(180, odometry, drive);
 
         dropWhitePixels();
+
+    }
+
+    public void dropYellowPixel() {
+
+        collection.setIntakeHeight(Collection.intakeHeightState.letClawThrough);
+        collection.updateIntakeHeight();
+
+        sleep(200);
+
+        deliverySlides.DeliverySlides(500, 0.6);
+
+        while (deliverySlides.getCurrentposition() < 500){}
+
+        delivery.setArmTargetState(Delivery.armState.deliverAuto);
+        delivery.updateArm(deliverySlides.getCurrentposition());
+
+        sleep(1500);
+
+        delivery.setGripperState(Delivery.targetGripperState.openRight);
+        delivery.updateGrippers();
+
+        sleep(1500);
+
+        delivery.setArmTargetState(Delivery.armState.collect);
+        delivery.updateArm(deliverySlides.getCurrentposition());
+
+        sleep(100);
+
+        deliverySlides.DeliverySlides(0, -0.6);
+
+        sleep(500);
+
+        collection.setIntakeHeight(Collection.intakeHeightState.stowed);
+        collection.updateIntakeHeight();
+
+    }
+
+    public void dropWhitePixels(){
+
+        collection.setIntakeHeight(Collection.intakeHeightState.letClawThrough);
+        collection.updateIntakeHeight();
+
+        sleep(200);
+
+        deliverySlides.DeliverySlides(700, 0.6);
+
+        while (deliverySlides.getCurrentposition() < 680){
+
+            if (deliverySlides.getCurrentposition() > 150){
+                delivery.setArmTargetState(Delivery.armState.deliverAuto);
+                delivery.updateArm(deliverySlides.getCurrentposition());
+            }
+
+        }
+
+        boolean armInPosition = false;
+
+        while (!armInPosition){
+            if (Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.deliverAuto) {
+                armInPosition = true;
+            }
+        }
+
+        sleep(200);
+
+        delivery.setGripperState(Delivery.targetGripperState.openBoth);
+        delivery.updateGrippers();
+
+        sleep(500);
+
+        delivery.setArmTargetState(Delivery.armState.collect);
+        delivery.updateArm(deliverySlides.getCurrentposition());
+
+        sleep(100);
+
+        deliverySlides.DeliverySlides(0, -0.6);
+
+        while (deliverySlides.getCurrentposition() > 100){
+            //wait
+        }
+
+        collection.setIntakeHeight(Collection.intakeHeightState.stowed);
+        collection.updateIntakeHeight();
 
     }
 

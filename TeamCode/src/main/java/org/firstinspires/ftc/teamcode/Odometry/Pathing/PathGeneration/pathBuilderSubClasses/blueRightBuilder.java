@@ -50,7 +50,7 @@ public class blueRightBuilder extends pathBuilderMain {
     Vector2D DYE3F = new Vector2D(getRealCoords(300), getRealCoords(75));
 
     /**drop yellow second*/
-    Vector2D DYS1S = new Vector2D(DPE1S.getX(), DPE1S.getY());
+    Vector2D DYS1S = DPE1S;
     Vector2D DYC1S = new Vector2D(getRealCoords(35), getRealCoords(0));
     Vector2D DYE1S = new Vector2D(getRealCoords(35), getRealCoords(90));
 
@@ -79,7 +79,7 @@ public class blueRightBuilder extends pathBuilderMain {
     /**collect white pixels from stack, These are also for delivering the white pixels but just reversed*/
 
     /*first position*/
-    Vector2D CS1F = new Vector2D(DYE1F.getX(), DYE1F.getY());
+    Vector2D CS1F = DYE1F;
     Vector2D CC1F = new Vector2D(getRealCoords(292), getRealCoords(194));
     Vector2D CE1F = new Vector2D(getRealCoords(180), getRealCoords(210));
 
@@ -112,6 +112,11 @@ public class blueRightBuilder extends pathBuilderMain {
         right
     }
 
+    public enum pixelColor {
+        purple,
+        yellow,
+    }
+
     public enum Section {
         preload,
         collect,
@@ -127,7 +132,7 @@ public class blueRightBuilder extends pathBuilderMain {
                         firstPositionPreloadPurple();
                         break;
                     case right:
-                        thirdPositionPreloadYellow();
+                        thirdPositionPreloadPurple();
                         break;
                     case center:
                         secondPositionPreload();
@@ -152,13 +157,82 @@ public class blueRightBuilder extends pathBuilderMain {
             case deliver:
                 switch (propPosition) {
                     case left:
-                        firstPositionPreloadYellow();
+                        firstPositionDeliver();
                         break;
                     case right:
-                        thirdPositionPreloadPurple();
+                        secondPositionDeliver();
+                        break;
+                    case center:
+                        thirdPositionDeliver();
+                        break;
+                    default:
+                }
+                break;
+            default:
+        }
+
+        pathBuilder(originalPath);
+
+        motionProfile();
+    }
+
+    public void buildPath(Position propPosition, Section section, pixelColor color){
+
+        switch (section) {
+            case preload:
+                switch (propPosition) {
+                    case left:
+                        switch (color){
+                            case purple:
+                                firstPositionPreloadPurple();
+                                break;
+                            case yellow:
+                                firstPositionPreloadYellow();
+                                break;
+                            default:
+                        }
+                        break;
+                    case right:
+                        switch (color){
+                            case purple:
+                                thirdPositionPreloadPurple();
+                                break;
+                            case yellow:
+                                thirdPositionPreloadYellow();
+                                break;
+                            default:
+                        }
                         break;
                     case center:
                         secondPositionPreload();
+                        break;
+                    default:
+                }
+                break;
+            case collect:
+                switch (propPosition) {
+                    case left:
+                        firstPositionCollect();
+                        break;
+                    case right:
+                        thirdPositionCollect();
+                        break;
+                    case center:
+                        secondPositionCollect();
+                        break;
+                    default:
+                }
+                break;
+            case deliver:
+                switch (propPosition) {
+                    case left:
+                        firstPositionDeliver();
+                        break;
+                    case right:
+                        thirdPositionDeliver();
+                        break;
+                    case center:
+                        secondPositionDeliver();
                         break;
                     default:
                 }
@@ -223,6 +297,10 @@ public class blueRightBuilder extends pathBuilderMain {
         // drop yellow pixel
         buildCurveSegment(DYS1S, DYC1S, DYE1S);
 
+        buildCurveSegment(DYS2S, DYC2S, DYE2S);
+
+        buildCurveSegment(DYS3S, DYC3S, DYE3S);
+
     }
 
     /**second Position*/
@@ -233,6 +311,15 @@ public class blueRightBuilder extends pathBuilderMain {
         buildLineSegment(CS2S, CE2S);
 
     }
+
+    private void secondPositionDeliver(){
+
+        buildCurveSegment(CS1S, CC1S, CE1S);
+
+        buildLineSegment(CS2S, CE2S);
+
+    }
+
 
     /**
      * third Position
@@ -256,6 +343,14 @@ public class blueRightBuilder extends pathBuilderMain {
 
     /**third Position*/
     private void thirdPositionCollect(){
+
+        buildCurveSegment(CS1T, CC1T, CE1T);
+
+        buildLineSegment(CS2T, CE2T);
+
+    }
+
+    private void thirdPositionDeliver(){
 
         buildCurveSegment(CS1T, CC1T, CE1T);
 
