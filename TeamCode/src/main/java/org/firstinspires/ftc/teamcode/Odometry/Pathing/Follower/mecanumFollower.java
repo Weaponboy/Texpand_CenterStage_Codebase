@@ -130,7 +130,7 @@ public class mecanumFollower {
         double robotRelativeXError = yDist * Math.sin(Math.toRadians(heading)) + xDist * Math.cos(Math.toRadians(heading));
         double robotRelativeYError = yDist * Math.cos(Math.toRadians(heading)) - xDist * Math.sin(Math.toRadians(heading));
 
-        double xPower = XCorrective.calculate(-robotRelativeXError)*1.2;
+        double xPower = XCorrective.calculate(-robotRelativeXError)*1.3;
         double yPower = YCorrective.calculate(-robotRelativeYError)*1.4;
 
         correctivePower.set(xPower, yPower);
@@ -154,7 +154,7 @@ public class mecanumFollower {
         double robotRelativeXError = yDist * Math.sin(Math.toRadians(heading)) + xDist * Math.cos(Math.toRadians(heading));
         double robotRelativeYError = yDist * Math.cos(Math.toRadians(heading)) - xDist * Math.sin(Math.toRadians(heading));
 
-        double xPower = XCorrective.calculate(-robotRelativeXError)*1.2;
+        double xPower = XCorrective.calculate(-robotRelativeXError)*1.3;
         double yPower = YCorrective.calculate(-robotRelativeYError)*1.4;
 
         correctivePower.set(xPower, yPower);
