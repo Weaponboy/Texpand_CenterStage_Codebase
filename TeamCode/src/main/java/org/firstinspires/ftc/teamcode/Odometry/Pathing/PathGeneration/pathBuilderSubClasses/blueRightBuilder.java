@@ -38,15 +38,15 @@ public class blueRightBuilder extends pathBuilderMain {
 
     /**drop yellow first*/
     Vector2D DYS1F = DPE1F;
-    Vector2D DYC1F = new Vector2D(getRealCoords(30), getRealCoords(140));
-    Vector2D DYE1F = new Vector2D(getRealCoords(103), getRealCoords(174));
+    Vector2D DYC1F = new Vector2D(getRealCoords(53), getRealCoords(104));
+    Vector2D DYE1F = new Vector2D(getRealCoords(100), getRealCoords(158));
 
     Vector2D DYS2F = DYE1F;
-    Vector2D DYC2F = new Vector2D(getRealCoords(158), getRealCoords(188));
-    Vector2D DYE2F = new Vector2D(getRealCoords(240), getRealCoords(157));
+    Vector2D DYC2F = new Vector2D(getRealCoords(132), getRealCoords(186));
+    Vector2D DYE2F = new Vector2D(getRealCoords(200), getRealCoords(168));
 
     Vector2D DYS3F = DYE2F;
-    Vector2D DYC3F = new Vector2D(getRealCoords(293), getRealCoords(136));
+    Vector2D DYC3F = new Vector2D(getRealCoords(285), getRealCoords(141));
     Vector2D DYE3F = new Vector2D(getRealCoords(300), getRealCoords(75));
 
     /**drop yellow second*/
@@ -65,46 +65,81 @@ public class blueRightBuilder extends pathBuilderMain {
     /**drop yellow third*/
 
     Vector2D DYS1T = DPE1T;
-    Vector2D DYC1T = new Vector2D(getRealCoords(111), getRealCoords(68));
-    Vector2D DYE1T = new Vector2D(getRealCoords(86), getRealCoords(142));
+    Vector2D DYC1T = new Vector2D(getRealCoords(97), getRealCoords(73));
+    Vector2D DYE1T = new Vector2D(getRealCoords(85), getRealCoords(142));
 
     Vector2D DYS2T = DYE1T;
-    Vector2D DYC2T = new Vector2D(getRealCoords(64), getRealCoords(194));
-    Vector2D DYE2T = new Vector2D(getRealCoords(180), getRealCoords(181));
+    Vector2D DYC2T = new Vector2D(getRealCoords(76), getRealCoords(198));
+    Vector2D DYE2T = new Vector2D(getRealCoords(203), getRealCoords(173));
 
     Vector2D DYS3T = DYE2T;
-    Vector2D DYC3T = new Vector2D(getRealCoords(270), getRealCoords(167));
+    Vector2D DYC3T = new Vector2D(getRealCoords(276), getRealCoords(158));
     Vector2D DYE3T = new Vector2D(getRealCoords(300), getRealCoords(105));
 
-    /**collect white pixels from stack, These are also for delivering the white pixels but just reversed*/
+    /**
+     * collect white pixels from stack
+     * */
 
-    /*first position*/
-    Vector2D CS1F = DYE1F;
-    Vector2D CC1F = new Vector2D(getRealCoords(292), getRealCoords(194));
-    Vector2D CE1F = new Vector2D(getRealCoords(180), getRealCoords(210));
-
-    //first segment
-    Vector2D CS2F = new Vector2D(getRealCoords(180), getRealCoords(210));
-    Vector2D CE2F = new Vector2D(getRealCoords(41), getRealCoords(210));
-
-    /*second position*/
-    Vector2D CS1S = new Vector2D(DYE1S.getX(), DYE1S.getY());
-    Vector2D CC1S = new Vector2D(getRealCoords(292), getRealCoords(194));
-    Vector2D CE1S = new Vector2D(getRealCoords(180), getRealCoords(210));
+    /**first position*/
+    Vector2D CS1F = new Vector2D(DYE1F.getX(), DYE1F.getY());
+    Vector2D CC1F = new Vector2D(getRealCoords(292), getRealCoords(166));
+    Vector2D CE1F = new Vector2D(getRealCoords(180), getRealCoords(150));
 
     //second segment
-    Vector2D CS2S = new Vector2D(getRealCoords(180), getRealCoords(210));
-    Vector2D CE2S = new Vector2D(getRealCoords(41), getRealCoords(210));
+    Vector2D CS2F = CE1F;
+    Vector2D CC2F = new Vector2D(getRealCoords(30), getRealCoords(249));
+    Vector2D CE2F = new Vector2D(getRealCoords(33), getRealCoords(150));
 
-    /*third position*/
+    /**second position*/
+    Vector2D CS1S = new Vector2D(DYE1S.getX(), DYE1S.getY());
+    Vector2D CC1S = new Vector2D(getRealCoords(292), getRealCoords(166));
+    Vector2D CE1S = new Vector2D(getRealCoords(180), getRealCoords(150));
+
+    //second segment
+    Vector2D CS2S = CE1S;
+    Vector2D CC2S = new Vector2D(getRealCoords(30), getRealCoords(249));
+    Vector2D CE2S = new Vector2D(getRealCoords(33), getRealCoords(150));
+
+    /**third position*/
     Vector2D CS1T = new Vector2D(DYE1T.getX(), DYE1T.getY());
-    Vector2D CC1T = new Vector2D(getRealCoords(292), getRealCoords(194));
-    Vector2D CE1T = new Vector2D(getRealCoords(180), getRealCoords(210));
+    Vector2D CC1T = new Vector2D(getRealCoords(294), getRealCoords(149));
+    Vector2D CE1T = new Vector2D(getRealCoords(181), getRealCoords(193));
 
-    //third segment
-    Vector2D CS2T = new Vector2D(getRealCoords(180), getRealCoords(210));
-    Vector2D CE2T = new Vector2D(getRealCoords(38), getRealCoords(210));
+    //second segment
+    Vector2D CS2T = CE1T;
+    Vector2D CC2T = new Vector2D(getRealCoords(30), getRealCoords(249));
+    Vector2D CE2T = new Vector2D(getRealCoords(41), getRealCoords(135));
 
+    /**
+     * deliver points
+     * */
+
+    /**first position*/
+    Vector2D DS1F = new Vector2D(CE2F.getX(), CE2F.getY());
+    Vector2D DC1F = new Vector2D(getRealCoords(84), getRealCoords(189));
+    Vector2D DE1F = new Vector2D(getRealCoords(179), getRealCoords(176));
+
+    Vector2D DS2F = new Vector2D(DE1F.getX(), DE1F.getY());
+    Vector2D DC2F = new Vector2D(getRealCoords(293), getRealCoords(160));
+    Vector2D DE2F = new Vector2D(getRealCoords(296), getRealCoords(90));
+
+    /**second position*/
+    Vector2D DS1S = new Vector2D(CE2S.getX(), CE2S.getY());
+    Vector2D DC1S = new Vector2D(getRealCoords(84), getRealCoords(189));
+    Vector2D DE1S = new Vector2D(getRealCoords(179), getRealCoords(176));
+
+    Vector2D DS2S = new Vector2D(DE1S.getX(), DE1S.getY());
+    Vector2D DC2S = new Vector2D(getRealCoords(293), getRealCoords(160));
+    Vector2D DE2S = new Vector2D(getRealCoords(296), getRealCoords(90));
+
+    /**third position*/
+    Vector2D DS1T = new Vector2D(CE2T.getX(), CE2T.getY());
+    Vector2D DC1T = new Vector2D(getRealCoords(84), getRealCoords(189));
+    Vector2D DE1T = new Vector2D(getRealCoords(179), getRealCoords(176));
+
+    Vector2D DS2T = new Vector2D(DE1T.getX(), DE1T.getY());
+    Vector2D DC2T = new Vector2D(getRealCoords(293), getRealCoords(160));
+    Vector2D DE2T = new Vector2D(getRealCoords(296), getRealCoords(90));
 
     public enum Position {
         left,
@@ -272,7 +307,7 @@ public class blueRightBuilder extends pathBuilderMain {
 
         buildCurveSegment(CS1F, CC1F, CE1F);
 
-        buildLineSegment(CS2F, CE2F);
+        buildCurveSegment(CS2F, CC2F, CE2F);
 
     }
 
@@ -281,7 +316,7 @@ public class blueRightBuilder extends pathBuilderMain {
 
         buildCurveSegment(CS1F, CC1F, CE1F);
 
-        buildLineSegment(CS2F, CE2F);
+        buildCurveSegment(CS2F, CC2F, CE2F);
 
     }
 
@@ -304,22 +339,24 @@ public class blueRightBuilder extends pathBuilderMain {
     }
 
     /**second Position*/
+
+    /**third Position*/
     private void secondPositionCollect(){
 
         buildCurveSegment(CS1S, CC1S, CE1S);
 
-        buildLineSegment(CS2S, CE2S);
+        buildCurveSegment(CS2S, CC2S, CE2S);
 
     }
 
+    /**third Position*/
     private void secondPositionDeliver(){
 
-        buildCurveSegment(CS1S, CC1S, CE1S);
+        buildCurveSegment(DS1S, DC1S, DE1S);
 
-        buildLineSegment(CS2S, CE2S);
+        buildCurveSegment(DS2S, DC2S, DE2S);
 
     }
-
 
     /**
      * third Position
@@ -342,19 +379,22 @@ public class blueRightBuilder extends pathBuilderMain {
     }
 
     /**third Position*/
+
+    /**third Position*/
     private void thirdPositionCollect(){
 
         buildCurveSegment(CS1T, CC1T, CE1T);
 
-        buildLineSegment(CS2T, CE2T);
+        buildCurveSegment(CS2T, CC2T, CE2T);
 
     }
 
+    /**third Position*/
     private void thirdPositionDeliver(){
 
-        buildCurveSegment(CS1T, CC1T, CE1T);
+        buildCurveSegment(DS1T, DC1T, DE1T);
 
-        buildLineSegment(CS2T, CE2T);
+        buildCurveSegment(DS2T, DC2T, DE2T);
 
     }
 

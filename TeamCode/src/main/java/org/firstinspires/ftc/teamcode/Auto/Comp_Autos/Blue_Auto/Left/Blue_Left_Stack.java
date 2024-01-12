@@ -25,7 +25,7 @@ import java.util.Objects;
 
 @Autonomous
 /**start red right*/
-public class Blue_Left_Stack extends LinearOpMode{
+public class Blue_Left_Stack extends LinearOpMode implements Auto_Methods{
 
     public WebcamName frontCam;
 
@@ -48,12 +48,6 @@ public class Blue_Left_Stack extends LinearOpMode{
     blueLeftBuilder posThreeExtra = new blueLeftBuilder();
 
     mecanumFollower follower = new mecanumFollower();
-
-    Delivery delivery = new Delivery();
-
-    Delivery_Slides deliverySlides = new Delivery_Slides();
-
-    Collection collection = new Collection();
 
 
     @Override
@@ -139,11 +133,7 @@ public class Blue_Left_Stack extends LinearOpMode{
 
         drive.init(hardwareMap);
 
-        collection.init(hardwareMap);
-
-        delivery.init(hardwareMap);
-
-        deliverySlides.init(hardwareMap);
+        init(hardwareMap);
 
         odometry.update();
 
@@ -153,7 +143,7 @@ public class Blue_Left_Stack extends LinearOpMode{
 
     }
 
-    public void stackPixels() {
+    public void stackPixels() throws InterruptedException {
 
         follower.setPath(secondPath.followablePath, secondPath.pathingVelocity);
 
@@ -187,92 +177,6 @@ public class Blue_Left_Stack extends LinearOpMode{
         follower.followPath(180, odometry, drive);
 
         dropWhitePixels();
-
-    }
-
-    public void dropYellowPixel() {
-
-        collection.setIntakeHeight(Collection.intakeHeightState.letClawThrough);
-        collection.updateIntakeHeight();
-
-        sleep(200);
-
-        deliverySlides.DeliverySlides(500, 0.6);
-
-        while (deliverySlides.getCurrentposition() < 500){}
-
-        delivery.setArmTargetState(Delivery.armState.deliverAuto);
-        delivery.updateArm(deliverySlides.getCurrentposition());
-
-        sleep(1500);
-
-        delivery.setGripperState(Delivery.targetGripperState.openRight);
-        delivery.updateGrippers();
-
-        sleep(1500);
-
-        delivery.setArmTargetState(Delivery.armState.collect);
-        delivery.updateArm(deliverySlides.getCurrentposition());
-
-        sleep(100);
-
-        deliverySlides.DeliverySlides(0, -0.6);
-
-        sleep(500);
-
-        collection.setIntakeHeight(Collection.intakeHeightState.stowed);
-        collection.updateIntakeHeight();
-
-    }
-
-    public void dropWhitePixels(){
-
-        collection.setIntakeHeight(Collection.intakeHeightState.letClawThrough);
-        collection.updateIntakeHeight();
-
-        sleep(200);
-
-        deliverySlides.DeliverySlides(700, 0.6);
-
-        while (deliverySlides.getCurrentposition() < 680){
-
-            if (deliverySlides.getCurrentposition() > 150){
-                delivery.setArmTargetState(Delivery.armState.deliverAuto);
-                delivery.updateArm(deliverySlides.getCurrentposition());
-            }
-
-        }
-
-        boolean armInPosition = false;
-
-        while (!armInPosition){
-
-            if (Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.deliverAuto) {
-                armInPosition = true;
-            }
-            delivery.updateArm(deliverySlides.getCurrentposition());
-        }
-
-        sleep(200);
-
-        delivery.setGripperState(Delivery.targetGripperState.openBoth);
-        delivery.updateGrippers();
-
-        sleep(500);
-
-        delivery.setArmTargetState(Delivery.armState.collect);
-        delivery.updateArm(deliverySlides.getCurrentposition());
-
-        sleep(100);
-
-        deliverySlides.DeliverySlides(0, -0.6);
-
-        while (deliverySlides.getCurrentposition() > 100){
-            //wait
-        }
-
-        collection.setIntakeHeight(Collection.intakeHeightState.stowed);
-        collection.updateIntakeHeight();
 
     }
 

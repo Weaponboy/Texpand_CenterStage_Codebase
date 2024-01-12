@@ -284,4 +284,13 @@ public class redRightBuilder extends pathBuilderMain {
 
     }
 
+    private void secondPositionDeliver(){
+
+        buildLineSegment(CE2T, CS2T);
+
+        buildCurveSegment(CE1T, CC1T, CS1S);
+
+    }
+
+
 }

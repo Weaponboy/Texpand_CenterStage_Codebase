@@ -62,7 +62,8 @@ public class blueLeftBuilder extends pathBuilderMain {
     Vector2D CE1F = new Vector2D(getRealCoords(180), getRealCoords(150));
 
     //second segment
-    Vector2D CS2F = new Vector2D(getRealCoords(180), getRealCoords(150));
+    Vector2D CS2F = CE1F;
+    Vector2D CC2F = new Vector2D(getRealCoords(30), getRealCoords(249));
     Vector2D CE2F = new Vector2D(getRealCoords(33), getRealCoords(150));
 
     /**second position*/
@@ -71,7 +72,8 @@ public class blueLeftBuilder extends pathBuilderMain {
     Vector2D CE1S = new Vector2D(getRealCoords(180), getRealCoords(150));
 
     //second segment
-    Vector2D CS2S = new Vector2D(getRealCoords(180), getRealCoords(150));
+    Vector2D CS2S = CE1S;
+    Vector2D CC2S = new Vector2D(getRealCoords(30), getRealCoords(249));
     Vector2D CE2S = new Vector2D(getRealCoords(33), getRealCoords(150));
 
     /**third position*/
@@ -80,7 +82,7 @@ public class blueLeftBuilder extends pathBuilderMain {
     Vector2D CE1T = new Vector2D(getRealCoords(181), getRealCoords(193));
 
     //second segment
-    Vector2D CS2T = new Vector2D(CE1T.getX(), CE1T.getY());
+    Vector2D CS2T = CE1T;
     Vector2D CC2T = new Vector2D(getRealCoords(30), getRealCoords(249));
     Vector2D CE2T = new Vector2D(getRealCoords(41), getRealCoords(135));
 

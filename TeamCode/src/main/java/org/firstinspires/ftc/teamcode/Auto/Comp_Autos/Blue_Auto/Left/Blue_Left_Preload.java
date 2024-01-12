@@ -64,9 +64,7 @@ public class Blue_Left_Preload extends LinearOpMode {
 
             follower.setPath(firstPath.followablePath, firstPath.pathingVelocity);
 
-            //change target heading after dropping the purple pixel
-            Vector2D point;
-            follower.followPath(240, odometry, drive, point = new Vector2D(250, 46), 180);
+            follower.followPath(240, odometry, drive, new Vector2D(250, 46), 180);
 
             odometry.update();
 
@@ -113,47 +111,6 @@ public class Blue_Left_Preload extends LinearOpMode {
             odometry.update();
 
             dropYellowPixel();
-
-//
-//            delivery.setGripperState(Delivery.targetGripperState.openBoth);
-//            delivery.updateGrippers();
-//
-//            collection.setIntakeHeight(Collection.intakeHeightState.fifthPixel);
-//            collection.updateIntakeHeight();
-//
-//            collection.setState(Collection.intakePowerState.on);
-//            collection.updateIntakeState();
-//
-//            sleep(1500);
-//
-//            collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
-//            collection.updateIntakeHeight();
-//
-//            sleep(1500);
-//
-//            collection.setState(Collection.intakePowerState.off);
-//            collection.updateIntakeState();
-//
-//            delivery.setGripperState(Delivery.targetGripperState.closeBoth);
-//            delivery.updateGrippers();
-//
-//            sleep(500);
-//
-//            collection.setState(Collection.intakePowerState.reversed);
-//            collection.updateIntakeState();
-//
-//            sleep(200);
-//
-//            collection.setState(Collection.intakePowerState.off);
-//            collection.updateIntakeState();
-//
-//            follower.setPath(thridPath.followablePath, thridPath.pathingVelocity);
-//
-//            follower.followPath(180, odometry, drive);
-//
-//            dropWhitePixels();
-//
-//            sleep(200);
 
         }
 

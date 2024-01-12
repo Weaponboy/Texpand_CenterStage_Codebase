@@ -80,7 +80,7 @@ public class Delivery {
 
     HardwareMap hmap;
 
-    public enum armState{
+    public enum armState {
         delivery,
         deliverAuto,
         collect,
@@ -457,7 +457,6 @@ public class Delivery {
         }
 
     }
-
 
     public void updateGrippers (){
 

@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.hardware.Method_Interfaces;
 
 import static java.lang.Thread.sleep;
 
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Collection;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Delivery;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Delivery_Slides;
@@ -18,6 +20,16 @@ public interface Auto_Methods {
     Collection collection = new Collection();
 
     Sensors sensors = new Sensors();
+
+    default void init(HardwareMap hardwareMap){
+        delivery.init(hardwareMap);
+
+        deliverySlides.init(hardwareMap);
+
+        collection.init(hardwareMap);
+
+        sensors.init(hardwareMap);
+    }
 
     default void dropYellowPixel() throws InterruptedException {
 

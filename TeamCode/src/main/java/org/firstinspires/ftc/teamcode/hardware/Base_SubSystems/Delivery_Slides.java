@@ -19,7 +19,7 @@ public class  Delivery_Slides {
     public enum SlideState{
         manual,
         moving,
-        targetReached;
+        targetReached
     }
 
     SlideState slideState = SlideState.manual;
