@@ -407,11 +407,11 @@ public class mecanumFollower {
             PathingPower correctivePower;
             PathingPower pathingPower;
 
+            correctivePower = getCorrectivePowerOnPath(robotPositionVector, odometry.heading);
+
             if (!closeToTarget){
                 pathingPower = getPathingPower(robotPositionVector, odometry.heading);
-                correctivePower = getCorrectivePowerOnPath(robotPositionVector, odometry.heading);
             }else {
-                correctivePower = getCorrectivePowerAtEnd(robotPositionVector, targetPoint, odometry.heading);
                 pathingPower = new PathingPower(0,0);
             }
 
