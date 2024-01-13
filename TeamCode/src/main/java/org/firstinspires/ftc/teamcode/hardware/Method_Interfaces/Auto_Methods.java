@@ -38,9 +38,9 @@ public interface Auto_Methods {
 
         sleep(200);
 
-        deliverySlides.DeliverySlides(500, 0.6);
+        deliverySlides.DeliverySlides(400, 0.6);
 
-        while (deliverySlides.getCurrentposition() < 500){}
+        while (deliverySlides.getCurrentposition() < 390){}
 
         delivery.setArmTargetState(Delivery.armState.deliverAuto);
         delivery.updateArm(deliverySlides.getCurrentposition());
