@@ -140,8 +140,8 @@ public class mecanumFollower {
 
     public PathingPower getCorrectivePowerAtEnd(Vector2D robotPos, Vector2D targetPos, double heading){
 
-        XCorrective = new PIDController(0.04, 0, 0.002);
-        YCorrective = new PIDController(0.05, 0, 0.002);
+        XCorrective = new PIDController(0.03, 0, 0.002);
+        YCorrective = new PIDController(0.04, 0, 0.001);
 
         Vector2D error;
         PathingPower correctivePower = new PathingPower();
@@ -154,8 +154,8 @@ public class mecanumFollower {
         double robotRelativeXError = yDist * Math.sin(Math.toRadians(heading)) + xDist * Math.cos(Math.toRadians(heading));
         double robotRelativeYError = yDist * Math.cos(Math.toRadians(heading)) - xDist * Math.sin(Math.toRadians(heading));
 
-        double xPower = XCorrective.calculate(-robotRelativeXError)*1.3;
-        double yPower = YCorrective.calculate(-robotRelativeYError)*1.4;
+        double xPower = XCorrective.calculate(-robotRelativeXError)*1.2;
+        double yPower = YCorrective.calculate(-robotRelativeYError)*1.3;
 
         correctivePower.set(xPower, yPower);
 
@@ -404,16 +404,16 @@ public class mecanumFollower {
             }
 
             PathingPower correctivePower = null;
-            correctivePower = getCorrectivePowerOnPath(robotPositionVector, odometry.heading);
-
             PathingPower pathingPower;
 
-            closeToTarget = Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 3 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 3;
+            closeToTarget = Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 5 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 5;
 
             if (!closeToTarget){
                 pathingPower = getPathingPower(robotPositionVector, odometry.heading);
+                correctivePower = getCorrectivePowerOnPath(robotPositionVector, odometry.heading);
             }else {
                 pathingPower = new PathingPower(0, 0);
+                correctivePower = getCorrectivePowerAtEnd(robotPositionVector, targetPoint, odometry.heading);
             }
             vertical = correctivePower.getVertical() + pathingPower.getVertical();
             horizontal = correctivePower.getHorizontal() + pathingPower.getHorizontal();
