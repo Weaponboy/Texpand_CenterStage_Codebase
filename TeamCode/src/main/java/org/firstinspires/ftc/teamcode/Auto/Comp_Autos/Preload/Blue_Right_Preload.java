@@ -52,8 +52,6 @@ public class Blue_Right_Preload extends LinearOpMode implements Auto_Methods{
 
         waitForStart();
 
-        propPos = 1;
-
         if (propPos == 1){
 
             portal.close();
@@ -94,7 +92,7 @@ public class Blue_Right_Preload extends LinearOpMode implements Auto_Methods{
 
             preloadPurple.buildPath(blueRightBuilder.Position.right, blueRightBuilder.Section.preload, blueRightBuilder.pixelColor.purple);
 
-            preloadYellow.buildPath(blueRightBuilder.Position.right, blueRightBuilder.Section.collect, blueRightBuilder.pixelColor.yellow);
+            preloadYellow.buildPath(blueRightBuilder.Position.right, blueRightBuilder.Section.preload, blueRightBuilder.pixelColor.yellow);
 
             follower.setPath(preloadPurple.followablePath, preloadPurple.pathingVelocity);
 

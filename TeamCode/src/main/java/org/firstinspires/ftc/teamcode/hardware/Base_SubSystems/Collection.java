@@ -16,7 +16,6 @@ public class Collection {
 
     HardwareMap hmap;
 
-    //get the correct values when Ethan pushes
     double collect = 0;
     double stowed = 0.3;
     double letClawThrough = 0.15;

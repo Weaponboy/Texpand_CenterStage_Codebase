@@ -45,7 +45,7 @@ public class Red_Right_Preload extends LinearOpMode implements Auto_Methods {
 
     redRightBuilder secondPath = new redRightBuilder();
 
-    redRightBuilder thridPath = new redRightBuilder();
+    redRightBuilder thirdPath = new redRightBuilder();
 
     mecanumFollower follower = new mecanumFollower();
 
