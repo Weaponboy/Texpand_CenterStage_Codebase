@@ -1,6 +1,8 @@
-package org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Blue_Auto.Left;
+package org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Stack;
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.propPos;
+
+import static java.lang.Thread.sleep;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -16,11 +18,14 @@ import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Delivery;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Delivery_Slides;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry;
+import org.firstinspires.ftc.teamcode.hardware.Method_Interfaces.Auto_Methods;
 import org.firstinspires.ftc.vision.VisionPortal;
+
+import java.util.Objects;
 
 @Autonomous
 /**start red right*/
-public class Blue_Left_Preload extends LinearOpMode {
+public class Blue_Left_Stack extends LinearOpMode implements Auto_Methods{
 
     public WebcamName frontCam;
 
@@ -40,13 +45,9 @@ public class Blue_Left_Preload extends LinearOpMode {
 
     blueLeftBuilder thridPath = new blueLeftBuilder();
 
+    blueLeftBuilder posThreeExtra = new blueLeftBuilder();
+
     mecanumFollower follower = new mecanumFollower();
-
-    Delivery delivery = new Delivery();
-
-    Delivery_Slides deliverySlides = new Delivery_Slides();
-
-    Collection collection = new Collection();
 
 
     @Override
@@ -55,8 +56,7 @@ public class Blue_Left_Preload extends LinearOpMode {
         initialize();
 
         waitForStart();
-
-        propPos = 2;
+        propPos = 3;
 
         if (propPos == 1){
 
@@ -66,7 +66,9 @@ public class Blue_Left_Preload extends LinearOpMode {
 
             follower.setPath(firstPath.followablePath, firstPath.pathingVelocity);
 
-            follower.followPath(240, odometry, drive, new Vector2D(250, 46), 180);
+            //change target heading after dropping the purple pixel
+            Vector2D point;
+            follower.followPath(240, odometry, drive, point = new Vector2D(250, 46), 180);
 
             odometry.update();
 
@@ -90,43 +92,38 @@ public class Blue_Left_Preload extends LinearOpMode {
 
         } else if (propPos == 3) {
 
+            //close vision portal
             portal.close();
 
+            //build paths
             firstPath.buildPath(blueLeftBuilder.Position.right, blueLeftBuilder.Section.preload, redRightBuilder.pathSplit.first);
 
-            secondPath.buildPath(blueLeftBuilder.Position.right, blueLeftBuilder.Section.preload, redRightBuilder.pathSplit.second);
+            posThreeExtra.buildPath(blueLeftBuilder.Position.right, blueLeftBuilder.Section.preload, redRightBuilder.pathSplit.second);
 
+            //follow first path
             follower.setPath(firstPath.followablePath, firstPath.pathingVelocity);
 
-            follower.setPath(firstPath.followablePath, firstPath.pathingVelocity);
-
-            //change target heading after dropping the purple pixel
-            Vector2D point;
-            follower.followPath(270, odometry, drive, point = new Vector2D(210, 70), 0);
+            follower.followPath(270, odometry, drive, new Vector2D(210, 70), 0);
 
             odometry.update();
 
-            follower.setPath(secondPath.followablePath, secondPath.pathingVelocity);
+            //follow second path
+            follower.setPath(posThreeExtra.followablePath, posThreeExtra.pathingVelocity);
 
-            follower.followPath(0, odometry, drive, point = new Vector2D(250, 90), 180);
+            follower.followPath(0, odometry, drive, new Vector2D(250, 90), 180);
 
             odometry.update();
 
             dropYellowPixel();
 
-        }
+            //build stack paths
+            secondPath.buildPath(blueLeftBuilder.Position.right, blueLeftBuilder.Section.collect);
 
-        while (opModeIsActive()){
+            thridPath.buildPath(blueLeftBuilder.Position.right, blueLeftBuilder.Section.deliver);
 
-            odometry.update();
-
-            telemetry.addData("X", odometry.X);
-            telemetry.addData("Y", odometry.Y);
-            telemetry.addData("heading", odometry.heading);
-            telemetry.update();
+            stackPixels();
 
         }
-
 
     }
 
@@ -137,11 +134,7 @@ public class Blue_Left_Preload extends LinearOpMode {
 
         drive.init(hardwareMap);
 
-        collection.init(hardwareMap);
-
-        delivery.init(hardwareMap);
-
-        deliverySlides.init(hardwareMap);
+        init(hardwareMap);
 
         odometry.update();
 
@@ -151,73 +144,40 @@ public class Blue_Left_Preload extends LinearOpMode {
 
     }
 
-    private void dropYellowPixel(){
+    public void stackPixels() throws InterruptedException {
 
-        collection.setIntakeHeight(Collection.intakeHeightState.letClawThrough);
-        collection.updateIntakeHeight();
-
-        sleep(200);
-
-        deliverySlides.DeliverySlides(500, 0.6);
-
-        while (deliverySlides.getCurrentposition() < 500){}
-
-        delivery.setArmTargetState(Delivery.armState.deliverAuto);
-        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
-
-        sleep(1500);
-
-        delivery.setGripperState(Delivery.targetGripperState.openRight);
-        delivery.updateGrippers();
-
-        sleep(1500);
-
-        delivery.setArmTargetState(Delivery.armState.collect);
-        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
-
-        sleep(100);
-
-        deliverySlides.DeliverySlides(0, -0.6);
-
-        sleep(500);
-
-        collection.setIntakeHeight(Collection.intakeHeightState.stowed);
-        collection.updateIntakeHeight();
-
-    }
-
-    private void dropWhitePixels(){
-
-        collection.setIntakeHeight(Collection.intakeHeightState.letClawThrough);
-        collection.updateIntakeHeight();
-
-        sleep(200);
-
-        deliverySlides.DeliverySlides(700, 0.6);
-
-        while (deliverySlides.getCurrentposition() < 680){}
-
-        delivery.setArmTargetState(Delivery.armState.deliverAuto);
-        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
-
-        sleep(1500);
+        follower.setPath(secondPath.followablePath, secondPath.pathingVelocity);
 
         delivery.setGripperState(Delivery.targetGripperState.openBoth);
         delivery.updateGrippers();
 
+        collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
+        collection.updateIntakeHeight();
+
+        follower.followPath(180, odometry, drive, collection, new Vector2D(76, 209));
+
+        odometry.update();
+
         sleep(1000);
 
-        delivery.setArmTargetState(Delivery.armState.collect);
-        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
-
-        sleep(100);
-
-        deliverySlides.DeliverySlides(0, -0.6);
+        delivery.setGripperState(Delivery.targetGripperState.closeBoth);
+        delivery.updateGrippers();
 
         sleep(500);
 
-        collection.setIntakeHeight(Collection.intakeHeightState.stowed);
-        collection.updateIntakeHeight();
+        collection.setState(Collection.intakePowerState.reversed);
+        collection.updateIntakeState();
+
+        sleep(400);
+
+        collection.setState(Collection.intakePowerState.off);
+        collection.updateIntakeState();
+
+        follower.setPath(thridPath.followablePath, thridPath.pathingVelocity);
+
+        follower.followPath(180, odometry, drive);
+
+        dropWhitePixels();
 
     }
 

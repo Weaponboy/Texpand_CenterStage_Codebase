@@ -3,9 +3,10 @@ package org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuild
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.UsefulMethods.getRealCoords;
 
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
+import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.Red_Points_Overlap;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderMain;
 
-public class redRightBuilder extends pathBuilderMain {
+public class redRightBuilder extends pathBuilderMain implements Red_Points_Overlap {
 
     /** control point naming key
      * don't need start position because i have sub classes for each one
@@ -48,34 +49,6 @@ public class redRightBuilder extends pathBuilderMain {
     Vector2D DYC1T = new Vector2D(getRealCoords(233), getRealCoords(341));
     Vector2D DYE1T = new Vector2D(getRealCoords(296), getRealCoords(290));
 
-    /**collect white pixels from stack, These are also for delivering the white pixels but just reversed*/
-
-    /*first position*/
-    Vector2D CS1F = new Vector2D(DYE1F.getX(), DYE1F.getY());
-    Vector2D CC1F = new Vector2D(getRealCoords(292), getRealCoords(194));
-    Vector2D CE1F = new Vector2D(getRealCoords(180), getRealCoords(210));
-
-    //first segment
-    Vector2D CS2F = new Vector2D(getRealCoords(180), getRealCoords(210));
-    Vector2D CE2F = new Vector2D(getRealCoords(41), getRealCoords(210));
-
-    /*second position*/
-    Vector2D CS1S = new Vector2D(DYE1S.getX(), DYE1S.getY());
-    Vector2D CC1S = new Vector2D(getRealCoords(292), getRealCoords(194));
-    Vector2D CE1S = new Vector2D(getRealCoords(180), getRealCoords(210));
-
-    //second segment
-    Vector2D CS2S = new Vector2D(getRealCoords(180), getRealCoords(210));
-    Vector2D CE2S = new Vector2D(getRealCoords(41), getRealCoords(210));
-
-    /*third position*/
-    Vector2D CS1T = new Vector2D(DYE1T.getX(), DYE1T.getY());
-    Vector2D CC1T = new Vector2D(getRealCoords(292), getRealCoords(194));
-    Vector2D CE1T = new Vector2D(getRealCoords(180), getRealCoords(210));
-
-    //third segment
-    Vector2D CS2T = new Vector2D(getRealCoords(180), getRealCoords(210));
-    Vector2D CE2T = new Vector2D(getRealCoords(38), getRealCoords(210));
 
     public enum Position {
         left,
@@ -134,7 +107,7 @@ public class redRightBuilder extends pathBuilderMain {
                         thirdPositionDeliver();
                         break;
                     case center:
-                        secondPositionPreload();
+                        secondPositionDeliver();
                         break;
                     default:
                 }
@@ -195,7 +168,7 @@ public class redRightBuilder extends pathBuilderMain {
                         thirdPositionDeliver();
                         break;
                     case center:
-                        secondPositionPreload();
+                        secondPositionDeliver();
                         break;
                     default:
                 }
@@ -209,7 +182,10 @@ public class redRightBuilder extends pathBuilderMain {
     }
 
 
-    /**First Position*/
+    /**
+     * First Position
+     * */
+
     private void firstPositionPreload1(){
         buildLineSegment(DPS1F, DPE1F);
     }
@@ -219,16 +195,25 @@ public class redRightBuilder extends pathBuilderMain {
         buildLineSegment(DYS1F, DYE1F);
     }
 
-    /**First Position*/
     private void firstPositionCollect(){
 
         buildCurveSegment(CS1F, CC1F, CE1F);
 
-        buildLineSegment(CS2F, CE2F);
+        buildCurveSegment(CS2F, CC2F, CE2F);
 
     }
 
-    /**second Position*/
+    private void firstPositionDeliver(){
+
+        buildCurveSegment(DS1F, DC1F, DE1F);
+
+        buildCurveSegment(DS2F, DC2F, DE2F);
+    }
+
+    /**
+     * Second Position
+     * */
+
     private void secondPositionPreload(){
 
         // drop purple pixel
@@ -239,16 +224,26 @@ public class redRightBuilder extends pathBuilderMain {
 
     }
 
-    /**second Position*/
     private void secondPositionCollect(){
 
         buildCurveSegment(CS1S, CC1S, CE1S);
 
-        buildLineSegment(CS2S, CE2S);
+        buildCurveSegment(CS2S, CC2S, CE2S);
 
     }
 
-    /**third Position*/
+    private void secondPositionDeliver(){
+
+        buildCurveSegment(DS1S, DC1S, DE1S);
+
+        buildCurveSegment(DS2S, DC2S, DE2S);
+
+    }
+
+    /**
+     * Third Position
+     * */
+
     private void thirdPositionPreload(){
 
         // drop purple pixel
@@ -259,36 +254,20 @@ public class redRightBuilder extends pathBuilderMain {
 
     }
 
-    /**third Position*/
     private void thirdPositionCollect(){
 
         buildCurveSegment(CS1T, CC1T, CE1T);
 
-        buildLineSegment(CS2T, CE2T);
+        buildCurveSegment(CS2T, CC2T, CE2T);
+
 
     }
 
     private void thirdPositionDeliver(){
 
-        buildLineSegment(CE2T, CS2T);
+        buildCurveSegment(DS1T, DC1T, DE1T);
 
-        buildCurveSegment(CE1T, CC1T, CS1S);
-
-    }
-
-    private void firstPositionDeliver(){
-
-        buildLineSegment(CE2T, CS2T);
-
-        buildCurveSegment(CE1T, CC1T, CS1S);
-
-    }
-
-    private void secondPositionDeliver(){
-
-        buildLineSegment(CE2T, CS2T);
-
-        buildCurveSegment(CE1T, CC1T, CS1S);
+        buildCurveSegment(DS2T, DC2T, DE2T);
 
     }
 

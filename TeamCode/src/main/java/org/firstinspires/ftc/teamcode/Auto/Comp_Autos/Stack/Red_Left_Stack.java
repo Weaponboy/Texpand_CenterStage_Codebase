@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Red_Auto.Left;
+package org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Stack;
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.propPos;
 
