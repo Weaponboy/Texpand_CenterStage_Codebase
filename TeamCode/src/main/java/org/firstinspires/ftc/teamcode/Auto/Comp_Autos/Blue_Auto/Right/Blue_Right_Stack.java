@@ -82,8 +82,6 @@ public class Blue_Right_Stack extends LinearOpMode {
 
         waitForStart();
 
-        propPos = 3;
-
         if (propPos == 1){
 
             portal.close();

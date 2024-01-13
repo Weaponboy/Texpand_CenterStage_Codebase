@@ -56,6 +56,7 @@ public class Blue_Left_Stack extends LinearOpMode implements Auto_Methods{
         initialize();
 
         waitForStart();
+        propPos = 3;
 
         if (propPos == 1){
 

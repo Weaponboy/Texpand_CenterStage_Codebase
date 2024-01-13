@@ -18,7 +18,7 @@ public class Collection {
 
     //get the correct values when Ethan pushes
     double collect = 0;
-    double stowed = 0.55;
+    double stowed = 0.3;
     double letClawThrough = 0.2;
     double firstPixel = 0;
     double secondPixel = 0.17;

@@ -56,6 +56,8 @@ public class Blue_Left_Preload extends LinearOpMode {
 
         waitForStart();
 
+        propPos = 2;
+
         if (propPos == 1){
 
             portal.close();
