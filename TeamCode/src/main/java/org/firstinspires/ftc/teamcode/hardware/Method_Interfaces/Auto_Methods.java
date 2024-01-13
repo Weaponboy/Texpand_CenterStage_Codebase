@@ -55,7 +55,7 @@ public interface Auto_Methods {
         delivery.setArmTargetState(Delivery.armState.collect);
         delivery.updateArm(deliverySlides.getCurrentposition());
 
-        sleep(100);
+        sleep(1000);
 
         deliverySlides.DeliverySlides(0, -0.6);
 
