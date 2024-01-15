@@ -42,6 +42,9 @@ public class mecanumFollower {
 
     FollowPath pathfollow;
 
+    double yI = 0;
+    double xI = 0;
+
     public void setPath(ArrayList<Vector2D> trajectory, ArrayList<PathingVelocity> pathingVelocity){
         pathfollow = new FollowPath(trajectory, pathingVelocity);
     }
@@ -140,8 +143,8 @@ public class mecanumFollower {
 
     public PathingPower getCorrectivePowerAtEnd(Vector2D robotPos, Vector2D targetPos, double heading){
 
-        XCorrective = new PIDController(0.03, 0, 0.002);
-        YCorrective = new PIDController(0.04, 0, 0.001);
+        XCorrective = new PIDController(0.03, xI, 0.002);
+        YCorrective = new PIDController(0.04, yI, 0.001);
 
         Vector2D error;
         PathingPower correctivePower = new PathingPower();
@@ -190,6 +193,9 @@ public class mecanumFollower {
         boolean reachedTarget = false;
 
         boolean closeToTarget = false;
+
+        xI = 0;
+        yI = 0;
 
         do {
 
@@ -241,6 +247,8 @@ public class mecanumFollower {
 
         boolean closeToTarget = false;
 
+        xI = 0;
+        yI = 0;
 
         do {
 
@@ -295,6 +303,9 @@ public class mecanumFollower {
 
         boolean closeToTarget = false;
 
+        xI = 0;
+        yI = 0;
+
         do {
 
             odometry.update();
@@ -340,6 +351,12 @@ public class mecanumFollower {
 
         closeToTarget = Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 5 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 5;
 
+        if(!reachedTarget && Math.abs(odometry.getHorizontalVelocity) < 1){
+            yI += 1;
+        }else if(!reachedTarget && Math.abs(odometry.getVerticalVelocity) < 1){
+            xI += 1;
+        }
+
         if (!closeToTarget){
             pathingPower = getPathingPower(robotPositionVector, odometry.heading);
             correctivePower = getCorrectivePowerOnPath(robotPositionVector, odometry.heading);
@@ -353,28 +370,6 @@ public class mecanumFollower {
 
         pivot = getTurnPower(targetHeading, odometry.heading);
 
-    }
-
-    private PathingPower correctivePowerAtEnd(Vector2D robotPos, double heading) {
-
-        XCorrective = new PIDController(0.04, 0, 0.1);
-        YCorrective = new PIDController(0.04, 0, 0.1);
-
-        Vector2D error;
-
-        PathingPower correctivePower = new PathingPower();
-
-        error = pathfollow.getPointOnFollowable(pathfollow.getLastPoint());
-
-        double xDist = error.getX() - robotPos.getX();
-        double yDist = error.getY() - robotPos.getY();
-
-        double robotRelativeXError = yDist * Math.sin(Math.toRadians(heading)) + xDist * Math.cos(Math.toRadians(heading));
-        double robotRelativeYError = yDist * Math.cos(Math.toRadians(heading)) - xDist * Math.sin(Math.toRadians(heading));
-
-        correctivePower.set(XCorrective.calculate(-robotRelativeXError), YCorrective.calculate(-robotRelativeYError));
-
-        return correctivePower;
     }
 
     public boolean followPathTeleop(boolean power, double targetHeading, boolean debugging, Odometry odometry, Drivetrain drive, Telemetry dashboardTelemetry){
