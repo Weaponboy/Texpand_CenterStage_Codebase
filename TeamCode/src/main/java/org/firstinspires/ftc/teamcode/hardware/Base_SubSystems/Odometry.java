@@ -118,7 +118,7 @@ public class Odometry {
         int dn2 = currentRightPod - oldRightPod;
         int dn3 = currentCenterPod - oldCenterPod;
 
-        dtheta = Math.toDegrees(cm_per_tick * ((dn2-dn1) / trackwidth));
+        dtheta = Math.toDegrees(cm_per_tick * ((dn1-dn2) / trackwidth));
         dx = cm_per_tick * (dn1+dn2)/2.0;
         dy = cm_per_tick * (dn3 - (dn2-dn1) * centerPodOffset / trackwidth);
 

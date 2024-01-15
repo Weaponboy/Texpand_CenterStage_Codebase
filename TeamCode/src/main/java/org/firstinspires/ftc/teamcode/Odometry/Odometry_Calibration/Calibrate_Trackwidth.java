@@ -20,7 +20,7 @@ public class Calibrate_Trackwidth extends OpMode {
 
     Telemetry dashboardTelemetry = dashboard.getTelemetry();
 
-    public static double trackwidth = 34.6;
+    public static double trackwidth = 34.498;
     public static double centerPodOffset = 15.94;
     public double wheelRadius = 1.75;
     public double podTicks = 8192;
@@ -91,7 +91,7 @@ public class Calibrate_Trackwidth extends OpMode {
         dashboardTelemetry.addData("centerPodOffset", centerPodOffset);
         dashboardTelemetry.addData("X", dx);
         dashboardTelemetry.addData("Y", dy);
-        dashboardTelemetry.addData("heading", dtheta);
+        dashboardTelemetry.addData("heading", Math.toDegrees(dtheta));
         dashboardTelemetry.update();
 
 //        packet.put("trackwidth", trackwidth);
