@@ -323,21 +323,21 @@ public class BlueTeleop extends OpMode {
             default:
         }
 
-//        if(collection.getIntakePower() > 0){
-//
-//            double rightClawReading = sensors.RightClawSensor.getDistance(DistanceUnit.MM);
-//            double leftClawReading = sensors.LeftClawSensor.getDistance(DistanceUnit.MM);
-//
-//            if (rightClawReading < 75 && leftClawReading < 75) {
-//                delivery.setGripperState(Delivery.targetGripperState.closeBoth);
-//            }else {
-//                if(leftClawReading < 75){
-//                    delivery.setGripperState(Delivery.targetGripperState.closeLeft);
-//                } else if(rightClawReading < 75){
-//                    delivery.setGripperState(Delivery.targetGripperState.closeRight);
-//                }
-//            }
-//        }
+       if(collection.getIntakePower() > 0){
+
+           double rightClawReading = sensors.RightClawSensor.getDistance(DistanceUnit.MM);
+           double leftClawReading = sensors.LeftClawSensor.getDistance(DistanceUnit.MM);
+
+           if (rightClawReading < 75 && leftClawReading < 75) {
+               delivery.setGripperState(Delivery.targetGripperState.closeBoth);
+           }else {
+               if(leftClawReading < 75){
+                   delivery.setGripperState(Delivery.targetGripperState.closeLeft);
+               } else if(rightClawReading < 75){
+                   delivery.setGripperState(Delivery.targetGripperState.closeRight);
+               }
+           }
+       }
 
         if (gamepad2.right_trigger > 0){
             delivery.setArmTargetState(Delivery.armState.collect);

@@ -39,8 +39,8 @@ public class Sensors {
 
         frontCam = hardwareMap.get(WebcamName.class, "frontcam");
 
-//        RightClawSensor = hardwareMap.get(DistanceSensor.class, "rightclaw");
-//        LeftClawSensor = hardwareMap.get(DistanceSensor.class, "leftclaw");
+        RightClawSensor = hardwareMap.get(DistanceSensor.class, "rightclaw");
+        LeftClawSensor = hardwareMap.get(DistanceSensor.class, "leftclaw");
 
     }
 

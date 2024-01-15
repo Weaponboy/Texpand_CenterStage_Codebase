@@ -66,13 +66,18 @@ public class Blue_Left_Stack extends LinearOpMode implements Auto_Methods{
 
             follower.setPath(firstPath.followablePath, firstPath.pathingVelocity);
 
-            //change target heading after dropping the purple pixel
-            Vector2D point;
-            follower.followPath(240, odometry, drive, point = new Vector2D(250, 46), 180);
+            follower.followPath(240, odometry, drive, new Vector2D(250, 46), 180);
 
             odometry.update();
 
             dropYellowPixel();
+
+            //build stack paths
+            secondPath.buildPath(blueLeftBuilder.Position.left, blueLeftBuilder.Section.collect);
+
+            thridPath.buildPath(blueLeftBuilder.Position.left, blueLeftBuilder.Section.deliver);
+
+            stackPixels();
 
         } else if (propPos == 2) {
 
@@ -90,27 +95,34 @@ public class Blue_Left_Stack extends LinearOpMode implements Auto_Methods{
 
             dropYellowPixel();
 
+            //build stack paths
+            secondPath.buildPath(blueLeftBuilder.Position.center, blueLeftBuilder.Section.collect);
+
+            thridPath.buildPath(blueLeftBuilder.Position.center, blueLeftBuilder.Section.deliver);
+
+            stackPixels();
+
         } else if (propPos == 3) {
 
-            //close vision portal
             portal.close();
 
-            //build paths
             firstPath.buildPath(blueLeftBuilder.Position.right, blueLeftBuilder.Section.preload, redRightBuilder.pathSplit.first);
 
-            posThreeExtra.buildPath(blueLeftBuilder.Position.right, blueLeftBuilder.Section.preload, redRightBuilder.pathSplit.second);
+            secondPath.buildPath(blueLeftBuilder.Position.right, blueLeftBuilder.Section.preload, redRightBuilder.pathSplit.second);
 
-            //follow first path
             follower.setPath(firstPath.followablePath, firstPath.pathingVelocity);
 
-            follower.followPath(270, odometry, drive, new Vector2D(210, 70), 0);
+            follower.setPath(firstPath.followablePath, firstPath.pathingVelocity);
+
+            //change target heading after dropping the purple pixel
+            Vector2D point;
+            follower.followPath(270, odometry, drive, point = new Vector2D(210, 70), 0);
 
             odometry.update();
 
-            //follow second path
-            follower.setPath(posThreeExtra.followablePath, posThreeExtra.pathingVelocity);
+            follower.setPath(secondPath.followablePath, secondPath.pathingVelocity);
 
-            follower.followPath(0, odometry, drive, new Vector2D(250, 90), 180);
+            follower.followPath(0, odometry, drive, point = new Vector2D(250, 90), 180);
 
             odometry.update();
 
