@@ -80,14 +80,13 @@ public class Odometry {
     public Odometry(double startX, double startY, double startHeading){
         this.X = startX;
         this.Y = startY;
-        this.startHeading = startHeading;
         this.heading = startHeading;
     }
 
     public Odometry(){
         this.X = 0;
         this.Y = 0;
-        this.startHeading = 0;
+        this.heading = 0;
     }
 
     public double X, Y, heading;
@@ -106,19 +105,6 @@ public class Odometry {
     public double correctedStart = 0;
 
     public void update(){
-
-        YawAngle = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        botHeading = -YawAngle.firstAngle;
-
-        botHeading += getCorrectStartHeading(startHeading);
-
-        if (botHeading <= 0) {
-            ConvertedHeadingForPosition = (360 + botHeading);
-        } else {
-            ConvertedHeadingForPosition = (0 + botHeading);
-        }
-
-        heading = ConvertedHeadingForPosition;
 
         oldCenterPod = currentCenterPod;
         oldLeftPod = currentLeftPod;
@@ -141,10 +127,10 @@ public class Odometry {
         Y += dx * Math.sin(Math.toRadians(ConvertedHeadingForPosition)) + dy * Math.cos(Math.toRadians(ConvertedHeadingForPosition));
         heading += dtheta;
 
-        factor = heading/360;
-
-        if(factor > 1) {
-            heading = heading - 360*(int)factor;
+        if (heading > 360) {
+            heading = heading - 360;
+        } else if (heading < 0){
+            heading = heading + 360;
         }
 
     }

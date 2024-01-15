@@ -48,7 +48,7 @@ public class blueRightBuilder extends pathBuilderMain implements Blue_Points_Ove
 
     Vector2D DYS3F = DYE2F;
     Vector2D DYC3F = new Vector2D(getRealCoords(285), getRealCoords(141));
-    Vector2D DYE3F = new Vector2D(getRealCoords(300), getRealCoords(75));
+    Vector2D DYE3F = new Vector2D(getRealCoords(300), getRealCoords(85));
 
     /**drop yellow second*/
     Vector2D DYS1S = DPE1S;
@@ -61,7 +61,7 @@ public class blueRightBuilder extends pathBuilderMain implements Blue_Points_Ove
 
     Vector2D DYS3S = DYE2S;
     Vector2D DYC3S = new Vector2D(getRealCoords(293), getRealCoords(136));
-    Vector2D DYE3S = new Vector2D(getRealCoords(300), getRealCoords(90));
+    Vector2D DYE3S = new Vector2D(getRealCoords(300), getRealCoords(95));
 
     /**drop yellow third*/
 
@@ -75,7 +75,7 @@ public class blueRightBuilder extends pathBuilderMain implements Blue_Points_Ove
 
     Vector2D DYS3T = DYE2T;
     Vector2D DYC3T = new Vector2D(getRealCoords(276), getRealCoords(158));
-    Vector2D DYE3T = new Vector2D(getRealCoords(300), getRealCoords(105));
+    Vector2D DYE3T = new Vector2D(getRealCoords(300), getRealCoords(110));
 
     public enum Position {
         left,
