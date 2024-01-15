@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry;
 @TeleOp
 public class TestingPositioning extends OpMode {
 
-    Odometry odometry = new Odometry(210, 337, 90);
+    Odometry odometry = new Odometry(0, 0, 90);
 
     FtcDashboard dashboard = FtcDashboard.getInstance();
 
@@ -24,10 +24,10 @@ public class TestingPositioning extends OpMode {
     @Override
     public void loop() {
         odometry.update();
-        dashboardTelemetry.addData("x", odometry.X);
-        dashboardTelemetry.addData("y", odometry.Y);
-        dashboardTelemetry.addData("heading", odometry.heading);
-        dashboardTelemetry.update();
+        telemetry.addData("x", odometry.X);
+        telemetry.addData("y", odometry.Y);
+        telemetry.addData("heading", odometry.heading);
+        telemetry.update();
     }
 
 }
