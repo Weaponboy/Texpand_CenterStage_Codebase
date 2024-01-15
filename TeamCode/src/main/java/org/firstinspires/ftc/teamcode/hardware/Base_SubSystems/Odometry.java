@@ -118,13 +118,13 @@ public class Odometry {
         int dn2 = currentRightPod - oldRightPod;
         int dn3 = currentCenterPod - oldCenterPod;
 
-        dtheta = cm_per_tick * ((dn2-dn1) / trackwidth);
+        dtheta = Math.toDegrees(cm_per_tick * ((dn2-dn1) / trackwidth));
         dx = cm_per_tick * (dn1+dn2)/2.0;
         dy = cm_per_tick * (dn3 - (dn2-dn1) * centerPodOffset / trackwidth);
 
         double theta = heading + (dtheta / 2.0);
-        X += dx * Math.cos(Math.toRadians(ConvertedHeadingForPosition)) - dy * Math.sin(Math.toRadians(ConvertedHeadingForPosition));
-        Y += dx * Math.sin(Math.toRadians(ConvertedHeadingForPosition)) + dy * Math.cos(Math.toRadians(ConvertedHeadingForPosition));
+        X += dx * Math.cos(Math.toRadians(theta)) - dy * Math.sin(Math.toRadians(theta));
+        Y += dx * Math.sin(Math.toRadians(theta)) + dy * Math.cos(Math.toRadians(theta));
         heading += dtheta;
 
         if (heading > 360) {
