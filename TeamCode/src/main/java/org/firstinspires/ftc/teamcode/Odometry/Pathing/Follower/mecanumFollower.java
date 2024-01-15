@@ -316,7 +316,6 @@ public class mecanumFollower {
                 targetHeading = secondHeading;
             }
 
-            //use follower methods to get motor power
             if (Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 1.4 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 1.4 && Math.abs(odometry.getVerticalVelocity()) < 3 && Math.abs(odometry.getHorizontalVelocity()) < 3){
                 reachedTarget = true;
             }
@@ -335,6 +334,9 @@ public class mecanumFollower {
             drive.LF.setPower(left_Front);
             drive.LB.setPower(left_Back);
 
+            dashboardTelemetry.addData("close to target", closeToTarget);
+            dashboardTelemetry.update();
+
         }while(!reachedTarget);
 
         drive.RF.setPower(0);
@@ -351,11 +353,11 @@ public class mecanumFollower {
 
         closeToTarget = Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 5 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 5;
 
-        if(Math.abs(odometry.getHorizontalVelocity()) < 1){
-            yI += 1;
-        }else if(Math.abs(odometry.getVerticalVelocity()) < 1){
-            xI += 1;
-        }
+//        if(Math.abs(odometry.getHorizontalVelocity()) < 1){
+//            yI += 1;
+//        }else if(Math.abs(odometry.getVerticalVelocity()) < 1){
+//            xI += 1;
+//        }
 
         if (!closeToTarget){
             pathingPower = getPathingPower(robotPositionVector, odometry.heading);

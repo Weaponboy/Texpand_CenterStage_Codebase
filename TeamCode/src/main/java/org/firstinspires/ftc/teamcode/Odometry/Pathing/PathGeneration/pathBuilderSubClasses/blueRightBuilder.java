@@ -28,7 +28,7 @@ public class blueRightBuilder extends pathBuilderMain implements Blue_Points_Ove
 
     //second pos
     Vector2D DPS1S = startPos;
-    Vector2D DPC1S = new Vector2D(getRealCoords(84), getRealCoords(115));
+    Vector2D DPC1S = new Vector2D(getRealCoords(93), getRealCoords(115));
     Vector2D DPE1S = new Vector2D(getRealCoords(70), getRealCoords(60));
 
     //third pos
@@ -52,8 +52,8 @@ public class blueRightBuilder extends pathBuilderMain implements Blue_Points_Ove
 
     /**drop yellow second*/
     Vector2D DYS1S = DPE1S;
-    Vector2D DYC1S = new Vector2D(getRealCoords(35), getRealCoords(0));
-    Vector2D DYE1S = new Vector2D(getRealCoords(35), getRealCoords(90));
+    Vector2D DYC1S = new Vector2D(getRealCoords(40), getRealCoords(0));
+    Vector2D DYE1S = new Vector2D(getRealCoords(40), getRealCoords(90));
 
     Vector2D DYS2S = DYE1S;
     Vector2D DYC2S = new Vector2D(getRealCoords(24), getRealCoords(205));
