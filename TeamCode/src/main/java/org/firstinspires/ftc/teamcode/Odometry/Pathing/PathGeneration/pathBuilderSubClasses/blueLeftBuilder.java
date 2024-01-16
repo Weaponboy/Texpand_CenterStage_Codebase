@@ -104,13 +104,13 @@ public class blueLeftBuilder extends pathBuilderMain implements Blue_Points_Over
             case deliver:
                 switch (propPosition) {
                     case left:
-                        firstPositionPreload();
+                        firstPositionDeliver();
                         break;
                     case right:
                         thirdPositionDeliver();
                         break;
                     case center:
-                        secondPositionPreload();
+                        secondPositionDeliver();
                         break;
                     default:
                 }
@@ -165,13 +165,13 @@ public class blueLeftBuilder extends pathBuilderMain implements Blue_Points_Over
             case deliver:
                 switch (propPosition) {
                     case left:
-                        firstPositionPreload();
+                        firstPositionDeliver();
                         break;
                     case right:
                         thirdPositionDeliver();
                         break;
                     case center:
-                        secondPositionPreload();
+                        secondPositionDeliver();
                         break;
                     default:
                 }
@@ -204,6 +204,14 @@ public class blueLeftBuilder extends pathBuilderMain implements Blue_Points_Over
 
     }
 
+    private void firstPositionDeliver(){
+
+        buildCurveSegment(DS1F, DC1F, DE1F);
+
+        buildCurveSegment(DS2F, DC2F, DE2F);
+
+    }
+
     /**second Position*/
     private void secondPositionPreload(){
 
@@ -221,6 +229,15 @@ public class blueLeftBuilder extends pathBuilderMain implements Blue_Points_Over
         buildCurveSegment(CS1S, CC1S, CE1S);
 
         buildLineSegment(CS2S, CE2S);
+
+    }
+
+    /**third Position*/
+    private void secondPositionDeliver(){
+
+        buildCurveSegment(DS1S, DC1S, DE1S);
+
+        buildCurveSegment(DS2S, DC2S, DE2S);
 
     }
 

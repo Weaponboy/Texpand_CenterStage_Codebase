@@ -39,7 +39,7 @@ public class Blue_Left_Preload extends LinearOpMode implements Auto_Methods {
 
     blueLeftBuilder secondPath = new blueLeftBuilder();
 
-    blueLeftBuilder thridPath = new blueLeftBuilder();
+    blueLeftBuilder thirdPath = new blueLeftBuilder();
 
     mecanumFollower follower = new mecanumFollower();
 
@@ -49,8 +49,6 @@ public class Blue_Left_Preload extends LinearOpMode implements Auto_Methods {
         initialize();
 
         waitForStart();
-
-        propPos = 2;
 
         if (propPos == 1){
 
@@ -92,35 +90,19 @@ public class Blue_Left_Preload extends LinearOpMode implements Auto_Methods {
 
             follower.setPath(firstPath.followablePath, firstPath.pathingVelocity);
 
-            follower.setPath(firstPath.followablePath, firstPath.pathingVelocity);
-
-            //change target heading after dropping the purple pixel
-            Vector2D point;
-            follower.followPath(270, odometry, drive, point = new Vector2D(210, 70), 0);
+            follower.followPath(270, odometry, drive, new Vector2D(210, 70), 0);
 
             odometry.update();
 
             follower.setPath(secondPath.followablePath, secondPath.pathingVelocity);
 
-            follower.followPath(0, odometry, drive, point = new Vector2D(250, 90), 180);
+            follower.followPath(0, odometry, drive, new Vector2D(250, 90), 180);
 
             odometry.update();
 
             dropYellowPixel();
 
         }
-
-        while (opModeIsActive()){
-
-            odometry.update();
-
-            telemetry.addData("X", odometry.X);
-            telemetry.addData("Y", odometry.Y);
-            telemetry.addData("heading", odometry.heading);
-            telemetry.update();
-
-        }
-
 
     }
 

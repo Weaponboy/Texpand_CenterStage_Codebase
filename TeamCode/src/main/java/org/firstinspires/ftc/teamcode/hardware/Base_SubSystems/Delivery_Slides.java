@@ -29,7 +29,7 @@ public class  Delivery_Slides {
         Delivery.targetGripperState targetGripperState = null;
 
         SlideSafetyHeight = Left_Slide.getCurrentPosition() > 2200;
-        SlideSafetyBottom = Left_Slide.getCurrentPosition() < 5;
+        SlideSafetyBottom = Left_Slide.getCurrentPosition() < 15;
 
         switch (slideState){
 
@@ -40,7 +40,7 @@ public class  Delivery_Slides {
                     SlidesBothPower(0.3);
                     targetGripperState = Delivery.targetGripperState.closeBoth;
                 } else if (gamepad2.right_stick_y > 0.5  || gamepad1.a && !SlideSafetyBottom) {
-                    SlideSafetyBottom = Left_Slide.getCurrentPosition() < 5;
+                    SlideSafetyBottom = Left_Slide.getCurrentPosition() < 15;
                     SlidesBothPower(-0.3);
                     targetGripperState = Delivery.targetGripperState.closeBoth;
                 }else {
