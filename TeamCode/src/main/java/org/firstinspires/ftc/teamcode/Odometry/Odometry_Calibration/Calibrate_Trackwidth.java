@@ -93,13 +93,6 @@ public class Calibrate_Trackwidth extends OpMode {
         dashboardTelemetry.addData("Y", dy);
         dashboardTelemetry.addData("heading", Math.toDegrees(dtheta));
         dashboardTelemetry.update();
-
-//        packet.put("trackwidth", trackwidth);
-//        packet.put("centerPodOffset", centerPodOffset);
-//        packet.put("X", X);
-//        packet.put("Y", Y);
-//
-//        dashboard.sendTelemetryPacket(packet);
         
     }
 
