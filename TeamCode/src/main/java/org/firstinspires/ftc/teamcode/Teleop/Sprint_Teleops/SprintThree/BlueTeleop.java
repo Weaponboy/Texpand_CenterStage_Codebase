@@ -272,7 +272,7 @@ public class BlueTeleop extends OpMode {
         if (gamepad2.dpad_up || gamepad1.dpad_up && deliverySlides.getCurrentposition() > 150){
             delivery.setArmTargetState(Delivery.armState.delivery);
         } else if (gamepad2.dpad_down || gamepad1.dpad_down && deliverySlides.getCurrentposition() > 100) {
-            delivery.setArmTargetState(Delivery.armState.collect);
+            delivery.setArmTargetState(Delivery.armState.intermediate);
         }
 
         /**gripper code*/
@@ -349,7 +349,7 @@ public class BlueTeleop extends OpMode {
         }
 
         if (gamepad2.right_trigger > 0){
-            delivery.setArmTargetState(Delivery.armState.collect);
+            delivery.setArmTargetState(Delivery.armState.intermediate);
 
             deliverySlides.DeliverySlides(0, -0.5);
 

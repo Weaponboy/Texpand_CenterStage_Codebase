@@ -36,7 +36,7 @@ public class Delivery {
     double timePerDegree = 7;
 
     double collectTopPivotPos = 0.2;
-    double intermediateTopPivot = 0.5;
+    double intermediateTopPivot = 0.4;
     double deliveryTopPivot = 0.7;
     double safeTopPivot = 0.3;
 
@@ -44,7 +44,7 @@ public class Delivery {
     double deliverySecondPivotAuto = 0.45;
 
     double avoidIntakeSecondPivot = 0.8;
-    double collectSecondPivot = 0.9;
+    double collectSecondPivot = 0.88;
     double deliverySecondPivot = -0.12;
     double lowdeliveryTopPivot = 1;
 
@@ -298,6 +298,11 @@ public class Delivery {
 
                     secondRotate.setPosition(targetRotatePos);
 
+                }
+            case intermediate:
+
+                if (slidesPos < 50){
+                    setArmTargetState(armState.collect);
                 }
 
                 break;
