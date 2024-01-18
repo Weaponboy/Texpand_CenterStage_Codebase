@@ -52,6 +52,8 @@ public class Blue_Right_Preload extends LinearOpMode implements Auto_Methods{
 
         waitForStart();
 
+        propPos = 3;
+
         if (propPos == 1){
 
             portal.close();
