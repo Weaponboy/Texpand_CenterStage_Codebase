@@ -204,11 +204,15 @@ public class BlueTeleop extends OpMode {
 
         //this is to toggle fully up and fully down on the intake
         if (currentGamepad2.left_bumper && !previousGamepad2.left_bumper && collection.getIntakeHeight() > 0){
+            collection.setState(Collection.intakePowerState.on);
             collection.setIntakeHeight(Collection.intakeHeightState.collect);
             collection.updateIntakeHeight();
+            collection.updateIntakeState();
         } else if (currentGamepad2.left_bumper && !previousGamepad2.left_bumper && collection.getIntakeHeight() < 0.5) {
+            collection.setState(Collection.intakePowerState.off);
             collection.setIntakeHeight(Collection.intakeHeightState.stowed);
             collection.updateIntakeHeight();
+            collection.updateIntakeState();
         }
 
         if (currentGamepad1.right_trigger > 0 && !(previousGamepad1.right_trigger > 0)){
@@ -331,6 +335,10 @@ public class BlueTeleop extends OpMode {
 
            if (rightClawReading < 75 && leftClawReading < 75) {
                delivery.setGripperState(Delivery.targetGripperState.closeBoth);
+               collection.setState(Collection.intakePowerState.off);
+               collection.setIntakeHeight(Collection.intakeHeightState.stowed);
+               collection.updateIntakeHeight();
+               collection.updateIntakeState();
            }else {
                if(leftClawReading < 75){
                    delivery.setGripperState(Delivery.targetGripperState.closeLeft);
