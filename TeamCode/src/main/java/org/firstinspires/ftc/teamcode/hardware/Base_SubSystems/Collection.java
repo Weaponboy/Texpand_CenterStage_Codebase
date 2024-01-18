@@ -12,7 +12,8 @@ public class Collection {
 
     DcMotorEx Intake;
 
-    public Servo IntakeHeight;
+    public Servo IntakeHeightLeft;
+    public Servo IntakeHeightRight;
 
     HardwareMap hmap;
 
@@ -66,28 +67,28 @@ public class Collection {
 
         switch (heightState){
             case stowed:
-                IntakeHeight.setPosition(stowed);
+                IntakeHeightRight.setPosition(stowed);
                 break;
             case collect:
-                IntakeHeight.setPosition(collect);
+                IntakeHeightRight.setPosition(collect);
                 break;
             case letClawThrough:
-                IntakeHeight.setPosition(letClawThrough);
+                IntakeHeightRight.setPosition(letClawThrough);
                 break;
             case firstPixel:
-                IntakeHeight.setPosition(firstPixel);
+                IntakeHeightRight.setPosition(firstPixel);
                 break;
             case secondPixel:
-                IntakeHeight.setPosition(secondPixel);
+                IntakeHeightRight.setPosition(secondPixel);
                 break;
             case thirdPixel:
-                IntakeHeight.setPosition(thirdPixel);
+                IntakeHeightRight.setPosition(thirdPixel);
                 break;
             case forthPixel:
-                IntakeHeight.setPosition(forthPixel);
+                IntakeHeightRight.setPosition(forthPixel);
                 break;
             case fifthPixel:
-                IntakeHeight.setPosition(fifthPixel);
+                IntakeHeightRight.setPosition(fifthPixel);
                 break;
             default:
         }
@@ -100,9 +101,13 @@ public class Collection {
 
         Intake = hardwareMap.get(DcMotorEx.class, "Intake");
 
-        IntakeHeight = hardwareMap.get(Servo.class, "IntakeServo");
+        IntakeHeightLeft = hardwareMap.get(Servo.class, "IntakeServo");
 
-        IntakeHeight.setDirection(Servo.Direction.FORWARD);
+        IntakeHeightLeft.setDirection(Servo.Direction.FORWARD);
+
+        IntakeHeightLeft = hardwareMap.get(Servo.class, "IntakeServo");
+
+        IntakeHeightLeft.setDirection(Servo.Direction.REVERSE);
 
         Intake.setDirection(DcMotorSimple.Direction.FORWARD);
 
@@ -133,7 +138,7 @@ public class Collection {
     }
 
     public double getIntakeHeight() {
-        return IntakeHeight.getPosition();
+        return (IntakeHeightLeft.getPosition() + IntakeHeightLeft.getPosition())/2;
     }
 
     public double getIntakeCurrentUse(){

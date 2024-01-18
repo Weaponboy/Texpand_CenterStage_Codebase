@@ -211,37 +211,29 @@ public class BlueTeleop extends OpMode {
 
         if (currentGamepad1.right_trigger > 0 && !(previousGamepad1.right_trigger > 0)){
 
-            intakePos += 0.01;
+            pivotIntakePos++;
 
-            collection.IntakeHeight.setPosition(intakePos);
-
-            if(intakePos > 0.3){
-                intakePos = 0;
+            if (pivotIntakePos == 5){
+                pivotIntakePos = 0;
             }
 
-//            pivotIntakePos++;
-//
-//            if (pivotIntakePos == 5){
-//                pivotIntakePos = 0;
-//            }
-//
-//            if(pivotIntakePos == 0){
-//                collection.setIntakeHeight(Collection.intakeHeightState.fifthPixel);
-//            }
-//            else if(pivotIntakePos == 1){
-//                collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
-//            }
-//            else if(pivotIntakePos == 2){
-//                collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
-//            }
-//            else if(pivotIntakePos == 3){
-//                collection.setIntakeHeight(Collection.intakeHeightState.secondPixel);
-//            }
-//            else if(pivotIntakePos == 4){
-//                collection.setIntakeHeight(Collection.intakeHeightState.firstPixel);
-//            }
-//
-//            collection.updateIntakeHeight();
+            if(pivotIntakePos == 0){
+                collection.setIntakeHeight(Collection.intakeHeightState.fifthPixel);
+            }
+            else if(pivotIntakePos == 1){
+                collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
+            }
+            else if(pivotIntakePos == 2){
+                collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
+            }
+            else if(pivotIntakePos == 3){
+                collection.setIntakeHeight(Collection.intakeHeightState.secondPixel);
+            }
+            else if(pivotIntakePos == 4){
+                collection.setIntakeHeight(Collection.intakeHeightState.firstPixel);
+            }
+
+            collection.updateIntakeHeight();
 
         }
 
@@ -364,7 +356,7 @@ public class BlueTeleop extends OpMode {
         odometry.update();
 
         //update collection state
-//        collection.updateIntakeHeight();
+        collection.updateIntakeHeight();
         collection.updateIntakeState();
 
         //update delivery state
