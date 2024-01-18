@@ -87,6 +87,8 @@ public class BlueTeleop extends OpMode {
 
     double intakePos = 0;
 
+    boolean useSensors = false;
+
     @Override
     public void loop() {
 
@@ -316,7 +318,13 @@ public class BlueTeleop extends OpMode {
             default:
         }
 
-       if(collection.getIntakePower() > 0){
+        if (gamepad2.a && useSensors){
+            useSensors  = false;
+        }else if (gamepad2.a && !useSensors){
+            useSensors  = true;
+        }
+
+        if(collection.getIntakePower() > 0 && useSensors){
 
            double rightClawReading = sensors.RightClawSensor.getDistance(DistanceUnit.MM);
            double leftClawReading = sensors.LeftClawSensor.getDistance(DistanceUnit.MM);
@@ -330,7 +338,7 @@ public class BlueTeleop extends OpMode {
                    delivery.setGripperState(Delivery.targetGripperState.closeRight);
                }
            }
-       }
+        }
 
         if (gamepad2.right_trigger > 0){
             delivery.setArmTargetState(Delivery.armState.collect);
