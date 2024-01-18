@@ -301,13 +301,6 @@ public class Delivery {
                 }
 
                 break;
-//            case intermediate:
-//
-//                if (slidesPos < 60){
-//                    setArmTargetState(armState.collect);
-//                }
-//
-//                break;
             default:
         }
 
