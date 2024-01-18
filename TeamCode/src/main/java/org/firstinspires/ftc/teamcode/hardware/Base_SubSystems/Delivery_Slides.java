@@ -35,11 +35,11 @@ public class  Delivery_Slides {
 
             case manual:
 
-                if (gamepad2.right_stick_y < -0.5 || gamepad1.x && !SlideSafetyHeight) {
+                if (gamepad2.right_stick_y < -0.5 && !SlideSafetyHeight || gamepad1.x && !SlideSafetyHeight) {
                     SlideSafetyHeight = Left_Slide.getCurrentPosition() > 2200;
                     SlidesBothPower(0.3);
                     targetGripperState = Delivery.targetGripperState.closeBoth;
-                } else if (gamepad2.right_stick_y > 0.5  || gamepad1.a && !SlideSafetyBottom) {
+                } else if (gamepad2.right_stick_y > 0.5 && !SlideSafetyBottom || gamepad1.a && !SlideSafetyBottom) {
                     SlideSafetyBottom = Left_Slide.getCurrentPosition() < 15;
                     SlidesBothPower(-0.3);
                     targetGripperState = Delivery.targetGripperState.closeBoth;
