@@ -19,7 +19,7 @@ public class Collection {
 
     double collect = 0;
     double stowed = 0.3;
-    double letClawThrough = 0.15;
+    double letClawThrough = 0.25;
     double firstPixel = 0;
     double secondPixel = 0.17;
     double thirdPixel = 0.19;
