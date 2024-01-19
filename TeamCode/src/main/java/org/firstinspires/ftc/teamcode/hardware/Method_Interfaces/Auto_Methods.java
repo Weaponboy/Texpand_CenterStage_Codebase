@@ -88,6 +88,7 @@ public interface Auto_Methods {
 
         while (!armInPosition){
             if (Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.deliverAuto) {
+                delivery.updateArm(deliverySlides.getCurrentposition());
                 armInPosition = true;
             }
         }
