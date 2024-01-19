@@ -36,7 +36,7 @@ public class Delivery {
     double timePerDegree = 7;
 
     double collectTopPivotPos = 0.2;
-    double intermediateTopPivot = 0.4;
+    double intermediateTopPivot = 0.25;
     double deliveryTopPivot = 0.7;
     double safeTopPivot = 0.3;
 
