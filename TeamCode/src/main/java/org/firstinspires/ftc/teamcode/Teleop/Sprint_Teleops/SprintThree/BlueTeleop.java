@@ -333,16 +333,16 @@ public class BlueTeleop extends OpMode {
            double rightClawReading = sensors.RightClawSensor.getDistance(DistanceUnit.MM);
            double leftClawReading = sensors.LeftClawSensor.getDistance(DistanceUnit.MM);
 
-           if (rightClawReading < 75 && leftClawReading < 75) {
+           if (rightClawReading < 55 && leftClawReading < 55) {
                delivery.setGripperState(Delivery.targetGripperState.closeBoth);
                collection.setState(Collection.intakePowerState.off);
                collection.setIntakeHeight(Collection.intakeHeightState.stowed);
                collection.updateIntakeHeight();
                collection.updateIntakeState();
            }else {
-               if(leftClawReading < 75){
+               if(leftClawReading < 55){
                    delivery.setGripperState(Delivery.targetGripperState.closeLeft);
-               } else if(rightClawReading < 75){
+               } else if(rightClawReading < 55){
                    delivery.setGripperState(Delivery.targetGripperState.closeRight);
                }
            }

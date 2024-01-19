@@ -44,7 +44,7 @@ public class  Delivery_Slides {
                     SlidesBothPower(-0.3);
                     targetGripperState = Delivery.targetGripperState.closeBoth;
                 }else {
-                    SlidesBothPower(0.0004);
+                    SlidesBothPower(0.0005);
                 }
 
                 break;
