@@ -200,7 +200,7 @@ public class blueLeftBuilder extends pathBuilderMain implements Blue_Points_Over
 
         buildCurveSegment(CS1F, CC1F, CE1F);
 
-        buildLineSegment(CS2F, CE2F);
+        buildCurveSegment(CS2F, CC2F, CE2F);
 
     }
 
@@ -228,7 +228,7 @@ public class blueLeftBuilder extends pathBuilderMain implements Blue_Points_Over
 
         buildCurveSegment(CS1S, CC1S, CE1S);
 
-        buildLineSegment(CS2S, CE2S);
+        buildCurveSegment(CS2S, CC2S, CE2S);
 
     }
 

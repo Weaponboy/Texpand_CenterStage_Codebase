@@ -47,34 +47,6 @@ public class Blue_Right_Stack extends LinearOpMode {
 
     Collection collection = new Collection();
 
-    boolean SlideSafetyHeight = false;
-
-    boolean SlideSafetyBottom = false;
-
-    //in ms
-    double timePerDegreeTopPivot = 6;
-
-    double smallServoTimePerDegree = 6;
-
-    double collectTopPivotPos = 0.1;
-    double deliveryTopPivot = 1;
-    double safeTopPivot = 0.3;
-
-    double avoidIntakeSecondPivot = 0.8;
-    double collectSecondPivot = 1;
-    double deliverySecondPivot = 0.3;
-
-    double clawOpen = 0.5;
-    double clawClosed = 0;
-
-    double rotateCollect = 0.5;
-    double rotateRight = 1;
-
-    double intakeSafeInRobot = 0.6;
-    double intakeCollect = 0.15;
-
-    long timeToWait;
-
     @Override
     public void runOpMode() throws InterruptedException {
 

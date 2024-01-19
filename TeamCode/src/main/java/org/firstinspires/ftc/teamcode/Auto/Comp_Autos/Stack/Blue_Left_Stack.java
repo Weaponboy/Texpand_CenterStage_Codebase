@@ -56,7 +56,6 @@ public class Blue_Left_Stack extends LinearOpMode implements Auto_Methods{
         initialize();
 
         waitForStart();
-        propPos = 3;
 
         if (propPos == 1){
 
@@ -108,21 +107,17 @@ public class Blue_Left_Stack extends LinearOpMode implements Auto_Methods{
 
             firstPath.buildPath(blueLeftBuilder.Position.right, blueLeftBuilder.Section.preload, redRightBuilder.pathSplit.first);
 
-            secondPath.buildPath(blueLeftBuilder.Position.right, blueLeftBuilder.Section.preload, redRightBuilder.pathSplit.second);
+            posThreeExtra.buildPath(blueLeftBuilder.Position.right, blueLeftBuilder.Section.preload, redRightBuilder.pathSplit.second);
 
             follower.setPath(firstPath.followablePath, firstPath.pathingVelocity);
 
-            follower.setPath(firstPath.followablePath, firstPath.pathingVelocity);
-
-            //change target heading after dropping the purple pixel
-            Vector2D point;
-            follower.followPath(270, odometry, drive, point = new Vector2D(210, 70), 0);
+            follower.followPath(270, odometry, drive, new Vector2D(210, 70), 0);
 
             odometry.update();
 
-            follower.setPath(secondPath.followablePath, secondPath.pathingVelocity);
+            follower.setPath(posThreeExtra.followablePath, posThreeExtra.pathingVelocity);
 
-            follower.followPath(0, odometry, drive, point = new Vector2D(250, 90), 180);
+            follower.followPath(0, odometry, drive, new Vector2D(250, 90), 180);
 
             odometry.update();
 
