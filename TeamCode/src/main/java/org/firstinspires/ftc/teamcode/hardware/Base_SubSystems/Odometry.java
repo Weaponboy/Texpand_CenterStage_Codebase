@@ -135,6 +135,50 @@ public class Odometry {
 
     }
 
+    public void updateArc(){
+
+        oldCenterPod = currentCenterPod;
+        oldLeftPod = currentLeftPod;
+        oldRightPod = currentRightPod;
+
+        currentCenterPod = -centerPod.getCurrentPosition();
+        currentLeftPod = -leftPod.getCurrentPosition();
+        currentRightPod = rightPod.getCurrentPosition();
+
+        int dn1 = currentLeftPod - oldLeftPod;
+        int dn2 = currentRightPod - oldRightPod;
+        int dn3 = currentCenterPod - oldCenterPod;
+
+        dtheta = Math.toDegrees(cm_per_tick * ((dn1-dn2) / trackwidth));
+
+        if (dtheta == 0){
+            dtheta = Math.toDegrees(cm_per_tick * ((dn1-dn2) / trackwidth));
+            dx = cm_per_tick * (dn1+dn2)/2.0;
+            dy = cm_per_tick * (dn3 - (dn2-dn1) * centerPodOffset / trackwidth);
+        }else {
+            double dfoward = cm_per_tick * (dn1+dn2)/2.0;
+            double dstrafe = cm_per_tick * (dn3 - (dn2-dn1) * centerPodOffset / trackwidth);
+
+            double xR = dfoward/dtheta;
+            double yR = dstrafe/dtheta;
+
+            dx = (xR*Math.sin(dtheta)) + (yR*Math.sin(dtheta));
+            dy = (xR - xR * Math.cos(dtheta)) - (yR - yR * Math.cos(dtheta));
+        }
+
+        double theta = heading + (dtheta / 2.0);
+        X += dx * Math.cos(Math.toRadians(theta)) - dy * Math.sin(Math.toRadians(theta));
+        Y += dx * Math.sin(Math.toRadians(theta)) + dy * Math.cos(Math.toRadians(theta));
+        heading += dtheta;
+
+        if (heading > 360) {
+            heading = heading - 360;
+        } else if (heading < 0){
+            heading = heading + 360;
+        }
+
+    }
+
     public void update(double delta){
 
         heading = 0;

@@ -43,7 +43,7 @@ public class BlueTeleop extends OpMode {
 
     Drivetrain drive = new Drivetrain();
 
-    Odometry odometry = new Odometry(210, 337, 270);
+    Odometry odometry = new Odometry(210, 337, 180);
 
     Delivery delivery = new Delivery();
 
