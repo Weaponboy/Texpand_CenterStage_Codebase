@@ -119,8 +119,8 @@ public class mecanumFollower {
 
     public PathingPower getCorrectivePowerOnPath(Vector2D robotPos, double heading){
 
-        XCorrective = new PIDController(driveP, xI, driveD);
-        YCorrective = new PIDController(strafeP, yI, strafeD);
+        XCorrective.setPID(driveP, xI, driveD);
+        YCorrective.setPID(strafeP, yI, strafeD);
 
         Vector2D error;
         PathingPower correctivePower = new PathingPower();
@@ -143,8 +143,8 @@ public class mecanumFollower {
 
     public PathingPower getCorrectivePowerAtEnd(Vector2D robotPos, Vector2D targetPos, double heading){
 
-        XCorrective = new PIDController(0.03, xI, 0.002);
-        YCorrective = new PIDController(0.04, yI, 0.001);
+        XCorrective.setPID(0.03, xI, 0.002);
+        YCorrective.setPID(0.04, yI, 0.001);
 
         Vector2D error;
         PathingPower correctivePower = new PathingPower();
@@ -351,13 +351,13 @@ public class mecanumFollower {
         closeToTarget = Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 5 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 5;
 
         if(Math.abs(odometry.getHorizontalVelocity()) < 3){
-            yI += 0.2;
+            yI += 0.00001;
         }else {
             yI = 0;
         }
 
         if(Math.abs(odometry.getVerticalVelocity()) < 3){
-            xI += 0.2;
+            xI += 0.00001;
         }else {
             xI = 0;
         }
