@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Teleop.Sprint_Teleops.SprintThree;
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.horizontal;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.pivot;
+import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.propPos;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.vertical;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Non_Hardware_Objects.currentGamepad1;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Non_Hardware_Objects.currentGamepad2;
@@ -36,10 +37,6 @@ import java.util.Objects;
 
 @TeleOp
 public class BlueTeleop extends OpMode {
-
-    FtcDashboard dashboard = FtcDashboard.getInstance();
-
-    Telemetry dashboardTelemetry = dashboard.getTelemetry();
 
     Drivetrain drive = new Drivetrain();
 
@@ -83,11 +80,16 @@ public class BlueTeleop extends OpMode {
 
     ElapsedTime elapsedTime = new ElapsedTime();
 
+    ElapsedTime closeRight = new ElapsedTime();
+    ElapsedTime closeLeft = new ElapsedTime();
+
     List<LynxModule> allHubs;
 
     double intakePos = 0;
 
     boolean useSensors = false;
+
+    int waitTimeSensors;
 
     @Override
     public void loop() {
@@ -187,8 +189,14 @@ public class BlueTeleop extends OpMode {
             horizontal = gamepad1.right_stick_x;
             pivot = gamepad1.left_stick_x;
 
-            if (pivot > 0.6){
-                pivot = 0.6;
+            double slowPivot = 0.5;
+
+            if (Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery){
+                if (pivot > slowPivot){
+                    pivot = slowPivot;
+                } else if (pivot < -slowPivot) {
+                    pivot = -slowPivot;
+                }
             }
 
             double denominator = Math.max(Math.abs(horizontal) + Math.abs(vertical) + Math.abs(pivot), 1);
@@ -197,6 +205,10 @@ public class BlueTeleop extends OpMode {
             drive.RB.setPower((-pivot + (vertical + horizontal)) / denominator);
             drive.LF.setPower((pivot + (vertical + horizontal)) / denominator);
             drive.LB.setPower((pivot + (vertical - horizontal)) / denominator);
+
+        }
+
+        if (Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery && Math.abs(odometry.getHorizontalVelocity()) > 5){
 
         }
 
@@ -259,7 +271,7 @@ public class BlueTeleop extends OpMode {
 
         /**Slide code*/
 
-        Delivery.targetGripperState slidesGripppers = deliverySlides.updateSlides(gamepad1, gamepad2);
+        Delivery.GripperState slidesGripppers = deliverySlides.updateSlides(gamepad1, gamepad2);
 
         if (slidesGripppers == null){
         }else {
@@ -272,84 +284,106 @@ public class BlueTeleop extends OpMode {
         if (gamepad2.dpad_up || gamepad1.dpad_up && deliverySlides.getCurrentposition() > 150){
             delivery.setArmTargetState(Delivery.armState.delivery);
         } else if (gamepad2.dpad_down || gamepad1.dpad_down && deliverySlides.getCurrentposition() > 100) {
-            delivery.setArmTargetState(Delivery.armState.intermediate);
+            delivery.setArmTargetState(Delivery.armState.collect);
         }
 
         /**gripper code*/
 
         if (gamepad1.start) {
-            delivery.setGripperState(Delivery.targetGripperState.closeBoth);
+            delivery.setGripperState(Delivery.GripperState.closed);
         }
 
         if (gamepad1.back) {
-            delivery.setGripperState(Delivery.targetGripperState.openBoth);
+            if (Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery){
+                delivery.setGripperState(Delivery.GripperState.openDeliver);
+            }
+            delivery.setGripperState(Delivery.GripperState.open);
         }
 
         if (gamepad2.b) {
-            delivery.setGripperState(Delivery.targetGripperState.openBoth);
+            if (Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.collect){
+                collection.setState(Collection.intakePowerState.on);
+                collection.setIntakeHeight(Collection.intakeHeightState.collect);
+                delivery.setGripperState(Delivery.GripperState.open);
+            }
+            delivery.setGripperState(Delivery.GripperState.openDeliver);
         }
 
         if (gamepad2.x) {
-            delivery.setGripperState(Delivery.targetGripperState.closeBoth);
+            collection.setState(Collection.intakePowerState.off);
+            delivery.setGripperState(Delivery.GripperState.closed);
         }
 
 
         switch (delivery.getLeftgripperstate()){
+
             case closed:
-                if (currentGamepad2.start && !previousGamepad2.start) {
-                    delivery.setGripperState(Delivery.targetGripperState.openRight);
+                if (currentGamepad2.start && !previousGamepad2.start && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.collect) {
+                    delivery.setLeftGripperState(Delivery.leftGripperState.open);
+                } else if (currentGamepad2.start && !previousGamepad2.start && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery) {
+                    delivery.setLeftGripperState(Delivery.leftGripperState.openDeliver);
                 }
                 break;
             case open:
                 if (currentGamepad2.start && !previousGamepad2.start) {
-                    delivery.setGripperState(Delivery.targetGripperState.closeRight);
+                    delivery.setLeftGripperState(Delivery.leftGripperState.closed);
                 }
                 break;
             default:
+
         }
 
         switch (delivery.getRightgripperstate()){
+
             case closed:
-                if (currentGamepad2.back && !previousGamepad2.back) {
-                    delivery.setGripperState(Delivery.targetGripperState.openLeft);
+                if (currentGamepad2.back && !previousGamepad2.back && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.collect) {
+                    delivery.setRightGripperState(Delivery.rightGripperState.open);
+                } else if (currentGamepad2.back && !previousGamepad2.back && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery) {
+                    delivery.setRightGripperState(Delivery.rightGripperState.openDeliver);
                 }
                 break;
             case open:
                 if (currentGamepad2.back && !previousGamepad2.back) {
-                    delivery.setGripperState(Delivery.targetGripperState.closeLeft);
+                    delivery.setRightGripperState(Delivery.rightGripperState.closed);
                 }
                 break;
             default:
+
         }
 
-        if (gamepad2.a && useSensors){
-            useSensors  = false;
-        }else if (gamepad2.a && !useSensors){
-            useSensors  = true;
-        }
+        if(collection.getIntakePower() > 0 && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.collect){
 
-        if(collection.getIntakePower() > 0 && useSensors){
+            if (sensors.RightClawSensor.isPressed()){
+                closeRight.reset();
+            }
 
-           double rightClawReading = sensors.RightClawSensor.getDistance(DistanceUnit.MM);
-           double leftClawReading = sensors.LeftClawSensor.getDistance(DistanceUnit.MM);
+            if (sensors.LeftClawSensor.isPressed()){
+                closeLeft.reset();
+            }
 
-           if (rightClawReading < 55 && leftClawReading < 55) {
-               delivery.setGripperState(Delivery.targetGripperState.closeBoth);
+            waitTimeSensors = 600;
+
+           if (closeLeft.milliseconds() > waitTimeSensors && closeRight.milliseconds() > waitTimeSensors) {
+
+               delivery.setGripperState(Delivery.GripperState.closed);
                collection.setState(Collection.intakePowerState.off);
                collection.setIntakeHeight(Collection.intakeHeightState.stowed);
                collection.updateIntakeHeight();
                collection.updateIntakeState();
+
            }else {
-               if(leftClawReading < 55){
-                   delivery.setGripperState(Delivery.targetGripperState.closeLeft);
-               } else if(rightClawReading < 55){
-                   delivery.setGripperState(Delivery.targetGripperState.closeRight);
+
+               if(closeLeft.milliseconds() > waitTimeSensors){
+                   delivery.setLeftGripperState(Delivery.leftGripperState.closed);
+               } else if(closeRight.milliseconds() > waitTimeSensors){
+                   delivery.setRightGripperState(Delivery.rightGripperState.closed);
                }
+
            }
         }
 
         if (gamepad2.right_trigger > 0){
-            delivery.setArmTargetState(Delivery.armState.intermediate);
+            delivery.setArmTargetState(Delivery.armState.collect);
 
             deliverySlides.DeliverySlides(0, -0.5);
 
@@ -360,13 +394,31 @@ public class BlueTeleop extends OpMode {
 
             delivery.setArmTargetState(Delivery.armState.collect);
 
-            deliverySlides.DeliverySlides(1000, 0.7);
+            deliverySlides.DeliverySlides(1450, 0.7);
+
+            deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
+
+        } else if (gamepad2.left_trigger > 0 && deliverySlides.getCurrentposition() > 1300){
+
+            collection.setIntakeHeight(Collection.intakeHeightState.hangStowed);
+
+            deliverySlides.DeliverySlides(800, -0.8);
 
             deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
         }
 
-        if (gamepad1.left_trigger > 0){
-            planelauncher.setTrigger(0.5);
+        if (currentGamepad2.a && !previousGamepad2.a && planelauncher.getTriggerPosition() < 0.1){
+            planelauncher.setTrigger(0.6);
+        }else if (currentGamepad2.a && !previousGamepad2.a && planelauncher.getTriggerPosition() > 0.45){
+            planelauncher.setTrigger(0);
+        }
+
+        if (gamepad2.left_stick_y < -0.9 && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery){
+            delivery.setRotateClaw(0.5);
+        }else if (gamepad2.left_stick_x > 0.9 && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery){
+            delivery.setRotateClaw(0);
+        } else if (gamepad2.left_stick_x < -0.9 && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery) {
+            delivery.setRotateClaw(1);
         }
 
         odometry.update();
@@ -379,10 +431,19 @@ public class BlueTeleop extends OpMode {
         delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
         delivery.updateGrippers();
 
-        telemetry.addData("intake current draw", collection.getIntakeCurrentUse());
-        telemetry.addData("Intakeheight", collection.getIntakeHeight());
-        telemetry.addData("Slide state ", deliverySlides.getSlideState());
-        telemetry.addData("main pivot position", delivery.getMainPivotPosition());
+//        sensors.getDetections();
+//
+//        resetOdo();
+
+//        telemetry.addData("main pivot", delivery.getMainPivotPosition());
+        telemetry.addData("X", odometry.X);
+        telemetry.addData("Y", odometry.Y);
+        telemetry.addData("heading", odometry.heading);
+//        telemetry.addData("distance sensor", sensors.backBoard.getDistance(DistanceUnit.CM));
+//        if (sensors.rightTag != null){
+//            telemetry.addData("distance camera", ((sensors.rightTag.ftcPose.y)*0.1));
+//        }
+//
         telemetry.addData("loop time", loopTime);
         telemetry.update();
 
@@ -390,8 +451,6 @@ public class BlueTeleop extends OpMode {
 
     @Override
     public void init() {
-
-        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         allHubs = hardwareMap.getAll(LynxModule.class);
 
@@ -411,7 +470,7 @@ public class BlueTeleop extends OpMode {
         odometry.init(hardwareMap);
         sensors.init(hardwareMap);
 
-        sensors.initAprilTag();
+        sensors.initAprilTag(telemetry);
 
         previousGamepad1 = new Gamepad();
         currentGamepad1 = new Gamepad();
@@ -420,6 +479,8 @@ public class BlueTeleop extends OpMode {
         currentGamepad2 = new Gamepad();
 
         collection.setIntakeHeight(Collection.intakeHeightState.collect);
+
+        sensors.portal.setProcessorEnabled(sensors.propDetectionByAmount, false);
     }
 
     public void init_loop() {
@@ -429,9 +490,7 @@ public class BlueTeleop extends OpMode {
         resetOdo();
 
         odometry.update();
-        telemetry.addData("x", odometry.X);
-        telemetry.addData("y", odometry.Y);
-        telemetry.update();
+
     };
 
     public void resetOdo(){
@@ -455,21 +514,23 @@ public class BlueTeleop extends OpMode {
                     aprilTagOffset = getRealCoords(105);
                 }
 
-                double realNewY = (Math.cos(sensors.rightTag.ftcPose.bearing)) * (sensors.rightTag.ftcPose.x * 0.1);
-                double realNewX = (Math.cos(sensors.rightTag.ftcPose.bearing)) * (sensors.rightTag.ftcPose.y * 0.1);
+                double heading = odometry.getIMUHeading();
 
-                NewY = aprilTagOffset + realNewY;
-                NewX = 360 - realNewX;
+                double realNewX = (sensors.rightTag.ftcPose.y * 0.1);
+                double realNewY = (sensors.rightTag.ftcPose.x * 0.1);
 
-                newPosition = new Vector2D((NewX -5) - 46, (NewY - 11));
+                NewY = (realNewY + aprilTagOffset)-12;
+                NewX = 360 - (realNewX + 45);
 
-                odometry.reset(newPosition);
+                newPosition = new Vector2D(NewX, NewY);
 
-                telemetry.addData("rightTag.ftcPose.yaw", sensors.rightTag.ftcPose.yaw);
-                telemetry.addData("rightTag.ftcPose.y", sensors.rightTag.ftcPose.y);
-                telemetry.addData("rightTag.ftcPose.x", sensors.rightTag.ftcPose.x);
-                telemetry.addData("X reset pos", newPosition.getX());
-                telemetry.addData("Y reset pos", newPosition.getY());
+                odometry.reset(newPosition, heading);
+
+                telemetry.addData("heading", heading);
+                telemetry.addData("sensors.rightTag.ftcPose.y ", sensors.rightTag.ftcPose.x);
+                telemetry.addData("X reset pos", NewX);
+                telemetry.addData("Y reset pos", NewY);
+                telemetry.update();
 
             }
         }

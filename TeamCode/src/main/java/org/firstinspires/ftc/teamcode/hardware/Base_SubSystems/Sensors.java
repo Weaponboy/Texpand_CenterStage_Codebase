@@ -4,13 +4,17 @@ import android.util.Size;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.CameraName;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
@@ -24,10 +28,14 @@ public class Sensors {
 
     public VisionPortal portal;
 
+    public org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount propDetectionByAmount;
+
     public WebcamName frontCam;
 
-    public DistanceSensor RightClawSensor;
-    public DistanceSensor LeftClawSensor;
+    public DistanceSensor backBoard;
+
+    public TouchSensor RightClawSensor;
+    public TouchSensor LeftClawSensor;
 
     public AprilTagDetection rightTag;
 
@@ -39,12 +47,14 @@ public class Sensors {
 
         frontCam = hardwareMap.get(WebcamName.class, "frontcam");
 
-        RightClawSensor = hardwareMap.get(DistanceSensor.class, "rightclaw");
-        LeftClawSensor = hardwareMap.get(DistanceSensor.class, "leftclaw");
+        RightClawSensor = hardwareMap.get(TouchSensor.class, "rightclaw");
+        LeftClawSensor = hardwareMap.get(TouchSensor.class, "leftclaw");
+
+        backBoard = hardwareMap.get(DistanceSensor.class, "backboard");
 
     }
 
-    public void initAprilTag() {
+    public void initAprilTag(Telemetry telemetry) {
 
         // Create the AprilTag processor.
         aprilTag = new AprilTagProcessor.Builder()
@@ -53,22 +63,9 @@ public class Sensors {
                 .setOutputUnits(DistanceUnit.MM, AngleUnit.DEGREES)
                 .build();
 
-        VisionPortal.Builder builder = new VisionPortal.Builder();
+        propDetectionByAmount  = new propDetectionByAmount(telemetry, org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount.Side.left, org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount.color.blue);
 
-        builder.setCamera(frontCam);
-
-        // Choose a camera resolution. Not all cameras support all resolutions.
-        builder.setCameraResolution(new Size(640, 480));
-
-        builder.enableLiveView(true);
-
-        builder.setAutoStopLiveView(false);
-
-        // Set and enable the processor.
-        builder.addProcessor(aprilTag);
-
-        // Build the Vision Portal, using the above settings.
-        portal = builder.build();
+        portal = VisionPortal.easyCreateWithDefaults(frontCam, aprilTag, propDetectionByAmount);
 
     }
 
@@ -79,12 +76,32 @@ public class Sensors {
         // Step through the list of detections and display info for each one.
         for (AprilTagDetection detection : currentDetections) {
 
-            if (detection.id == 4 || detection.id == 5 || detection.id == 6){
+            if (detection.id == 4 || detection.id == 5 || detection.id == 6 || detection.id == 1 || detection.id == 2 || detection.id == 3){
                 rightTag = detection;
+            }else {
+                rightTag = null;
             }
 
         }
 
     }
+
+    public void getDetections(Telemetry telemetry) {
+
+        List<AprilTagDetection> currentDetections = aprilTag.getDetections();
+
+        // Step through the list of detections and display info for each one.
+        for (AprilTagDetection detection : currentDetections) {
+
+            if (detection.id == 4 || detection.id == 5 || detection.id == 6){
+                rightTag = detection;
+
+            }
+            telemetry.addData("id", detection.id);
+            telemetry.update();
+        }
+
+    }
+
 
 }

@@ -104,6 +104,14 @@ public class Blue_Left_Preload extends LinearOpMode implements Auto_Methods {
 
         }
 
+        while (opModeIsActive()){
+            odometry.update();
+            telemetry.addData("X", odometry.X);
+            telemetry.addData("Y", odometry.Y);
+            telemetry.addData("heading", odometry.heading);
+            telemetry.update();
+        }
+
     }
 
     private void initialize(){

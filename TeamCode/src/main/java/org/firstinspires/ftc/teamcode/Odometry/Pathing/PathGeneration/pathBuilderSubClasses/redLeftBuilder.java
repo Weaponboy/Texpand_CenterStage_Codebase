@@ -23,36 +23,36 @@ public class redLeftBuilder extends pathBuilderMain implements Red_Points_Overla
     /**drop purple pixel*/
 
     Vector2D DPS1F = startPos;
-    Vector2D DPE1F = new Vector2D(getRealCoords(90), getRealCoords(270));
+    Vector2D DPE1F = new Vector2D(getRealCoords(74), getRealCoords(286));
 
     //second pos
     Vector2D DPS1S = startPos;
-    Vector2D DPC1S = new Vector2D(getRealCoords(84), getRealCoords(245));
+    Vector2D DPC1S = new Vector2D(getRealCoords(93), getRealCoords(245));
     Vector2D DPE1S = new Vector2D(getRealCoords(70), getRealCoords(300));
 
     //third pos
     Vector2D DPS1T = startPos;
-    Vector2D DPE1T = new Vector2D(getRealCoords(74), getRealCoords(286));
+    Vector2D DPE1T = new Vector2D(getRealCoords(90), getRealCoords(270));
 
     /**drop yellow pixel*/
 
     /**drop yellow first*/
     Vector2D DYS1F = DPE1F;
-    Vector2D DYC1F = new Vector2D(getRealCoords(53), getRealCoords(256));
-    Vector2D DYE1F = new Vector2D(getRealCoords(100), getRealCoords(202));
+    Vector2D DYC1F = new Vector2D(getRealCoords(95), getRealCoords(308));
+    Vector2D DYE1F = new Vector2D(getRealCoords(85), getRealCoords(218));
 
     Vector2D DYS2F = DYE1F;
-    Vector2D DYC2F = new Vector2D(getRealCoords(132), getRealCoords(174));
-    Vector2D DYE2F = new Vector2D(getRealCoords(200), getRealCoords(192));
+    Vector2D DYC2F = new Vector2D(getRealCoords(76), getRealCoords(162));
+    Vector2D DYE2F = new Vector2D(getRealCoords(203), getRealCoords(187));
 
     Vector2D DYS3F = DYE2F;
-    Vector2D DYC3F = new Vector2D(getRealCoords(285), getRealCoords(219));
-    Vector2D DYE3F = new Vector2D(getRealCoords(300), getRealCoords(285));
+    Vector2D DYC3F = new Vector2D(getRealCoords(276), getRealCoords(202));
+    Vector2D DYE3F = new Vector2D(getRealCoords(280), getRealCoords(255));
 
     /**drop yellow second*/
     Vector2D DYS1S = DPE1S;
-    Vector2D DYC1S = new Vector2D(getRealCoords(35), getRealCoords(360));
-    Vector2D DYE1S = new Vector2D(getRealCoords(35), getRealCoords(270));
+    Vector2D DYC1S = new Vector2D(getRealCoords(40), getRealCoords(360));
+    Vector2D DYE1S = new Vector2D(getRealCoords(40), getRealCoords(270));
 
     Vector2D DYS2S = DYE1S;
     Vector2D DYC2S = new Vector2D(getRealCoords(24), getRealCoords(155));
@@ -60,21 +60,21 @@ public class redLeftBuilder extends pathBuilderMain implements Red_Points_Overla
 
     Vector2D DYS3S = DYE2S;
     Vector2D DYC3S = new Vector2D(getRealCoords(293), getRealCoords(224));
-    Vector2D DYE3S = new Vector2D(getRealCoords(300), getRealCoords(270));
+    Vector2D DYE3S = new Vector2D(getRealCoords(280), getRealCoords(240));
 
     /**drop yellow third*/
 
     Vector2D DYS1T = DPE1T;
-    Vector2D DYC1T = new Vector2D(getRealCoords(97), getRealCoords(287));
-    Vector2D DYE1T = new Vector2D(getRealCoords(85), getRealCoords(218));
+    Vector2D DYC1T = new Vector2D(getRealCoords(53), getRealCoords(256));
+    Vector2D DYE1T = new Vector2D(getRealCoords(100), getRealCoords(202));
 
     Vector2D DYS2T = DYE1T;
-    Vector2D DYC2T = new Vector2D(getRealCoords(76), getRealCoords(162));
-    Vector2D DYE2T = new Vector2D(getRealCoords(203), getRealCoords(187));
+    Vector2D DYC2T = new Vector2D(getRealCoords(132), getRealCoords(174));
+    Vector2D DYE2T = new Vector2D(getRealCoords(200), getRealCoords(192));
 
     Vector2D DYS3T = DYE2T;
-    Vector2D DYC3T = new Vector2D(getRealCoords(276), getRealCoords(202));
-    Vector2D DYE3T = new Vector2D(getRealCoords(300), getRealCoords(255));
+    Vector2D DYC3T = new Vector2D(getRealCoords(285), getRealCoords(219));
+    Vector2D DYE3T = new Vector2D(getRealCoords(280), getRealCoords(240));
 
     public enum Position {
         left,

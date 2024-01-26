@@ -24,8 +24,9 @@
             <Servo name="leftmain" port="3"/>
             <Servo name="LeftClaw" port="4"/>
             <Servo name="RightClaw" port="5"/>
-            <REV_VL53L0X_RANGE_SENSOR name="rightclaw" port="0" bus="1"/>
-            <REV_VL53L0X_RANGE_SENSOR name="leftclaw" port="0" bus="2"/>
+            <RevTouchSensor name="rightclaw" port="3"/>
+            <RevTouchSensor name="leftclaw" port="1"/>
+            <REV_VL53L0X_RANGE_SENSOR name="backboard" port="0" bus="1"/>
             <LynxEmbeddedIMU name="imu" port="0" bus="0"/>
         </LynxModule>
     </LynxUsbDevice>

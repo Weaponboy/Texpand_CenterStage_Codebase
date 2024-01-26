@@ -23,7 +23,7 @@ public class planeLauncher {
 
         Trigger = hardwareMap.get(Servo.class, "trigger");
 
-        Trigger.setPosition(0);
+        Trigger.setPosition(0.65);
 
     }
 

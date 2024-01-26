@@ -24,9 +24,9 @@ public class  Delivery_Slides {
 
     SlideState slideState = SlideState.manual;
 
-    public Delivery.targetGripperState updateSlides(Gamepad gamepad1, Gamepad gamepad2){
+    public Delivery.GripperState updateSlides(Gamepad gamepad1, Gamepad gamepad2){
 
-        Delivery.targetGripperState targetGripperState = null;
+        Delivery.GripperState targetGripperState = null;
 
         SlideSafetyHeight = Left_Slide.getCurrentPosition() > 2200;
         SlideSafetyBottom = Left_Slide.getCurrentPosition() < 15;
@@ -37,20 +37,28 @@ public class  Delivery_Slides {
 
                 if (gamepad2.right_stick_y < -0.5 && !SlideSafetyHeight || gamepad1.x && !SlideSafetyHeight) {
                     SlideSafetyHeight = Left_Slide.getCurrentPosition() > 2200;
-                    SlidesBothPower(0.3);
-                    targetGripperState = Delivery.targetGripperState.closeBoth;
+                    SlidesBothPower(0.4);
+                    targetGripperState = Delivery.GripperState.closed;
                 } else if (gamepad2.right_stick_y > 0.5 && !SlideSafetyBottom || gamepad1.a && !SlideSafetyBottom) {
                     SlideSafetyBottom = Left_Slide.getCurrentPosition() < 15;
-                    SlidesBothPower(-0.3);
-                    targetGripperState = Delivery.targetGripperState.closeBoth;
-                }else {
-                    SlidesBothPower(0.0005);
+                    SlidesBothPower(-0.4);
+                    targetGripperState = Delivery.GripperState.closed;
+                }else if (gamepad2.left_stick_y > 0.5 && !SlideSafetyBottom) {
+                    SlideSafetyBottom = Left_Slide.getCurrentPosition() < 15;
+                    SlidesBothPower(-0.6);
+                    targetGripperState = Delivery.GripperState.closed;
+                } else {
+                    if (getCurrentposition() < 100){
+                        SlidesBothPower(0);
+                    }else {
+                        SlidesBothPower(0.0005);
+                    }
                 }
 
                 break;
             case moving:
 
-                targetGripperState = Delivery.targetGripperState.closeBoth;
+                targetGripperState = Delivery.GripperState.closed;
 
                 if (Math.abs(Left_Slide.getVelocity()) < 2){
                     slideState = SlideState.targetReached;

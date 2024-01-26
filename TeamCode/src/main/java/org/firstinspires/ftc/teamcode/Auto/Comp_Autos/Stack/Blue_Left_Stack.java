@@ -155,7 +155,7 @@ public class Blue_Left_Stack extends LinearOpMode implements Auto_Methods{
 
         follower.setPath(secondPath.followablePath, secondPath.pathingVelocity);
 
-        delivery.setGripperState(Delivery.targetGripperState.openBoth);
+        delivery.setGripperState(Delivery.GripperState.open);
         delivery.updateGrippers();
 
         collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
@@ -167,7 +167,7 @@ public class Blue_Left_Stack extends LinearOpMode implements Auto_Methods{
 
         sleep(1000);
 
-        delivery.setGripperState(Delivery.targetGripperState.closeBoth);
+        delivery.setGripperState(Delivery.GripperState.closed);
         delivery.updateGrippers();
 
         sleep(500);

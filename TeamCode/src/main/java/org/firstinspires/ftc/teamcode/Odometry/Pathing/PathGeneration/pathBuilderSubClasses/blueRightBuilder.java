@@ -48,7 +48,7 @@ public class blueRightBuilder extends pathBuilderMain implements Blue_Points_Ove
 
     Vector2D DYS3F = DYE2F;
     Vector2D DYC3F = new Vector2D(getRealCoords(285), getRealCoords(141));
-    Vector2D DYE3F = new Vector2D(getRealCoords(300), getRealCoords(85));
+    Vector2D DYE3F = new Vector2D(getRealCoords(280), getRealCoords(85));
 
     /**drop yellow second*/
     Vector2D DYS1S = DPE1S;
@@ -61,12 +61,12 @@ public class blueRightBuilder extends pathBuilderMain implements Blue_Points_Ove
 
     Vector2D DYS3S = DYE2S;
     Vector2D DYC3S = new Vector2D(getRealCoords(293), getRealCoords(136));
-    Vector2D DYE3S = new Vector2D(getRealCoords(300), getRealCoords(95));
+    Vector2D DYE3S = new Vector2D(getRealCoords(280), getRealCoords(75));
 
     /**drop yellow third*/
 
     Vector2D DYS1T = DPE1T;
-    Vector2D DYC1T = new Vector2D(getRealCoords(97), getRealCoords(73));
+    Vector2D DYC1T = new Vector2D(getRealCoords(95), getRealCoords(52));
     Vector2D DYE1T = new Vector2D(getRealCoords(85), getRealCoords(142));
 
     Vector2D DYS2T = DYE1T;
@@ -75,7 +75,7 @@ public class blueRightBuilder extends pathBuilderMain implements Blue_Points_Ove
 
     Vector2D DYS3T = DYE2T;
     Vector2D DYC3T = new Vector2D(getRealCoords(276), getRealCoords(158));
-    Vector2D DYE3T = new Vector2D(getRealCoords(300), getRealCoords(110));
+    Vector2D DYE3T = new Vector2D(getRealCoords(280), getRealCoords(75));
 
     public enum Position {
         left,
@@ -210,6 +210,15 @@ public class blueRightBuilder extends pathBuilderMain implements Blue_Points_Ove
                 break;
             default:
         }
+
+        pathBuilder(originalPath);
+
+        motionProfile();
+    }
+
+    public void buildPathLine(Vector2D startPos, Vector2D targetPos){
+
+        buildLineSegment(startPos, targetPos);
 
         pathBuilder(originalPath);
 

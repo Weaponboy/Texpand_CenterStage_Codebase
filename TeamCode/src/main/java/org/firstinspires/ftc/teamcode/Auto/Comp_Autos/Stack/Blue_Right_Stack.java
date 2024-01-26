@@ -15,11 +15,12 @@ import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Delivery;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Delivery_Slides;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry;
+import org.firstinspires.ftc.teamcode.hardware.Method_Interfaces.Auto_Methods;
 import org.firstinspires.ftc.vision.VisionPortal;
 
 @Autonomous
 /**start red right*/
-public class Blue_Right_Stack extends LinearOpMode {
+public class Blue_Right_Stack extends LinearOpMode implements Auto_Methods {
 
     public WebcamName frontCam;
 
@@ -189,76 +190,6 @@ public class Blue_Right_Stack extends LinearOpMode {
         frontCam = hardwareMap.get(WebcamName.class, "frontcam");
 
         portal = VisionPortal.easyCreateWithDefaults(frontCam, propDetectionByAmount);
-
-    }
-
-    private void dropYellowPixel(){
-
-        collection.setIntakeHeight(Collection.intakeHeightState.letClawThrough);
-        collection.updateIntakeHeight();
-
-        sleep(200);
-
-        deliverySlides.DeliverySlides(500, 0.6);
-
-        while (deliverySlides.getCurrentposition() < 500){}
-
-        delivery.setArmTargetState(Delivery.armState.deliverAuto);
-        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
-
-        sleep(1500);
-
-        delivery.setGripperState(Delivery.targetGripperState.openRight);
-        delivery.updateGrippers();
-
-        sleep(1000);
-
-        delivery.setArmTargetState(Delivery.armState.collect);
-        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
-
-        sleep(100);
-
-        deliverySlides.DeliverySlides(0, -0.6);
-
-        sleep(500);
-
-        collection.setIntakeHeight(Collection.intakeHeightState.stowed);
-        collection.updateIntakeHeight();
-
-    }
-
-    private void dropWhitePixels(){
-
-        collection.setIntakeHeight(Collection.intakeHeightState.letClawThrough);
-        collection.updateIntakeHeight();
-
-        sleep(200);
-
-        deliverySlides.DeliverySlides(700, 0.6);
-
-        while (deliverySlides.getCurrentposition() < 680){}
-
-        delivery.setArmTargetState(Delivery.armState.deliverAuto);
-        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
-
-        sleep(1500);
-
-        delivery.setGripperState(Delivery.targetGripperState.openBoth);
-        delivery.updateGrippers();
-
-        sleep(1000);
-
-        delivery.setArmTargetState(Delivery.armState.collect);
-        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
-
-        sleep(100);
-
-        deliverySlides.DeliverySlides(0, -0.6);
-
-        sleep(500);
-
-        collection.setIntakeHeight(Collection.intakeHeightState.stowed);
-        collection.updateIntakeHeight();
 
     }
 

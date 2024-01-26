@@ -15,7 +15,7 @@
             <Servo name="RightClaw" port="5" />
             <REV_VL53L0X_RANGE_SENSOR name="leftclaw" port="0" bus="2" />
             <LynxEmbeddedIMU name="imu" port="0" bus="0" />
-            <REV_VL53L0X_RANGE_SENSOR name="rightclaw" port="0" bus="1" />
+            <RevColorSensorV3 name="rightclaw" port="0" bus="1" />
         </LynxModule>
     </LynxUsbDevice>
     <LynxUsbDevice name="Expansion Hub Portal 1" serialNumber="DQ4VWHH9" parentModuleAddress="2">

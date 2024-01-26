@@ -48,7 +48,7 @@ public class get_Odometry_Encoder_Values extends OpMode {
     public void loop() {
         odo.update();
 
-        telemetry.addData("Heading", imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle);
+        telemetry.addData("Heading", Math.toRadians(imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle));
         telemetry.addData("left pod", odo.currentLeftPod);
         telemetry.addData("right pod", odo.currentRightPod);
         telemetry.addData("center pod", odo.currentCenterPod);

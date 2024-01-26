@@ -18,13 +18,14 @@ public class Collection {
     HardwareMap hmap;
 
     double collect = 0;
+    double hangStowed = 0.4;
     double stowed = 0.3;
     double letClawThrough = 0.25;
     double firstPixel = 0;
-    double secondPixel = 0.17;
-    double thirdPixel = 0.19;
-    double forthPixel = 0.23;
-    double fifthPixel = 0.26;
+    double secondPixel = 0.19;
+    double thirdPixel = 0.23;
+    double forthPixel = 0.27;
+    double fifthPixel = 0.31;
 
     intakePowerState statePower = intakePowerState.off;
     intakeHeightState heightState = intakeHeightState.stowed;
@@ -36,6 +37,7 @@ public class Collection {
     }
 
     public enum intakeHeightState{
+        hangStowed,
         collect,
         stowed,
         letClawThrough,
@@ -66,6 +68,10 @@ public class Collection {
     public void updateIntakeHeight(){
 
         switch (heightState){
+            case hangStowed:
+                IntakeHeightRight.setPosition(hangStowed);
+                IntakeHeightLeft.setPosition(hangStowed);
+                break;
             case stowed:
                 IntakeHeightRight.setPosition(stowed);
                 IntakeHeightLeft.setPosition(stowed);

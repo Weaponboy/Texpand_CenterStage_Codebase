@@ -14,12 +14,13 @@ import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Delivery;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Delivery_Slides;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry;
+import org.firstinspires.ftc.teamcode.hardware.Method_Interfaces.Auto_Methods;
 import org.firstinspires.ftc.vision.VisionPortal;
 
 @Autonomous
 @Disabled
 /**start red right*/
-public class Testing_Odo_Drift extends LinearOpMode {
+public class Testing_Odo_Drift extends LinearOpMode implements Auto_Methods {
 
     public WebcamName frontCam;
 
@@ -72,7 +73,7 @@ public class Testing_Odo_Drift extends LinearOpMode {
 
         follower.setPath(firstPath.followablePath, firstPath.pathingVelocity);
 
-        delivery.setGripperState(Delivery.targetGripperState.openBoth);
+        delivery.setGripperState(Delivery.GripperState.open);
         delivery.updateGrippers();
 
         collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
@@ -84,7 +85,7 @@ public class Testing_Odo_Drift extends LinearOpMode {
 
         sleep(1000);
 
-        delivery.setGripperState(Delivery.targetGripperState.closeBoth);
+        delivery.setGripperState(Delivery.GripperState.closed);
         delivery.updateGrippers();
 
         sleep(500);
@@ -131,76 +132,6 @@ public class Testing_Odo_Drift extends LinearOpMode {
         deliverySlides.init(hardwareMap);
 
         odometry.update();
-
-    }
-
-    private void dropYellowPixel(){
-
-        collection.setIntakeHeight(Collection.intakeHeightState.letClawThrough);
-        collection.updateIntakeHeight();
-
-        sleep(200);
-
-        deliverySlides.DeliverySlides(500, 0.6);
-
-        while (deliverySlides.getCurrentposition() < 500){}
-
-        delivery.setArmTargetState(Delivery.armState.deliverAuto);
-        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
-
-        sleep(1500);
-
-        delivery.setGripperState(Delivery.targetGripperState.openRight);
-        delivery.updateGrippers();
-
-        sleep(1500);
-
-        delivery.setArmTargetState(Delivery.armState.collect);
-        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
-
-        sleep(100);
-
-        deliverySlides.DeliverySlides(0, -0.6);
-
-        sleep(500);
-
-        collection.setIntakeHeight(Collection.intakeHeightState.stowed);
-        collection.updateIntakeHeight();
-
-    }
-
-    private void dropWhitePixels(){
-
-        collection.setIntakeHeight(Collection.intakeHeightState.letClawThrough);
-        collection.updateIntakeHeight();
-
-        sleep(200);
-
-        deliverySlides.DeliverySlides(700, 0.6);
-
-        while (deliverySlides.getCurrentposition() < 680){}
-
-        delivery.setArmTargetState(Delivery.armState.deliverAuto);
-        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
-
-        sleep(1500);
-
-        delivery.setGripperState(Delivery.targetGripperState.openBoth);
-        delivery.updateGrippers();
-
-        sleep(1000);
-
-        delivery.setArmTargetState(Delivery.armState.collect);
-        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
-
-        sleep(100);
-
-        deliverySlides.DeliverySlides(0, -0.6);
-
-        sleep(500);
-
-        collection.setIntakeHeight(Collection.intakeHeightState.stowed);
-        collection.updateIntakeHeight();
 
     }
 
