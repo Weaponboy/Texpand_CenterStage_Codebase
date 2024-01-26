@@ -82,6 +82,7 @@ public class BlueTeleop extends OpMode {
 
     ElapsedTime closeRight = new ElapsedTime();
     ElapsedTime closeLeft = new ElapsedTime();
+    ElapsedTime resetOdo = new ElapsedTime();
 
     List<LynxModule> allHubs;
 
@@ -421,6 +422,18 @@ public class BlueTeleop extends OpMode {
             delivery.setRotateClaw(1);
         }
 
+        if (gamepad1.b){
+            resetOdo.reset();
+            double heading = odometry.getIMUHeading();
+            odometry.reset(heading);
+        }
+
+        if (resetOdo.milliseconds() < 500){
+            resetOdo();
+        }
+
+        sensors.getDetections();
+
         odometry.update();
 
         //update collection state
@@ -431,9 +444,6 @@ public class BlueTeleop extends OpMode {
         delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
         delivery.updateGrippers();
 
-//        sensors.getDetections();
-//
-//        resetOdo();
 
 //        telemetry.addData("main pivot", delivery.getMainPivotPosition());
         telemetry.addData("X", odometry.X);
