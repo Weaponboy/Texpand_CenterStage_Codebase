@@ -172,7 +172,7 @@ public class FollowPath {
 
         int index = 0;
 
-        int startIndex = Math.max(lastPointOnPath - 80, 0);
+        int startIndex = Math.max(lastPointOnPath - 20, 0);
 
         int endIndex = Math.min(lastPointOnPath + 20, followablePath.size());
 
@@ -198,9 +198,6 @@ public class FollowPath {
 
         }
 
-        dashboardTelemetry.addData("last point", lastPointOnPath);
-        dashboardTelemetry.update();
-
         lastPointOnPath = index;
 
         return index;
@@ -216,11 +213,19 @@ public class FollowPath {
 
         double lookaheadDistance;
 
-        double incrementDistance = 1;
+        int startIndex = Math.max(lastPointOnPath - 20, 0);
+
+        int endIndex = Math.min(lastPointOnPath + 20, followablePath.size());
+
+        int length = endIndex - startIndex + 1;
 
         double minDistance = Double.MAX_VALUE;
 
-        for (Vector2D pos : followablePath) {
+        List<Vector2D> subList = followablePath.subList(startIndex, endIndex + 1);
+
+        ArrayList<Vector2D> sectionToLook = new ArrayList<>(subList);
+
+        for (Vector2D pos : sectionToLook) {
 
             double distance = Math.sqrt(
                     Math.pow(robotPos.getX() - pos.getX(), 2) +
@@ -230,9 +235,11 @@ public class FollowPath {
             if (distance < minDistance) {
                 minDistance = distance;
                 index = followablePath.indexOf(pos);
-                position.set(pos.getX(), pos.getY());
             }
+
         }
+
+        lastPointOnPath = index;
 
         lookaheadDistance = Math.abs(Math.hypot(position.getX() - robotPos.getX(), position.getY() - robotPos.getY()));
 
@@ -248,6 +255,28 @@ public class FollowPath {
 
         return error;
     }
+
+    public Vector2D getErrorToPath(Vector2D robotPos, int index) {
+
+        Vector2D error = new Vector2D();
+
+        Vector2D position = getPointOnFollowable(index);
+
+        double lookaheadDistance = Math.abs(Math.hypot(position.getX() - robotPos.getX(), position.getY() - robotPos.getY()));
+
+        index += (int)lookaheadDistance;
+
+        if (index < followablePath.size()-1){
+            position = followablePath.get(index);
+        }else {
+            position = followablePath.get(followablePath.size()-1);
+        }
+
+        error.set(position.getX() - robotPos.getX(), position.getY() - robotPos.getY());
+
+        return error;
+    }
+
 
     public PathingVelocity getTargetVelocity(int index){
 
