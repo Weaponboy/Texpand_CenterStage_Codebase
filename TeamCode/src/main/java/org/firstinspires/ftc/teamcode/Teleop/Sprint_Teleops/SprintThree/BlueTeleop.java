@@ -454,6 +454,9 @@ public class BlueTeleop extends OpMode {
 //            telemetry.addData("distance camera", ((sensors.rightTag.ftcPose.y)*0.1));
 //        }
 //
+        telemetry.addData("X", odometry.X);
+        telemetry.addData("Y", odometry.Y);
+        telemetry.addData("heading", odometry.heading);
         telemetry.addData("loop time", loopTime);
         telemetry.update();
 

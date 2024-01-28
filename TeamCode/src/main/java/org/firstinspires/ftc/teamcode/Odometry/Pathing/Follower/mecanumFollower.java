@@ -142,6 +142,7 @@ public class mecanumFollower {
         PathingPower correctivePower = new PathingPower();
 
         error = pathfollow.getErrorToPath(robotPos);
+
         double xDist = error.getX();
         double yDist = error.getY();
 
@@ -195,6 +196,46 @@ public class mecanumFollower {
         int closestPos = pathfollow.getClosestPositionOnPath(robotPos);
 
         return pathingVelocity = pathfollow.getTargetVelocity(closestPos);
+    }
+
+    public void TestNewPathingMethod(Odometry odometry){
+
+        Vector2D targetPoint = pathfollow.getPointOnFollowable(pathfollow.getLastPoint());
+
+        Vector2D robotPos = new Vector2D();
+
+        boolean reachedTarget = false;
+
+        do {
+
+            counter++;
+
+            if (counter > 50){
+                counter = 0;
+                loopTime = elapsedTime.milliseconds() - lastLoopTime;
+            }
+
+            lastLoopTime = elapsedTime.milliseconds();
+
+            odometry.update();
+
+            robotPos.set(odometry.X, odometry.Y);
+
+            if (Math.abs(robotPos.getX() - targetPoint.getX()) < 1.4 && Math.abs(robotPos.getY() - targetPoint.getY()) < 1.4 && Math.abs(odometry.getVerticalVelocity()) < 3 && Math.abs(odometry.getHorizontalVelocity()) < 3){
+                reachedTarget = true;
+            }
+
+            Vector2D error = pathfollow.getPointOnFollowable(pathfollow.getClosestPositionOnPath(robotPos));
+
+            dashboardTelemetry.addData("X odo", robotPos.getX());
+            dashboardTelemetry.addData("Y odo", robotPos.getY());
+            dashboardTelemetry.addData("X", error.getX());
+            dashboardTelemetry.addData("Y", error.getY());
+            dashboardTelemetry.addData("loop time", loopTime);
+            dashboardTelemetry.update();
+
+        }while(!reachedTarget);
+
     }
 
     //normal method

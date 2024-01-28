@@ -4,16 +4,28 @@ import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.m
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.velocityDecreasePerPoint;
 import static org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry.getMaxVelocity;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.qualcomm.robotcore.util.Range;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathingUtility.PathingVelocity;
 
+import java.awt.font.NumericShaper;
 import java.util.ArrayList;
+import java.util.List;
 
 public class FollowPath {
 
     ArrayList<Vector2D> followablePath = new ArrayList<>();
 
     ArrayList<PathingVelocity> pathingVelocity = new ArrayList<>();
+
+    FtcDashboard dashboard = FtcDashboard.getInstance();
+
+    Telemetry dashboardTelemetry = dashboard.getTelemetry();
+
+    int lastPointOnPath;
 
     public FollowPath(ArrayList<Vector2D> followablePath, ArrayList<PathingVelocity> pathingVelocity){
         this.followablePath = followablePath;
@@ -160,9 +172,19 @@ public class FollowPath {
 
         int index = 0;
 
+        int startIndex = Math.max(lastPointOnPath - 80, 0);
+
+        int endIndex = Math.min(lastPointOnPath + 20, followablePath.size());
+
+        int length = endIndex - startIndex + 1;
+
         double minDistance = Double.MAX_VALUE;
 
-        for (Vector2D pos : followablePath) {
+        List<Vector2D> subList = followablePath.subList(startIndex, endIndex + 1);
+
+        ArrayList<Vector2D> sectionToLook = new ArrayList<>(subList);
+
+        for (Vector2D pos : sectionToLook) {
 
             double distance = Math.sqrt(
                     Math.pow(robotPos.getX() - pos.getX(), 2) +
@@ -175,6 +197,11 @@ public class FollowPath {
             }
 
         }
+
+        dashboardTelemetry.addData("last point", lastPointOnPath);
+        dashboardTelemetry.update();
+
+        lastPointOnPath = index;
 
         return index;
     }
@@ -194,6 +221,7 @@ public class FollowPath {
         double minDistance = Double.MAX_VALUE;
 
         for (Vector2D pos : followablePath) {
+
             double distance = Math.sqrt(
                     Math.pow(robotPos.getX() - pos.getX(), 2) +
                             Math.pow(robotPos.getY() - pos.getY(), 2)

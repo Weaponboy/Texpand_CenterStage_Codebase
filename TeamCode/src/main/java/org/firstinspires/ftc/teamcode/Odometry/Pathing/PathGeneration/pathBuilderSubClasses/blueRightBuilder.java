@@ -279,7 +279,7 @@ public class blueRightBuilder extends pathBuilderMain implements Blue_Points_Ove
 
         buildCurveSegment(DYS2S, DYC2S, DYE2S);
 
-//        buildCurveSegment(DYS3S, DYC3S, DYE3S);
+        buildCurveSegment(DYS3S, DYC3S, DYE3S);
 
     }
 
