@@ -11,6 +11,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower.mecanumFollower;
+import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.blueRightBuilder;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.redRightBuilder;
 import org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Collection;
@@ -47,6 +48,8 @@ public class Red_Right_Preload extends LinearOpMode implements Auto_Methods {
 
     redRightBuilder thirdPath = new redRightBuilder();
 
+    blueRightBuilder lastToBackboard = new blueRightBuilder();
+
     mecanumFollower follower = new mecanumFollower();
 
 
@@ -79,11 +82,15 @@ public class Red_Right_Preload extends LinearOpMode implements Auto_Methods {
 
             odometry.update();
 
+            Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
+
             dropYellowPixel();
 
-//            follower.setPath(secondPath.followablePath, secondPath.pathingVelocity);
-//
-//            follower.followPath(180, odometry, drive);
+            lastToBackboard.buildPathLine(startPos, new Vector2D(290, 330));
+
+            follower.setPath(lastToBackboard.followablePath, lastToBackboard.pathingVelocity);
+
+            follower.followPath(180, odometry, drive, "yes");
 
         } else if (propPos == 2) {
 
@@ -101,11 +108,16 @@ public class Red_Right_Preload extends LinearOpMode implements Auto_Methods {
 
             odometry.update();
 
+            Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
+
             dropYellowPixel();
 
-//            follower.setPath(secondPath.followablePath, secondPath.pathingVelocity);
-//
-//            follower.followPath(180, odometry, drive);
+            lastToBackboard.buildPathLine(startPos, new Vector2D(290, 330));
+
+            follower.setPath(lastToBackboard.followablePath, lastToBackboard.pathingVelocity);
+
+            follower.followPath(180, odometry, drive, "yes");
+
 
         } else if (propPos == 3) {
 
@@ -123,7 +135,16 @@ public class Red_Right_Preload extends LinearOpMode implements Auto_Methods {
 
             odometry.update();
 
+            Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
+
             dropYellowPixel();
+
+            lastToBackboard.buildPathLine(startPos, new Vector2D(290, 330));
+
+            follower.setPath(lastToBackboard.followablePath, lastToBackboard.pathingVelocity);
+
+            follower.followPath(180, odometry, drive, "yes");
+
 
 
         }

@@ -58,14 +58,14 @@ public class propDetectionByAmount implements VisionProcessor {
         telemetryBool = false;
     }
 
-    public Scalar MIN_THRESH_BLUE = new Scalar(5, 90, 110);
-    public Scalar MAX_THRESH_BLUE = new Scalar(40, 255, 255);
+    public Scalar MIN_THRESH_BLUE = new Scalar(16, 50, 50);
+    public Scalar MAX_THRESH_BLUE = new Scalar(50, 255, 255);
 
-    public Scalar MIN_THRESH_RED = new Scalar(110, 80, 60);
+    public Scalar MIN_THRESH_RED = new Scalar(110, 20, 50);
     public Scalar MAX_THRESH_RED = new Scalar(220, 255, 255);
 
-    static final Rect rightOfScreen = new Rect(new Point(320, 0), new Point(640, 480));
-    static final Rect leftOfScreen = new Rect(new Point(0, 0), new Point(320, 480));
+    static final Rect rightOfScreen = new Rect(new Point(320, 0), new Point(640, 240));
+    static final Rect leftOfScreen = new Rect(new Point(0, 0), new Point(320, 240));
 
     public double position1 = 0;
     public double position2 = 0;

@@ -21,6 +21,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Sensors {
 
@@ -54,7 +55,7 @@ public class Sensors {
 
     }
 
-    public void initAprilTag(Telemetry telemetry) {
+    public void initAprilTag(Telemetry telemetry, boolean red) {
 
         // Create the AprilTag processor.
         aprilTag = new AprilTagProcessor.Builder()
@@ -63,7 +64,11 @@ public class Sensors {
                 .setOutputUnits(DistanceUnit.MM, AngleUnit.DEGREES)
                 .build();
 
-        propDetectionByAmount  = new propDetectionByAmount(telemetry, org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount.Side.left, org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount.color.blue);
+        if (red) {
+            propDetectionByAmount  = new propDetectionByAmount(telemetry, org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount.Side.left, org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount.color.red);
+        } else {
+            propDetectionByAmount  = new propDetectionByAmount(telemetry, org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount.Side.left, org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount.color.blue);
+        }
 
         portal = VisionPortal.easyCreateWithDefaults(frontCam, aprilTag, propDetectionByAmount);
 

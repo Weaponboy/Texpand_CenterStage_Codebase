@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.Teleop.Sprint_Teleops.SprintThree;
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.horizontal;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.pivot;
-import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.propPos;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.vertical;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Non_Hardware_Objects.currentGamepad1;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Non_Hardware_Objects.currentGamepad2;
@@ -10,16 +9,12 @@ import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Non_Hardwar
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Non_Hardware_Objects.previousGamepad2;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.UsefulMethods.getRealCoords;
 
-import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower.mecanumFollower;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.teleopPathBuilder;
@@ -36,7 +31,7 @@ import java.util.Objects;
 
 
 @TeleOp
-public class BlueTeleop extends OpMode {
+public class RedTeleop extends OpMode {
 
     Drivetrain drive = new Drivetrain();
 
@@ -480,7 +475,7 @@ public class BlueTeleop extends OpMode {
         odometry.init(hardwareMap);
         sensors.init(hardwareMap);
 
-        sensors.initAprilTag(telemetry, false);
+        sensors.initAprilTag(telemetry, true);
 
         previousGamepad1 = new Gamepad();
         currentGamepad1 = new Gamepad();
@@ -507,7 +502,7 @@ public class BlueTeleop extends OpMode {
 
         if (!(sensors.rightTag == null)){
 
-            if (sensors.rightTag.id == 1 || sensors.rightTag.id == 2 || sensors.rightTag.id == 3){
+            if (sensors.rightTag.id == 4 || sensors.rightTag.id == 5 || sensors.rightTag.id == 6){
 
                 double NewY;
                 double NewX;
@@ -516,12 +511,12 @@ public class BlueTeleop extends OpMode {
 
                 Vector2D newPosition;
 
-                if (sensors.rightTag.id == 1){
-                    aprilTagOffset = getRealCoords(75);
-                }else if (sensors.rightTag.id == 2){
-                    aprilTagOffset = getRealCoords(90);
+                if (sensors.rightTag.id == 4){
+                    aprilTagOffset = getRealCoords(255);
+                }else if (sensors.rightTag.id == 5){
+                    aprilTagOffset = getRealCoords(270);
                 }else{
-                    aprilTagOffset = getRealCoords(105);
+                    aprilTagOffset = getRealCoords(285);
                 }
 
                 double heading = odometry.getIMUHeading();

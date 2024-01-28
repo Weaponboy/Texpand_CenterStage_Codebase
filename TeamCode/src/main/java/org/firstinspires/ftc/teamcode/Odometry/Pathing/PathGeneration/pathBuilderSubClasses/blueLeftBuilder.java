@@ -70,6 +70,16 @@ public class blueLeftBuilder extends pathBuilderMain implements Blue_Points_Over
         deliver
     }
 
+    public void buildPathLine(Vector2D startPos, Vector2D targetPos){
+
+        buildLineSegment(startPos, targetPos);
+
+        pathBuilder(originalPath);
+
+        motionProfile();
+
+    }
+
     public void buildPath(Position propPosition, Section section){
 
         switch (section) {

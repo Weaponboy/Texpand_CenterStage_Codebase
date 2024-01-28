@@ -163,6 +163,7 @@ public class FollowPath {
         double minDistance = Double.MAX_VALUE;
 
         for (Vector2D pos : followablePath) {
+
             double distance = Math.sqrt(
                     Math.pow(robotPos.getX() - pos.getX(), 2) +
                             Math.pow(robotPos.getY() - pos.getY(), 2)
@@ -172,6 +173,7 @@ public class FollowPath {
                 minDistance = distance;
                 index = followablePath.indexOf(pos);
             }
+
         }
 
         return index;

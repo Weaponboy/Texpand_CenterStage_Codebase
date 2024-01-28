@@ -6,6 +6,7 @@ import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.UsefulMetho
 
 import android.util.Size;
 
+import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -28,6 +29,8 @@ import org.firstinspires.ftc.teamcode.hardware.Method_Interfaces.Auto_Methods;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+
+import java.util.List;
 
 @Autonomous
 /**start red right*/
@@ -60,6 +63,8 @@ public class Blue_Right_Preload extends LinearOpMode implements Auto_Methods{
     blueRightBuilder lastToBackboard = new blueRightBuilder();
 
     mecanumFollower follower = new mecanumFollower();
+
+    List<LynxModule> allHubs;
 
     boolean reset = false;
 
@@ -120,7 +125,7 @@ public class Blue_Right_Preload extends LinearOpMode implements Auto_Methods{
 
             follower.setPath(preloadPurple.followablePath, preloadPurple.pathingVelocity);
 
-            follower.followPath(270, odometry, drive, new Vector2D(75, 163), 180);
+            follower.followPath(270, odometry, drive, new Vector2D(75, 163), 180, allHubs);
 
             elapsedTime.reset();
 
@@ -191,6 +196,12 @@ public class Blue_Right_Preload extends LinearOpMode implements Auto_Methods{
 
     private void initialize(){
 
+        allHubs = hardwareMap.getAll(LynxModule.class);
+
+        for (LynxModule hub : allHubs) {
+            hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
+        }
+
         //init hardware
         odometry.init(hardwareMap);
 
@@ -202,7 +213,7 @@ public class Blue_Right_Preload extends LinearOpMode implements Auto_Methods{
 
         sensors.init(hardwareMap);
 
-        sensors.initAprilTag(telemetry);
+        sensors.initAprilTag(telemetry, false);
 
     }
 
@@ -210,7 +221,7 @@ public class Blue_Right_Preload extends LinearOpMode implements Auto_Methods{
 
         if (!(sensors.rightTag == null)){
 
-            if (sensors.rightTag.id == 4 || sensors.rightTag.id == 5 || sensors.rightTag.id == 6){
+            if (sensors.rightTag.id == 1 || sensors.rightTag.id == 2 || sensors.rightTag.id == 3){
 
                 counter++;
 
@@ -221,9 +232,9 @@ public class Blue_Right_Preload extends LinearOpMode implements Auto_Methods{
 
                 Vector2D newPosition;
 
-                if (sensors.rightTag.id == 4){
+                if (sensors.rightTag.id == 1){
                     aprilTagOffset = getRealCoords(75);
-                }else if (sensors.rightTag.id == 5){
+                }else if (sensors.rightTag.id == 2){
                     aprilTagOffset = getRealCoords(90);
                 }else{
                     aprilTagOffset = getRealCoords(105);

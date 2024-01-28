@@ -28,10 +28,6 @@ public class Red_Left_Preload extends LinearOpMode implements Auto_Methods {
 
     public WebcamName frontCam;
 
-    public VisionPortal portal;
-
-    org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount propDetectionByAmount = new propDetectionByAmount(telemetry, org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount.Side.left, org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount.color.red);
-
     /**hardware objects*/
     Odometry odometry = new Odometry(90, 337, 90);
 
@@ -91,7 +87,7 @@ public class Red_Left_Preload extends LinearOpMode implements Auto_Methods {
 
             Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
 
-            lastToBackboard.buildPathLine(startPos, new Vector2D(306, 260));
+            lastToBackboard.buildPathLine(startPos, new Vector2D(308, 295));
 
             follower.setPath(lastToBackboard.followablePath, lastToBackboard.pathingVelocity);
 
@@ -123,7 +119,7 @@ public class Red_Left_Preload extends LinearOpMode implements Auto_Methods {
 
             Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
 
-            lastToBackboard.buildPathLine(startPos, new Vector2D(306, 274));
+            lastToBackboard.buildPathLine(startPos, new Vector2D(308, 265));
 
             follower.setPath(lastToBackboard.followablePath, lastToBackboard.pathingVelocity);
 
@@ -161,7 +157,7 @@ public class Red_Left_Preload extends LinearOpMode implements Auto_Methods {
 
             Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
 
-            lastToBackboard.buildPathLine(startPos, new Vector2D(306, 295));
+            lastToBackboard.buildPathLine(startPos, new Vector2D(308, 250));
 
             follower.setPath(lastToBackboard.followablePath, lastToBackboard.pathingVelocity);
 
@@ -186,7 +182,7 @@ public class Red_Left_Preload extends LinearOpMode implements Auto_Methods {
 
         sensors.init(hardwareMap);
 
-        sensors.initAprilTag(telemetry);
+        sensors.initAprilTag(telemetry, true);
 
     }
 
@@ -194,7 +190,7 @@ public class Red_Left_Preload extends LinearOpMode implements Auto_Methods {
 
         if (!(sensors.rightTag == null)){
 
-            if (sensors.rightTag.id == 1 || sensors.rightTag.id == 2 || sensors.rightTag.id == 3){
+            if (sensors.rightTag.id == 4 || sensors.rightTag.id == 5 || sensors.rightTag.id == 6){
 
                 counter++;
 
@@ -205,9 +201,9 @@ public class Red_Left_Preload extends LinearOpMode implements Auto_Methods {
 
                 Vector2D newPosition;
 
-                if (sensors.rightTag.id == 1){
+                if (sensors.rightTag.id == 4){
                     aprilTagOffset = getRealCoords(255);
-                }else if (sensors.rightTag.id == 2){
+                }else if (sensors.rightTag.id == 5){
                     aprilTagOffset = getRealCoords(270);
                 }else{
                     aprilTagOffset = getRealCoords(285);

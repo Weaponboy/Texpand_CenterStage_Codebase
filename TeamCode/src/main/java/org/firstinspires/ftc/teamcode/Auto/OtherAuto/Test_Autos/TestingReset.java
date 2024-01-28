@@ -110,7 +110,7 @@ public class TestingReset extends LinearOpMode implements Auto_Methods{
 
         sensors.init(hardwareMap);
 
-        sensors.initAprilTag(telemetry);
+        sensors.initAprilTag(telemetry, true);
 
     }
 

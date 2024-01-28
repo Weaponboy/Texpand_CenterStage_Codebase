@@ -47,7 +47,7 @@ public class redLeftBuilder extends pathBuilderMain implements Red_Points_Overla
 
     Vector2D DYS3F = DYE2F;
     Vector2D DYC3F = new Vector2D(getRealCoords(276), getRealCoords(202));
-    Vector2D DYE3F = new Vector2D(getRealCoords(280), getRealCoords(255));
+    Vector2D DYE3F = new Vector2D(getRealCoords(280), getRealCoords(260));
 
     /**drop yellow second*/
     Vector2D DYS1S = DPE1S;
@@ -214,6 +214,8 @@ public class redLeftBuilder extends pathBuilderMain implements Red_Points_Overla
 
         motionProfile();
     }
+
+
 
     /**
      * First Position

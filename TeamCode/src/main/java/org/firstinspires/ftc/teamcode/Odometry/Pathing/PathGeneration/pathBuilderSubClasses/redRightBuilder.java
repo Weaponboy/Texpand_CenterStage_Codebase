@@ -181,6 +181,15 @@ public class redRightBuilder extends pathBuilderMain implements Red_Points_Overl
         motionProfile();
     }
 
+    public void buildPathLine(Vector2D startPos, Vector2D targetPos){
+
+        buildLineSegment(startPos, targetPos);
+
+        pathBuilder(originalPath);
+
+        motionProfile();
+    }
+
 
     /**
      * First Position
