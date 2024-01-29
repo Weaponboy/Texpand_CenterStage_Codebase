@@ -74,7 +74,7 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
     boolean firstSnap = false;
 
-    int snapPos;
+    int snapPos = 0;
 
     public static Vector2D targetPoint = new Vector2D();
 
@@ -175,61 +175,110 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
                 if(snapPos == 1){
 
-                    path.buildPathLine(robotPos, threeLeftRed);
+                    double xerror = Math.abs(threeLeftRed.getX() - robotPos.getX());
+                    double yerror = Math.abs(threeLeftRed.getY() - robotPos.getY());
 
-                    follower.setPath(path.followablePath, path.pathingVelocity);
+                    if (xerror < 2 && yerror < 2){
 
-                    pathing = true;
+                    }else {
+                        path.buildPathLine(robotPos, threeLeftRed);
+
+                        follower.setPath(path.followablePath, path.pathingVelocity);
+
+                        pathing = true;
+                    }
 
 
                 }else if(snapPos == 2){
 
-                    path.buildPathLine(robotPos, twoLeftRed);
+                    double xerror = Math.abs(twoLeftRed.getX() - robotPos.getX());
+                    double yerror = Math.abs(twoLeftRed.getY() - robotPos.getY());
 
-                    follower.setPath(path.followablePath, path.pathingVelocity);
+                    if (xerror < 2 && yerror < 2){
 
-                    pathing = true;
+                    }else {
+                        path.buildPathLine(robotPos, twoLeftRed);
 
+                        follower.setPath(path.followablePath, path.pathingVelocity);
+
+                        pathing = true;
+                    }
 
                 }else if(snapPos == 3){
 
-                    path.buildPathLine(robotPos, oneLeftRed);
+                    double xerror = Math.abs(oneLeftRed.getX() - robotPos.getX());
+                    double yerror = Math.abs(oneLeftRed.getY() - robotPos.getY());
 
-                    follower.setPath(path.followablePath, path.pathingVelocity);
+                    if (xerror < 2 && yerror < 2){
 
-                    pathing = true;
+                    }else {
+                        path.buildPathLine(robotPos, oneLeftRed);
+
+                        follower.setPath(path.followablePath, path.pathingVelocity);
+
+                        pathing = true;
+                    }
 
                 }else if(snapPos == 4){
 
-                    path.buildPathLine(robotPos, middleRed);
+                    double xerror = Math.abs(middleRed.getX() - robotPos.getX());
+                    double yerror = Math.abs(middleRed.getY() - robotPos.getY());
 
-                    follower.setPath(path.followablePath, path.pathingVelocity);
+                    if (xerror < 2 && yerror < 2){
 
-                    pathing = true;
+                    }else {
+                        path.buildPathLine(robotPos, middleRed);
+
+                        follower.setPath(path.followablePath, path.pathingVelocity);
+
+                        pathing = true;
+                    }
+
 
                 }else if(snapPos == 5){
 
-                    path.buildPathLine(robotPos, oneRightRed);
+                    double xerror = Math.abs(oneRightRed.getX() - robotPos.getX());
+                    double yerror = Math.abs(oneRightRed.getY() - robotPos.getY());
 
-                    follower.setPath(path.followablePath, path.pathingVelocity);
+                    if (xerror < 2 && yerror < 2){
 
-                    pathing = true;
+                    }else {
+                        path.buildPathLine(robotPos, oneRightRed);
+
+                        follower.setPath(path.followablePath, path.pathingVelocity);
+
+                        pathing = true;
+                    }
 
                 }else if(snapPos == 6){
 
-                    path.buildPathLine(robotPos, twoRightRed);
+                    double xerror = Math.abs(twoRightRed.getX() - robotPos.getX());
+                    double yerror = Math.abs(twoRightRed.getY() - robotPos.getY());
 
-                    follower.setPath(path.followablePath, path.pathingVelocity);
+                    if (xerror < 2 && yerror < 2){
 
-                    pathing = true;
+                    }else {
+                        path.buildPathLine(robotPos, twoRightRed);
+
+                        follower.setPath(path.followablePath, path.pathingVelocity);
+
+                        pathing = true;
+                    }
 
                 }else if(snapPos == 7){
 
-                    path.buildPathLine(robotPos, threeRightRed);
+                    double xerror = Math.abs(threeRightRed.getX() - robotPos.getX());
+                    double yerror = Math.abs(threeRightRed.getY() - robotPos.getY());
 
-                    follower.setPath(path.followablePath, path.pathingVelocity);
+                    if (xerror < 2 && yerror < 2){
 
-                    pathing = true;
+                    }else {
+                        path.buildPathLine(robotPos, threeRightRed);
+
+                        follower.setPath(path.followablePath, path.pathingVelocity);
+
+                        pathing = true;
+                    }
 
                 }
 
