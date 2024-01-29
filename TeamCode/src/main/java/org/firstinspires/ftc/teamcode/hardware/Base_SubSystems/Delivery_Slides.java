@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import java.util.Objects;
+
 public class  Delivery_Slides {
 
     HardwareMap hardwareMap;
@@ -24,7 +26,7 @@ public class  Delivery_Slides {
 
     SlideState slideState = SlideState.manual;
 
-    public Delivery.GripperState updateSlides(Gamepad gamepad1, Gamepad gamepad2){
+    public Delivery.GripperState updateSlides(Gamepad gamepad1, Gamepad gamepad2, Delivery.armState state){
 
         Delivery.GripperState targetGripperState = null;
 
@@ -38,15 +40,21 @@ public class  Delivery_Slides {
                 if (gamepad2.right_stick_y < -0.5 && !SlideSafetyHeight || gamepad1.x && !SlideSafetyHeight) {
                     SlideSafetyHeight = Left_Slide.getCurrentPosition() > 2200;
                     SlidesBothPower(0.4);
-                    targetGripperState = Delivery.GripperState.closed;
+                    if (Objects.requireNonNull(state) == Delivery.armState.collect) {
+                        targetGripperState = Delivery.GripperState.closed;
+                    }
                 } else if (gamepad2.right_stick_y > 0.5 && !SlideSafetyBottom || gamepad1.a && !SlideSafetyBottom) {
                     SlideSafetyBottom = Left_Slide.getCurrentPosition() < 15;
                     SlidesBothPower(-0.4);
-                    targetGripperState = Delivery.GripperState.closed;
+                    if (Objects.requireNonNull(state) == Delivery.armState.collect) {
+                        targetGripperState = Delivery.GripperState.closed;
+                    }
                 }else if (gamepad2.left_stick_y > 0.5 && !SlideSafetyBottom) {
                     SlideSafetyBottom = Left_Slide.getCurrentPosition() < 15;
                     SlidesBothPower(-0.6);
-                    targetGripperState = Delivery.GripperState.closed;
+                    if (Objects.requireNonNull(state) == Delivery.armState.collect) {
+                        targetGripperState = Delivery.GripperState.closed;
+                    }
                 } else {
                     if (getCurrentposition() < 100){
                         SlidesBothPower(0);

@@ -48,7 +48,21 @@ public class teleopPathBuilder extends pathBuilderMain {
         blue,
     }
 
+    public void buildPathLine(Vector2D startPos, Vector2D targetPos){
+
+        clearAll();
+
+        buildLineSegment(startPos, targetPos);
+
+        pathBuilder(originalPath);
+
+        motionProfile();
+
+    }
+
     public void buildPath(TeleopPath allianceColor, Vector2D startPos, Vector2D endPos){
+
+        clearAll();
 
         switch (allianceColor) {
             case red:

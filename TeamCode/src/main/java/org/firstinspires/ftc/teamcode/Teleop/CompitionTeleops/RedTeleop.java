@@ -18,6 +18,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower.mecanumFollower;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.teleopPathBuilder;
+import org.firstinspires.ftc.teamcode.Teleop.TeleopPathing;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Collection;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Delivery;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Delivery_Slides;
@@ -31,7 +32,7 @@ import java.util.Objects;
 
 
 @TeleOp
-public class RedTeleop extends OpMode {
+public class RedTeleop extends OpMode implements TeleopPathing {
 
     Drivetrain drive = new Drivetrain();
 
@@ -43,7 +44,7 @@ public class RedTeleop extends OpMode {
 
     Collection collection = new Collection();
 
-    teleopPathBuilder pathBuilder = new teleopPathBuilder();
+    teleopPathBuilder path = new teleopPathBuilder();
 
     Vector2D robotPos = new Vector2D();
 
@@ -59,11 +60,9 @@ public class RedTeleop extends OpMode {
 
     boolean pathing = false;
 
-    double autoDropLastTime;
-    boolean autoDrop = false;
+    boolean headingLock = false;
 
-    String backboardPosition;
-    boolean Confirmed = false;
+    boolean snapToBackboard = false;
 
     int counter;
 
@@ -71,19 +70,20 @@ public class RedTeleop extends OpMode {
 
     double loopTime;
 
-    boolean backboardSafe = false;
+    boolean inBackboardArea = false;
+
+    boolean firstSnap = false;
+
+    public static int snapPos = 0;
 
     ElapsedTime elapsedTime = new ElapsedTime();
 
     ElapsedTime closeRight = new ElapsedTime();
     ElapsedTime closeLeft = new ElapsedTime();
-    ElapsedTime resetOdo = new ElapsedTime();
+
+    int resetCounter = 0;
 
     List<LynxModule> allHubs;
-
-    double intakePos = 0;
-
-    boolean useSensors = false;
 
     int waitTimeSensors;
 
@@ -98,10 +98,9 @@ public class RedTeleop extends OpMode {
 
         if (counter > 50){
             counter = 0;
+            lastLoopTime = loopTime;
             loopTime = elapsedTime.milliseconds() - lastLoopTime;
         }
-
-        lastLoopTime = elapsedTime.milliseconds();
 
         robotPos.set(odometry.X, odometry.Y);
 
@@ -116,74 +115,86 @@ public class RedTeleop extends OpMode {
 
         /**drive code*/
 
-//        //drive to backboard
-//        if (gamepad1.b){
-//
-//            Vector2D targetPoint = new Vector2D(getRealCoords(220), getRealCoords(270));
-//
-//            pathBuilder.buildPath(teleopPathBuilder.TeleopPath.red, robotPos, targetPoint);
-//
-//            targetHeading = 180;
-//
-//            pathing = true;
-//
-//            follower.setPath(pathBuilder.followablePath, pathBuilder.pathingVelocity);
-//
-//        }
-
-//        //drive to collection
-//        if (gamepad2.a){
-//
-//            Vector2D targetPoint = new Vector2D(getRealCoords(55), getRealCoords(88));
-//
-//            pathBuilder.buildPath(teleopPathBuilder.TeleopPath.red, robotPos, targetPoint);
-//
-//            targetHeading = 270;
-//
-//            pathing = true;
-//
-//            follower.setPath(pathBuilder.followablePath, pathBuilder.pathingVelocity);
-//        }
-
-        //set target position for backboard
-
-        if (gamepad2.dpad_up ){
-            backboardPosition = "Center";
-        }else if (gamepad2.x){
-            backboardPosition = "Left";
-        }else if (gamepad2.b){
-            backboardPosition = "Right";
+        if (gamepad1.dpad_left){
+            headingLock = true;
+        } else if (gamepad1.dpad_right) {
+            headingLock = false;
         }
 
-        //confirm target
-        if (gamepad2.left_trigger > 0){
-            Confirmed = true;
+        inBackboardArea = odometry.X > 210 && odometry.Y < 210 && odometry.X < 300;
+
+        if(gamepad1.right_trigger > 0 && inBackboardArea){
+            snapToBackboard = true;
+        } else {
+            snapToBackboard = false;
         }
 
-        backboardSafe = odometry.X > 210 && odometry.Y < 180 && odometry.X < 300;
+        if(currentGamepad1.right_trigger > 0 && !(previousGamepad1.right_trigger > 0) && inBackboardArea){
+            firstSnap = true;
+        }
 
-        if (Confirmed && !pathing && backboardSafe){
-            if (Objects.equals(backboardPosition, "Left")){
-                odometry.Odo_Drive_Teleop(295, 64, 180);
-            }else if (Objects.equals(backboardPosition, "Center")){
-                odometry.Odo_Drive_Teleop(295, 79, 180);
-            }else if (Objects.equals(backboardPosition, "Right")){
-                odometry.Odo_Drive_Teleop(295, 94, 180);
-            }
+        if(firstSnap){
+            snapPos = findClosestPosRed(robotPos);
+            firstSnap = false;
+            pathing = true;
         }
 
         if(gamepad1.right_stick_button && gamepad1.left_stick_button){
+            headingLock = false;
             pathing = false;
-            Confirmed = false;
         }
 
         if (pathing && gamepad1.atRest()){
-            pathing = follower.followPathTeleop(true, targetHeading, true, odometry, drive, telemetry);
+            pathing = follower.followPathTeleop(targetHeading, odometry, drive);
         }else {
 
             vertical = -gamepad1.right_stick_y;
             horizontal = gamepad1.right_stick_x;
-            pivot = gamepad1.left_stick_x;
+
+            if (snapToBackboard && gamepad1.right_stick_x > 0.5 || snapToBackboard && gamepad1.right_stick_x < 0.5){
+
+                if (gamepad1.right_stick_x > 0.5){
+                    snapPos++;
+                } else if (gamepad1.right_stick_x < 0.5) {
+                    snapPos--;
+                }
+
+                if (snapPos == 8){
+                    snapPos = 1;
+                } else if (snapPos == 0) {
+                    snapPos = 7;
+                }
+
+                if(snapPos == 1){
+                    path.buildPathLine(robotPos, threeLeftRed);
+                }
+                else if(snapPos == 2){
+                    path.buildPathLine(robotPos, twoLeftRed);
+                }
+                else if(snapPos == 3){
+                    path.buildPathLine(robotPos, oneLeftRed);
+                }
+                else if(snapPos == 4){
+                    path.buildPathLine(robotPos, middleRed);
+                }
+                else if(snapPos == 5){
+                    path.buildPathLine(robotPos, oneRightRed);
+                }
+                else if(snapPos == 6){
+                    path.buildPathLine(robotPos, twoRightRed);
+                }
+                else if(snapPos == 7){
+                    path.buildPathLine(robotPos, threeRightRed);
+                }
+
+            }else {
+                double headingLockPower = 0;
+                if (headingLock){
+                    headingLockPower = follower.getTurnPower(180, odometry.heading);
+                }
+                pivot = gamepad1.left_stick_x + headingLockPower;
+            }
+
 
             double slowPivot = 0.5;
 
@@ -201,10 +212,6 @@ public class RedTeleop extends OpMode {
             drive.RB.setPower((-pivot + (vertical + horizontal)) / denominator);
             drive.LF.setPower((pivot + (vertical + horizontal)) / denominator);
             drive.LB.setPower((pivot + (vertical - horizontal)) / denominator);
-
-        }
-
-        if (Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery && Math.abs(odometry.getHorizontalVelocity()) > 5){
 
         }
 
@@ -267,7 +274,7 @@ public class RedTeleop extends OpMode {
 
         /**Slide code*/
 
-        Delivery.GripperState slidesGripppers = deliverySlides.updateSlides(gamepad1, gamepad2);
+        Delivery.GripperState slidesGripppers = deliverySlides.updateSlides(gamepad1, gamepad2, delivery.getArmState());
 
         if (slidesGripppers == null){
         }else {
@@ -418,17 +425,15 @@ public class RedTeleop extends OpMode {
         }
 
         if (gamepad1.b){
-            resetOdo.reset();
             double heading = odometry.getIMUHeading();
             odometry.reset(heading);
         }
 
-        if (resetOdo.milliseconds() < 500){
-            resetOdo();
-        }
-
+        //reset with atags
         sensors.getDetections();
+        resetOdo();
 
+        //update odo position
         odometry.update();
 
         //update collection state
@@ -439,16 +444,9 @@ public class RedTeleop extends OpMode {
         delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
         delivery.updateGrippers();
 
-
-//        telemetry.addData("main pivot", delivery.getMainPivotPosition());
         telemetry.addData("X", odometry.X);
         telemetry.addData("Y", odometry.Y);
         telemetry.addData("heading", odometry.heading);
-//        telemetry.addData("distance sensor", sensors.backBoard.getDistance(DistanceUnit.CM));
-//        if (sensors.rightTag != null){
-//            telemetry.addData("distance camera", ((sensors.rightTag.ftcPose.y)*0.1));
-//        }
-//
         telemetry.addData("loop time", loopTime);
         telemetry.update();
 
@@ -504,6 +502,8 @@ public class RedTeleop extends OpMode {
 
             if (sensors.rightTag.id == 4 || sensors.rightTag.id == 5 || sensors.rightTag.id == 6){
 
+                resetCounter++;
+
                 double NewY;
                 double NewX;
 
@@ -518,9 +518,6 @@ public class RedTeleop extends OpMode {
                 }else{
                     aprilTagOffset = getRealCoords(285);
                 }
-
-                double heading = odometry.getIMUHeading();
-
                 double realNewX = (sensors.rightTag.ftcPose.y * 0.1);
                 double realNewY = (sensors.rightTag.ftcPose.x * 0.1);
 
@@ -529,10 +526,11 @@ public class RedTeleop extends OpMode {
 
                 newPosition = new Vector2D(NewX, NewY);
 
-                odometry.reset(newPosition, heading);
+                if (resetCounter > 20){
+                    odometry.reset(newPosition);
+                    resetCounter = 0;
+                }
 
-                telemetry.addData("heading", heading);
-                telemetry.addData("sensors.rightTag.ftcPose.y ", sensors.rightTag.ftcPose.x);
                 telemetry.addData("X reset pos", NewX);
                 telemetry.addData("Y reset pos", NewY);
                 telemetry.update();

@@ -64,9 +64,6 @@ public class BlueTeleop extends OpMode {
 
     boolean pathing = false;
 
-    double autoDropLastTime;
-    boolean autoDrop = false;
-
     String backboardPosition;
     boolean Confirmed = false;
 
@@ -86,10 +83,6 @@ public class BlueTeleop extends OpMode {
 
     List<LynxModule> allHubs;
 
-    double intakePos = 0;
-
-    boolean useSensors = false;
-
     int waitTimeSensors;
 
     @Override
@@ -103,10 +96,9 @@ public class BlueTeleop extends OpMode {
 
         if (counter > 50){
             counter = 0;
+            lastLoopTime = loopTime;
             loopTime = elapsedTime.milliseconds() - lastLoopTime;
         }
-
-        lastLoopTime = elapsedTime.milliseconds();
 
         robotPos.set(odometry.X, odometry.Y);
 
@@ -183,7 +175,7 @@ public class BlueTeleop extends OpMode {
         }
 
         if (pathing && gamepad1.atRest()){
-            pathing = follower.followPathTeleop(true, targetHeading, true, odometry, drive, telemetry);
+            pathing = follower.followPathTeleop(targetHeading, odometry, drive);
         }else {
 
             vertical = -gamepad1.right_stick_y;
@@ -272,7 +264,7 @@ public class BlueTeleop extends OpMode {
 
         /**Slide code*/
 
-        Delivery.GripperState slidesGripppers = deliverySlides.updateSlides(gamepad1, gamepad2);
+        Delivery.GripperState slidesGripppers = deliverySlides.updateSlides(gamepad1, gamepad2, delivery.getArmState());
 
         if (slidesGripppers == null){
         }else {
@@ -406,6 +398,7 @@ public class BlueTeleop extends OpMode {
             deliverySlides.DeliverySlides(800, -0.8);
 
             deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
+
         }
 
         if (currentGamepad2.a && !previousGamepad2.a && planelauncher.getTriggerPosition() < 0.1){
@@ -422,6 +415,8 @@ public class BlueTeleop extends OpMode {
             delivery.setRotateClaw(1);
         }
 
+        sensors.getDetections();
+
         if (gamepad1.b){
             resetOdo.reset();
             double heading = odometry.getIMUHeading();
@@ -431,8 +426,6 @@ public class BlueTeleop extends OpMode {
         if (resetOdo.milliseconds() < 500){
             resetOdo();
         }
-
-        sensors.getDetections();
 
         odometry.update();
 
@@ -445,7 +438,6 @@ public class BlueTeleop extends OpMode {
         delivery.updateGrippers();
 
 
-//        telemetry.addData("main pivot", delivery.getMainPivotPosition());
         telemetry.addData("X", odometry.X);
         telemetry.addData("Y", odometry.Y);
         telemetry.addData("heading", odometry.heading);
@@ -453,10 +445,6 @@ public class BlueTeleop extends OpMode {
 //        if (sensors.rightTag != null){
 //            telemetry.addData("distance camera", ((sensors.rightTag.ftcPose.y)*0.1));
 //        }
-//
-        telemetry.addData("X", odometry.X);
-        telemetry.addData("Y", odometry.Y);
-        telemetry.addData("heading", odometry.heading);
         telemetry.addData("loop time", loopTime);
         telemetry.update();
 

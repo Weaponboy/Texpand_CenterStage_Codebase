@@ -136,9 +136,6 @@ public class Delivery {
 
             case collect:
 
-                setClaws(clawClosed);
-                setGripperState(GripperState.closed);
-
                 mainPivotOffSet = 0;
 
                 secondRotate.setPosition(secondRotateMiddleCollect);
@@ -270,6 +267,12 @@ public class Delivery {
                     intermediateMoving = false;
                 }
 
+                if (CollectionMoving && pivotMoveTimeCollection.milliseconds() >= (timeToWaitCollection/2)){
+                    setClaws(clawClosed);
+
+                    setGripperState(GripperState.closed);
+                }
+
                 if (CollectionMoving && pivotMoveTimeCollection.milliseconds() >= timeToWaitCollection){
                     armstateCurrent = armState.collect;
                     CollectionMoving = false;
@@ -290,11 +293,11 @@ public class Delivery {
 
                 odometry.update();
 
-                if (gamepad2.dpad_left && mainPivotRight.getPosition() < lowdeliveryTopPivot || gamepad1.dpad_left && mainPivotRight.getPosition() < lowdeliveryTopPivot) {
+                if (gamepad2.dpad_left && mainPivotRight.getPosition() < lowdeliveryTopPivot) {
                     mainPivotOffSet = mainPivotOffSet + deliveryIncrement;
                 }
 
-                if (gamepad2.dpad_right && mainPivotRight.getPosition() > deliveryTopPivot-0.04 || gamepad1.dpad_right && mainPivotRight.getPosition() > deliveryTopPivot-0.04) {
+                if (gamepad2.dpad_right && mainPivotRight.getPosition() > deliveryTopPivot-0.04) {
                     mainPivotOffSet = mainPivotOffSet - deliveryIncrement;
                 }
 
@@ -337,10 +340,6 @@ public class Delivery {
         switch (armstateTarget){
 
             case collect:
-
-                setClaws(clawClosed);
-
-                setGripperState(GripperState.closed);
 
                 mainPivotOffSet = 0;
 
@@ -482,6 +481,12 @@ public class Delivery {
                 armstateCurrent = armState.intermediate;
                 intermediateMoving = false;
             }
+
+            if (CollectionMoving && pivotMoveTimeCollection.milliseconds() >= (timeToWaitCollection/2)){
+                setClaws(clawClosed);
+                setGripperState(GripperState.closed);
+            }
+
 
             if (CollectionMoving && pivotMoveTimeCollection.milliseconds() >= timeToWaitCollection) {
                 armstateCurrent = armState.collect;

@@ -15,13 +15,9 @@ public class pathBuilderMain {
 
     public SegmentGenerator segmentGenerator = new SegmentGenerator();
 
-    public controlPoints controlPoints = new controlPoints();
-
     public ArrayList<Vector2D> originalPath = new ArrayList<>();
 
     public ArrayList<Vector2D> followablePath = new ArrayList<>();
-
-    public Vector2D firstPoint = new Vector2D();
 
     public ArrayList<PathingVelocity> pathingVelocity = new ArrayList<>();
 
@@ -287,6 +283,12 @@ public class pathBuilderMain {
     public void buildLineSegment(Vector2D start, Vector2D end){
         segmentGenerator.buildPath(start, end);
         originalPath.addAll(segmentGenerator.copyPath());
+    }
+
+    public void clearAll(){
+        followablePath.clear();
+        originalPath.clear();
+        pathingVelocity.clear();
     }
 
 }

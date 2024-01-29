@@ -215,8 +215,6 @@ public class redLeftBuilder extends pathBuilderMain implements Red_Points_Overla
         motionProfile();
     }
 
-
-
     /**
      * First Position
      * */
