@@ -98,9 +98,10 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
         if (counter > 50){
             counter = 0;
-            lastLoopTime = loopTime;
             loopTime = elapsedTime.milliseconds() - lastLoopTime;
         }
+
+        lastLoopTime = elapsedTime.milliseconds();
 
         robotPos.set(odometry.X, odometry.Y);
 
@@ -158,7 +159,7 @@ public class RedTeleop extends OpMode implements TeleopPathing {
                 if (gamepad1.left_stick_x > 0.5){
                     snapPos++;
                 } else if (gamepad1.left_stick_x < 0.5) {
-                    snapPos = snapPos - 1;
+                    snapPos = (snapPos - 1);
                 }
 
                 if (snapPos == 8){
@@ -169,23 +170,17 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
                 if(snapPos == 1){
                     path.buildPathLine(robotPos, threeLeftRed);
-                }
-                else if(snapPos == 2){
+                }else if(snapPos == 2){
                     path.buildPathLine(robotPos, twoLeftRed);
-                }
-                else if(snapPos == 3){
+                }else if(snapPos == 3){
                     path.buildPathLine(robotPos, oneLeftRed);
-                }
-                else if(snapPos == 4){
+                }else if(snapPos == 4){
                     path.buildPathLine(robotPos, middleRed);
-                }
-                else if(snapPos == 5){
+                }else if(snapPos == 5){
                     path.buildPathLine(robotPos, oneRightRed);
-                }
-                else if(snapPos == 6){
+                }else if(snapPos == 6){
                     path.buildPathLine(robotPos, twoRightRed);
-                }
-                else if(snapPos == 7){
+                }else if(snapPos == 7){
                     path.buildPathLine(robotPos, threeRightRed);
                 }
 
