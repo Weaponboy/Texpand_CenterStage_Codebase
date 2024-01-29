@@ -80,7 +80,6 @@ public class TestingPathingGenForTeleop extends OpMode {
         }
 
 
-
 //        if (gamepad1.a){
 //
 //            if (getDriveToCollectionControlPoint(robotPos) != null){
@@ -101,7 +100,7 @@ public class TestingPathingGenForTeleop extends OpMode {
         }
 
         if (pathing && gamepad1.atRest()){
-            follower.followPathTeleop(true, targetHeading, false, odometry, drive, telemetry);
+            follower.followPathTeleop(targetHeading,  odometry, drive);
         }else {
 
             vertical = -gamepad1.right_stick_x;
