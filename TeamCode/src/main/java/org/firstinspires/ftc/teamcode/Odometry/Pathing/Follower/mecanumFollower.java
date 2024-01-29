@@ -696,7 +696,16 @@ public class mecanumFollower {
 
         Vector2D robotPositionVector = new Vector2D(odometry.X, odometry.Y);
 
-        Vector2D targetPoint = pathfollow.getPointOnFollowable(pathfollow.getLastPoint());
+        int index = pathfollow.getLastPoint();
+
+        Vector2D targetPoint;
+
+        if (index == 0){
+            targetPoint = new Vector2D(odometry.X, odometry.Y);
+        }else {
+            targetPoint = pathfollow.getPointOnFollowable(pathfollow.getLastPoint());
+        }
+
 
         boolean pathing = true;
 
