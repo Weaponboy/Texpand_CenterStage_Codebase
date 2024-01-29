@@ -156,16 +156,12 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
             if (snapToBackboard && gamepad1.left_stick_x > 0.5 || snapToBackboard && gamepad1.left_stick_x < 0.5){
 
-                if (gamepad1.left_stick_x > 0.5){
+                if (gamepad1.left_stick_x > 0.5) {
                     snapPos++;
-                } else if (gamepad1.left_stick_x < 0.5) {
-                    snapPos = (snapPos - 1);
                 }
 
-                if (snapPos == 8){
+                if (snapPos > 7){
                     snapPos = 1;
-                } else if (snapPos == 0) {
-                    snapPos = 7;
                 }
 
                 if(snapPos == 1){
