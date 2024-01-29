@@ -76,6 +76,8 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
     int snapPos = 0;
 
+    public static Vector2D targetPoint = new Vector2D();
+
     ElapsedTime elapsedTime = new ElapsedTime();
 
     ElapsedTime closeRight = new ElapsedTime();
@@ -135,8 +137,20 @@ public class RedTeleop extends OpMode implements TeleopPathing {
         }
 
         if(firstSnap){
-            snapPos = findClosestPosRed(robotPos);
+
+            int closestPos = findClosestPosRed(robotPos);
+
+            double xerror = Math.abs(targetPoint.getX() - odometry.X);
+            double yerror = Math.abs(targetPoint.getY() - odometry.Y);
+
+            if (xerror < 4 && yerror < 4){
+
+            }else {
+                snapPos = closestPos;
+            }
+
             firstSnap = false;
+
         }
 
         if(gamepad1.right_stick_button && gamepad1.left_stick_button){
