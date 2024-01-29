@@ -122,7 +122,7 @@ public class RedTeleop extends OpMode implements TeleopPathing {
             headingLock = false;
         }
 
-        inBackboardArea = odometry.X > 210 && odometry.Y > 210 && odometry.X < 300;
+        inBackboardArea = odometry.X > 210 && odometry.Y > 210 && odometry.X < 340;
 
         if(gamepad1.right_trigger > 0 && inBackboardArea){
             snapToBackboard = true;
@@ -161,8 +161,16 @@ public class RedTeleop extends OpMode implements TeleopPathing {
                     snapPos++;
                 }
 
+                if (currentGamepad1.left_stick_x < 0.5 && !(previousGamepad1.left_stick_x < 0.5)) {
+                    snapPos--;
+                }
+
                 if (snapPos > 7){
                     snapPos = 1;
+                }
+
+                if (snapPos < 0){
+                    snapPos = 7;
                 }
 
                 if(snapPos == 1){
