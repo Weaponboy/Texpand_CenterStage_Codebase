@@ -74,7 +74,7 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
     boolean firstSnap = false;
 
-    int snapPos = 0;
+    int snapPos;
 
     public static Vector2D targetPoint = new Vector2D();
 
