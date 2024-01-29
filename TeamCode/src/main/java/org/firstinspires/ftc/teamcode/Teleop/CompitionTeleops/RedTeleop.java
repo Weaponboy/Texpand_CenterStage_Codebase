@@ -189,13 +189,17 @@ public class RedTeleop extends OpMode implements TeleopPathing {
                     path.buildPathLine(robotPos, threeRightRed);
                 }
 
+                follower.setPath(path.followablePath, path.pathingVelocity);
+
             }else {
                 double headingLockPower = 0;
 
                 if (headingLock){
-                    headingLockPower = follower.getTurnPower(180, odometry.heading);
+                    pivot = follower.getTurnPower(180, odometry.heading);
+                }else {
+                    pivot = gamepad1.left_stick_x;
                 }
-                pivot = gamepad1.left_stick_x + headingLockPower;
+
             }
 
 
@@ -531,7 +535,7 @@ public class RedTeleop extends OpMode implements TeleopPathing {
                 double heading = odometry.getIMUHeading();
 
                 newPosition = new Vector2D(NewX, NewY);
-                
+
                 odometry.reset(newPosition, heading);
 
                 telemetry.addData("X reset pos", NewX);

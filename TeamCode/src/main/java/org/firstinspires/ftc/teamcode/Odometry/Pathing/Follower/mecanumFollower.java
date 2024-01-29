@@ -773,8 +773,10 @@ public class mecanumFollower {
         } else if (rotdist > 360) {
             rotdist = (rotdist - 360);
         }
-
-//        rotdist = Math.toRadians(rotdist);
+//
+//        if(){
+//
+//        }
 
         headingPID = new PIDController(rotationP, 0, rotationD);
 
