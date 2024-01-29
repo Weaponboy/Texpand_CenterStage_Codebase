@@ -18,6 +18,7 @@ import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
@@ -88,6 +89,48 @@ public class mecanumFollower {
         pathingPower = new PathingPower(vertical, horizontal);
 
         return pathingPower;
+    }
+
+    public PathingPower getFullPathingPower(Vector2D robotPos, double heading){
+
+        XCorrective.setPID(driveP, 0, driveD);
+        YCorrective.setPID(strafeP, 0, strafeD);
+
+        Vector2D error;
+        PathingPower correctivePower = new PathingPower();
+
+        PathingPower pathingPower;
+        PathingPower actualPathingPower = new PathingPower();
+
+        double ky = 0.0234;
+        double kx = 0.0154;
+
+        PathingVelocity pathingVelocity;
+
+        int closestPos = pathfollow.getClosestPositionOnPath(robotPos);
+
+        pathingVelocity = pathfollow.getTargetVelocity(closestPos);//try this
+
+        error = pathfollow.getErrorToPath(robotPos, closestPos);
+
+        double xDist = error.getX();
+        double yDist = error.getY();
+
+        double robotRelativeXError = yDist * Math.sin(Math.toRadians(heading)) + xDist * Math.cos(Math.toRadians(heading));
+        double robotRelativeYError = yDist * Math.cos(Math.toRadians(heading)) - xDist * Math.sin(Math.toRadians(heading));
+
+        double xPowerC = XCorrective.calculate(-robotRelativeXError)*1.2;
+        double yPowerC = YCorrective.calculate(-robotRelativeYError)*1.4;
+
+        double xPower = pathingVelocity.getYVelocity() * Math.sin(Math.toRadians(heading)) + pathingVelocity.getXVelocity() * Math.cos(Math.toRadians(heading));
+        double yPower = pathingVelocity.getYVelocity() * Math.cos(Math.toRadians(heading)) - pathingVelocity.getXVelocity() * Math.sin(Math.toRadians(heading));
+
+        vertical = kx * xPower;
+        horizontal = ky * yPower;
+
+        actualPathingPower.set(xPowerC+vertical, yPowerC+horizontal);
+
+        return actualPathingPower;
     }
 
     public PathingPower getPathingPowerInverted(Vector2D robotPos, double heading){
@@ -592,7 +635,10 @@ public class mecanumFollower {
             drive.LF.setPower(left_Front);
             drive.LB.setPower(left_Back);
 
-            dashboardTelemetry.addData("time corrective", time);
+            RobotLog.d(String.valueOf(loopTime));
+            RobotLog.d(String.valueOf(time));
+
+            dashboardTelemetry.addData("time", time);
             dashboardTelemetry.addData("loop time", loopTime);
             dashboardTelemetry.update();
 
@@ -607,7 +653,7 @@ public class mecanumFollower {
 
     public void basePower(Vector2D robotPositionVector, Vector2D targetPoint, boolean closeToTarget, Odometry odometry, double targetHeading){
 
-        PathingPower correctivePower;
+        PathingPower correctivePower = new PathingPower();
         PathingPower pathingPower;
 
         closeToTarget = Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 10 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 10;
@@ -624,11 +670,12 @@ public class mecanumFollower {
             xI = 0;
         }
 
+        getCorrective.reset();
+
         double heading = odometry.heading;
 
         if (!closeToTarget){
-            pathingPower = getPathingPower(robotPositionVector, heading);
-            correctivePower = getCorrectivePowerOnPath(robotPositionVector, heading);
+            pathingPower = getFullPathingPower(robotPositionVector, heading);
         }else {
             correctivePower = getCorrectivePowerAtEnd(robotPositionVector, targetPoint, heading);
             pathingPower = new PathingPower(0,0);
@@ -638,6 +685,10 @@ public class mecanumFollower {
         horizontal = correctivePower.getHorizontal() + pathingPower.getHorizontal();
 
         pivot = getTurnPower(targetHeading, odometry.heading);
+
+        time = getCorrective.milliseconds();
+
+        dashboardTelemetry.addData("time", time);
 
     }
 
