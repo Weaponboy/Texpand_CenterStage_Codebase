@@ -132,7 +132,7 @@ public class RedTeleop extends OpMode implements TeleopPathing {
             snapToBackboard = false;
         }
 
-        if(currentGamepad1.right_trigger > 0 && !(previousGamepad1.right_trigger > 0) && inBackboardArea && !snapToBackboard){
+        if(currentGamepad1.right_trigger > 0.5 && !(previousGamepad1.right_trigger > 0.5) && inBackboardArea && !snapToBackboard){
             snapPos = 4;
         }
 //
