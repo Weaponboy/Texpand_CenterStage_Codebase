@@ -121,7 +121,7 @@ public class RedTeleop extends OpMode implements TeleopPathing {
             headingLock = false;
         }
 
-        inBackboardArea = odometry.X > 210 && odometry.Y < 210 && odometry.X < 300;
+        inBackboardArea = odometry.X > 210 && odometry.Y > 210 && odometry.X < 300;
 
         if(gamepad1.right_trigger > 0 && inBackboardArea){
             snapToBackboard = true;
@@ -190,7 +190,8 @@ public class RedTeleop extends OpMode implements TeleopPathing {
                 }
 
             }else {
-                double headingLockPower = 0;
+                double headingLockPower = 0;    
+
                 if (headingLock){
                     headingLockPower = follower.getTurnPower(180, odometry.heading);
                 }
