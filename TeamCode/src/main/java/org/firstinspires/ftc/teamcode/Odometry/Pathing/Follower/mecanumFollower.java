@@ -760,6 +760,25 @@ public class mecanumFollower {
         return Math.abs(turnError);
     }
 
+    public double getTurnPowerTeleop(double targetHeading, double currentHeading){
+
+        double turnPower;
+
+        double rotdist = (targetHeading - currentHeading);
+
+        if (rotdist < -180) {
+            rotdist = (360 + rotdist);
+        } else if (rotdist > 360) {
+            rotdist = (rotdist - 360);
+        }
+
+        headingPID = new PIDController(rotationP, 0, rotationD);
+
+        turnPower = headingPID.calculate(-rotdist);
+
+        return turnPower*1.2;
+    }
+
     public double getTurnPower(double targetHeading, double currentHeading){
 
         double turnPower;

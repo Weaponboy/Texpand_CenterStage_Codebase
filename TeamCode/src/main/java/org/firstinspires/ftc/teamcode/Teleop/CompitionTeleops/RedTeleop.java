@@ -135,18 +135,18 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 //            firstSnap = true;
 //        }
 
-//        if(firstSnap){
-//            snapPos = findClosestPosRed(robotPos);
-//            firstSnap = false;
-//            pathing = true;
-//        }
+        if(firstSnap){
+            snapPos = findClosestPosRed(robotPos);
+            firstSnap = false;
+            pathing = true;
+        }
 
         if(gamepad1.right_stick_button && gamepad1.left_stick_button){
             headingLock = false;
             pathing = false;
         }
 
-        if (pathing && gamepad1.atRest()){
+        if (pathing && atRest(gamepad1)){
 
             pathing = follower.followPathTeleop(180, odometry, drive);
 
@@ -544,5 +544,9 @@ public class RedTeleop extends OpMode implements TeleopPathing {
             }
         }
 
+    }
+
+    public boolean atRest(Gamepad gamepad){
+        return gamepad.right_stick_x == 0 && gamepad.right_stick_y == 0 && gamepad.left_stick_x == 0 && gamepad.left_stick_y == 0;
     }
 }
