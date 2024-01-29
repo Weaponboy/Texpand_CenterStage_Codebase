@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Auto.OtherAuto.Test_Autos;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -8,6 +9,7 @@ import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilde
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry;
 
 @TeleOp
+@Disabled
 public class TestingNewPathFollower extends LinearOpMode {
 
     Odometry odometry = new Odometry(90, 23, 270);

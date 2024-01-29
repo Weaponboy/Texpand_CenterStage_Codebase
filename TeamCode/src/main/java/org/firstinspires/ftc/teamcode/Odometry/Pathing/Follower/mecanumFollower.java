@@ -635,8 +635,8 @@ public class mecanumFollower {
             drive.LF.setPower(left_Front);
             drive.LB.setPower(left_Back);
 
-            RobotLog.d(String.valueOf(loopTime));
-            RobotLog.d(String.valueOf(time));
+            RobotLog.d("loop time: " + loopTime);
+            RobotLog.d("set motor time: " + time);
 
             dashboardTelemetry.addData("time", time);
             dashboardTelemetry.addData("loop time", loopTime);
