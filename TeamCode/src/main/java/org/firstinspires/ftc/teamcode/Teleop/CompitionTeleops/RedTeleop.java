@@ -74,7 +74,7 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
     boolean firstSnap = false;
 
-    public static int snapPos = 0;
+    int snapPos = 0;
 
     ElapsedTime elapsedTime = new ElapsedTime();
 
@@ -133,11 +133,11 @@ public class RedTeleop extends OpMode implements TeleopPathing {
             firstSnap = true;
         }
 
-//        if(firstSnap){
-//            snapPos = findClosestPosRed(robotPos);
-//            firstSnap = false;
-//            pathing = true;
-//        }
+        if(firstSnap){
+            snapPos = findClosestPosRed(robotPos);
+            firstSnap = false;
+            pathing = true;
+        }
 
         if(gamepad1.right_stick_button && gamepad1.left_stick_button){
             headingLock = false;
@@ -155,11 +155,11 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
             if (snapToBackboard && gamepad1.left_stick_x > 0.5 || snapToBackboard && gamepad1.left_stick_x < 0.5){
 
-                if (gamepad1.right_stick_x > 0.5){
-                    snapPos++;
-                } else if (gamepad1.right_stick_x < 0.5) {
-                    snapPos--;
-                }
+//                if (gamepad1.left_stick_x > 0.5){
+//                    snapPos++;
+//                } else if (gamepad1.left_stick_x < 0.5) {
+//                    snapPos--;
+//                }
 
                 if (snapPos == 8){
                     snapPos = 1;
