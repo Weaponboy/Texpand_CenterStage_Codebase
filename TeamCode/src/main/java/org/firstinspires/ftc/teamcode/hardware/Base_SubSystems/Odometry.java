@@ -589,7 +589,6 @@ public class Odometry {
         rightPod.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         centerPod.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-
     }
 
     public void reset(double heading){

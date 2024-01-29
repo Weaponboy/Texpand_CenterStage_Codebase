@@ -190,7 +190,7 @@ public class RedTeleop extends OpMode implements TeleopPathing {
                 }
 
             }else {
-                double headingLockPower = 0;    
+                double headingLockPower = 0;
 
                 if (headingLock){
                     headingLockPower = follower.getTurnPower(180, odometry.heading);
@@ -428,13 +428,12 @@ public class RedTeleop extends OpMode implements TeleopPathing {
         }
 
         if (gamepad1.b){
-            double heading = odometry.getIMUHeading();
-            odometry.reset(heading);
+            sensors.getDetections();
+            resetOdo();
         }
 
         //reset with atags
-        sensors.getDetections();
-        resetOdo();
+
 
         //update odo position
         odometry.update();
@@ -529,12 +528,11 @@ public class RedTeleop extends OpMode implements TeleopPathing {
                 NewY = (realNewY + aprilTagOffset)-12;
                 NewX = 360 - (realNewX + 45);
 
-                newPosition = new Vector2D(NewX, NewY);
+                double heading = odometry.getIMUHeading();
 
-                if (resetCounter > 20){
-                    odometry.reset(newPosition);
-                    resetCounter = 0;
-                }
+                newPosition = new Vector2D(NewX, NewY);
+                
+                odometry.reset(newPosition, heading);
 
                 telemetry.addData("X reset pos", NewX);
                 telemetry.addData("Y reset pos", NewY);
