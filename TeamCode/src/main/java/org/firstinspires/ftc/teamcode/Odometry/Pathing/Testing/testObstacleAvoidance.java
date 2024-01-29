@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Odometry.Pathing.Testing;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -12,13 +13,14 @@ import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.KDTreeExample;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.ObstacleMap;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.buildRobotBoundary;
-import org.firstinspires.ftc.teamcode.hardware.Drivetrain;
-import org.firstinspires.ftc.teamcode.hardware.Odometry;
+import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Drivetrain;
+import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry;
 
 import java.util.List;
 
 @Config
 @TeleOp
+@Disabled
 public class testObstacleAvoidance extends OpMode {
 
     FtcDashboard dashboard = FtcDashboard.getInstance();

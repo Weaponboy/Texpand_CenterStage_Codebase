@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<Robot type="FirstInspires-FTC">
+    <Webcam name="frontcam" serialNumber="54770580" />
+    <LynxUsbDevice name="Control Hub Portal" serialNumber="(embedded)" parentModuleAddress="173">
+        <LynxModule name="Control Hub" port="173">
+            <goBILDA5202SeriesMotor name="LF" port="0" />
+            <goBILDA5202SeriesMotor name="LB" port="1" />
+            <RevRoboticsUltraplanetaryHDHexMotor name="Intake" port="2" />
+            <goBILDA5202SeriesMotor name="RF" port="3" />
+            <Servo name="secondRotate" port="0" />
+            <Servo name="ClawRotate" port="1" />
+            <Servo name="rightmain" port="2" />
+            <Servo name="leftmain" port="3" />
+            <Servo name="LeftClaw" port="4" />
+            <Servo name="RightClaw" port="5" />
+            <REV_VL53L0X_RANGE_SENSOR name="leftclaw" port="0" bus="2" />
+            <LynxEmbeddedIMU name="imu" port="0" bus="0" />
+            <RevColorSensorV3 name="rightclaw" port="0" bus="1" />
+        </LynxModule>
+    </LynxUsbDevice>
+    <LynxUsbDevice name="Expansion Hub Portal 1" serialNumber="DQ4VWHH9" parentModuleAddress="2">
+        <LynxModule name="Expansion Hub 2" port="2">
+            <goBILDA5202SeriesMotor name="RB" port="1" />
+            <goBILDA5202SeriesMotor name="Right_Slide" port="2" />
+            <goBILDA5202SeriesMotor name="Left_Slide" port="3" />
+            <Servo name="IntakeServo" port="2" />
+            <Servo name="RightPivot" port="3" />
+            <Servo name="LeftPivot" port="4" />
+            <Servo name="trigger" port="5" />
+            <LynxEmbeddedIMU name="imu 1" port="0" bus="0" />
+        </LynxModule>
+    </LynxUsbDevice>
+</Robot>

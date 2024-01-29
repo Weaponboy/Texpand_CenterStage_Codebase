@@ -29,6 +29,8 @@ public class propDetectionByAmount implements VisionProcessor {
 
     Telemetry telemetry;
 
+    boolean telemetryBool = false;
+
     public enum color{
         blue,
         red
@@ -47,20 +49,35 @@ public class propDetectionByAmount implements VisionProcessor {
         this.telemetry = telemetry;
         this.color = propColor;
         this.side = startSide;
+        telemetryBool = true;
     }
 
-    public Scalar MIN_THRESH_BLUE = new Scalar(5, 90, 110);
-    public Scalar MAX_THRESH_BLUE = new Scalar(40, 255, 255);
+    public propDetectionByAmount(Side startSide, color propColor){
+        this.color = propColor;
+        this.side = startSide;
+        telemetryBool = false;
+    }
 
-    public Scalar MIN_THRESH_RED = new Scalar(110, 50, 50);
+    public Scalar MIN_THRESH_BLUE = new Scalar(16, 50, 50);
+    public Scalar MAX_THRESH_BLUE = new Scalar(50, 255, 255);
+
+    public Scalar MIN_THRESH_RED = new Scalar(110, 20, 50);
     public Scalar MAX_THRESH_RED = new Scalar(220, 255, 255);
 
-    static final Rect rightOfScreen = new Rect(new Point(320, 0), new Point(640, 480));
-    static final Rect leftOfScreen = new Rect(new Point(0, 0), new Point(320, 480));
+    static final Rect rightOfScreen = new Rect(new Point(320, 0), new Point(640, 240));
+    static final Rect leftOfScreen = new Rect(new Point(0, 0), new Point(320, 240));
 
     public double position1 = 0;
     public double position2 = 0;
     public double position3 = 0;
+
+    int lastReadingLeft;
+    int lastReadingRight;
+
+    int RightPixels;
+    int LeftPixels;
+
+    int counter;
 
     @Override
     public void init(int width, int height, CameraCalibration calibration) {
@@ -69,6 +86,8 @@ public class propDetectionByAmount implements VisionProcessor {
 
     @Override
     public Object processFrame(Mat frame, long captureTimeNanos) {
+
+        counter++;
 
         displayMat = frame.clone();
 
@@ -96,12 +115,30 @@ public class propDetectionByAmount implements VisionProcessor {
         dilate(modifiedRight, modifiedRight, new Mat(5, 5, CV_8U));
         dilate(modifiedLeft, modifiedLeft, new Mat(5, 5, CV_8U));
 
-        int RightPixels = Core.countNonZero(modifiedRight);
-        int LeftPixels = Core.countNonZero(modifiedLeft);
+//        if (counter > 10){
+//            lastReadingLeft = LeftPixels;
+//            lastReadingRight = RightPixels;
+//            counter = 0;
+//        }
+
+        RightPixels = Core.countNonZero(modifiedRight);
+        LeftPixels = Core.countNonZero(modifiedLeft);
+
+//        if(counter == 0){
+//            if(lastReadingRight-RightPixels > 7000){
+//                position1 = 0;
+//                position2 = 0;
+//                position3 = 0;
+//            } else if (lastReadingLeft-LeftPixels > 7000) {
+//                position1 = 0;
+//                position2 = 0;
+//                position3 = 0;
+//            }
+//        }
 
         switch (side) {
             case right:
-                if (RightPixels - LeftPixels > 1000){
+                if (RightPixels - LeftPixels > 1200){
                     position3++;
                 }else if (LeftPixels - RightPixels > 1000){
                     position2++;
@@ -110,12 +147,12 @@ public class propDetectionByAmount implements VisionProcessor {
                 }
                 break;
             case left:
-                if (RightPixels - LeftPixels > 1000){
+                if (RightPixels - LeftPixels > 4000){
                     position2++;
-                }else if (LeftPixels - RightPixels > 1000){
-                    position1++;
-                }else{
+                }else if (LeftPixels - RightPixels > 4000){
                     position3++;
+                }else{
+                    position1++;
                 }
                 break;
             default:
@@ -129,13 +166,29 @@ public class propDetectionByAmount implements VisionProcessor {
             propPos = 3;
         }
 
-        telemetry.addData("prop Pos 1", position1);
-        telemetry.addData("prop Pos 2", position2);
-        telemetry.addData("prop Pos 3", position3);
-        telemetry.addData("modifyefLeft", modifiedLeft.width());
+        if (position1 > 50 && position2 > 50){
+            position1 = 0;
+            position2 = 0;
+            position3 = 0;
+        } else if (position2 > 50 && position3 > 50){
+            position1 = 0;
+            position2 = 0;
+            position3 = 0;
+        }else if (position1 > 50 && position3 > 50){
+            position1 = 0;
+            position2 = 0;
+            position3 = 0;
+        }
+
+        RightSide.release();
+        LeftSide.release();
+
         telemetry.addData("prop Pos", propPos);
         telemetry.addData("contoursRight.size()", RightPixels);
         telemetry.addData("contoursLeft.size()", LeftPixels);
+        telemetry.addData("prop Pos 1", position1);
+        telemetry.addData("prop Pos 2", position2);
+        telemetry.addData("prop Pos 3", position3);
         telemetry.update();
 
         return null;

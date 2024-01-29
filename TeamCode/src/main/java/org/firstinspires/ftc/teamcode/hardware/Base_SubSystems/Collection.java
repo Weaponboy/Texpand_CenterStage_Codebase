@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.hardware;
+package org.firstinspires.ftc.teamcode.hardware.Base_SubSystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -6,23 +6,26 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
+
 public class Collection {
 
     DcMotorEx Intake;
 
-    Servo IntakeHeight;
+    public Servo IntakeHeightLeft;
+    public Servo IntakeHeightRight;
 
     HardwareMap hmap;
 
-    //get the correct values when Ethan pushes
     double collect = 0;
-    double stowed = 0.55;
-    double letClawThrough = 0.2;
+    double hangStowed = 0.4;
+    double stowed = 0.3;
+    double letClawThrough = 0.25;
     double firstPixel = 0;
-    double secondPixel = 0.175;
-    double thirdPixel = 0.20;
+    double secondPixel = 0.19;
+    double thirdPixel = 0.23;
     double forthPixel = 0.27;
-    double fifthPixel = 0.29;
+    double fifthPixel = 0.31;
 
     intakePowerState statePower = intakePowerState.off;
     intakeHeightState heightState = intakeHeightState.stowed;
@@ -34,6 +37,7 @@ public class Collection {
     }
 
     public enum intakeHeightState{
+        hangStowed,
         collect,
         stowed,
         letClawThrough,
@@ -64,29 +68,41 @@ public class Collection {
     public void updateIntakeHeight(){
 
         switch (heightState){
+            case hangStowed:
+                IntakeHeightRight.setPosition(hangStowed);
+                IntakeHeightLeft.setPosition(hangStowed);
+                break;
             case stowed:
-                IntakeHeight.setPosition(stowed);
+                IntakeHeightRight.setPosition(stowed);
+                IntakeHeightLeft.setPosition(stowed);
                 break;
             case collect:
-                IntakeHeight.setPosition(collect);
+                IntakeHeightRight.setPosition(collect);
+                IntakeHeightLeft.setPosition(collect);
                 break;
             case letClawThrough:
-                IntakeHeight.setPosition(letClawThrough);
+                IntakeHeightRight.setPosition(letClawThrough);
+                IntakeHeightLeft.setPosition(letClawThrough);
                 break;
             case firstPixel:
-                IntakeHeight.setPosition(firstPixel);
+                IntakeHeightRight.setPosition(firstPixel);
+                IntakeHeightLeft.setPosition(firstPixel);
                 break;
             case secondPixel:
-                IntakeHeight.setPosition(secondPixel);
+                IntakeHeightRight.setPosition(secondPixel);
+                IntakeHeightLeft.setPosition(secondPixel);
                 break;
             case thirdPixel:
-                IntakeHeight.setPosition(thirdPixel);
+                IntakeHeightRight.setPosition(thirdPixel);
+                IntakeHeightLeft.setPosition(thirdPixel);
                 break;
             case forthPixel:
-                IntakeHeight.setPosition(forthPixel);
+                IntakeHeightRight.setPosition(forthPixel);
+                IntakeHeightLeft.setPosition(forthPixel);
                 break;
             case fifthPixel:
-                IntakeHeight.setPosition(fifthPixel);
+                IntakeHeightRight.setPosition(fifthPixel);
+                IntakeHeightLeft.setPosition(fifthPixel);
                 break;
             default:
         }
@@ -99,9 +115,13 @@ public class Collection {
 
         Intake = hardwareMap.get(DcMotorEx.class, "Intake");
 
-        IntakeHeight = hardwareMap.get(Servo.class, "IntakeServo");
+        IntakeHeightRight = hardwareMap.get(Servo.class, "IntakeServoRight");
 
-        IntakeHeight.setDirection(Servo.Direction.FORWARD);
+        IntakeHeightRight.setDirection(Servo.Direction.REVERSE);
+
+        IntakeHeightLeft = hardwareMap.get(Servo.class, "IntakeServoLeft");
+
+        IntakeHeightLeft.setDirection(Servo.Direction.FORWARD);
 
         Intake.setDirection(DcMotorSimple.Direction.FORWARD);
 
@@ -132,6 +152,10 @@ public class Collection {
     }
 
     public double getIntakeHeight() {
-        return IntakeHeight.getPosition();
+        return (IntakeHeightLeft.getPosition() + IntakeHeightLeft.getPosition())/2;
+    }
+
+    public double getIntakeCurrentUse(){
+        return Intake.getCurrent(CurrentUnit.MILLIAMPS);
     }
 }

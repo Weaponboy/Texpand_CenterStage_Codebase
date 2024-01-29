@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Auto;
+package org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Stack;
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.propPos;
 
@@ -10,22 +10,23 @@ import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower.mecanumFollower;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.redRightBuilder;
 import org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount;
-import org.firstinspires.ftc.teamcode.hardware.Collection;
-import org.firstinspires.ftc.teamcode.hardware.Delivery;
-import org.firstinspires.ftc.teamcode.hardware.Delivery_Slides;
-import org.firstinspires.ftc.teamcode.hardware.Drivetrain;
-import org.firstinspires.ftc.teamcode.hardware.Odometry;
+import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Collection;
+import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Delivery;
+import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Delivery_Slides;
+import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Drivetrain;
+import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry;
+import org.firstinspires.ftc.teamcode.hardware.Method_Interfaces.Auto_Methods;
 import org.firstinspires.ftc.vision.VisionPortal;
 
 @Autonomous
 /**start red right*/
-public class Sprint_3_Auto extends LinearOpMode {
+public class Red_Left_Stack extends LinearOpMode implements Auto_Methods {
 
     public WebcamName frontCam;
 
     public VisionPortal portal;
 
-    org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount propDetectionByAmount = new propDetectionByAmount(telemetry, org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount.Side.left, org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount.color.blue);
+    org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount propDetectionByAmount = new propDetectionByAmount(telemetry, org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount.Side.left, org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount.color.red);
 
     /**hardware objects*/
     Odometry odometry = new Odometry(210, 337, 90);
@@ -142,7 +143,7 @@ public class Sprint_3_Auto extends LinearOpMode {
 
             //change target heading after dropping the purple pixel
             Vector2D point;
-            follower.followPath(130, odometry, drive, point = new Vector2D(250, 302), 180);
+            follower.followPath(130, odometry, drive, point = new Vector2D(250, 314), 180);
 
             odometry.update();
 
@@ -152,45 +153,49 @@ public class Sprint_3_Auto extends LinearOpMode {
 
             follower.followPath(180, odometry, drive);
 
-            delivery.setGripperState(Delivery.targetGripperState.openBoth);
-            delivery.updateGrippers();
-
-            collection.setIntakeHeight(Collection.intakeHeightState.fifthPixel);
-            collection.updateIntakeHeight();
-
-            collection.setState(Collection.intakePowerState.on);
-            collection.updateIntakeState();
-
-            sleep(1500);
-
-            collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
-            collection.updateIntakeHeight();
-
-            sleep(1500);
-
-            collection.setState(Collection.intakePowerState.off);
-            collection.updateIntakeState();
-
-            delivery.setGripperState(Delivery.targetGripperState.closeBoth);
-            delivery.updateGrippers();
-
-            sleep(500);
-
-            collection.setState(Collection.intakePowerState.reversed);
-            collection.updateIntakeState();
-
-            sleep(200);
-
-            collection.setState(Collection.intakePowerState.off);
-            collection.updateIntakeState();
-
             follower.setPath(thridPath.followablePath, thridPath.pathingVelocity);
 
             follower.followPath(180, odometry, drive);
-
-            dropWhitePixels();
-
-            sleep(200);
+//
+//            delivery.setGripperState(Delivery.targetGripperState.openBoth);
+//            delivery.updateGrippers();
+//
+//            collection.setIntakeHeight(Collection.intakeHeightState.fifthPixel);
+//            collection.updateIntakeHeight();
+//
+//            collection.setState(Collection.intakePowerState.on);
+//            collection.updateIntakeState();
+//
+//            sleep(1500);
+//
+//            collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
+//            collection.updateIntakeHeight();
+//
+//            sleep(1500);
+//
+//            collection.setState(Collection.intakePowerState.off);
+//            collection.updateIntakeState();
+//
+//            delivery.setGripperState(Delivery.targetGripperState.closeBoth);
+//            delivery.updateGrippers();
+//
+//            sleep(500);
+//
+//            collection.setState(Collection.intakePowerState.reversed);
+//            collection.updateIntakeState();
+//
+//            sleep(200);
+//
+//            collection.setState(Collection.intakePowerState.off);
+//            collection.updateIntakeState();
+//
+//            follower.setPath(thridPath.followablePath, thridPath.pathingVelocity);
+//
+//            follower.followPath(180, odometry, drive);
+//
+//            dropWhitePixels();
+//
+//            sleep(200);
 
         }
 
@@ -215,76 +220,6 @@ public class Sprint_3_Auto extends LinearOpMode {
         frontCam = hardwareMap.get(WebcamName.class, "frontcam");
 
         portal = VisionPortal.easyCreateWithDefaults(frontCam, propDetectionByAmount);
-
-    }
-
-    private void dropYellowPixel(){
-
-        collection.setIntakeHeight(Collection.intakeHeightState.letClawThrough);
-        collection.updateIntakeHeight();
-
-        sleep(200);
-
-        deliverySlides.DeliverySlides(500, 0.6);
-
-        while (deliverySlides.getCurrentposition() < 500){}
-
-        delivery.setArmTargetState(Delivery.armState.deliverAuto);
-        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
-
-        sleep(1500);
-
-        delivery.setGripperState(Delivery.targetGripperState.openRight);
-        delivery.updateGrippers();
-
-        sleep(1000);
-
-        delivery.setArmTargetState(Delivery.armState.collect);
-        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
-
-        sleep(100);
-
-        deliverySlides.DeliverySlides(0, -0.6);
-
-        sleep(500);
-
-        collection.setIntakeHeight(Collection.intakeHeightState.stowed);
-        collection.updateIntakeHeight();
-
-    }
-
-    private void dropWhitePixels(){
-
-        collection.setIntakeHeight(Collection.intakeHeightState.letClawThrough);
-        collection.updateIntakeHeight();
-
-        sleep(200);
-
-        deliverySlides.DeliverySlides(700, 0.6);
-
-        while (deliverySlides.getCurrentposition() < 680){}
-
-        delivery.setArmTargetState(Delivery.armState.deliverAuto);
-        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
-
-        sleep(1500);
-
-        delivery.setGripperState(Delivery.targetGripperState.openBoth);
-        delivery.updateGrippers();
-
-        sleep(1000);
-
-        delivery.setArmTargetState(Delivery.armState.collect);
-        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
-
-        sleep(100);
-
-        deliverySlides.DeliverySlides(0, -0.6);
-
-        sleep(500);
-
-        collection.setIntakeHeight(Collection.intakeHeightState.stowed);
-        collection.updateIntakeHeight();
 
     }
 

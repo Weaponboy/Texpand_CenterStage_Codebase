@@ -319,16 +319,11 @@ public class ObstacleMap {
             double dx = currentPos.getX() - closestInside.getX();
             double dy = currentPos.getY() - closestInside.getY();
 
-            if (dy == 0){
-                double dxfactor = 1/dx;
-                powerToAdd = new PathingPower((dxfactor*dx)*scaleFactor, 0);
-            } else if (dx == 0) {
+            double hypot = Math.hypot(dx, dy);
 
-            } else {
-
-            }
-
-            double factor = 1/dx;
+            double angleA = Math.toDegrees(Math.acos((dy * dy + hypot * hypot - dx * dx) / (2 * dy * hypot)));
+            double angleB = Math.toDegrees(Math.acos((dx * dx + hypot * hypot - dy * dy) / (2 * dx * hypot)));
+            double angleC = Math.toDegrees(Math.acos((dx * dx + dy * dy - hypot * hypot) / (2 * dx * dy)));
 
         }
 

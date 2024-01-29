@@ -2,18 +2,30 @@ package org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower;
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.maxYAcceleration;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.velocityDecreasePerPoint;
-import static org.firstinspires.ftc.teamcode.hardware.Odometry.getMaxVelocity;
+import static org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry.getMaxVelocity;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.qualcomm.robotcore.util.Range;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathingUtility.PathingVelocity;
 
+import java.awt.font.NumericShaper;
 import java.util.ArrayList;
+import java.util.List;
 
 public class FollowPath {
 
     ArrayList<Vector2D> followablePath = new ArrayList<>();
 
     ArrayList<PathingVelocity> pathingVelocity = new ArrayList<>();
+
+    FtcDashboard dashboard = FtcDashboard.getInstance();
+
+    Telemetry dashboardTelemetry = dashboard.getTelemetry();
+
+    int lastPointOnPath;
 
     public FollowPath(ArrayList<Vector2D> followablePath, ArrayList<PathingVelocity> pathingVelocity){
         this.followablePath = followablePath;
@@ -160,9 +172,20 @@ public class FollowPath {
 
         int index = 0;
 
+        int startIndex = Math.max(lastPointOnPath - 20, 0);
+
+        int endIndex = Math.min(lastPointOnPath + 20, followablePath.size());
+
+        int length = endIndex - startIndex + 1;
+
         double minDistance = Double.MAX_VALUE;
 
-        for (Vector2D pos : followablePath) {
+        List<Vector2D> subList = followablePath.subList(startIndex, endIndex + 1);
+
+        ArrayList<Vector2D> sectionToLook = new ArrayList<>(subList);
+
+        for (Vector2D pos : sectionToLook) {
+
             double distance = Math.sqrt(
                     Math.pow(robotPos.getX() - pos.getX(), 2) +
                             Math.pow(robotPos.getY() - pos.getY(), 2)
@@ -172,7 +195,10 @@ public class FollowPath {
                 minDistance = distance;
                 index = followablePath.indexOf(pos);
             }
+
         }
+
+        lastPointOnPath = index;
 
         return index;
     }
@@ -187,11 +213,20 @@ public class FollowPath {
 
         double lookaheadDistance;
 
-        double incrementDistance = 1;
+        int startIndex = Math.max(lastPointOnPath - 20, 0);
+
+        int endIndex = Math.min(lastPointOnPath + 20, followablePath.size());
+
+        int length = endIndex - startIndex + 1;
 
         double minDistance = Double.MAX_VALUE;
 
-        for (Vector2D pos : followablePath) {
+        List<Vector2D> subList = followablePath.subList(startIndex, endIndex + 1);
+
+        ArrayList<Vector2D> sectionToLook = new ArrayList<>(subList);
+
+        for (Vector2D pos : sectionToLook) {
+
             double distance = Math.sqrt(
                     Math.pow(robotPos.getX() - pos.getX(), 2) +
                             Math.pow(robotPos.getY() - pos.getY(), 2)
@@ -200,9 +235,11 @@ public class FollowPath {
             if (distance < minDistance) {
                 minDistance = distance;
                 index = followablePath.indexOf(pos);
-                position.set(pos.getX(), pos.getY());
             }
+
         }
+
+        lastPointOnPath = index;
 
         lookaheadDistance = Math.abs(Math.hypot(position.getX() - robotPos.getX(), position.getY() - robotPos.getY()));
 
@@ -218,6 +255,28 @@ public class FollowPath {
 
         return error;
     }
+
+    public Vector2D getErrorToPath(Vector2D robotPos, int index) {
+
+        Vector2D error = new Vector2D();
+
+        Vector2D position = getPointOnFollowable(index);
+
+        double lookaheadDistance = Math.abs(Math.hypot(position.getX() - robotPos.getX(), position.getY() - robotPos.getY()));
+
+        index += (int)lookaheadDistance;
+
+        if (index < followablePath.size()-1){
+            position = followablePath.get(index);
+        }else {
+            position = followablePath.get(followablePath.size()-1);
+        }
+
+        error.set(position.getX() - robotPos.getX(), position.getY() - robotPos.getY());
+
+        return error;
+    }
+
 
     public PathingVelocity getTargetVelocity(int index){
 
