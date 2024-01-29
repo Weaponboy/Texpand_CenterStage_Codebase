@@ -450,7 +450,7 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
         telemetry.addData("heading lock", headingLock);
         telemetry.addData("snap pos", snapToBackboard);
-        telemetry.addData("path", path.followablePath.size());
+        telemetry.addData("path", snapPos);
         telemetry.addData("X", odometry.X);
         telemetry.addData("Y", odometry.Y);
         telemetry.addData("heading", odometry.heading);
