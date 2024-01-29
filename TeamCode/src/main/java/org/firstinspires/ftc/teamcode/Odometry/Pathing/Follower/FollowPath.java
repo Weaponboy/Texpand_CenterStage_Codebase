@@ -296,7 +296,15 @@ public class FollowPath {
     }
 
     public int getLastPoint(){
-        return followablePath.size()-1;
+        int one;
+
+        if (followablePath.size() == 0){
+            one = 0;
+        }else {
+            one = followablePath.size()-1;
+        }
+
+        return one;
     }
 
 
