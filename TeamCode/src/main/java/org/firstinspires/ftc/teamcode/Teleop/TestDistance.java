@@ -15,6 +15,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @TeleOp
+@Disabled
 public class TestDistance extends OpMode {
 
     FtcDashboard dashboard = FtcDashboard.getInstance();

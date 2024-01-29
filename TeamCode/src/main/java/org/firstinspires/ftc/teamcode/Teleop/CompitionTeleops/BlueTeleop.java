@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Teleop.Sprint_Teleops.SprintThree;
+package org.firstinspires.ftc.teamcode.Teleop.CompitionTeleops;
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.horizontal;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.pivot;

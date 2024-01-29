@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.VisionTesting.VisionOpmodes;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.PropD
 import org.firstinspires.ftc.vision.VisionPortal;
 
 @Autonomous
+@Disabled
 public class DetectionOpmodeTest extends OpMode {
 
     FtcDashboard dashboard = FtcDashboard.getInstance();

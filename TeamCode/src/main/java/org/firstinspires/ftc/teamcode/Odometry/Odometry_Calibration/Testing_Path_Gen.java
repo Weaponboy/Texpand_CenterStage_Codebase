@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.p
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -18,6 +19,7 @@ import org.firstinspires.ftc.teamcode.hardware.Method_Interfaces.Auto_Methods;
 import org.firstinspires.ftc.vision.VisionPortal;
 
 @Autonomous
+@Disabled
 /**start red right*/
 public class Testing_Path_Gen extends LinearOpMode{
 
