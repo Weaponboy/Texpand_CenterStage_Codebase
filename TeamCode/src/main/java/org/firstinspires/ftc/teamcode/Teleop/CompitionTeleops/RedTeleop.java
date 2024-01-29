@@ -194,6 +194,10 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
                     }else {
                         path.buildPathLine(robotPos, twoLeftRed);
+
+                        follower.setPath(path.followablePath, path.pathingVelocity);
+
+                        pathing = true;
                     }
 
                 }else if(snapPos == 3){
@@ -205,6 +209,10 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
                     }else {
                         path.buildPathLine(robotPos, oneLeftRed);
+
+                        follower.setPath(path.followablePath, path.pathingVelocity);
+
+                        pathing = true;
                     }
 
                 }else if(snapPos == 4){
@@ -216,6 +224,10 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
                     }else {
                         path.buildPathLine(robotPos, middleRed);
+
+                        follower.setPath(path.followablePath, path.pathingVelocity);
+
+                        pathing = true;
                     }
 
 
@@ -228,6 +240,10 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
                     }else {
                         path.buildPathLine(robotPos, oneRightRed);
+
+                        follower.setPath(path.followablePath, path.pathingVelocity);
+
+                        pathing = true;
                     }
 
                 }else if(snapPos == 6){
@@ -239,6 +255,10 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
                     }else {
                         path.buildPathLine(robotPos, twoRightRed);
+
+                        follower.setPath(path.followablePath, path.pathingVelocity);
+
+                        pathing = true;
                     }
 
                 }else if(snapPos == 7){
@@ -250,13 +270,13 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
                     }else {
                         path.buildPathLine(robotPos, threeRightRed);
+
+                        follower.setPath(path.followablePath, path.pathingVelocity);
+
+                        pathing = true;
                     }
 
                 }
-
-                follower.setPath(path.followablePath, path.pathingVelocity);
-
-                pathing = true;
 
 
             }else {
