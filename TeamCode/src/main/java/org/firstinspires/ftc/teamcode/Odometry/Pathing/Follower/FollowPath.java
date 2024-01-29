@@ -174,13 +174,11 @@ public class FollowPath {
 
         int startIndex = Math.max(lastPointOnPath - 20, 0);
 
-        int endIndex = Math.min(lastPointOnPath + 20, followablePath.size());
-
-        int length = endIndex - startIndex + 1;
+        int endIndex = Math.min(lastPointOnPath + 20, followablePath.size()-1);
 
         double minDistance = Double.MAX_VALUE;
 
-        List<Vector2D> subList = followablePath.subList(startIndex, endIndex + 1);
+        List<Vector2D> subList = followablePath.subList(startIndex, endIndex);
 
         ArrayList<Vector2D> sectionToLook = new ArrayList<>(subList);
 

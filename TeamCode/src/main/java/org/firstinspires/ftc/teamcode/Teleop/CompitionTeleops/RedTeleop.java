@@ -146,7 +146,7 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
         if (pathing && gamepad1.atRest()){
 
-            pathing = follower.followPathTeleop(180, odometry, drive);
+//            pathing = follower.followPathTeleop(180, odometry, drive);
 
         }else {
 
@@ -192,7 +192,6 @@ public class RedTeleop extends OpMode implements TeleopPathing {
                 follower.setPath(path.followablePath, path.pathingVelocity);
 
             }else {
-                double headingLockPower = 0;
 
                 if (headingLock){
                     pivot = follower.getTurnPower(180, odometry.heading);
@@ -201,7 +200,6 @@ public class RedTeleop extends OpMode implements TeleopPathing {
                 }
 
             }
-
 
             double slowPivot = 0.5;
 
@@ -452,6 +450,7 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
         telemetry.addData("heading lock", headingLock);
         telemetry.addData("snap pos", snapToBackboard);
+        telemetry.addData("path", path.followablePath.size());
         telemetry.addData("X", odometry.X);
         telemetry.addData("Y", odometry.Y);
         telemetry.addData("heading", odometry.heading);
