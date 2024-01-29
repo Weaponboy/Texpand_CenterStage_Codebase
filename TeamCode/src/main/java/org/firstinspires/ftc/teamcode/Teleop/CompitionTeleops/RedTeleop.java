@@ -145,7 +145,9 @@ public class RedTeleop extends OpMode implements TeleopPathing {
         }
 
         if (pathing && gamepad1.atRest()){
+
             pathing = follower.followPathTeleop(targetHeading, odometry, drive);
+
         }else {
 
             vertical = -gamepad1.right_stick_y;
@@ -230,33 +232,33 @@ public class RedTeleop extends OpMode implements TeleopPathing {
             collection.updateIntakeState();
         }
 
-        if (currentGamepad1.right_trigger > 0 && !(previousGamepad1.right_trigger > 0)){
-
-            pivotIntakePos++;
-
-            if (pivotIntakePos == 5){
-                pivotIntakePos = 0;
-            }
-
-            if(pivotIntakePos == 0){
-                collection.setIntakeHeight(Collection.intakeHeightState.fifthPixel);
-            }
-            else if(pivotIntakePos == 1){
-                collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
-            }
-            else if(pivotIntakePos == 2){
-                collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
-            }
-            else if(pivotIntakePos == 3){
-                collection.setIntakeHeight(Collection.intakeHeightState.secondPixel);
-            }
-            else if(pivotIntakePos == 4){
-                collection.setIntakeHeight(Collection.intakeHeightState.firstPixel);
-            }
-
-            collection.updateIntakeHeight();
-
-        }
+//        if (currentGamepad1.right_trigger > 0 && !(previousGamepad1.right_trigger > 0)){
+//
+//            pivotIntakePos++;
+//
+//            if (pivotIntakePos == 5){
+//                pivotIntakePos = 0;
+//            }
+//
+//            if(pivotIntakePos == 0){
+//                collection.setIntakeHeight(Collection.intakeHeightState.fifthPixel);
+//            }
+//            else if(pivotIntakePos == 1){
+//                collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
+//            }
+//            else if(pivotIntakePos == 2){
+//                collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
+//            }
+//            else if(pivotIntakePos == 3){
+//                collection.setIntakeHeight(Collection.intakeHeightState.secondPixel);
+//            }
+//            else if(pivotIntakePos == 4){
+//                collection.setIntakeHeight(Collection.intakeHeightState.firstPixel);
+//            }
+//
+//            collection.updateIntakeHeight();
+//
+//        }
 
         //reverse intake
         if (currentGamepad2.y) {
@@ -444,6 +446,8 @@ public class RedTeleop extends OpMode implements TeleopPathing {
         delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
         delivery.updateGrippers();
 
+        telemetry.addData("heading lock", headingLock);
+        telemetry.addData("snap pos", snapToBackboard);
         telemetry.addData("X", odometry.X);
         telemetry.addData("Y", odometry.Y);
         telemetry.addData("heading", odometry.heading);
