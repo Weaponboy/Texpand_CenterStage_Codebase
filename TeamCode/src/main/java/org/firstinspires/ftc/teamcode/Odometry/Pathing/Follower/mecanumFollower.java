@@ -776,7 +776,7 @@ public class mecanumFollower {
 
         turnPower = headingPID.calculate(-rotdist);
 
-        return turnPower*1.2;
+        return turnPower*1.3;
     }
 
     public double getTurnPower(double targetHeading, double currentHeading){
@@ -795,7 +795,7 @@ public class mecanumFollower {
 
         turnPower = headingPID.calculate(-rotdist);
 
-        return turnPower*1.2;
+        return turnPower;
     }
 
     //still need to finish this

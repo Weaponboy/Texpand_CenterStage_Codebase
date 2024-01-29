@@ -155,7 +155,7 @@ public class RedTeleop extends OpMode implements TeleopPathing {
             vertical = -gamepad1.right_stick_y;
             horizontal = gamepad1.right_stick_x;
 
-            if ((snapToBackboard && gamepad1.left_stick_x > 0.5) || (snapToBackboard && gamepad1.left_stick_x < 0.5) || firstSnap){
+            if ((snapToBackboard && gamepad1.left_stick_x > 0.5) || (snapToBackboard && gamepad1.left_stick_x < 0.5)) {
 
                 if (currentGamepad1.left_stick_x > 0.5 && !(previousGamepad1.left_stick_x > 0.5)) {
                     snapPos++;
@@ -165,129 +165,134 @@ public class RedTeleop extends OpMode implements TeleopPathing {
                     snapPos--;
                 }
 
-                if (snapPos > 7){
+                if (snapPos > 7) {
                     snapPos = 1;
                 }
 
-                if (snapPos == 0){
+                if (snapPos == 0) {
                     snapPos = 7;
                 }
-
-                if(snapPos == 1){
-
-                    double xerror = Math.abs(threeLeftRed.getX() - robotPos.getX());
-                    double yerror = Math.abs(threeLeftRed.getY() - robotPos.getY());
-
-                    if (xerror < 2 && yerror < 2){
-
-                    }else {
-                        path.buildPathLine(robotPos, threeLeftRed);
-                    }
-
-
-                }else if(snapPos == 2){
-
-                    double xerror = Math.abs(twoLeftRed.getX() - robotPos.getX());
-                    double yerror = Math.abs(twoLeftRed.getY() - robotPos.getY());
-
-                    if (xerror < 2 && yerror < 2){
-
-                    }else {
-                        path.buildPathLine(robotPos, twoLeftRed);
-
-                        follower.setPath(path.followablePath, path.pathingVelocity);
-
-                        pathing = true;
-                    }
-
-                }else if(snapPos == 3){
-
-                    double xerror = Math.abs(oneLeftRed.getX() - robotPos.getX());
-                    double yerror = Math.abs(oneLeftRed.getY() - robotPos.getY());
-
-                    if (xerror < 2 && yerror < 2){
-
-                    }else {
-                        path.buildPathLine(robotPos, oneLeftRed);
-
-                        follower.setPath(path.followablePath, path.pathingVelocity);
-
-                        pathing = true;
-                    }
-
-                }else if(snapPos == 4){
-
-                    double xerror = Math.abs(middleRed.getX() - robotPos.getX());
-                    double yerror = Math.abs(middleRed.getY() - robotPos.getY());
-
-                    if (xerror < 2 && yerror < 2){
-
-                    }else {
-                        path.buildPathLine(robotPos, middleRed);
-
-                        follower.setPath(path.followablePath, path.pathingVelocity);
-
-                        pathing = true;
-                    }
-
-
-                }else if(snapPos == 5){
-
-                    double xerror = Math.abs(oneRightRed.getX() - robotPos.getX());
-                    double yerror = Math.abs(oneRightRed.getY() - robotPos.getY());
-
-                    if (xerror < 2 && yerror < 2){
-
-                    }else {
-                        path.buildPathLine(robotPos, oneRightRed);
-
-                        follower.setPath(path.followablePath, path.pathingVelocity);
-
-                        pathing = true;
-                    }
-
-                }else if(snapPos == 6){
-
-                    double xerror = Math.abs(twoRightRed.getX() - robotPos.getX());
-                    double yerror = Math.abs(twoRightRed.getY() - robotPos.getY());
-
-                    if (xerror < 2 && yerror < 2){
-
-                    }else {
-                        path.buildPathLine(robotPos, twoRightRed);
-
-                        follower.setPath(path.followablePath, path.pathingVelocity);
-
-                        pathing = true;
-                    }
-
-                }else if(snapPos == 7){
-
-                    double xerror = Math.abs(threeRightRed.getX() - robotPos.getX());
-                    double yerror = Math.abs(threeRightRed.getY() - robotPos.getY());
-
-                    if (xerror < 2 && yerror < 2){
-
-                    }else {
-                        path.buildPathLine(robotPos, threeRightRed);
-
-                        follower.setPath(path.followablePath, path.pathingVelocity);
-
-                        pathing = true;
-                    }
-
-                }
-
 
             }else {
 
                 if (headingLock){
-                    pivot = follower.getTurnPower(180, odometry.heading);
+                    pivot = follower.getTurnPowerTeleop(180, odometry.heading);
                 }else {
                     pivot = gamepad1.left_stick_x;
                 }
 
             }
+
+
+            if(snapPos == 1){
+
+                double xerror = Math.abs(threeLeftRed.getX() - robotPos.getX());
+                double yerror = Math.abs(threeLeftRed.getY() - robotPos.getY());
+
+                if (xerror < 2 && yerror < 2){
+
+                }else {
+                    path.buildPathLine(robotPos, threeLeftRed);
+
+                    follower.setPath(path.followablePath, path.pathingVelocity);
+
+                    pathing = true;
+                }
+
+
+            }else if(snapPos == 2){
+
+                double xerror = Math.abs(twoLeftRed.getX() - robotPos.getX());
+                double yerror = Math.abs(twoLeftRed.getY() - robotPos.getY());
+
+                if (xerror < 2 && yerror < 2){
+
+                }else {
+                    path.buildPathLine(robotPos, twoLeftRed);
+
+                    follower.setPath(path.followablePath, path.pathingVelocity);
+
+                    pathing = true;
+                }
+
+            }else if(snapPos == 3){
+
+                double xerror = Math.abs(oneLeftRed.getX() - robotPos.getX());
+                double yerror = Math.abs(oneLeftRed.getY() - robotPos.getY());
+
+                if (xerror < 2 && yerror < 2){
+
+                }else {
+                    path.buildPathLine(robotPos, oneLeftRed);
+
+                    follower.setPath(path.followablePath, path.pathingVelocity);
+
+                    pathing = true;
+                }
+
+            }else if(snapPos == 4){
+
+                double xerror = Math.abs(middleRed.getX() - robotPos.getX());
+                double yerror = Math.abs(middleRed.getY() - robotPos.getY());
+
+                if (xerror < 2 && yerror < 2){
+
+                }else {
+                    path.buildPathLine(robotPos, middleRed);
+
+                    follower.setPath(path.followablePath, path.pathingVelocity);
+
+                    pathing = true;
+                }
+
+
+            }else if(snapPos == 5){
+
+                double xerror = Math.abs(oneRightRed.getX() - robotPos.getX());
+                double yerror = Math.abs(oneRightRed.getY() - robotPos.getY());
+
+                if (xerror < 2 && yerror < 2){
+
+                }else {
+                    path.buildPathLine(robotPos, oneRightRed);
+
+                    follower.setPath(path.followablePath, path.pathingVelocity);
+
+                    pathing = true;
+                }
+
+            }else if(snapPos == 6){
+
+                double xerror = Math.abs(twoRightRed.getX() - robotPos.getX());
+                double yerror = Math.abs(twoRightRed.getY() - robotPos.getY());
+
+                if (xerror < 2 && yerror < 2){
+
+                }else {
+                    path.buildPathLine(robotPos, twoRightRed);
+
+                    follower.setPath(path.followablePath, path.pathingVelocity);
+
+                    pathing = true;
+                }
+
+            }else if(snapPos == 7) {
+
+                double xerror = Math.abs(threeRightRed.getX() - robotPos.getX());
+                double yerror = Math.abs(threeRightRed.getY() - robotPos.getY());
+
+                if (xerror < 2 && yerror < 2) {
+
+                } else {
+                    path.buildPathLine(robotPos, threeRightRed);
+
+                    follower.setPath(path.followablePath, path.pathingVelocity);
+
+                    pathing = true;
+                }
+
+            }
+
 
             double slowPivot = 0.5;
 
