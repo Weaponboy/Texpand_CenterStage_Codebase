@@ -280,7 +280,7 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
         if (pathing && atRest(gamepad1)){
 
-//            pathing = follower.followPathTeleop(180, odometry, drive);
+            pathing = follower.followPathTeleop(180, odometry, drive);
 
         }else {
 
