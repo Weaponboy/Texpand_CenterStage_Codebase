@@ -9,22 +9,22 @@ import java.util.ArrayList;
 
 public interface TeleopPathing {
 
-    Vector2D threeLeftRed = new Vector2D(getRealCoords(300), getRealCoords(250));
-    Vector2D twoLeftRed = new Vector2D(getRealCoords(300), getRealCoords(255));
-    Vector2D oneLeftRed = new Vector2D(getRealCoords(300), getRealCoords(262.5));
-    Vector2D middleRed = new Vector2D(getRealCoords(300), getRealCoords(270));
-    Vector2D oneRightRed = new Vector2D(getRealCoords(300), getRealCoords(277.5));
-    Vector2D twoRightRed = new Vector2D(getRealCoords(300), getRealCoords(285));
-    Vector2D threeRightRed = new Vector2D(getRealCoords(300), getRealCoords(290));
+    Vector2D threeLeftRed = new Vector2D(getRealCoords(305), getRealCoords(250));
+    Vector2D twoLeftRed = new Vector2D(getRealCoords(305), getRealCoords(255));
+    Vector2D oneLeftRed = new Vector2D(getRealCoords(305), getRealCoords(262.5));
+    Vector2D middleRed = new Vector2D(getRealCoords(305), getRealCoords(270));
+    Vector2D oneRightRed = new Vector2D(getRealCoords(305), getRealCoords(277.5));
+    Vector2D twoRightRed = new Vector2D(getRealCoords(305), getRealCoords(285));
+    Vector2D threeRightRed = new Vector2D(getRealCoords(305), getRealCoords(290));
 
 
-    Vector2D threeLeftBlue = new Vector2D(getRealCoords(300), getRealCoords(70));
-    Vector2D twoLeftBlue = new Vector2D(getRealCoords(300), getRealCoords(75));
-    Vector2D oneLeftBlue = new Vector2D(getRealCoords(300), getRealCoords(82.5));
-    Vector2D middleBlue = new Vector2D(getRealCoords(300), getRealCoords(90));
-    Vector2D oneRightBlue = new Vector2D(getRealCoords(300), getRealCoords(97.5));
-    Vector2D twoRightBlue = new Vector2D(getRealCoords(300), getRealCoords(105));
-    Vector2D threeRightBlue = new Vector2D(getRealCoords(300), getRealCoords(110));
+    Vector2D threeLeftBlue = new Vector2D(getRealCoords(305), getRealCoords(70));
+    Vector2D twoLeftBlue = new Vector2D(getRealCoords(305), getRealCoords(75));
+    Vector2D oneLeftBlue = new Vector2D(getRealCoords(305), getRealCoords(82.5));
+    Vector2D middleBlue = new Vector2D(getRealCoords(305), getRealCoords(90));
+    Vector2D oneRightBlue = new Vector2D(getRealCoords(305), getRealCoords(97.5));
+    Vector2D twoRightBlue = new Vector2D(getRealCoords(305), getRealCoords(105));
+    Vector2D threeRightBlue = new Vector2D(getRealCoords(305), getRealCoords(110));
 
 
     default Vector2D findClosestPosBlue(Vector2D robotPos){
