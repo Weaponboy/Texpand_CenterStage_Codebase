@@ -164,6 +164,7 @@ public class RedTeleop extends OpMode implements TeleopPathing {
             if (snapPos < 1){
                 snapPos = 7;
             }
+
         }
 
         if (snapToBackboard && !pathing){
