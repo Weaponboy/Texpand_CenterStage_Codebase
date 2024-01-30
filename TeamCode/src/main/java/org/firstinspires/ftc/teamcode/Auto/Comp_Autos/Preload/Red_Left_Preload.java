@@ -22,7 +22,7 @@ import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry;
 import org.firstinspires.ftc.teamcode.hardware.Method_Interfaces.Auto_Methods;
 import org.firstinspires.ftc.vision.VisionPortal;
 
-@Autonomous
+@Autonomous(name = "Red_Left_Preload", group = "Preload")
 /**start red right*/
 public class Red_Left_Preload extends LinearOpMode implements Auto_Methods {
 

@@ -2,8 +2,6 @@ package org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Stack;
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.propPos;
 
-import static java.lang.Thread.sleep;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -11,6 +9,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower.mecanumFollower;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.blueLeftBuilder;
+import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.blueRightBuilder;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.redRightBuilder;
 import org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Collection;
@@ -21,11 +20,9 @@ import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry;
 import org.firstinspires.ftc.teamcode.hardware.Method_Interfaces.Auto_Methods;
 import org.firstinspires.ftc.vision.VisionPortal;
 
-import java.util.Objects;
-
-@Autonomous
+@Autonomous(name = "Blue_Left_Stack+2", group = "Stack 2+2")
 /**start red right*/
-public class Blue_Left_Stack extends LinearOpMode implements Auto_Methods{
+public class Blue_Left_Stack_2 extends LinearOpMode implements Auto_Methods {
 
     public WebcamName frontCam;
 
@@ -43,12 +40,11 @@ public class Blue_Left_Stack extends LinearOpMode implements Auto_Methods{
 
     blueLeftBuilder secondPath = new blueLeftBuilder();
 
-    blueLeftBuilder thridPath = new blueLeftBuilder();
+    blueLeftBuilder thirdPath = new blueLeftBuilder();
 
-    blueLeftBuilder posThreeExtra = new blueLeftBuilder();
+    blueRightBuilder lastToBackboard = new blueRightBuilder();
 
     mecanumFollower follower = new mecanumFollower();
-
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -69,14 +65,15 @@ public class Blue_Left_Stack extends LinearOpMode implements Auto_Methods{
 
             odometry.update();
 
+            Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
+
             dropYellowPixel();
 
-            //build stack paths
-            secondPath.buildPath(blueLeftBuilder.Position.left, blueLeftBuilder.Section.collect);
+            lastToBackboard.buildPathLine(startPos, new Vector2D(290, 30));
 
-            thridPath.buildPath(blueLeftBuilder.Position.left, blueLeftBuilder.Section.deliver);
+            follower.setPath(lastToBackboard.followablePath, lastToBackboard.pathingVelocity);
 
-            stackPixels();
+            follower.followPath(180, odometry, drive, "yes");
 
         } else if (propPos == 2) {
 
@@ -92,14 +89,15 @@ public class Blue_Left_Stack extends LinearOpMode implements Auto_Methods{
 
             odometry.update();
 
+            Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
+
             dropYellowPixel();
 
-            //build stack paths
-            secondPath.buildPath(blueLeftBuilder.Position.center, blueLeftBuilder.Section.collect);
+            lastToBackboard.buildPathLine(startPos, new Vector2D(290, 30));
 
-            thridPath.buildPath(blueLeftBuilder.Position.center, blueLeftBuilder.Section.deliver);
+            follower.setPath(lastToBackboard.followablePath, lastToBackboard.pathingVelocity);
 
-            stackPixels();
+            follower.followPath(180, odometry, drive, "yes");
 
         } else if (propPos == 3) {
 
@@ -107,7 +105,7 @@ public class Blue_Left_Stack extends LinearOpMode implements Auto_Methods{
 
             firstPath.buildPath(blueLeftBuilder.Position.right, blueLeftBuilder.Section.preload, redRightBuilder.pathSplit.first);
 
-            posThreeExtra.buildPath(blueLeftBuilder.Position.right, blueLeftBuilder.Section.preload, redRightBuilder.pathSplit.second);
+            secondPath.buildPath(blueLeftBuilder.Position.right, blueLeftBuilder.Section.preload, redRightBuilder.pathSplit.second);
 
             follower.setPath(firstPath.followablePath, firstPath.pathingVelocity);
 
@@ -115,20 +113,21 @@ public class Blue_Left_Stack extends LinearOpMode implements Auto_Methods{
 
             odometry.update();
 
-            follower.setPath(posThreeExtra.followablePath, posThreeExtra.pathingVelocity);
+            follower.setPath(secondPath.followablePath, secondPath.pathingVelocity);
 
             follower.followPath(0, odometry, drive, new Vector2D(250, 90), 180);
 
             odometry.update();
 
+            Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
+
             dropYellowPixel();
 
-            //build stack paths
-            secondPath.buildPath(blueLeftBuilder.Position.right, blueLeftBuilder.Section.collect);
+            lastToBackboard.buildPathLine(startPos, new Vector2D(290, 30));
 
-            thridPath.buildPath(blueLeftBuilder.Position.right, blueLeftBuilder.Section.deliver);
+            follower.setPath(lastToBackboard.followablePath, lastToBackboard.pathingVelocity);
 
-            stackPixels();
+            follower.followPath(180, odometry, drive, "yes");
 
         }
 
@@ -148,43 +147,6 @@ public class Blue_Left_Stack extends LinearOpMode implements Auto_Methods{
         frontCam = hardwareMap.get(WebcamName.class, "frontcam");
 
         portal = VisionPortal.easyCreateWithDefaults(frontCam, propDetectionByAmount);
-
-    }
-
-    public void stackPixels() throws InterruptedException {
-
-        follower.setPath(secondPath.followablePath, secondPath.pathingVelocity);
-
-        delivery.setGripperState(Delivery.GripperState.open);
-        delivery.updateGrippers();
-
-        collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
-        collection.updateIntakeHeight();
-
-        follower.followPath(180, odometry, drive, collection, new Vector2D(76, 209));
-
-        odometry.update();
-
-        sleep(1000);
-
-        delivery.setGripperState(Delivery.GripperState.closed);
-        delivery.updateGrippers();
-
-        sleep(500);
-
-        collection.setState(Collection.intakePowerState.reversed);
-        collection.updateIntakeState();
-
-        sleep(400);
-
-        collection.setState(Collection.intakePowerState.off);
-        collection.updateIntakeState();
-
-        follower.setPath(thridPath.followablePath, thridPath.pathingVelocity);
-
-        follower.followPath(180, odometry, drive);
-
-        dropWhitePixels();
 
     }
 

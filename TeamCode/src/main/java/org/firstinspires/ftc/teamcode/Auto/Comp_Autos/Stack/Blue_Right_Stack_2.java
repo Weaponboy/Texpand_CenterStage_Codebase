@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Preload;
+package org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Stack;
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.propPos;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.slide_d;
@@ -32,9 +32,9 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;
 
-@Autonomous(name = "Blue_Right_Preload", group = "Preload")
+@Autonomous(name = "Blue_Right_Stack+2", group = "Stack 2+2")
 /**start red right*/
-public class Blue_Right_Preload extends LinearOpMode implements Auto_Methods{
+public class Blue_Right_Stack_2 extends LinearOpMode implements Auto_Methods{
 
     public WebcamName frontCam;
 
