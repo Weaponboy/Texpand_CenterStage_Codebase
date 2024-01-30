@@ -141,15 +141,15 @@ public class Blue_Right_Preload extends LinearOpMode implements Auto_Methods{
 
             }
 
-            Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
-
-            lastToBackboard.buildPathLine(startPos, new Vector2D(306, 100));
-
-            follower.setPath(lastToBackboard.followablePath, lastToBackboard.pathingVelocity);
-
-            follower.followPath(180, odometry, drive, "yes");
-
-            dropYellowPixel();
+//            Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
+//
+//            lastToBackboard.buildPathLine(startPos, new Vector2D(306, 100));
+//
+//            follower.setPath(lastToBackboard.followablePath, lastToBackboard.pathingVelocity);
+//
+//            follower.followPath(180, odometry, drive, "yes");
+//
+//            dropYellowPixel();
 
         } else if (propPos == 3) {
 

@@ -596,12 +596,7 @@ public class mecanumFollower {
 
         do {
 
-            counter++;
-
-            if (counter > 50){
-                counter = 0;
-                loopTime = elapsedTime.milliseconds() - lastLoopTime;
-            }
+            loopTime = elapsedTime.milliseconds() - lastLoopTime;
 
             lastLoopTime = elapsedTime.milliseconds();
 
@@ -636,7 +631,6 @@ public class mecanumFollower {
             drive.LB.setPower(left_Back);
 
             RobotLog.d("loop time: " + loopTime);
-            RobotLog.d("set motor time: " + time);
 
             dashboardTelemetry.addData("time", time);
             dashboardTelemetry.addData("loop time", loopTime);
