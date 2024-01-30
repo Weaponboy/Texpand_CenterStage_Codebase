@@ -710,13 +710,13 @@ public class mecanumFollower {
         PathingPower pathingPower;
 
         if(Math.abs(odometry.getHorizontalVelocity()) < 3){
-            yI += 0.04;
+            yI += 0.02;
         }else {
             yI = 0;
         }
 
         if(Math.abs(odometry.getVerticalVelocity()) < 3){
-            xI += 0.04;
+            xI += 0.02;
         }else {
             xI = 0;
         }

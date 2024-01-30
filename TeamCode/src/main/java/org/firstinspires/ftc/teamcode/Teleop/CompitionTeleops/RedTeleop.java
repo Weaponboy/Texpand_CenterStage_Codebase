@@ -521,13 +521,12 @@ public class RedTeleop extends OpMode implements TeleopPathing {
             delivery.setRotateClaw(1);
         }
 
+
+        //reset with atags
         if (gamepad1.b){
             sensors.getDetections();
             resetOdo();
         }
-
-        //reset with atags
-
 
         //update odo position
         odometry.update();
@@ -598,8 +597,9 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
     public void resetOdo(){
 
-        if (!(sensors.rightTag == null)){
+        if (sensors.rightTag == null){
 
+        }else {
             if (sensors.rightTag.id == 4 || sensors.rightTag.id == 5 || sensors.rightTag.id == 6){
 
                 resetCounter++;
