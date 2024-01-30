@@ -54,10 +54,6 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
     Sensors sensors = new Sensors();
 
-    double pivotIntakePos = 0;
-
-    double targetHeading;
-
     boolean pathing = false;
 
     boolean headingLock = false;
@@ -132,57 +128,40 @@ public class RedTeleop extends OpMode implements TeleopPathing {
             snapToBackboard = false;
         }
 
-        if(currentGamepad1.right_trigger > 0.5 && !(previousGamepad1.right_trigger > 0.5) && inBackboardArea){
-            firstSnap = true;
-        }
-
-        if(firstSnap){
-            snapPos = findClosestPosRed(robotPos);
-            firstSnap = false;
-        }
+//        if(currentGamepad1.right_trigger > 0.5 && !(previousGamepad1.right_trigger > 0.5) && inBackboardArea){
+//            firstSnap = true;
+//        }
+//
+//        if(firstSnap){
+//            snapPos = findClosestPosRed(robotPos);
+//            firstSnap = false;
+//        }
 
         if(gamepad1.right_stick_button && gamepad1.left_stick_button){
             headingLock = false;
             pathing = false;
         }
 
-        if (pathing && atRest(gamepad1)){
+        if ((snapToBackboard && gamepad1.left_stick_x > 0.5) || (snapToBackboard && gamepad1.left_stick_x < 0.5) || firstSnap){
 
-            pathing = follower.followPathTeleop(180, odometry, drive);
-
-        }else {
-
-            vertical = -gamepad1.right_stick_y;
-            horizontal = gamepad1.right_stick_x;
-
-            if ((snapToBackboard && gamepad1.left_stick_x > 0.5) || (snapToBackboard && gamepad1.left_stick_x < 0.5)) {
-
-                if (currentGamepad1.left_stick_x > 0.5 && !(previousGamepad1.left_stick_x > 0.5)) {
-                    snapPos++;
-                }
-
-                if (currentGamepad1.left_stick_x < 0.5 && !(previousGamepad1.left_stick_x < 0.5)) {
-                    snapPos--;
-                }
-
-                if (snapPos > 7) {
-                    snapPos = 1;
-                }
-
-                if (snapPos == 0) {
-                    snapPos = 7;
-                }
-
-            }else {
-
-                if (headingLock){
-                    pivot = follower.getTurnPowerTeleop(180, odometry.heading);
-                }else {
-                    pivot = gamepad1.left_stick_x;
-                }
-
+            if (currentGamepad1.left_stick_x > 0.5 && !(previousGamepad1.left_stick_x > 0.5)) {
+                snapPos++;
             }
 
+            if (currentGamepad1.left_stick_x < 0.5 && !(previousGamepad1.left_stick_x < 0.5)) {
+                snapPos--;
+            }
+
+            if (snapPos > 7){
+                snapPos = 1;
+            }
+
+            if (snapPos < 1){
+                snapPos = 7;
+            }
+        }
+
+        if (snapToBackboard){
 
             if(snapPos == 1){
 
@@ -193,12 +172,7 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
                 }else {
                     path.buildPathLine(robotPos, threeLeftRed);
-
-                    follower.setPath(path.followablePath, path.pathingVelocity);
-
-                    pathing = true;
                 }
-
 
             }else if(snapPos == 2){
 
@@ -209,10 +183,6 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
                 }else {
                     path.buildPathLine(robotPos, twoLeftRed);
-
-                    follower.setPath(path.followablePath, path.pathingVelocity);
-
-                    pathing = true;
                 }
 
             }else if(snapPos == 3){
@@ -224,10 +194,6 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
                 }else {
                     path.buildPathLine(robotPos, oneLeftRed);
-
-                    follower.setPath(path.followablePath, path.pathingVelocity);
-
-                    pathing = true;
                 }
 
             }else if(snapPos == 4){
@@ -239,12 +205,7 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
                 }else {
                     path.buildPathLine(robotPos, middleRed);
-
-                    follower.setPath(path.followablePath, path.pathingVelocity);
-
-                    pathing = true;
                 }
-
 
             }else if(snapPos == 5){
 
@@ -255,10 +216,6 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
                 }else {
                     path.buildPathLine(robotPos, oneRightRed);
-
-                    follower.setPath(path.followablePath, path.pathingVelocity);
-
-                    pathing = true;
                 }
 
             }else if(snapPos == 6){
@@ -270,29 +227,40 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
                 }else {
                     path.buildPathLine(robotPos, twoRightRed);
-
-                    follower.setPath(path.followablePath, path.pathingVelocity);
-
-                    pathing = true;
                 }
 
-            }else if(snapPos == 7) {
+            }else if(snapPos == 7){
 
                 double xerror = Math.abs(threeRightRed.getX() - robotPos.getX());
                 double yerror = Math.abs(threeRightRed.getY() - robotPos.getY());
 
-                if (xerror < 2 && yerror < 2) {
+                if (xerror < 2 && yerror < 2){
 
-                } else {
+                }else {
                     path.buildPathLine(robotPos, threeRightRed);
-
-                    follower.setPath(path.followablePath, path.pathingVelocity);
-
-                    pathing = true;
                 }
 
             }
 
+            follower.setPath(path.followablePath, path.pathingVelocity);
+
+            pathing = true;
+        }
+
+        if (pathing && atRest(gamepad1)){
+
+            pathing = follower.followPathTeleop(180, odometry, drive);
+
+        }else {
+
+            vertical = -gamepad1.right_stick_y;
+            horizontal = gamepad1.right_stick_x;
+
+            if (headingLock){
+                pivot = follower.getTurnPowerTeleop(180, odometry.heading);
+            } else if (!snapToBackboard) {
+                pivot = gamepad1.left_stick_x;
+            }
 
             double slowPivot = 0.5;
 
