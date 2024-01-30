@@ -43,7 +43,13 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
     Collection collection = new Collection();
 
-    teleopPathBuilder path = new teleopPathBuilder();
+    teleopPathBuilder path1 = new teleopPathBuilder();
+    teleopPathBuilder path2 = new teleopPathBuilder();
+    teleopPathBuilder path3 = new teleopPathBuilder();
+    teleopPathBuilder path4 = new teleopPathBuilder();
+    teleopPathBuilder path5 = new teleopPathBuilder();
+    teleopPathBuilder path6 = new teleopPathBuilder();
+    teleopPathBuilder path7 = new teleopPathBuilder();
 
     Vector2D robotPos = new Vector2D();
 
@@ -170,9 +176,9 @@ public class RedTeleop extends OpMode implements TeleopPathing {
                 if (xerror < 2 && yerror < 2){
 
                 }else {
-                    path.buildPathLine(robotPos, threeLeftRed);
+                    path1.buildPathLine(robotPos, threeLeftRed);
 
-                    follower.setPath(path.followablePath, path.pathingVelocity);
+                    follower.setPath(path1.followablePath, path1.pathingVelocity);
 
                     pathing = true;
                 }
@@ -185,9 +191,9 @@ public class RedTeleop extends OpMode implements TeleopPathing {
                 if (xerror < 2 && yerror < 2){
 
                 }else {
-                    path.buildPathLine(robotPos, twoLeftRed);
+                    path2.buildPathLine(robotPos, twoLeftRed);
 
-                    follower.setPath(path.followablePath, path.pathingVelocity);
+                    follower.setPath(path2.followablePath, path2.pathingVelocity);
 
                     pathing = true;
                 }
@@ -200,9 +206,9 @@ public class RedTeleop extends OpMode implements TeleopPathing {
                 if (xerror < 2 && yerror < 2){
 
                 }else {
-                    path.buildPathLine(robotPos, oneLeftRed);
+                    path3.buildPathLine(robotPos, oneLeftRed);
 
-                    follower.setPath(path.followablePath, path.pathingVelocity);
+                    follower.setPath(path3.followablePath, path3.pathingVelocity);
 
                     pathing = true;
                 }
@@ -215,9 +221,9 @@ public class RedTeleop extends OpMode implements TeleopPathing {
                 if (xerror < 2 && yerror < 2){
 
                 }else {
-                    path.buildPathLine(robotPos, middleRed);
+                    path4.buildPathLine(robotPos, middleRed);
 
-                    follower.setPath(path.followablePath, path.pathingVelocity);
+                    follower.setPath(path4.followablePath, path4.pathingVelocity);
 
                     pathing = true;
                 }
@@ -230,9 +236,9 @@ public class RedTeleop extends OpMode implements TeleopPathing {
                 if (xerror < 2 && yerror < 2){
 
                 }else {
-                    path.buildPathLine(robotPos, oneRightRed);
+                    path5.buildPathLine(robotPos, oneRightRed);
 
-                    follower.setPath(path.followablePath, path.pathingVelocity);
+                    follower.setPath(path5.followablePath, path5.pathingVelocity);
 
                     pathing = true;
                 }
@@ -245,9 +251,9 @@ public class RedTeleop extends OpMode implements TeleopPathing {
                 if (xerror < 2 && yerror < 2){
 
                 }else {
-                    path.buildPathLine(robotPos, twoRightRed);
+                    path6.buildPathLine(robotPos, twoRightRed);
 
-                    follower.setPath(path.followablePath, path.pathingVelocity);
+                    follower.setPath(path6.followablePath, path6.pathingVelocity);
 
                     pathing = true;
                 }
@@ -260,9 +266,9 @@ public class RedTeleop extends OpMode implements TeleopPathing {
                 if (xerror < 2 && yerror < 2){
 
                 }else {
-                    path.buildPathLine(robotPos, threeRightRed);
+                    path7.buildPathLine(robotPos, threeRightRed);
 
-                    follower.setPath(path.followablePath, path.pathingVelocity);
+                    follower.setPath(path7.followablePath, path7.pathingVelocity);
 
                     pathing = true;
                 }
