@@ -738,10 +738,10 @@ public class mecanumFollower {
         double right_Front = (vertical - horizontal - pivot) / denominator;
         double right_Back = (vertical + horizontal - pivot) / denominator;
 
-//        drive.RF.setPower(right_Front);
-//        drive.RB.setPower(right_Back);
-//        drive.LF.setPower(left_Front);
-//        drive.LB.setPower(left_Back);
+        drive.RF.setPower(right_Front);
+        drive.RB.setPower(right_Back);
+        drive.LF.setPower(left_Front);
+        drive.LB.setPower(left_Back);
 
         return pathing;
 
