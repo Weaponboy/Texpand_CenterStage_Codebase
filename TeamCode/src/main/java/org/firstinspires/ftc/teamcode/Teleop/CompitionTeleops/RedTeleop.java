@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower.mecanumFollower;
@@ -101,8 +102,9 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
         if (counter > 50){
             counter = 0;
-            loopTime = elapsedTime.milliseconds() - lastLoopTime;
         }
+
+        loopTime = elapsedTime.milliseconds() - lastLoopTime;
 
         lastLoopTime = elapsedTime.milliseconds();
 
@@ -538,6 +540,8 @@ public class RedTeleop extends OpMode implements TeleopPathing {
         //update delivery state
         delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
         delivery.updateGrippers();
+
+        RobotLog.d("loop time: " + loopTime);
 
         telemetry.addData("heading lock", headingLock);
         telemetry.addData("snap pos", snapToBackboard);
