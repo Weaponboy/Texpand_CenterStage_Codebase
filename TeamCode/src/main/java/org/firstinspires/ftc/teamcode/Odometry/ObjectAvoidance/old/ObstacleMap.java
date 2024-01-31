@@ -1,7 +1,6 @@
-package org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance;
+package org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old;
 
-import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.scaleFactor;
-
+import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathingUtility.PathingPower;
 
 import java.util.ArrayList;
@@ -16,11 +15,10 @@ public class ObstacleMap {
     public ArrayList<PathingPower> InnerRingVectors = new ArrayList<>();
 
     public ArrayList<Vector2D> oneObstacle = new ArrayList<>();
+
     public ArrayList<Vector2D> oneObstacleOuter = new ArrayList<>();
 
     public ArrayList<Vector2D> robotPosition = new ArrayList<>();
-
-    //QuadTree quadTree = new QuadTree(new Rectangle(0, 0, 365, 365)); // Define the bounding box of your field
 
     public ObstacleMap() {
         SetMap();

@@ -9,10 +9,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.KDTreeExample;
-import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.ObstacleMap;
-import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
-import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.buildRobotBoundary;
+import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.KDTreeExample;
+import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.ObstacleMap;
+import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
+import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.buildRobotBoundary;
 
 import java.util.List;
 

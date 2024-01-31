@@ -1,8 +1,5 @@
 package org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower;
 
-import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.Heading;
-import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.X;
-import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.Y;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.driveD;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.driveP;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.horizontal;
@@ -21,8 +18,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
-import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.robotPos;
+import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathingUtility.PathingPower;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathingUtility.PathingVelocity;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Collection;

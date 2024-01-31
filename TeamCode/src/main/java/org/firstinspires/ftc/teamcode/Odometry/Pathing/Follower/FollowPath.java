@@ -5,13 +5,11 @@ import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.v
 import static org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry.getMaxVelocity;
 
 import com.acmerobotics.dashboard.FtcDashboard;
-import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
+import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathingUtility.PathingVelocity;
 
-import java.awt.font.NumericShaper;
 import java.util.ArrayList;
 import java.util.List;
 

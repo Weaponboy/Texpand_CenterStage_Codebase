@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuild
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.UsefulMethods.getRealCoords;
 
-import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
+import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.Red_Points_Overlap;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderMain;
 

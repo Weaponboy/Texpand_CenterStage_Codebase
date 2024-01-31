@@ -6,7 +6,7 @@ import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.v
 import static org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry.getMaxVelocity;
 
 import org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Auto_Control_Points.controlPoints;
-import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
+import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.SegmentGenerator;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.Enums.TargetPoint;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.Enums.whatPath;

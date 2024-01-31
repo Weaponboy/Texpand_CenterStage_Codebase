@@ -5,7 +5,6 @@ import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.d
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.driveF;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.driveP;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.maxYVelocity;
-import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.pivot;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.rotationD;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.rotationF;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.rotationP;
@@ -26,7 +25,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
+import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathingUtility.PathingPower;
 
 public class Odometry {
