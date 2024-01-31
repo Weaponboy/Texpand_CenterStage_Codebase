@@ -20,6 +20,7 @@ public class ArcOdometrytesting extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()){
+
             arcOdo.updateArc();
             lineOdo.update();
 
@@ -27,6 +28,7 @@ public class ArcOdometrytesting extends LinearOpMode {
             telemetry.addData("arcOdo Y", arcOdo.Y);
             telemetry.addData("arcOdo Heading", arcOdo.heading);
             telemetry.addLine();
+
             telemetry.addData("lineOdo X", lineOdo.X);
             telemetry.addData("lineOdo Y", lineOdo.Y);
             telemetry.addData("lineOdo Heading", lineOdo.heading);

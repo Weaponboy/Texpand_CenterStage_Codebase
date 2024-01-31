@@ -69,6 +69,8 @@ public class Blue_Right_Preload extends LinearOpMode implements Auto_Methods{
 
         waitForStart();
 
+        sensors.portal.setProcessorEnabled(sensors.propDetectionByAmount, false);
+
         if (propPos == 1){
 
             preloadPurple.buildPath(blueRightBuilder.Position.left, blueRightBuilder.Section.preload, blueRightBuilder.pixelColor.purple);
@@ -181,6 +183,14 @@ public class Blue_Right_Preload extends LinearOpMode implements Auto_Methods{
 
             dropYellowPixel();
 
+        }
+        while (opModeIsActive()){
+            odometry.update();
+
+            telemetry.addData("X", odometry.X);
+            telemetry.addData("Y", odometry.Y);
+            telemetry.addData("heading", odometry.heading);
+            telemetry.update();
         }
     }
 

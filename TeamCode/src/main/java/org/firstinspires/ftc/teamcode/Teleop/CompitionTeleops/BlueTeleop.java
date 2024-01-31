@@ -39,6 +39,8 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
     Odometry odometry = new Odometry(90, 23, 270);
 
+    Odometry odometryArc = new Odometry(90, 23, 270);
+
     Delivery delivery = new Delivery();
 
     Delivery_Slides deliverySlides = new Delivery_Slides();
@@ -104,8 +106,10 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         if (counter > 50){
             counter = 0;
         }
-        lastLoopTime = loopTime;
+
         loopTime = elapsedTime.milliseconds() - lastLoopTime;
+
+        lastLoopTime = elapsedTime.milliseconds();
 
         robotPos.set(odometry.X, odometry.Y);
 
@@ -545,10 +549,9 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         telemetry.addData("X", odometry.X);
         telemetry.addData("Y", odometry.Y);
         telemetry.addData("heading", odometry.heading);
-//        telemetry.addData("distance sensor", sensors.backBoard.getDistance(DistanceUnit.CM));
-//        if (sensors.rightTag != null){
-//            telemetry.addData("distance camera", ((sensors.rightTag.ftcPose.y)*0.1));
-//        }
+        telemetry.addData("X arc", odometryArc.X);
+        telemetry.addData("Y arc", odometryArc.Y);
+        telemetry.addData("heading arc", odometryArc.heading);
         telemetry.addData("loop time", loopTime);
         telemetry.update();
 
@@ -573,6 +576,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
         drive.init(hardwareMap);
         odometry.init(hardwareMap);
+        odometryArc.init(hardwareMap);
         sensors.init(hardwareMap);
 
         sensors.initAprilTag(telemetry, false);

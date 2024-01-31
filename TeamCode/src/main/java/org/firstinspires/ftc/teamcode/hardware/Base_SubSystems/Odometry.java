@@ -41,8 +41,8 @@ public class Odometry {
 
     HardwareMap hardwareMap;
 
-    public double trackwidth = 36.45;
-        public double centerPodOffset = 17.8;
+    public double trackwidth = 36.657964;
+        public double centerPodOffset = 18.73068;
     public double wheelRadius = 1.75;
     public double podTicks = 8192;
 
