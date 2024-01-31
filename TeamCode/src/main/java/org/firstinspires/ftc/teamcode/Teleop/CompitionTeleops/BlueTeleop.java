@@ -535,6 +535,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         }
 
         odometry.update();
+        odometryArc.update();
 
         //update collection state
         collection.updateIntakeHeight();
