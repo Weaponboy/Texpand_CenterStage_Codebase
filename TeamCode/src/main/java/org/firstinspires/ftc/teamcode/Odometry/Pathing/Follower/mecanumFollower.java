@@ -11,6 +11,8 @@ import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.s
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.vertical;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -28,6 +30,7 @@ import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry;
 import java.util.ArrayList;
 import java.util.List;
 
+@Config
 public class mecanumFollower {
 
     FtcDashboard dashboard = FtcDashboard.getInstance();
@@ -36,6 +39,9 @@ public class mecanumFollower {
 
     double yI = 0;
     double xI = 0;
+
+    public static double X = 0;
+    public static double Y = 0;
 
     double loopTime;
     int counter;
@@ -638,6 +644,73 @@ public class mecanumFollower {
         drive.RB.setPower(0);
         drive.LF.setPower(0);
         drive.LB.setPower(0);
+
+    }
+
+    //normal method
+    public void testingLoopTime(double targetHeading, Vector2D robotPos, double heading){
+
+        //for getting pathing power and corrective as well
+        Vector2D robotPositionVector = new Vector2D(robotPos.getX(), robotPos.getY());
+
+        Vector2D targetPoint = pathfollow.getPointOnFollowable(pathfollow.getLastPoint());
+
+        boolean reachedTarget = false;
+
+        boolean closeToTarget = false;
+
+        xI = 0;
+        yI = 0;
+
+        do {
+
+            loopTime = elapsedTime.milliseconds() - lastLoopTime;
+
+            lastLoopTime = elapsedTime.milliseconds();
+
+            robotPositionVector.set(X, Y);
+
+            if (Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 1.4 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 1.4){
+                reachedTarget = true;
+            }
+
+            PathingPower correctivePower = new PathingPower();
+            PathingPower pathingPower;
+
+            closeToTarget = Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 10 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 10;
+
+            getCorrective.reset();
+
+            if (!closeToTarget){
+                pathingPower = getFullPathingPower(robotPositionVector, heading);
+            }else {
+                correctivePower = getCorrectivePowerAtEnd(robotPositionVector, targetPoint, heading);
+                pathingPower = new PathingPower(0,0);
+            }
+
+            vertical = correctivePower.getVertical() + pathingPower.getVertical();
+            horizontal = correctivePower.getHorizontal() + pathingPower.getHorizontal();
+
+            pivot = getTurnPower(targetHeading, heading);
+
+            time = getCorrective.milliseconds();
+
+            TelemetryPacket packet = new TelemetryPacket();
+            packet.put("X", X);
+            packet.put("Y", Y);
+            dashboard.sendTelemetryPacket(packet);
+
+            dashboardTelemetry.addData("time", loopTime);
+            dashboardTelemetry.update();
+
+            double denominator = Math.max(Math.abs(vertical) + Math.abs(horizontal) + Math.abs(pivot), 1);
+
+            double left_Front = (vertical + horizontal + pivot) / denominator;
+            double left_Back = (vertical - horizontal + pivot) / denominator;
+            double right_Front = (vertical - horizontal - pivot) / denominator;
+            double right_Back = (vertical + horizontal - pivot) / denominator;
+
+        }while(!reachedTarget);
 
     }
 
