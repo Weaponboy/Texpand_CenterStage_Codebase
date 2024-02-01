@@ -122,16 +122,16 @@ public class Blue_Right_Preload extends LinearOpMode implements Auto_Methods{
             elapsedTime.reset();
 
             counter = 0;
-
-            while (!reset){
-
-                sensors.getDetections();
-
-                odometry.update();
-
-                resetOdo();
-
-            }
+//
+//            while (!reset){
+//
+//                sensors.getDetections();
+//
+//                odometry.update();
+//
+//                resetOdo();
+//
+//            }
 
 //            Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
 //
@@ -184,6 +184,7 @@ public class Blue_Right_Preload extends LinearOpMode implements Auto_Methods{
             dropYellowPixel();
 
         }
+
         while (opModeIsActive()){
             odometry.update();
 
@@ -192,6 +193,7 @@ public class Blue_Right_Preload extends LinearOpMode implements Auto_Methods{
             telemetry.addData("heading", odometry.heading);
             telemetry.update();
         }
+
     }
 
     private void initialize(){
