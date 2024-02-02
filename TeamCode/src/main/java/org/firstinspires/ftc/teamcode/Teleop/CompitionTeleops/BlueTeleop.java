@@ -81,14 +81,10 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
     int snapPos;
 
-    public static Vector2D targetPoint = new Vector2D();
-
     ElapsedTime elapsedTime = new ElapsedTime();
 
     ElapsedTime closeRight = new ElapsedTime();
     ElapsedTime closeLeft = new ElapsedTime();
-
-    int resetCounter = 0;
 
     List<LynxModule> allHubs;
 
@@ -124,7 +120,6 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
         /**drive code*/
 
-
         if (gamepad1.dpad_left){
             headingLock = true;
         } else if (gamepad1.dpad_right) {
@@ -135,7 +130,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
         if(gamepad1.right_trigger > 0 && inBackboardArea){
             snapToBackboard = true;
-        } else {
+        }else {
             snapToBackboard = false;
         }
 
@@ -144,7 +139,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         }
 
         if(firstSnap){
-            snapPos = findClosestPosRed(robotPos);
+            snapPos = findClosestPosBlue(robotPos);
             firstSnap = false;
         }
 

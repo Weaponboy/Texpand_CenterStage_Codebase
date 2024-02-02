@@ -17,7 +17,6 @@ public interface TeleopPathing {
     Vector2D twoRightRed = new Vector2D(getRealCoords(305), getRealCoords(285));
     Vector2D threeRightRed = new Vector2D(getRealCoords(305), getRealCoords(290));
 
-
     Vector2D threeLeftBlue = new Vector2D(getRealCoords(305), getRealCoords(70));
     Vector2D twoLeftBlue = new Vector2D(getRealCoords(305), getRealCoords(75));
     Vector2D oneLeftBlue = new Vector2D(getRealCoords(305), getRealCoords(82.5));
@@ -27,7 +26,7 @@ public interface TeleopPathing {
     Vector2D threeRightBlue = new Vector2D(getRealCoords(305), getRealCoords(110));
 
 
-    default Vector2D findClosestPosBlue(Vector2D robotPos){
+    default int findClosestPosBlue(Vector2D robotPos){
 
         ArrayList<Vector2D> sectionToLook = new ArrayList<>();
 
@@ -57,7 +56,7 @@ public interface TeleopPathing {
 
         }
 
-        return sectionToLook.get(index);
+        return index+1;
     }
 
     default int findClosestPosRed(Vector2D robotPos){
@@ -86,7 +85,6 @@ public interface TeleopPathing {
             if (distance < minDistance) {
                 minDistance = distance;
                 index = sectionToLook.indexOf(pos);
-                targetPoint.set(pos.getX(), pos.getY());
             }
 
         }
