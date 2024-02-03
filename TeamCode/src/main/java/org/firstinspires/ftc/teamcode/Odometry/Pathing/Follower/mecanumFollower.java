@@ -634,9 +634,9 @@ public class mecanumFollower {
 
             RobotLog.d("loop time: " + loopTime);
 
-            dashboardTelemetry.addData("time", time);
-            dashboardTelemetry.addData("loop time", loopTime);
-            dashboardTelemetry.update();
+//            dashboardTelemetry.addData("time", time);
+//            dashboardTelemetry.addData("loop time", loopTime);
+//            dashboardTelemetry.update();
 
         }while(!reachedTarget);
 

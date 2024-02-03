@@ -30,10 +30,6 @@ public class Blue_Right_Preload extends LinearOpMode implements Auto_Methods{
 
     public VisionPortal portal;
 
-    AprilTagProcessor aprilTag = null;
-
-    org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount propDetectionByAmount = new propDetectionByAmount(telemetry, org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount.Side.left, org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount.color.blue);
-
     /**hardware objects*/
     Odometry odometry = new Odometry(90, 23, 270);
 
@@ -70,6 +66,8 @@ public class Blue_Right_Preload extends LinearOpMode implements Auto_Methods{
         waitForStart();
 
         sensors.portal.setProcessorEnabled(sensors.propDetectionByAmount, false);
+
+        telemetry.update();
 
         if (propPos == 1){
 
@@ -132,7 +130,7 @@ public class Blue_Right_Preload extends LinearOpMode implements Auto_Methods{
 //                resetOdo();
 //
 //            }
-
+//
 //            Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
 //
 //            lastToBackboard.buildPathLine(startPos, new Vector2D(306, 100));
@@ -186,12 +184,14 @@ public class Blue_Right_Preload extends LinearOpMode implements Auto_Methods{
         }
 
         while (opModeIsActive()){
+
             odometry.update();
 
-            telemetry.addData("X", odometry.X);
-            telemetry.addData("Y", odometry.Y);
+            telemetry.addData("x", odometry.X);
+            telemetry.addData("y", odometry.Y);
             telemetry.addData("heading", odometry.heading);
             telemetry.update();
+
         }
 
     }
@@ -258,12 +258,12 @@ public class Blue_Right_Preload extends LinearOpMode implements Auto_Methods{
                     reset = true;
                 }
 
-                telemetry.addData("rightTag.ftcPose.yaw", Math.toDegrees(sensors.rightTag.ftcPose.yaw));
-                telemetry.addData("rightTag.ftcPose.y", sensors.rightTag.ftcPose.y);
-                telemetry.addData("realNewX", sensors.rightTag.ftcPose.x);
-                telemetry.addData("X reset pos", newPosition.getX());
-                telemetry.addData("Y reset pos", newPosition.getY());
-                telemetry.update();
+//                telemetry.addData("rightTag.ftcPose.yaw", Math.toDegrees(sensors.rightTag.ftcPose.yaw));
+//                telemetry.addData("rightTag.ftcPose.y", sensors.rightTag.ftcPose.y);
+//                telemetry.addData("realNewX", sensors.rightTag.ftcPose.x);
+//                telemetry.addData("X reset pos", newPosition.getX());
+//                telemetry.addData("Y reset pos", newPosition.getY());
+//                telemetry.update();
 
             }
         }
