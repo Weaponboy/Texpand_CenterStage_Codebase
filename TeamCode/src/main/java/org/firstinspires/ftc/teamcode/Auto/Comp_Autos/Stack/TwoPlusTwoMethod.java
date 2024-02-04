@@ -95,22 +95,27 @@ public interface TwoPlusTwoMethod extends Auto_Methods {
         collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
         collection.updateIntakeHeight();
 
-        boolean abortAndTry = false;
-        boolean gotBoth = false;
+//        boolean abortAndTry = false;
+//        boolean gotBoth = false;
+//
+//        while (!gotBoth && !abortAndTry){
+//
+//            gotBoth = sensors.LeftClawSensor.isPressed() && sensors.RightClawSensor.isPressed();
+//
+//            if (gotBoth){
+//                delivery.setRightGripperState(Delivery.rightGripperState.closed);
+//            }
+//
+////            if (autoTimer.milliseconds() > 26000){
+////                abortAndTry = true;
+////            }
+//
+//        }
 
-        while (!gotBoth && !abortAndTry){
+        sleep(2000);
 
-            gotBoth = sensors.LeftClawSensor.isPressed() && sensors.RightClawSensor.isPressed();
-
-            if (gotBoth){
-                delivery.setRightGripperState(Delivery.rightGripperState.closed);
-            }
-
-            if (autoTimer.milliseconds() > 26000){
-                abortAndTry = true;
-            }
-
-        }
+        delivery.setRightGripperState(Delivery.rightGripperState.closed);
+        delivery.updateGrippers();
 
         collection.setState(Collection.intakePowerState.reversed);
         collection.updateIntakeState();
