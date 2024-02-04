@@ -120,19 +120,6 @@ public class Odometry {
     ElapsedTime resetHeading = new ElapsedTime();
 
     public void update(){
-        
-        YawAngle = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        botHeading = -YawAngle.firstAngle;
-
-        botHeading += getCorrectStartHeading(startHeading);
-
-        if (botHeading <= 0) {
-            ConvertedHeadingForPosition = (360 + botHeading);
-        } else {
-            ConvertedHeadingForPosition = (0 + botHeading);
-        }
-
-        heading = ConvertedHeadingForPosition;
 
         oldCenterPod = currentCenterPod;
         oldLeftPod = currentLeftPod;
@@ -146,47 +133,26 @@ public class Odometry {
         int dn2 = currentRightPod - oldRightPod;
         int dn3 = currentCenterPod - oldCenterPod;
 
-        dtheta = cm_per_tick * ((dn2-dn1) / trackwidth);
+        //(rpD-lpD)/trackwidth
+        dtheta = Math.toDegrees(cm_per_tick * ((dn1-dn2) / trackwidth));
         dx = cm_per_tick * (dn1+dn2)/2.0;
         dy = cm_per_tick * (dn3 - (dn2-dn1) * centerPodOffset / trackwidth);
 
         double theta = heading + (dtheta / 2.0);
-        X += dx * Math.cos(Math.toRadians(ConvertedHeadingForPosition)) - dy * Math.sin(Math.toRadians(ConvertedHeadingForPosition));
-        Y += dx * Math.sin(Math.toRadians(ConvertedHeadingForPosition)) + dy * Math.cos(Math.toRadians(ConvertedHeadingForPosition));
+        X += dx * Math.cos(Math.toRadians(theta)) - dy * Math.sin(Math.toRadians(theta));
+        Y += dx * Math.sin(Math.toRadians(theta)) + dy * Math.cos(Math.toRadians(theta));
         heading += dtheta;
 
-//        oldCenterPod = currentCenterPod;
-//        oldLeftPod = currentLeftPod;
-//        oldRightPod = currentRightPod;
-//
-//        currentCenterPod = -centerPod.getCurrentPosition();
-//        currentLeftPod = -leftPod.getCurrentPosition();
-//        currentRightPod = rightPod.getCurrentPosition();
-//
-//        int dn1 = currentLeftPod - oldLeftPod;
-//        int dn2 = currentRightPod - oldRightPod;
-//        int dn3 = currentCenterPod - oldCenterPod;
-//
-//        //(rpD-lpD)/trackwidth
-//        dtheta = Math.toDegrees(cm_per_tick * ((dn1-dn2) / trackwidth));
-//        dx = cm_per_tick * (dn1+dn2)/2.0;
-//        dy = cm_per_tick * (dn3 - (dn2-dn1) * centerPodOffset / trackwidth);
-//
-//        double theta = heading + (dtheta / 2.0);
-//        X += dx * Math.cos(Math.toRadians(theta)) - dy * Math.sin(Math.toRadians(theta));
-//        Y += dx * Math.sin(Math.toRadians(theta)) + dy * Math.cos(Math.toRadians(theta));
-//        heading += dtheta;
-//
-//        if (heading > 360) {
-//            heading = heading - 360;
-//        } else if (heading < 0){
-//            heading = heading + 360;
-//        }
-//
-//        if (resetHeading.milliseconds() > 1000){
-//            reset(getIMUHeading());
-//            resetHeading.reset();
-//        }
+        if (heading > 360) {
+            heading = heading - 360;
+        } else if (heading < 0){
+            heading = heading + 360;
+        }
+
+        if (resetHeading.milliseconds() > 1000){
+            reset(getIMUHeading());
+            resetHeading.reset();
+        }
 
     }
 
