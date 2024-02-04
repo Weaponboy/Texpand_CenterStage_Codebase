@@ -70,7 +70,7 @@ public interface Auto_Methods {
 
         deliverySlides.DeliverySlides(0, -0.6);
 
-        sleep(500);
+        sleep(800);
 
         collection.setIntakeHeight(Collection.intakeHeightState.stowed);
         collection.updateIntakeHeight();
