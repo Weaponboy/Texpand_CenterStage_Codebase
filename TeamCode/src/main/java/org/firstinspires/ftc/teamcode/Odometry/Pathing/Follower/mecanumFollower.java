@@ -606,7 +606,7 @@ public class mecanumFollower {
                 hub.clearBulkCache();
             }
 
-            odometry.update();
+            odometry.updateIMU();
 
             robotPositionVector.set(odometry.X, odometry.Y);
 

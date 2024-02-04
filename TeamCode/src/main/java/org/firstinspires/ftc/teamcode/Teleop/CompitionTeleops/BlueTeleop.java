@@ -529,8 +529,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
             resetOdo();
         }
 
-        odometry.update();
-        odometryArc.updateArc();
+        odometry.updateIMU();
 
         //update collection state
         collection.updateIntakeHeight();
@@ -545,9 +544,6 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         telemetry.addData("X", odometry.X);
         telemetry.addData("Y", odometry.Y);
         telemetry.addData("heading", odometry.heading);
-        telemetry.addData("X arc", odometryArc.X);
-        telemetry.addData("Y arc", odometryArc.Y);
-        telemetry.addData("heading arc", odometryArc.heading);
         telemetry.addData("loop time", loopTime);
         telemetry.update();
 
