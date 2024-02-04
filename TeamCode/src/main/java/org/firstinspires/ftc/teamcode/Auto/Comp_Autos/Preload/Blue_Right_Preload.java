@@ -117,6 +117,18 @@ public class Blue_Right_Preload extends LinearOpMode implements Auto_Methods{
             elapsedTime.reset();
 
             counter = 0;
+
+            while (opModeIsActive()){
+
+                odometry.update();
+
+                telemetry.addData("X", odometry.X);
+                telemetry.addData("Y", odometry.Y);
+                telemetry.addData("heading", odometry.heading);
+                telemetry.update();
+
+            }
+
 //
 //            while (!reset){
 //
@@ -177,17 +189,6 @@ public class Blue_Right_Preload extends LinearOpMode implements Auto_Methods{
             follower.followPath(180, odometry, drive, "yes");
 
             dropYellowPixel();
-
-        }
-
-        while (opModeIsActive()){
-
-            odometry.update();
-
-            telemetry.addData("x", odometry.X);
-            telemetry.addData("y", odometry.Y);
-            telemetry.addData("heading", odometry.heading);
-            telemetry.update();
 
         }
 
