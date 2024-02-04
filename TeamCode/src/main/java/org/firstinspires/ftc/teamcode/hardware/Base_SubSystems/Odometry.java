@@ -121,11 +121,6 @@ public class Odometry {
 
     public void update(){
 
-        if (resetHeading.milliseconds() > 500){
-            reset(getIMUHeading());
-            resetHeading.reset();
-        }
-
         oldCenterPod = currentCenterPod;
         oldLeftPod = currentLeftPod;
         oldRightPod = currentRightPod;
@@ -152,6 +147,11 @@ public class Odometry {
             heading = heading - 360;
         } else if (heading < 0){
             heading = heading + 360;
+        }
+
+        if (resetHeading.milliseconds() > 1000){
+            reset(getIMUHeading());
+            resetHeading.reset();
         }
 
     }
@@ -273,6 +273,8 @@ public class Odometry {
     }
 
     public void init(HardwareMap hardwareMap2){
+
+        resetHeading.reset();
 
         hardwareMap = hardwareMap2;
 
