@@ -92,7 +92,7 @@ public interface TwoPlusTwoMethod extends Auto_Methods {
 
         sensors.init(hardwareMap);
 
-        collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
+        collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
         collection.updateIntakeHeight();
 
 //        boolean abortAndTry = false;
@@ -114,8 +114,10 @@ public interface TwoPlusTwoMethod extends Auto_Methods {
 
         sleep(2000);
 
-        delivery.setRightGripperState(Delivery.rightGripperState.closed);
+        delivery.setGripperState(Delivery.GripperState.closed);
         delivery.updateGrippers();
+
+        sleep(200);
 
         collection.setState(Collection.intakePowerState.reversed);
         collection.updateIntakeState();
