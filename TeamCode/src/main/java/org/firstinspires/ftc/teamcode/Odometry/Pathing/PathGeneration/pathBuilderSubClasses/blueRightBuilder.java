@@ -112,32 +112,10 @@ public class blueRightBuilder extends pathBuilderMain implements Blue_Points_Ove
                 }
                 break;
             case collect:
-                switch (propPosition) {
-                    case left:
-                        firstPositionCollect();
-                        break;
-                    case right:
-                        thirdPositionCollect();
-                        break;
-                    case center:
-                        secondPositionCollect();
-                        break;
-                    default:
-                }
+                Collect();
                 break;
             case deliver:
-                switch (propPosition) {
-                    case left:
-                        firstPositionDeliver();
-                        break;
-                    case right:
-                        secondPositionDeliver();
-                        break;
-                    case center:
-                        thirdPositionDeliver();
-                        break;
-                    default:
-                }
+                Deliver();
                 break;
             default:
         }
@@ -181,32 +159,10 @@ public class blueRightBuilder extends pathBuilderMain implements Blue_Points_Ove
                 }
                 break;
             case collect:
-                switch (propPosition) {
-                    case left:
-                        firstPositionCollect();
-                        break;
-                    case right:
-                        thirdPositionCollect();
-                        break;
-                    case center:
-                        secondPositionCollect();
-                        break;
-                    default:
-                }
+                Collect();
                 break;
             case deliver:
-                switch (propPosition) {
-                    case left:
-                        firstPositionDeliver();
-                        break;
-                    case right:
-                        thirdPositionDeliver();
-                        break;
-                    case center:
-                        secondPositionDeliver();
-                        break;
-                    default:
-                }
+                Deliver();
                 break;
             default:
         }
@@ -248,7 +204,7 @@ public class blueRightBuilder extends pathBuilderMain implements Blue_Points_Ove
     }
 
     /**First Position*/
-    private void firstPositionCollect(){
+    private void Collect(){
 
         buildCurveSegment(CS1F, CC1F, CE1F);
 
@@ -257,7 +213,7 @@ public class blueRightBuilder extends pathBuilderMain implements Blue_Points_Ove
     }
 
     /**First Position*/
-    private void firstPositionDeliver(){
+    private void Deliver(){
 
         buildCurveSegment(DS1F, DC1F, DE1F);
 
@@ -285,23 +241,6 @@ public class blueRightBuilder extends pathBuilderMain implements Blue_Points_Ove
 
     /**second Position*/
 
-    /**third Position*/
-    private void secondPositionCollect(){
-
-        buildCurveSegment(CS1S, CC1S, CE1S);
-
-        buildCurveSegment(CS2S, CC2S, CE2S);
-
-    }
-
-    /**third Position*/
-    private void secondPositionDeliver(){
-
-        buildCurveSegment(DS1S, DC1S, DE1S);
-
-        buildCurveSegment(DS2S, DC2S, DE2S);
-
-    }
 
     /**
      * third Position
@@ -321,24 +260,6 @@ public class blueRightBuilder extends pathBuilderMain implements Blue_Points_Ove
         buildCurveSegment(DYS2T, DYC2T, DYE2T);
 
         buildCurveSegment(DYS3T, DYC3T, DYE3T);
-
-    }
-
-    /**third Position*/
-    private void thirdPositionCollect(){
-
-        buildCurveSegment(CS1T, CC1T, CE1T);
-
-        buildCurveSegment(CS2T, CC2T, CE2T);
-
-    }
-
-    /**third Position*/
-    private void thirdPositionDeliver(){
-
-        buildCurveSegment(DS1T, DC1T, DE1T);
-
-        buildCurveSegment(DS2T, DC2T, DE2T);
 
     }
 
