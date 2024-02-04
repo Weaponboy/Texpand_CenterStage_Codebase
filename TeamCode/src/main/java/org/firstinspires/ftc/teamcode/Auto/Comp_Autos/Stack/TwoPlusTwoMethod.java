@@ -118,7 +118,7 @@ public interface TwoPlusTwoMethod extends Auto_Methods {
         delivery.setGripperState(Delivery.GripperState.closed);
         delivery.updateGrippers();
 
-        sleep(200);
+        sleep(500);
 
         collection.setState(Collection.intakePowerState.reversed);
         collection.updateIntakeState();
