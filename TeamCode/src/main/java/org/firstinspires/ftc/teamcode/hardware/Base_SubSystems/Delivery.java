@@ -359,6 +359,8 @@ public class Delivery {
 
                 setMainPivot(collectTopPivotPos);
 
+                setClaws(clawClosed);
+
                 RotateClaw.setPosition(rotateCollect);
 
                 break;
@@ -470,10 +472,6 @@ public class Delivery {
                 intermediateMoving = false;
             }
 
-            if (CollectionMoving && pivotMoveTimeCollection.milliseconds() >= (timeToWaitCollection/2)){
-                setClaws(clawClosed);
-                setGripperState(GripperState.closed);
-            }
 
 
             if (CollectionMoving && pivotMoveTimeCollection.milliseconds() >= timeToWaitCollection) {
