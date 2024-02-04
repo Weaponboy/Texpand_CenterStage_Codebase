@@ -20,6 +20,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -116,7 +117,14 @@ public class Odometry {
     double yI = 0;
     double xI = 0;
 
+    ElapsedTime resetHeading = new ElapsedTime();
+
     public void update(){
+
+        if (resetHeading.milliseconds() > 500){
+            reset(getIMUHeading());
+            resetHeading.reset();
+        }
 
         oldCenterPod = currentCenterPod;
         oldLeftPod = currentLeftPod;
