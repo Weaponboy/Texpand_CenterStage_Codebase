@@ -88,12 +88,13 @@ public interface TwoPlusTwoMethod extends Auto_Methods {
 
     }
 
-    default void collectPixels(HardwareMap hardwareMap) throws InterruptedException {
-
-        sensors.init(hardwareMap);
+    default void collectPixels() throws InterruptedException {
 
         collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
         collection.updateIntakeHeight();
+
+        collection.setState(Collection.intakePowerState.on);
+        collection.updateIntakeState();
 
 //        boolean abortAndTry = false;
 //        boolean gotBoth = false;
@@ -122,7 +123,7 @@ public interface TwoPlusTwoMethod extends Auto_Methods {
         collection.setState(Collection.intakePowerState.reversed);
         collection.updateIntakeState();
 
-        sleep(200);
+        sleep(100);
 
         collection.setState(Collection.intakePowerState.off);
         collection.updateIntakeState();

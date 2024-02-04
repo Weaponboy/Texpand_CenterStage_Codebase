@@ -482,7 +482,7 @@ public class mecanumFollower {
 
         do {
 
-            if (Math.abs(pointToTurnOn.getX() - odometry.X) < 10 && Math.abs(pointToTurnOn.getY() - odometry.Y) < 10){
+            if (Math.abs(pointToTurnOn.getX() - odometry.X) < 20 && Math.abs(pointToTurnOn.getY() - odometry.Y) < 20){
                 collection.setState(Collection.intakePowerState.on);
                 collection.updateIntakeState();
             }

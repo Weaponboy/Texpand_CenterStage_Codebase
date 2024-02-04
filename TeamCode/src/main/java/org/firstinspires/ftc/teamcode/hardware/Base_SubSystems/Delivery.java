@@ -407,18 +407,6 @@ public class Delivery {
 
                 double distance = sensors.backBoard.getDistance(DistanceUnit.CM);
 
-                if (distance < mindistancemm){
-                    distance = sensors.backBoard.getDistance(DistanceUnit.CM);
-                }
-
-                if (distance < mindistancemm){
-                    distance = sensors.backBoard.getDistance(DistanceUnit.CM);
-                }
-
-                if (distance < mindistancemm){
-                    distance = sensors.backBoard.getDistance(DistanceUnit.CM);
-                }
-
                 if(distance > mindistancemm && distance < maxdistancemm){
                     mainPivotOffSet = 0.174 + (( distance - mindistancemm) * mainservopospermm);
                 }

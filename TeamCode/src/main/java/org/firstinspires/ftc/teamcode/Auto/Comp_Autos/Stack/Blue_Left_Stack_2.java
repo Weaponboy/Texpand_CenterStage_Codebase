@@ -80,7 +80,7 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements TwoPlusTwoMethod 
 
             follower.followPath(180, odometry, drive, collection, new Vector2D(125, 180));
 
-            collectPixels(hardwareMap);
+            collectPixels();
 
             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
@@ -127,7 +127,7 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements TwoPlusTwoMethod 
 
             follower.followPath(180, odometry, drive, collection, new Vector2D(125, 180));
 
-            collectPixels(hardwareMap);
+            collectPixels();
 
             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
@@ -180,7 +180,7 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements TwoPlusTwoMethod 
 
             follower.followPath(180, odometry, drive, collection, new Vector2D(125, 180));
 
-            collectPixels(hardwareMap);
+            collectPixels();
 
             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
