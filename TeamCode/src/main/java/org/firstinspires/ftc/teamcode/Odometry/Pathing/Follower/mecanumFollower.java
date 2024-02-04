@@ -473,8 +473,6 @@ public class mecanumFollower {
 
         Vector2D targetPoint = pathfollow.getPointOnFollowable(pathfollow.getLastPoint());
 
-        int lastIndex = pathfollow.getLastPoint();
-
         boolean reachedTarget = false;
 
         boolean closeToTarget = false;
@@ -484,16 +482,16 @@ public class mecanumFollower {
 
         do {
 
-            odometry.update();
-
-            robotPositionVector.set(odometry.X, odometry.Y);
-
             if (Math.abs(pointToTurnOn.getX() - odometry.X) < 10 && Math.abs(pointToTurnOn.getY() - odometry.Y) < 10){
                 collection.setState(Collection.intakePowerState.on);
                 collection.updateIntakeState();
             }
 
-            if (Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 1.2 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 1.2 && odometry.getVerticalVelocity() < 3 && odometry.getHorizontalVelocity() < 3){
+            odometry.update();
+
+            robotPositionVector.set(odometry.X, odometry.Y);
+
+            if (Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 1.4 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 1.4 && Math.abs(odometry.getVerticalVelocity()) < 3 && Math.abs(odometry.getHorizontalVelocity()) < 3 && Math.abs(targetHeading - odometry.heading) < 2){
                 reachedTarget = true;
             }
 
@@ -510,9 +508,6 @@ public class mecanumFollower {
             drive.RB.setPower(right_Back);
             drive.LF.setPower(left_Front);
             drive.LB.setPower(left_Back);
-
-            dashboardTelemetry.addData("close to target", closeToTarget);
-            dashboardTelemetry.update();
 
         }while(!reachedTarget);
 
@@ -606,7 +601,7 @@ public class mecanumFollower {
                 hub.clearBulkCache();
             }
 
-            odometry.updateIMU();
+            odometry.update();
 
             robotPositionVector.set(odometry.X, odometry.Y);
 

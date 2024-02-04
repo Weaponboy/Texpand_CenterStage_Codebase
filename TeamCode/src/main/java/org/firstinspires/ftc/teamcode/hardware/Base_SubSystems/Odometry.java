@@ -240,14 +240,15 @@ public class Odometry {
 
     public void update(double delta){
 
-        heading = 0;
+        YawAngle = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        botHeading = -YawAngle.firstAngle;
 
-        heading += getCorrectStartHeading(startHeading);
+        botHeading += getCorrectStartHeading(startHeading);
 
-        if (heading <= 0) {
-            ConvertedHeadingForPosition = (360 + heading);
+        if (botHeading <= 0) {
+            ConvertedHeadingForPosition = (360 + botHeading);
         } else {
-            ConvertedHeadingForPosition = (0 + heading);
+            ConvertedHeadingForPosition = (0 + botHeading);
         }
 
         heading = ConvertedHeadingForPosition;
@@ -256,19 +257,52 @@ public class Odometry {
         oldLeftPod = currentLeftPod;
         oldRightPod = currentRightPod;
 
-        currentCenterPod -= delta;
-        currentLeftPod -= delta;
-        currentRightPod += delta;
+        currentCenterPod = -centerPod.getCurrentPosition();
+        currentLeftPod = -leftPod.getCurrentPosition();
+        currentRightPod = rightPod.getCurrentPosition();
 
         int dn1 = currentLeftPod - oldLeftPod;
         int dn2 = currentRightPod - oldRightPod;
         int dn3 = currentCenterPod - oldCenterPod;
 
+        dtheta = cm_per_tick * ((dn2-dn1) / trackwidth);
         dx = cm_per_tick * (dn1+dn2)/2.0;
         dy = cm_per_tick * (dn3 - (dn2-dn1) * centerPodOffset / trackwidth);
 
-        X += dx * Math.cos(Math.toRadians(heading)) - dy * Math.sin(Math.toRadians(heading));
-        Y += dx * Math.sin(Math.toRadians(heading)) + dy * Math.cos(Math.toRadians(heading));
+        double theta = heading + (dtheta / 2.0);
+        X += dx * Math.cos(Math.toRadians(ConvertedHeadingForPosition)) - dy * Math.sin(Math.toRadians(ConvertedHeadingForPosition));
+        Y += dx * Math.sin(Math.toRadians(ConvertedHeadingForPosition)) + dy * Math.cos(Math.toRadians(ConvertedHeadingForPosition));
+        heading += dtheta;
+//
+//        heading = 0;
+//
+//        heading += getCorrectStartHeading(startHeading);
+//
+//        if (heading <= 0) {
+//            ConvertedHeadingForPosition = (360 + heading);
+//        } else {
+//            ConvertedHeadingForPosition = (0 + heading);
+//        }
+//
+//        heading = ConvertedHeadingForPosition;
+//
+//        oldCenterPod = currentCenterPod;
+//        oldLeftPod = currentLeftPod;
+//        oldRightPod = currentRightPod;
+//
+//        currentCenterPod -= delta;
+//        currentLeftPod -= delta;
+//        currentRightPod += delta;
+//
+//        int dn1 = currentLeftPod - oldLeftPod;
+//        int dn2 = currentRightPod - oldRightPod;
+//        int dn3 = currentCenterPod - oldCenterPod;
+//
+//        dx = cm_per_tick * (dn1+dn2)/2.0;
+//        dy = cm_per_tick * (dn3 - (dn2-dn1) * centerPodOffset / trackwidth);
+//
+//        X += dx * Math.cos(Math.toRadians(heading)) - dy * Math.sin(Math.toRadians(heading));
+//        Y += dx * Math.sin(Math.toRadians(heading)) + dy * Math.cos(Math.toRadians(heading));
 
     }
 

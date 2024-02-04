@@ -80,6 +80,23 @@ public class blueLeftBuilder extends pathBuilderMain implements Blue_Points_Over
 
     }
 
+    public void buildPath(Section section){
+
+        switch (section) {
+            case collect:
+                Collect();
+                break;
+            case deliver:
+                Deliver();
+                break;
+            default:
+        }
+
+        pathBuilder(originalPath);
+
+        motionProfile();
+    }
+
     public void buildPath(Position propPosition, Section section){
 
         switch (section) {
@@ -98,32 +115,10 @@ public class blueLeftBuilder extends pathBuilderMain implements Blue_Points_Over
                 }
                 break;
             case collect:
-                switch (propPosition) {
-                    case left:
-                        firstPositionCollect();
-                        break;
-                    case right:
-                        thirdPositionCollect();
-                        break;
-                    case center:
-                        secondPositionCollect();
-                        break;
-                    default:
-                }
+                Collect();
                 break;
             case deliver:
-                switch (propPosition) {
-                    case left:
-                        firstPositionDeliver();
-                        break;
-                    case right:
-                        thirdPositionDeliver();
-                        break;
-                    case center:
-                        secondPositionDeliver();
-                        break;
-                    default:
-                }
+                Deliver();
                 break;
             default:
         }
@@ -159,32 +154,10 @@ public class blueLeftBuilder extends pathBuilderMain implements Blue_Points_Over
                 }
                 break;
             case collect:
-                switch (propPosition) {
-                    case left:
-                        firstPositionCollect();
-                        break;
-                    case right:
-                        thirdPositionCollect();
-                        break;
-                    case center:
-                        secondPositionCollect();
-                        break;
-                    default:
-                }
+                Collect();
                 break;
             case deliver:
-                switch (propPosition) {
-                    case left:
-                        firstPositionDeliver();
-                        break;
-                    case right:
-                        thirdPositionDeliver();
-                        break;
-                    case center:
-                        secondPositionDeliver();
-                        break;
-                    default:
-                }
+                Deliver();
                 break;
             default:
         }
@@ -206,7 +179,7 @@ public class blueLeftBuilder extends pathBuilderMain implements Blue_Points_Over
     }
 
     /**First Position*/
-    private void firstPositionCollect(){
+    private void Collect(){
 
         buildCurveSegment(CS1F, CC1F, CE1F);
 
@@ -214,7 +187,7 @@ public class blueLeftBuilder extends pathBuilderMain implements Blue_Points_Over
 
     }
 
-    private void firstPositionDeliver(){
+    private void Deliver(){
 
         buildCurveSegment(DS1F, DC1F, DE1F);
 
@@ -230,24 +203,6 @@ public class blueLeftBuilder extends pathBuilderMain implements Blue_Points_Over
 
         // drop yellow pixel
         buildCurveSegment(DYS1S, DYC1S, DYE1S);
-
-    }
-
-    /**second Position*/
-    private void secondPositionCollect(){
-
-        buildCurveSegment(CS1S, CC1S, CE1S);
-
-        buildCurveSegment(CS2S, CC2S, CE2S);
-
-    }
-
-    /**third Position*/
-    private void secondPositionDeliver(){
-
-        buildCurveSegment(DS1S, DC1S, DE1S);
-
-        buildCurveSegment(DS2S, DC2S, DE2S);
 
     }
 
@@ -267,22 +222,5 @@ public class blueLeftBuilder extends pathBuilderMain implements Blue_Points_Over
 
     }
 
-    /**third Position*/
-    private void thirdPositionCollect(){
-
-        buildCurveSegment(CS1T, CC1T, CE1T);
-
-        buildCurveSegment(CS2T, CC2T, CE2T);
-
-    }
-
-    /**third Position*/
-    private void thirdPositionDeliver(){
-
-        buildCurveSegment(DS1T, DC1T, DE1T);
-
-        buildCurveSegment(DS2T, DC2T, DE2T);
-
-    }
 
 }

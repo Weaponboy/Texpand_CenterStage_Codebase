@@ -13,7 +13,6 @@ import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilde
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.redLeftBuilder;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry;
-import org.firstinspires.ftc.teamcode.hardware.Method_Interfaces.Auto_Methods;
 
 @Autonomous(name = "Red_Left_Preload", group = "Preload")
 /**start red right*/

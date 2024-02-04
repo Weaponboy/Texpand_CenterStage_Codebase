@@ -1,9 +1,10 @@
-package org.firstinspires.ftc.teamcode.hardware.Method_Interfaces;
+package org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Preload;
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.UsefulMethods.getRealCoords;
 import static java.lang.Thread.sleep;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Collection;
@@ -24,6 +25,8 @@ public interface Auto_Methods {
     Collection collection = new Collection();
 
     Sensors sensors = new Sensors();
+
+    ElapsedTime autoTimer = new ElapsedTime();
 
     default void init(HardwareMap hardwareMap){
         delivery.init(hardwareMap);
@@ -73,62 +76,6 @@ public interface Auto_Methods {
         collection.updateIntakeHeight();
 
     }
-
-    default void dropWhitePixels() throws InterruptedException {
-
-        collection.setIntakeHeight(Collection.intakeHeightState.letClawThrough);
-        collection.updateIntakeHeight();
-
-        sleep(200);
-
-        deliverySlides.DeliverySlides(700, 0.6);
-
-        while (deliverySlides.getCurrentposition() < 680){
-
-            if (deliverySlides.getCurrentposition() > 150){
-                delivery.setArmTargetState(Delivery.armState.delivery);
-                delivery.updateArm(deliverySlides.getCurrentposition());
-            }
-
-        }
-
-        boolean armInPosition = false;
-
-        while (!armInPosition){
-
-            switch (delivery.getArmState()){
-                case delivery:
-                    armInPosition = true;
-                    break;
-                default:
-            }
-
-            delivery.updateArm(deliverySlides.getCurrentposition());
-        }
-
-        sleep(200);
-
-        delivery.setGripperState(Delivery.GripperState.closed);
-        delivery.updateGrippers();
-
-        sleep(500);
-
-        delivery.setArmTargetState(Delivery.armState.collect);
-        delivery.updateArm(deliverySlides.getCurrentposition());
-
-        sleep(100);
-
-        deliverySlides.DeliverySlides(0, -0.6);
-
-        while (deliverySlides.getCurrentposition() > 100){
-            //wait
-        }
-
-        collection.setIntakeHeight(Collection.intakeHeightState.stowed);
-        collection.updateIntakeHeight();
-
-    }
-
 
     default Vector2D getDetections(AprilTagProcessor aprilTag) {
 

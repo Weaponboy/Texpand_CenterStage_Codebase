@@ -14,12 +14,12 @@ import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilde
 import org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry;
-import org.firstinspires.ftc.teamcode.hardware.Method_Interfaces.Auto_Methods;
+import org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Preload.Auto_Methods;
 import org.firstinspires.ftc.vision.VisionPortal;
 
 @Autonomous(name = "Blue_Left_Stack+2", group = "Stack 2+2")
 /**start red right*/
-public class Blue_Left_Stack_2 extends LinearOpMode implements Auto_Methods {
+public class Blue_Left_Stack_2 extends LinearOpMode implements TwoPlusTwoMethod {
 
     public WebcamName frontCam;
 
@@ -37,7 +37,9 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements Auto_Methods {
 
     blueLeftBuilder secondPath = new blueLeftBuilder();
 
-    blueLeftBuilder thirdPath = new blueLeftBuilder();
+    blueLeftBuilder collect = new blueLeftBuilder();
+
+    blueLeftBuilder deliver = new blueLeftBuilder();
 
     blueRightBuilder lastToBackboard = new blueRightBuilder();
 
@@ -62,15 +64,35 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements Auto_Methods {
 
             odometry.update();
 
-            Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
-
             dropYellowPixel();
 
-            lastToBackboard.buildPathLine(startPos, new Vector2D(290, 30));
+            collect.buildPath(blueLeftBuilder.Section.collect);
 
-            follower.setPath(lastToBackboard.followablePath, lastToBackboard.pathingVelocity);
+            deliver.buildPath(blueLeftBuilder.Section.deliver);
 
-            follower.followPath(180, odometry, drive, "yes");
+            follower.setPath(collect.followablePath, collect.pathingVelocity);
+
+            follower.followPath(180, odometry, drive, collection, new Vector2D(125, 180));
+
+            collectPixels(hardwareMap);
+
+            follower.setPath(deliver.followablePath, deliver.pathingVelocity);
+
+            follower.followPath(180, odometry, drive, collection, new Vector2D(125, 180));
+
+            deployArm();
+
+            dropPixels();
+
+            retract();
+
+//            Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
+//
+//            lastToBackboard.buildPathLine(startPos, new Vector2D(290, 30));
+//
+//            follower.setPath(lastToBackboard.followablePath, lastToBackboard.pathingVelocity);
+//
+//            follower.followPath(180, odometry, drive, "yes");
 
         } else if (propPos == 2) {
 
@@ -86,15 +108,35 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements Auto_Methods {
 
             odometry.update();
 
-            Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
-
             dropYellowPixel();
 
-            lastToBackboard.buildPathLine(startPos, new Vector2D(290, 30));
+            collect.buildPath(blueLeftBuilder.Section.collect);
 
-            follower.setPath(lastToBackboard.followablePath, lastToBackboard.pathingVelocity);
+            deliver.buildPath(blueLeftBuilder.Section.deliver);
 
-            follower.followPath(180, odometry, drive, "yes");
+            follower.setPath(collect.followablePath, collect.pathingVelocity);
+
+            follower.followPath(180, odometry, drive, collection, new Vector2D(125, 180));
+
+            collectPixels(hardwareMap);
+
+            follower.setPath(deliver.followablePath, deliver.pathingVelocity);
+
+            follower.followPath(180, odometry, drive, collection, new Vector2D(125, 180));
+
+            deployArm();
+
+            dropPixels();
+
+            retract();
+
+//            Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
+//
+//            lastToBackboard.buildPathLine(startPos, new Vector2D(290, 30));
+//
+//            follower.setPath(lastToBackboard.followablePath, lastToBackboard.pathingVelocity);
+//
+//            follower.followPath(180, odometry, drive, "yes");
 
         } else if (propPos == 3) {
 
@@ -116,15 +158,35 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements Auto_Methods {
 
             odometry.update();
 
-            Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
-
             dropYellowPixel();
 
-            lastToBackboard.buildPathLine(startPos, new Vector2D(290, 30));
+            collect.buildPath(blueLeftBuilder.Section.collect);
 
-            follower.setPath(lastToBackboard.followablePath, lastToBackboard.pathingVelocity);
+            deliver.buildPath(blueLeftBuilder.Section.deliver);
 
-            follower.followPath(180, odometry, drive, "yes");
+            follower.setPath(collect.followablePath, collect.pathingVelocity);
+
+            follower.followPath(180, odometry, drive, collection, new Vector2D(125, 180));
+
+            collectPixels(hardwareMap);
+
+            follower.setPath(deliver.followablePath, deliver.pathingVelocity);
+
+            follower.followPath(180, odometry, drive, collection, new Vector2D(125, 180));
+
+            deployArm();
+
+            dropPixels();
+
+            retract();
+
+//            Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
+//
+//            lastToBackboard.buildPathLine(startPos, new Vector2D(290, 30));
+//
+//            follower.setPath(lastToBackboard.followablePath, lastToBackboard.pathingVelocity);
+//
+//            follower.followPath(180, odometry, drive, "yes");
 
         }
 

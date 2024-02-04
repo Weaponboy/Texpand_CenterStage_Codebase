@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Delivery;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Delivery_Slides;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry;
-import org.firstinspires.ftc.teamcode.hardware.Method_Interfaces.Auto_Methods;
+import org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Preload.Auto_Methods;
 import org.firstinspires.ftc.vision.VisionPortal;
 
 @Autonomous

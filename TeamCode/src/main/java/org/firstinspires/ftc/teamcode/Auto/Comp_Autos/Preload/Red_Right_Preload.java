@@ -16,7 +16,6 @@ import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilde
 import org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry;
-import org.firstinspires.ftc.teamcode.hardware.Method_Interfaces.Auto_Methods;
 import org.firstinspires.ftc.vision.VisionPortal;
 
 @Autonomous(name = "Red_Right_Preload", group = "Preload")
