@@ -73,6 +73,21 @@ public interface TwoPlusTwoMethod extends Auto_Methods {
 
     }
 
+    default void retractWait() throws InterruptedException {
+
+        delivery.setArmTargetState(Delivery.armState.collect);
+        delivery.updateArm(deliverySlides.getCurrentposition());
+
+        deliverySlides.DeliverySlides(0, -0.5);
+
+        while (deliverySlides.getCurrentposition() > 100){
+
+        }
+
+        deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
+
+    }
+
     default void collectPixels(HardwareMap hardwareMap) throws InterruptedException {
 
         sensors.init(hardwareMap);

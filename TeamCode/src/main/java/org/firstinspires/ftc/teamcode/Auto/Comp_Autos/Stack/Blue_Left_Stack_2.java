@@ -90,7 +90,7 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements TwoPlusTwoMethod 
 
             dropPixels();
 
-            retract();
+            retractWait();
 
 //            Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
 //
@@ -137,7 +137,7 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements TwoPlusTwoMethod 
 
             dropPixels();
 
-            retract();
+            retractWait();
 
 //            Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
 //
@@ -190,7 +190,7 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements TwoPlusTwoMethod 
 
             dropPixels();
 
-            retract();
+            retractWait();
 
 //            Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
 //
