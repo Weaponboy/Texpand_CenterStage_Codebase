@@ -102,8 +102,6 @@ public class Testing_Odo_Drift extends LinearOpMode implements Auto_Methods {
 
         follower.followPath(180, odometry, drive);
 
-        dropWhitePixels();
-
         while (opModeIsActive()){
 
             odometry.update();
