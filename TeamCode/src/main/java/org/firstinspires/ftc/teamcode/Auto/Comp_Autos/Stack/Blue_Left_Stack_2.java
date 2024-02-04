@@ -52,6 +52,8 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements TwoPlusTwoMethod 
 
         waitForStart();
 
+        autoTimer.reset();
+
         if (propPos == 1){
 
             portal.close();

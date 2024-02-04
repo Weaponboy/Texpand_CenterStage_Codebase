@@ -51,6 +51,8 @@ public interface TwoPlusTwoMethod extends Auto_Methods {
                 default:
             }
 
+            delivery.updateArm(deliverySlides.getCurrentposition());
+
         }
 
         delivery.setGripperState(Delivery.GripperState.open);
