@@ -108,7 +108,7 @@ public interface TwoPlusTwoMethod extends Auto_Methods {
 //
 //        }
 
-        sleep(3000);
+        sleep(500);
 
         delivery.setGripperState(Delivery.GripperState.closed);
         delivery.updateGrippers();
