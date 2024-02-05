@@ -416,9 +416,7 @@ public class Delivery {
                 targetMainPivot = deliveryTopPivot - slidesPos * servoPosPerTick + mainPivotOffSet;
 
                 setMainPivot(targetMainPivot);
-                if(targetMainPivot <= 1){
-                    setSecondPivot(deliverySecondPivot + (-slidesPos * servoPosPerTick + mainPivotOffSet) * mainToSecondConst);
-                }
+                setSecondPivot(deliverySecondPivot + (-slidesPos * servoPosPerTick + mainPivotOffSet) * mainToSecondConst);
 
                 RotateClaw.setPosition(rotateDeliver);
 

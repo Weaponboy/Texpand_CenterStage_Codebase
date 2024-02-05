@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilde
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.blueRightBuilder;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.redRightBuilder;
 import org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount;
+import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Collection;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Delivery;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry;
@@ -78,6 +79,9 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements TwoPlusTwoMethod 
             delivery.setGripperState(Delivery.GripperState.open);
             delivery.updateGrippers();
 
+            collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
+            collection.updateIntakeHeight();
+
             follower.followPath(180, odometry, drive, collection, new Vector2D(125, 180));
 
             collectPixels();
@@ -124,6 +128,9 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements TwoPlusTwoMethod 
 
             delivery.setGripperState(Delivery.GripperState.open);
             delivery.updateGrippers();
+
+            collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
+            collection.updateIntakeHeight();
 
             follower.followPath(180, odometry, drive, collection, new Vector2D(125, 180));
 
@@ -177,6 +184,9 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements TwoPlusTwoMethod 
 
             delivery.setGripperState(Delivery.GripperState.open);
             delivery.updateGrippers();
+
+            collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
+            collection.updateIntakeHeight();
 
             follower.followPath(180, odometry, drive, collection, new Vector2D(125, 180));
 

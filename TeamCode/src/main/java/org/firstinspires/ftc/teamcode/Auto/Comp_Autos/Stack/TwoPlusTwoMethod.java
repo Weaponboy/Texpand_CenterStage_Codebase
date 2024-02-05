@@ -90,9 +90,6 @@ public interface TwoPlusTwoMethod extends Auto_Methods {
 
     default void collectPixels() throws InterruptedException {
 
-        collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
-        collection.updateIntakeHeight();
-
         collection.setState(Collection.intakePowerState.on);
         collection.updateIntakeState();
 
@@ -113,7 +110,7 @@ public interface TwoPlusTwoMethod extends Auto_Methods {
 //
 //        }
 
-        sleep(2000);
+        sleep(3000);
 
         delivery.setGripperState(Delivery.GripperState.closed);
         delivery.updateGrippers();
