@@ -1,6 +1,4 @@
-package org.firstinspires.ftc.teamcode.hardware.Base_SubSystems;
-
-import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Hardware_objects.sensors;
+package org.firstinspires.ftc.teamcode.hardware._;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;

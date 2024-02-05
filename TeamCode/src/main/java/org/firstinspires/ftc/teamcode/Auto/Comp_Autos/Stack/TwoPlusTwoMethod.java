@@ -2,12 +2,10 @@ package org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Stack;
 
 import static java.lang.Thread.sleep;
 
-import com.qualcomm.robotcore.hardware.HardwareMap;
-
 import org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Preload.Auto_Methods;
-import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Collection;
-import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Delivery;
-import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Delivery_Slides;
+import org.firstinspires.ftc.teamcode.hardware._.Collection;
+import org.firstinspires.ftc.teamcode.hardware._.Delivery;
+import org.firstinspires.ftc.teamcode.hardware._.Delivery_Slides;
 
 public interface TwoPlusTwoMethod extends Auto_Methods {
 

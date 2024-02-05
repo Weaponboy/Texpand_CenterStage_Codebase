@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.hardware.Base_SubSystems;
+package org.firstinspires.ftc.teamcode.hardware._;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -23,7 +23,7 @@ public class Collection {
     double letClawThrough = 0.25;
     double firstPixel = 0;
     double secondPixel = 0.19;
-    double thirdPixel = 0.23;
+    double thirdPixel = 0.21;
     double forthPixel = 0.27;
     double fifthPixel = 0.31;
 

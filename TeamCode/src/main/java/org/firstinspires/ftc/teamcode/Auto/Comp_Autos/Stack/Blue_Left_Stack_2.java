@@ -12,11 +12,10 @@ import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilde
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.blueRightBuilder;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.redRightBuilder;
 import org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount;
-import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Collection;
-import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Delivery;
-import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Drivetrain;
-import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry;
-import org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Preload.Auto_Methods;
+import org.firstinspires.ftc.teamcode.hardware._.Collection;
+import org.firstinspires.ftc.teamcode.hardware._.Delivery;
+import org.firstinspires.ftc.teamcode.hardware._.Drivetrain;
+import org.firstinspires.ftc.teamcode.hardware._.Odometry;
 import org.firstinspires.ftc.vision.VisionPortal;
 
 @Autonomous(name = "Blue_Left_Stack+2", group = "Stack 2+2")
@@ -96,14 +95,6 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements TwoPlusTwoMethod 
 
             retractWait();
 
-//            Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
-//
-//            lastToBackboard.buildPathLine(startPos, new Vector2D(290, 30));
-//
-//            follower.setPath(lastToBackboard.followablePath, lastToBackboard.pathingVelocity);
-//
-//            follower.followPath(180, odometry, drive, "yes");
-
         } else if (propPos == 2) {
 
             portal.close();
@@ -145,14 +136,6 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements TwoPlusTwoMethod 
             dropPixels();
 
             retractWait();
-
-//            Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
-//
-//            lastToBackboard.buildPathLine(startPos, new Vector2D(290, 30));
-//
-//            follower.setPath(lastToBackboard.followablePath, lastToBackboard.pathingVelocity);
-//
-//            follower.followPath(180, odometry, drive, "yes");
 
         } else if (propPos == 3) {
 
@@ -201,14 +184,6 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements TwoPlusTwoMethod 
             dropPixels();
 
             retractWait();
-
-//            Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
-//
-//            lastToBackboard.buildPathLine(startPos, new Vector2D(290, 30));
-//
-//            follower.setPath(lastToBackboard.followablePath, lastToBackboard.pathingVelocity);
-//
-//            follower.followPath(180, odometry, drive, "yes");
 
         }
 
