@@ -533,15 +533,13 @@ public class mecanumFollower {
         xI = 0;
         yI = 0;
 
-
         do {
-
 
             odometry.update();
 
             robotPositionVector.set(odometry.X, odometry.Y);
 
-            if (Math.abs(pointForHeadingChange.getX() - odometry.X) < 10 && Math.abs(pointForHeadingChange.getY() - odometry.Y) < 10){
+            if (Math.abs(pointForHeadingChange.getX() - odometry.X) < 15 && Math.abs(pointForHeadingChange.getY() - odometry.Y) < 15){
                 targetHeading = secondHeading;
             }
 
