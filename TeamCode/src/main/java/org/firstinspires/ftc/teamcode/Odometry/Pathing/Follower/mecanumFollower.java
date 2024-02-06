@@ -359,7 +359,7 @@ public class mecanumFollower {
 
             robotPositionVector.set(odometry.X, odometry.Y);
 
-            if (odometry.X > 200 && odometry.getVerticalVelocity() > 5 && !onlyOnce){
+            if (odometry.X > 180 && odometry.getVerticalVelocity() > 5 && !onlyOnce){
 
                 onlyOnce = true;
 
