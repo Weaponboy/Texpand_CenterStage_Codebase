@@ -19,14 +19,8 @@ public interface CycleMethods extends Auto_Methods {
         delivery.setGripperState(Delivery.GripperState.closed);
         delivery.updateGrippers();
 
-        while (deliverySlides.getCurrentposition() < 200){
-
-            if (deliverySlides.getCurrentposition() > 150){
-                delivery.setArmTargetState(Delivery.armState.delivery);
-                delivery.updateArm(deliverySlides.getCurrentposition());
-            }
-
-        }
+        delivery.setArmTargetState(Delivery.armState.delivery);
+        delivery.updateArm(deliverySlides.getCurrentposition());
 
     }
 

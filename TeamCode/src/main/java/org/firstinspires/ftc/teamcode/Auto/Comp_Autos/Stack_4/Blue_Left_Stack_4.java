@@ -96,8 +96,10 @@ public class Blue_Left_Stack_4 extends LinearOpMode implements CycleMethods {
 
             retract();
 
-            collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
+            collection.setIntakeHeight(Collection.intakeHeightState.firstPixel);
             collection.updateIntakeHeight();
+
+            follower.setPath(collect.followablePath, collect.pathingVelocity);
 
             follower.followPath(180, odometry, drive, collection, new Vector2D(125, 180));
 
@@ -158,6 +160,8 @@ public class Blue_Left_Stack_4 extends LinearOpMode implements CycleMethods {
             collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
             collection.updateIntakeHeight();
 
+            follower.setPath(collect.followablePath, collect.pathingVelocity);
+
             follower.followPath(180, odometry, drive, collection, new Vector2D(125, 180));
 
             collectPixels();
@@ -205,6 +209,25 @@ public class Blue_Left_Stack_4 extends LinearOpMode implements CycleMethods {
 
             collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
             collection.updateIntakeHeight();
+
+            follower.followPath(180, odometry, drive, collection, new Vector2D(125, 180));
+
+            collectPixels();
+
+            follower.setPath(deliver.followablePath, deliver.pathingVelocity);
+
+            follower.followPath(180, odometry, drive);
+
+            deployArm();
+
+            dropPixels();
+
+            retract();
+
+            collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
+            collection.updateIntakeHeight();
+
+            follower.setPath(collect.followablePath, collect.pathingVelocity);
 
             follower.followPath(180, odometry, drive, collection, new Vector2D(125, 180));
 

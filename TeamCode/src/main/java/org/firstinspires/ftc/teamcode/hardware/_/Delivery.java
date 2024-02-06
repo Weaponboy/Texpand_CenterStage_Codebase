@@ -183,7 +183,7 @@ public class Delivery {
                 break;
             case delivery:
 
-                mainPivotOffSet = 0.25;
+                mainPivotOffSet = 0.2;
 
                 secondRotate.setPosition(secondRotateMiddle);
 
@@ -390,7 +390,7 @@ public class Delivery {
                 break;
             case delivery:
 
-                mainPivotOffSet = 0.25;
+                mainPivotOffSet = 0.2;
 
                 secondRotate.setPosition(secondRotateMiddle);
 

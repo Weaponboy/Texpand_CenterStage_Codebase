@@ -87,7 +87,7 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements CycleMethods {
 
             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
-            follower.followPath(180, odometry, drive);
+            follower.followPath(180, odometry, drive, delivery, deliverySlides);
 
             deployArm();
 
@@ -129,7 +129,7 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements CycleMethods {
 
             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
-            follower.followPath(180, odometry, drive);
+            follower.followPath(180, odometry, drive, delivery, deliverySlides);
 
             deployArm();
 
@@ -177,7 +177,7 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements CycleMethods {
 
             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
-            follower.followPath(180, odometry, drive);
+            follower.followPath(180, odometry, drive, delivery, deliverySlides);
 
             deployArm();
 
