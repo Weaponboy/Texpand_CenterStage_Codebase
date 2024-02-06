@@ -438,7 +438,7 @@ public class mecanumFollower {
 
             }
 
-            if (Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 1.4 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 1.4 && Math.abs(odometry.getVerticalVelocity()) < 3 && Math.abs(odometry.getHorizontalVelocity()) < 3 && Math.abs(targetHeading - odometry.heading) < 2){
+            if (Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 1 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 1 && Math.abs(odometry.getVerticalVelocity()) < 3 && Math.abs(odometry.getHorizontalVelocity()) < 3 && Math.abs(targetHeading - odometry.heading) < 1){
                 reachedTarget = true;
             }
 
@@ -508,7 +508,7 @@ public class mecanumFollower {
                 targetHeading = secondHeading;
             }
 
-            if (Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 1.4 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 1.4 && Math.abs(odometry.getVerticalVelocity()) < 3 && Math.abs(odometry.getHorizontalVelocity()) < 3 && Math.abs(targetHeading - odometry.heading) < 2){
+            if (Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 1 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 1 && Math.abs(odometry.getVerticalVelocity()) < 3 && Math.abs(odometry.getHorizontalVelocity()) < 3 && Math.abs(targetHeading - odometry.heading) < 1){
                 reachedTarget = true;
             }
 
