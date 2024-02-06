@@ -426,8 +426,6 @@ public class mecanumFollower {
 
                 deliverySlides.DeliverySlides(220, 0.6);
 
-                while (deliverySlides.getCurrentposition() < 210){}
-
                 delivery.setArmTargetState(Delivery.armState.deliverAuto);
                 delivery.updateArm(deliverySlides.getCurrentposition());
 
@@ -490,11 +488,8 @@ public class mecanumFollower {
 
                 deliverySlides.DeliverySlides(220, 0.6);
 
-                while (deliverySlides.getCurrentposition() < 210){}
-
                 delivery.setArmTargetState(Delivery.armState.deliverAuto);
                 delivery.updateArm(deliverySlides.getCurrentposition());
-
 
             }
 
