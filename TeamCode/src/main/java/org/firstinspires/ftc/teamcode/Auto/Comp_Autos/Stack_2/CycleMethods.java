@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Stack;
+package org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Stack_2;
 
 import static java.lang.Thread.sleep;
 
@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.hardware._.Collection;
 import org.firstinspires.ftc.teamcode.hardware._.Delivery;
 import org.firstinspires.ftc.teamcode.hardware._.Delivery_Slides;
 
-public interface TwoPlusTwoMethod extends Auto_Methods {
+public interface CycleMethods extends Auto_Methods {
 
     default void deployArm() throws InterruptedException {
 

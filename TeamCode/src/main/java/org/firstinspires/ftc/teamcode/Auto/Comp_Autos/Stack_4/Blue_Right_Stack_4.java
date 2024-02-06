@@ -1,47 +1,66 @@
-package org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Stack;
+package org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Stack_4;
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.propPos;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.UsefulMethods.getRealCoords;
 
+import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Preload.Auto_Methods;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower.mecanumFollower;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.blueRightBuilder;
-import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.redLeftBuilder;
+import org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount;
 import org.firstinspires.ftc.teamcode.hardware._.Drivetrain;
 import org.firstinspires.ftc.teamcode.hardware._.Odometry;
-import org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Preload.Auto_Methods;
+import org.firstinspires.ftc.teamcode.hardware._.Sensors;
+import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
-@Autonomous(name = "Red_Left_Stack+2", group = "Stack 2+2")
+import java.util.List;
+
+@Autonomous(name = "Blue_Right_Stack+2", group = "Stack 2+2")
 /**start red right*/
-public class Red_Left_Stack_2 extends LinearOpMode implements Auto_Methods {
+public class Blue_Right_Stack_4 extends LinearOpMode implements Auto_Methods{
 
     public WebcamName frontCam;
 
+    public VisionPortal portal;
+
+    AprilTagProcessor aprilTag = null;
+
+    org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount propDetectionByAmount = new propDetectionByAmount(telemetry, org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount.Side.left, org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount.color.blue);
+
     /**hardware objects*/
-    Odometry odometry = new Odometry(90, 337, 90);
+    Odometry odometry = new Odometry(90, 23, 270);
 
     Drivetrain drive = new Drivetrain();
 
+    Sensors sensors = new Sensors();
+
     /**pathing objects*/
-    redLeftBuilder preloadPurple = new redLeftBuilder();
+    blueRightBuilder preloadPurple = new blueRightBuilder();
 
-    redLeftBuilder preloadYellow = new redLeftBuilder();
+    blueRightBuilder preloadYellow = new blueRightBuilder();
 
-    redLeftBuilder collect = new redLeftBuilder();
+    blueRightBuilder collect = new blueRightBuilder();
 
-    redLeftBuilder deliver = new redLeftBuilder();
+    blueRightBuilder deliver = new blueRightBuilder();
 
     blueRightBuilder lastToBackboard = new blueRightBuilder();
 
     mecanumFollower follower = new mecanumFollower();
 
+    List<LynxModule> allHubs;
+
     boolean reset = false;
 
     int counter;
+
+    ElapsedTime elapsedTime = new ElapsedTime();
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -50,21 +69,23 @@ public class Red_Left_Stack_2 extends LinearOpMode implements Auto_Methods {
 
         waitForStart();
 
-        if (propPos == 3){
+        if (propPos == 1){
 
-            preloadPurple.buildPath(redLeftBuilder.Position.right, redLeftBuilder.Section.preload, redLeftBuilder.pixelColor.purple);
+            preloadPurple.buildPath(blueRightBuilder.Position.left, blueRightBuilder.Section.preload, blueRightBuilder.pixelColor.purple);
 
-            preloadYellow.buildPath(redLeftBuilder.Position.right, redLeftBuilder.Section.preload, redLeftBuilder.pixelColor.yellow);
+            preloadYellow.buildPath(blueRightBuilder.Position.left, blueRightBuilder.Section.preload, blueRightBuilder.pixelColor.yellow);
 
             follower.setPath(preloadPurple.followablePath, preloadPurple.pathingVelocity);
 
-            follower.followPath(90, odometry, drive, new Vector2D(90, 285), 180);
+            follower.followPath(270, odometry, drive, new Vector2D(90, 75), 180);
 
             odometry.update();
 
             follower.setPath(preloadYellow.followablePath, preloadYellow.pathingVelocity);
 
             follower.followPath(180, odometry, drive);
+
+            elapsedTime.reset();
 
             counter = 0;
 
@@ -80,7 +101,7 @@ public class Red_Left_Stack_2 extends LinearOpMode implements Auto_Methods {
 
             Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
 
-            lastToBackboard.buildPathLine(startPos, new Vector2D(308, 295));
+            lastToBackboard.buildPathLine(startPos, new Vector2D(306, 80));
 
             follower.setPath(lastToBackboard.followablePath, lastToBackboard.pathingVelocity);
 
@@ -90,13 +111,13 @@ public class Red_Left_Stack_2 extends LinearOpMode implements Auto_Methods {
 
         } else if (propPos == 2) {
 
-            preloadPurple.buildPath(redLeftBuilder.Position.center, redLeftBuilder.Section.preload);
+            preloadPurple.buildPath(blueRightBuilder.Position.center, blueRightBuilder.Section.preload);
 
             follower.setPath(preloadPurple.followablePath, preloadPurple.pathingVelocity);
 
-            follower.followPath(90, odometry, drive, new Vector2D(75, 197), 180);
+            follower.followPath(270, odometry, drive, new Vector2D(75, 163), 180, allHubs);
 
-            odometry.update();
+            elapsedTime.reset();
 
             counter = 0;
 
@@ -110,31 +131,33 @@ public class Red_Left_Stack_2 extends LinearOpMode implements Auto_Methods {
 
             }
 
-            Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
+//            Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
+//
+//            lastToBackboard.buildPathLine(startPos, new Vector2D(306, 100));
+//
+//            follower.setPath(lastToBackboard.followablePath, lastToBackboard.pathingVelocity);
+//
+//            follower.followPath(180, odometry, drive, "yes");
+//
+//            dropYellowPixel();
 
-            lastToBackboard.buildPathLine(startPos, new Vector2D(308, 265));
+        } else if (propPos == 3) {
 
-            follower.setPath(lastToBackboard.followablePath, lastToBackboard.pathingVelocity);
+            preloadPurple.buildPath(blueRightBuilder.Position.right, blueRightBuilder.Section.preload, blueRightBuilder.pixelColor.purple);
 
-            follower.followPath(180, odometry, drive, "yes");
-
-            dropYellowPixel();
-
-        } else if (propPos == 1) {
-
-            preloadPurple.buildPath(redLeftBuilder.Position.left, redLeftBuilder.Section.preload, redLeftBuilder.pixelColor.purple);
-
-            preloadYellow.buildPath(redLeftBuilder.Position.left, redLeftBuilder.Section.preload, redLeftBuilder.pixelColor.yellow);
+            preloadYellow.buildPath(blueRightBuilder.Position.right, blueRightBuilder.Section.preload, blueRightBuilder.pixelColor.yellow);
 
             follower.setPath(preloadPurple.followablePath, preloadPurple.pathingVelocity);
 
-            follower.followPath(60, odometry, drive);
+            follower.followPath(300, odometry, drive);
 
             odometry.update();
 
             follower.setPath(preloadYellow.followablePath, preloadYellow.pathingVelocity);
 
-            follower.followPath(90, odometry, drive, new Vector2D(97, 189), 180);
+            follower.followPath(270, odometry, drive, new Vector2D(97, 171), 180);
+
+            elapsedTime.reset();
 
             counter = 0;
 
@@ -150,7 +173,7 @@ public class Red_Left_Stack_2 extends LinearOpMode implements Auto_Methods {
 
             Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
 
-            lastToBackboard.buildPathLine(startPos, new Vector2D(308, 250));
+            lastToBackboard.buildPathLine(startPos, new Vector2D(306, 120));
 
             follower.setPath(lastToBackboard.followablePath, lastToBackboard.pathingVelocity);
 
@@ -159,10 +182,15 @@ public class Red_Left_Stack_2 extends LinearOpMode implements Auto_Methods {
             dropYellowPixel();
 
         }
-
     }
 
     private void initialize(){
+
+        allHubs = hardwareMap.getAll(LynxModule.class);
+
+        for (LynxModule hub : allHubs) {
+            hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
+        }
 
         //init hardware
         odometry.init(hardwareMap);
@@ -175,7 +203,7 @@ public class Red_Left_Stack_2 extends LinearOpMode implements Auto_Methods {
 
         sensors.init(hardwareMap);
 
-        sensors.initAprilTag(telemetry, true);
+        sensors.initAprilTag(telemetry, false);
 
     }
 
@@ -183,7 +211,7 @@ public class Red_Left_Stack_2 extends LinearOpMode implements Auto_Methods {
 
         if (!(sensors.rightTag == null)){
 
-            if (sensors.rightTag.id == 4 || sensors.rightTag.id == 5 || sensors.rightTag.id == 6){
+            if (sensors.rightTag.id == 1 || sensors.rightTag.id == 2 || sensors.rightTag.id == 3){
 
                 counter++;
 
@@ -194,12 +222,12 @@ public class Red_Left_Stack_2 extends LinearOpMode implements Auto_Methods {
 
                 Vector2D newPosition;
 
-                if (sensors.rightTag.id == 4){
-                    aprilTagOffset = getRealCoords(255);
-                }else if (sensors.rightTag.id == 5){
-                    aprilTagOffset = getRealCoords(270);
+                if (sensors.rightTag.id == 1){
+                    aprilTagOffset = getRealCoords(75);
+                }else if (sensors.rightTag.id == 2){
+                    aprilTagOffset = getRealCoords(90);
                 }else{
-                    aprilTagOffset = getRealCoords(285);
+                    aprilTagOffset = getRealCoords(105);
                 }
 
                 double heading = odometry.getIMUHeading();

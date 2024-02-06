@@ -34,8 +34,6 @@ public interface Auto_Methods {
         deliverySlides.init(hardwareMap);
 
         collection.init(hardwareMap);
-
-//        sensors.init(hardwareMap);
     }
 
     default void dropYellowPixel() throws InterruptedException {

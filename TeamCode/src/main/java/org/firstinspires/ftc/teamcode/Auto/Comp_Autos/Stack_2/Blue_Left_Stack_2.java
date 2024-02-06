@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Stack;
+package org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Stack_2;
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.propPos;
 
@@ -20,7 +20,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 
 @Autonomous(name = "Blue_Left_Stack+2", group = "Stack 2+2")
 /**start red right*/
-public class Blue_Left_Stack_2 extends LinearOpMode implements TwoPlusTwoMethod {
+public class Blue_Left_Stack_2 extends LinearOpMode implements CycleMethods {
 
     public WebcamName frontCam;
 

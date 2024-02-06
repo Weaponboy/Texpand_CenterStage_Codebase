@@ -51,7 +51,7 @@ public class blueLeftBuilder extends pathBuilderMain implements Blue_Points_Over
 
     //drop yellow pixel first
     Vector2D DYS1T = new Vector2D(DPE1F.getX(), DPE1F.getY());
-    Vector2D DYE1T = new Vector2D(getRealCoords(300), getRealCoords(100));
+    Vector2D DYE1T = new Vector2D(getRealCoords(300), getRealCoords(110));
 
     public enum Position {
         left,
