@@ -10,6 +10,8 @@ import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.s
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.strafeP;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.vertical;
 
+import static java.lang.Thread.sleep;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
@@ -357,14 +359,147 @@ public class mecanumFollower {
 
             if (odometry.X > 230 && odometry.getVerticalVelocity() > 5){
 
-                deliverySlides.DeliverySlides(700, 1);
+                deliverySlides.DeliverySlides(400, 0.8);
 
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
 
-                delivery.setArmTargetState(Delivery.armState.delivery);
+                delivery.setArmTargetState(Delivery.armState.deliverAuto);
                 delivery.updateArm(deliverySlides.getCurrentposition());
 
+            }
+
+            if (Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 1.4 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 1.4 && Math.abs(odometry.getVerticalVelocity()) < 3 && Math.abs(odometry.getHorizontalVelocity()) < 3 && Math.abs(targetHeading - odometry.heading) < 2){
+                reachedTarget = true;
+            }
+
+            basePower(robotPositionVector, targetPoint, closeToTarget, odometry, targetHeading);
+
+            double denominator = Math.max(Math.abs(vertical) + Math.abs(horizontal) + Math.abs(pivot), 1);
+
+            double left_Front = (vertical + horizontal + pivot) / denominator;
+            double left_Back = (vertical - horizontal + pivot) / denominator;
+            double right_Front = (vertical - horizontal - pivot) / denominator;
+            double right_Back = (vertical + horizontal - pivot) / denominator;
+
+            drive.RF.setPower(right_Front);
+            drive.RB.setPower(right_Back);
+            drive.LF.setPower(left_Front);
+            drive.LB.setPower(left_Back);
+
+        }while(!reachedTarget);
+
+        drive.RF.setPower(0);
+        drive.RB.setPower(0);
+        drive.LF.setPower(0);
+        drive.LB.setPower(0);
+
+    }
+
+    //deploy arm method yellow pixel
+    public void followPath(double targetHeading, Odometry odometry, Drivetrain drive, Delivery delivery, Delivery_Slides deliverySlides, Collection collection) throws InterruptedException {
+
+        //for getting pathing power and corrective as well
+        Vector2D robotPositionVector = new Vector2D(odometry.X, odometry.Y);
+
+        Vector2D targetPoint = pathfollow.getPointOnFollowable(pathfollow.getLastPoint());
+
+        boolean reachedTarget = false;
+
+        boolean closeToTarget = false;
+
+        xI = 0;
+        yI = 0;
+
+        do {
+
+            odometry.update();
+
+            robotPositionVector.set(odometry.X, odometry.Y);
+
+            if (odometry.X > 200 && odometry.getVerticalVelocity() > 5){
+
+                collection.setIntakeHeight(Collection.intakeHeightState.letClawThrough);
+                collection.updateIntakeHeight();
+
+                sleep(200);
+
+                deliverySlides.DeliverySlides(220, 0.6);
+
+                while (deliverySlides.getCurrentposition() < 210){}
+
+                delivery.setArmTargetState(Delivery.armState.deliverAuto);
+                delivery.updateArm(deliverySlides.getCurrentposition());
+
+            }
+
+            if (Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 1.4 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 1.4 && Math.abs(odometry.getVerticalVelocity()) < 3 && Math.abs(odometry.getHorizontalVelocity()) < 3 && Math.abs(targetHeading - odometry.heading) < 2){
+                reachedTarget = true;
+            }
+
+            basePower(robotPositionVector, targetPoint, closeToTarget, odometry, targetHeading);
+
+            double denominator = Math.max(Math.abs(vertical) + Math.abs(horizontal) + Math.abs(pivot), 1);
+
+            double left_Front = (vertical + horizontal + pivot) / denominator;
+            double left_Back = (vertical - horizontal + pivot) / denominator;
+            double right_Front = (vertical - horizontal - pivot) / denominator;
+            double right_Back = (vertical + horizontal - pivot) / denominator;
+
+            drive.RF.setPower(right_Front);
+            drive.RB.setPower(right_Back);
+            drive.LF.setPower(left_Front);
+            drive.LB.setPower(left_Back);
+
+        }while(!reachedTarget);
+
+        drive.RF.setPower(0);
+        drive.RB.setPower(0);
+        drive.LF.setPower(0);
+        drive.LB.setPower(0);
+
+    }
+
+    //deploy arm method yellow pixel with heading change
+    public void followPath(double targetHeading, Odometry odometry, Drivetrain drive, Vector2D pointForHeadingChange, double secondHeading, Delivery delivery, Delivery_Slides deliverySlides, Collection collection) throws InterruptedException {
+
+        //for getting pathing power and corrective as well
+        Vector2D robotPositionVector = new Vector2D(odometry.X, odometry.Y);
+
+        Vector2D targetPoint = pathfollow.getPointOnFollowable(pathfollow.getLastPoint());
+
+        boolean reachedTarget = false;
+
+        boolean closeToTarget = false;
+
+        xI = 0;
+        yI = 0;
+
+        do {
+
+            odometry.update();
+
+            robotPositionVector.set(odometry.X, odometry.Y);
+
+            if (odometry.X > 200 && odometry.getVerticalVelocity() > 5){
+
+                collection.setIntakeHeight(Collection.intakeHeightState.letClawThrough);
+                collection.updateIntakeHeight();
+
+                sleep(200);
+
+                deliverySlides.DeliverySlides(220, 0.6);
+
+                while (deliverySlides.getCurrentposition() < 210){}
+
+                delivery.setArmTargetState(Delivery.armState.deliverAuto);
+                delivery.updateArm(deliverySlides.getCurrentposition());
+
+
+            }
+
+            if (Math.abs(pointForHeadingChange.getX() - odometry.X) < 15 && Math.abs(pointForHeadingChange.getY() - odometry.Y) < 15){
+                targetHeading = secondHeading;
             }
 
             if (Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 1.4 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 1.4 && Math.abs(odometry.getVerticalVelocity()) < 3 && Math.abs(odometry.getHorizontalVelocity()) < 3 && Math.abs(targetHeading - odometry.heading) < 2){

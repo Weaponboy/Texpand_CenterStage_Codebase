@@ -44,7 +44,7 @@ public class Delivery {
     double deliveryTopPivotNew = 1;
     double safeTopPivot = 0.3;
 
-    double deliveryTopPivotAuto = 0.9;
+    double deliveryTopPivotAuto = 0.55;
     double deliverySecondPivotAuto = 0.45;
     double distancecalc;
     double avoidIntakeSecondPivot = 0.8;
@@ -231,6 +231,7 @@ public class Delivery {
                 timeToWaitDelivery = Math.max((Math.abs(getSecondPivotPosition()-deliverySecondPivotAuto)*180)*timePerDegree, (Math.abs(getTopPivotPosition()-deliveryTopPivotAuto)*180)*timePerDegree);
 
                 setClaws(clawClosed);
+
                 setGripperState(GripperState.closed);
 
                 setSecondPivot(deliverySecondPivotAuto);

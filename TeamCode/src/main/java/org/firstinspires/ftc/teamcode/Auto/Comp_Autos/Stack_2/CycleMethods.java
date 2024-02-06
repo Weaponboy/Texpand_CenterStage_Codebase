@@ -14,7 +14,7 @@ public interface CycleMethods extends Auto_Methods {
         collection.setIntakeHeight(Collection.intakeHeightState.letClawThrough);
         collection.updateIntakeHeight();
 
-        deliverySlides.DeliverySlides(700, 0.6);
+        deliverySlides.DeliverySlides(400, 0.6);
 
         delivery.setGripperState(Delivery.GripperState.closed);
         delivery.updateGrippers();

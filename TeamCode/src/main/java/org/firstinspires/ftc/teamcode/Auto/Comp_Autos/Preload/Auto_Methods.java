@@ -68,12 +68,84 @@ public interface Auto_Methods {
 
         deliverySlides.DeliverySlides(0, -0.6);
 
-        sleep(800);
+    }
 
-        collection.setIntakeHeight(Collection.intakeHeightState.stowed);
-        collection.updateIntakeHeight();
+    default void dropYellowPixelDrive() throws InterruptedException {
+
+        delivery.setArmTargetState(Delivery.armState.delivery);
+        delivery.updateArm(deliverySlides.getCurrentposition());
+
+        boolean armReady = false;
+
+        while (!armReady){
+
+            switch (delivery.getArmState()){
+                case delivery:
+                    armReady = true;
+                    break;
+                default:
+            }
+
+            delivery.updateArm(deliverySlides.getCurrentposition());
+
+        }
+
+        delivery.setRightGripperState(Delivery.rightGripperState.openDeliver);
+        delivery.updateGrippers();
+
+        deliverySlides.DeliverySlides(320, 0.6);
+
+        while (deliverySlides.getCurrentposition() < 310){}
+
+        sleep(400);
+
+        delivery.setArmTargetState(Delivery.armState.collect);
+        delivery.updateArm(deliverySlides.getCurrentposition());
+
+        sleep(1000);
+
+        deliverySlides.DeliverySlides(0, -0.6);
 
     }
+
+    default void dropYellowPixelWait() throws InterruptedException {
+
+        collection.setIntakeHeight(Collection.intakeHeightState.letClawThrough);
+        collection.updateIntakeHeight();
+
+        sleep(200);
+
+        deliverySlides.DeliverySlides(220, 0.6);
+
+        while (deliverySlides.getCurrentposition() < 210){}
+
+        delivery.setArmTargetState(Delivery.armState.delivery);
+        delivery.updateArm(deliverySlides.getCurrentposition());
+
+        sleep(1000);
+
+        delivery.setRightGripperState(Delivery.rightGripperState.openDeliver);
+        delivery.updateGrippers();
+
+        deliverySlides.DeliverySlides(320, 0.6);
+
+        while (deliverySlides.getCurrentposition() < 310){}
+
+        sleep(400);
+
+        delivery.setArmTargetState(Delivery.armState.collect);
+        delivery.updateArm(deliverySlides.getCurrentposition());
+
+        sleep(1000);
+
+        deliverySlides.DeliverySlides(0, -0.6);
+
+        while (deliverySlides.getCurrentposition() > 30){
+
+        }
+
+    }
+
 
     default Vector2D getDetections(AprilTagProcessor aprilTag) {
 

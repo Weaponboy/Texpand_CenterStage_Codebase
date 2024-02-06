@@ -63,11 +63,11 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements CycleMethods {
 
             follower.setPath(firstPath.followablePath, firstPath.pathingVelocity);
 
-            follower.followPath(240, odometry, drive, new Vector2D(250, 46), 180);
+            follower.followPath(240, odometry, drive, new Vector2D(250, 46), 180, delivery, deliverySlides, collection);
 
             odometry.update();
 
-            dropYellowPixel();
+            dropYellowPixelDrive();
 
             collect.buildPath(blueLeftBuilder.Section.collect);
 
@@ -105,11 +105,11 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements CycleMethods {
 
             //change target heading after dropping the purple pixel
             Vector2D point;
-            follower.followPath(270, odometry, drive, point = new Vector2D(236, 60), 180);
+            follower.followPath(270, odometry, drive, point = new Vector2D(236, 60), 180, delivery, deliverySlides, collection);
 
             odometry.update();
 
-            dropYellowPixel();
+            dropYellowPixelDrive();
 
             collect.buildPath(blueLeftBuilder.Section.collect);
 
@@ -153,11 +153,11 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements CycleMethods {
 
             follower.setPath(secondPath.followablePath, secondPath.pathingVelocity);
 
-            follower.followPath(0, odometry, drive, new Vector2D(250, 90), 180);
+            follower.followPath(0, odometry, drive, new Vector2D(250, 90), 180, delivery, deliverySlides, collection);
 
             odometry.update();
 
-            dropYellowPixel();
+            dropYellowPixelDrive();
 
             collect.buildPath(blueLeftBuilder.Section.collect);
 
