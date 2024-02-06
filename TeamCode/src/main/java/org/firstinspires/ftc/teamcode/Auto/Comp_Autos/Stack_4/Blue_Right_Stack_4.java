@@ -22,7 +22,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;
 
-@Autonomous(name = "Blue_Right_Stack+2", group = "Stack 2+2")
+@Autonomous(name = "Blue_Right_Stack+4", group = "Stack 2+4")
 /**start red right*/
 public class Blue_Right_Stack_4 extends LinearOpMode implements Auto_Methods{
 

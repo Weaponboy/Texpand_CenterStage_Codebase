@@ -19,7 +19,7 @@ import org.firstinspires.ftc.teamcode.hardware._.Drivetrain;
 import org.firstinspires.ftc.teamcode.hardware._.Odometry;
 import org.firstinspires.ftc.vision.VisionPortal;
 
-@Autonomous(name = "Blue_Left_Stack+2", group = "Stack 2+2")
+@Autonomous(name = "Blue_Left_Stack+4", group = "Stack 2+4")
 /**start red right*/
 public class Blue_Left_Stack_4 extends LinearOpMode implements CycleMethods {
 

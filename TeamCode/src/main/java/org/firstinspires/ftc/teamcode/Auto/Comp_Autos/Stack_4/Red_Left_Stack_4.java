@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilde
 import org.firstinspires.ftc.teamcode.hardware._.Drivetrain;
 import org.firstinspires.ftc.teamcode.hardware._.Odometry;
 
-@Autonomous(name = "Red_Left_Stack+2", group = "Stack 2+2")
+@Autonomous(name = "Red_Left_Stack+4", group = "Stack 2+4")
 /**start red right*/
 public class Red_Left_Stack_4 extends LinearOpMode implements Auto_Methods {
 
