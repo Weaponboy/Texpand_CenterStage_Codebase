@@ -51,7 +51,7 @@ public interface Blue_Points_Overlap {
 
     Vector2D DS2F = DE1F;
     Vector2D DC2F = new Vector2D(getRealCoords(293), getRealCoords(160));
-    Vector2D DE2F = new Vector2D(getRealCoords(306), getRealCoords(90));
+    Vector2D DE2F = new Vector2D(getRealCoords(300), getRealCoords(90));
 
 
 }
