@@ -32,20 +32,22 @@ public interface CycleMethods extends Auto_Methods {
         delivery.setGripperState(Delivery.GripperState.closed);
         delivery.updateGrippers();
 
-        boolean armReady = false;
+//        boolean armReady = false;
 
-        while (!armReady){
+        sleep(500);
 
-            switch (delivery.getArmState()){
-                case delivery:
-                    armReady = true;
-                    break;
-                default:
-            }
-
-            delivery.updateArm(deliverySlides.getCurrentposition());
-
-        }
+//        while (!armReady){
+//
+//            switch (delivery.getArmState()){
+//                case delivery:
+//                    armReady = true;
+//                    break;
+//                default:
+//            }
+//
+//            delivery.updateArm(deliverySlides.getCurrentposition());
+//
+//        }
 
         delivery.setGripperState(Delivery.GripperState.open);
         delivery.updateGrippers();

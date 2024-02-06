@@ -348,6 +348,8 @@ public class mecanumFollower {
 
         boolean closeToTarget = false;
 
+        boolean onlyOnce = false;
+
         xI = 0;
         yI = 0;
 
@@ -357,7 +359,9 @@ public class mecanumFollower {
 
             robotPositionVector.set(odometry.X, odometry.Y);
 
-            if (odometry.X > 200 && odometry.getVerticalVelocity() > 5){
+            if (odometry.X > 200 && odometry.getVerticalVelocity() > 5 && !onlyOnce){
+
+                onlyOnce = true;
 
                 deliverySlides.DeliverySlides(400, 0.8);
 
@@ -407,6 +411,7 @@ public class mecanumFollower {
         boolean reachedTarget = false;
 
         boolean closeToTarget = false;
+        boolean onlyOnce = false;
 
         xI = 0;
         yI = 0;
@@ -417,7 +422,9 @@ public class mecanumFollower {
 
             robotPositionVector.set(odometry.X, odometry.Y);
 
-            if (odometry.X > 260 && odometry.getVerticalVelocity() > 5){
+            if (odometry.X > 260 && odometry.getVerticalVelocity() > 5 && !onlyOnce){
+
+                onlyOnce = true;
 
                 collection.setIntakeHeight(Collection.intakeHeightState.letClawThrough);
                 collection.updateIntakeHeight();
@@ -470,6 +477,8 @@ public class mecanumFollower {
 
         boolean closeToTarget = false;
 
+        boolean onlyOnce = false;
+
         xI = 0;
         yI = 0;
 
@@ -479,7 +488,9 @@ public class mecanumFollower {
 
             robotPositionVector.set(odometry.X, odometry.Y);
 
-            if (odometry.X > 260 && odometry.getVerticalVelocity() > 5){
+            if (odometry.X > 260 && odometry.getVerticalVelocity() > 5 && !onlyOnce){
+
+                onlyOnce = true;
 
                 collection.setIntakeHeight(Collection.intakeHeightState.letClawThrough);
                 collection.updateIntakeHeight();
