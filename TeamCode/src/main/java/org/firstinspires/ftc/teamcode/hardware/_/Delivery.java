@@ -183,7 +183,7 @@ public class Delivery {
                 break;
             case delivery:
 
-                mainPivotOffSet = 0.1;
+                mainPivotOffSet = 0.15;
 
                 secondRotate.setPosition(secondRotateMiddle);
 
@@ -391,7 +391,7 @@ public class Delivery {
                 break;
             case delivery:
 
-                mainPivotOffSet = 0.1;
+                mainPivotOffSet = 0.15;
 
                 secondRotate.setPosition(secondRotateMiddle);
 
@@ -454,6 +454,7 @@ public class Delivery {
         }
 
         if (Objects.requireNonNull(armstateCurrent) == armState.moving) {
+
             if (DeliveryMoving && pivotMoveTimeDelivery.milliseconds() >= timeToWaitDelivery) {
                 armstateCurrent = armState.delivery;
                 DeliveryMoving = false;
@@ -468,8 +469,6 @@ public class Delivery {
                 armstateCurrent = armState.intermediate;
                 intermediateMoving = false;
             }
-
-
 
             if (CollectionMoving && pivotMoveTimeCollection.milliseconds() >= timeToWaitCollection) {
                 armstateCurrent = armState.collect;

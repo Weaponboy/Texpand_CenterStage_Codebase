@@ -47,10 +47,10 @@ public interface Blue_Points_Overlap {
     /**first position*/
     Vector2D DS1F = new Vector2D(CE2F.getX(), CE2F.getY());
     Vector2D DC1F = new Vector2D(getRealCoords(84), getRealCoords(181));
-    Vector2D DE1F = new Vector2D(getRealCoords(184), getRealCoords(181));
+    Vector2D DE1F = new Vector2D(getRealCoords(179), getRealCoords(176));
 
     Vector2D DS2F = DE1F;
-    Vector2D DC2F = new Vector2D(getRealCoords(293), getRealCoords(160));
+    Vector2D DC2F = new Vector2D(getRealCoords(315), getRealCoords(168));
     Vector2D DE2F = new Vector2D(getRealCoords(300), getRealCoords(90));
 
 

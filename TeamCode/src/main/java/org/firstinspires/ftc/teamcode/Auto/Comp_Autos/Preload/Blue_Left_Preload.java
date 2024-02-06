@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilde
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.blueRightBuilder;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.redRightBuilder;
 import org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount;
+import org.firstinspires.ftc.teamcode.hardware._.Collection;
 import org.firstinspires.ftc.teamcode.hardware._.Drivetrain;
 import org.firstinspires.ftc.teamcode.hardware._.Odometry;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -49,6 +50,9 @@ public class Blue_Left_Preload extends LinearOpMode implements Auto_Methods {
 
         waitForStart();
 
+        collection.setIntakeHeight(Collection.intakeHeightState.letClawThrough);
+        collection.updateIntakeHeight();
+
         if (propPos == 1){
 
             portal.close();
@@ -63,7 +67,7 @@ public class Blue_Left_Preload extends LinearOpMode implements Auto_Methods {
 
             Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
 
-            dropYellowPixel();
+            dropYellowPixel(telemetry);
 
             lastToBackboard.buildPathLine(startPos, new Vector2D(290, 30));
 
@@ -87,7 +91,7 @@ public class Blue_Left_Preload extends LinearOpMode implements Auto_Methods {
 
             Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
 
-            dropYellowPixel();
+            dropYellowPixel(telemetry);
 
             lastToBackboard.buildPathLine(startPos, new Vector2D(290, 30));
 
@@ -117,7 +121,7 @@ public class Blue_Left_Preload extends LinearOpMode implements Auto_Methods {
 
             Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
 
-            dropYellowPixel();
+            dropYellowPixel(telemetry);
 
             lastToBackboard.buildPathLine(startPos, new Vector2D(290, 30));
 

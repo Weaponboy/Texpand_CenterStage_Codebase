@@ -6,6 +6,7 @@ import static java.lang.Thread.sleep;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.hardware._.Collection;
 import org.firstinspires.ftc.teamcode.hardware._.Delivery;
@@ -38,33 +39,61 @@ public interface Auto_Methods {
 
     default void dropYellowPixel() throws InterruptedException {
 
-        collection.setIntakeHeight(Collection.intakeHeightState.letClawThrough);
-        collection.updateIntakeHeight();
-
-        sleep(200);
-
-        deliverySlides.DeliverySlides(220, 0.6);
+        deliverySlides.DeliverySlides(220, 1);
 
         while (deliverySlides.getCurrentposition() < 210){}
 
         delivery.setArmTargetState(Delivery.armState.delivery);
         delivery.updateArm(deliverySlides.getCurrentposition());
 
-        sleep(1000);
+        boolean reachedTarget = false;
+
+        while (!reachedTarget){
+            reachedTarget = delivery.getArmState() == Delivery.armState.delivery;
+            delivery.updateArm(deliverySlides.getCurrentposition());
+        }
 
         delivery.setRightGripperState(Delivery.rightGripperState.openDeliver);
         delivery.updateGrippers();
-
-        deliverySlides.DeliverySlides(320, 0.6);
-
-        while (deliverySlides.getCurrentposition() < 310){}
 
         sleep(400);
 
         delivery.setArmTargetState(Delivery.armState.collect);
         delivery.updateArm(deliverySlides.getCurrentposition());
 
-        sleep(1000);
+        sleep(500);
+
+        deliverySlides.DeliverySlides(0, -0.6);
+
+    }
+
+    default void dropYellowPixel(Telemetry telemetry) throws InterruptedException {
+
+        deliverySlides.DeliverySlides(220, 1);
+
+        while (deliverySlides.getCurrentposition() < 210){}
+
+        delivery.setArmTargetState(Delivery.armState.delivery);
+        delivery.updateArm(deliverySlides.getCurrentposition());
+
+        boolean reachedTarget = false;
+
+        while (!reachedTarget){
+            reachedTarget = delivery.getArmState() == Delivery.armState.delivery;
+            delivery.updateArm(deliverySlides.getCurrentposition());
+            telemetry.addData("state", delivery.getArmState());
+            telemetry.update();
+        }
+
+        delivery.setRightGripperState(Delivery.rightGripperState.openDeliver);
+        delivery.updateGrippers();
+
+        sleep(400);
+
+        delivery.setArmTargetState(Delivery.armState.collect);
+        delivery.updateArm(deliverySlides.getCurrentposition());
+
+        sleep(500);
 
         deliverySlides.DeliverySlides(0, -0.6);
 
