@@ -357,7 +357,7 @@ public class mecanumFollower {
 
             robotPositionVector.set(odometry.X, odometry.Y);
 
-            if (odometry.X > 230 && odometry.getVerticalVelocity() > 5){
+            if (odometry.X > 200 && odometry.getVerticalVelocity() > 5){
 
                 deliverySlides.DeliverySlides(400, 0.8);
 
@@ -417,7 +417,7 @@ public class mecanumFollower {
 
             robotPositionVector.set(odometry.X, odometry.Y);
 
-            if (odometry.X > 200 && odometry.getVerticalVelocity() > 5){
+            if (odometry.X > 260 && odometry.getVerticalVelocity() > 5){
 
                 collection.setIntakeHeight(Collection.intakeHeightState.letClawThrough);
                 collection.updateIntakeHeight();
@@ -479,7 +479,7 @@ public class mecanumFollower {
 
             robotPositionVector.set(odometry.X, odometry.Y);
 
-            if (odometry.X > 200 && odometry.getVerticalVelocity() > 5){
+            if (odometry.X > 260 && odometry.getVerticalVelocity() > 5){
 
                 collection.setIntakeHeight(Collection.intakeHeightState.letClawThrough);
                 collection.updateIntakeHeight();
