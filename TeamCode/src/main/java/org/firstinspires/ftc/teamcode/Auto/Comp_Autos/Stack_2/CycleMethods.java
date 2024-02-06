@@ -86,30 +86,13 @@ public interface CycleMethods extends Auto_Methods {
 
         collection.setState(Collection.intakePowerState.on);
         collection.updateIntakeState();
-
-//        boolean abortAndTry = false;
-//        boolean gotBoth = false;
-//
-//        while (!gotBoth && !abortAndTry){
-//
-//            gotBoth = sensors.LeftClawSensor.isPressed() && sensors.RightClawSensor.isPressed();
-//
-//            if (gotBoth){
-//                delivery.setRightGripperState(Delivery.rightGripperState.closed);
-//            }
-//
-////            if (autoTimer.milliseconds() > 26000){
-////                abortAndTry = true;
-////            }
-//
-//        }
-
-        sleep(500);
+        
+        sleep(100);
 
         delivery.setGripperState(Delivery.GripperState.closed);
         delivery.updateGrippers();
 
-        sleep(500);
+        sleep(200);
 
         collection.setState(Collection.intakePowerState.reversed);
         collection.updateIntakeState();
