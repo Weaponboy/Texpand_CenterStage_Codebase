@@ -75,7 +75,7 @@ public interface Auto_Methods {
         delivery.setArmTargetState(Delivery.armState.delivery);
         delivery.updateArm(deliverySlides.getCurrentposition());
 
-        sleep(500);
+        sleep(800);
 
         delivery.setRightGripperState(Delivery.rightGripperState.openDeliver);
         delivery.updateGrippers();
