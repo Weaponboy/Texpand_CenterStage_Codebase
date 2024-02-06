@@ -75,20 +75,7 @@ public interface Auto_Methods {
         delivery.setArmTargetState(Delivery.armState.delivery);
         delivery.updateArm(deliverySlides.getCurrentposition());
 
-        boolean armReady = false;
-
-        while (!armReady){
-
-            switch (delivery.getArmState()){
-                case delivery:
-                    armReady = true;
-                    break;
-                default:
-            }
-
-            delivery.updateArm(deliverySlides.getCurrentposition());
-
-        }
+        sleep(500);
 
         delivery.setRightGripperState(Delivery.rightGripperState.openDeliver);
         delivery.updateGrippers();
