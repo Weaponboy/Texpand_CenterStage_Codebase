@@ -454,7 +454,7 @@ public class mecanumFollower {
                 collection.updateIntakeState();
             }
 
-            if (Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 1 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 1 && Math.abs(odometry.getVerticalVelocity()) < 3 && Math.abs(odometry.getHorizontalVelocity()) < 3 && Math.abs(targetHeading - odometry.heading) < 1){
+            if (Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 3 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 5 && Math.abs(odometry.getVerticalVelocity()) < 3 && Math.abs(odometry.getHorizontalVelocity()) < 3 && Math.abs(targetHeading - odometry.heading) < 1){
                 reachedTarget = true;
             }
 
