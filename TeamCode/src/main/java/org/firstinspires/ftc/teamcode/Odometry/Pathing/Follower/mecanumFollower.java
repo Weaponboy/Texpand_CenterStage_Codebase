@@ -449,7 +449,7 @@ public class mecanumFollower {
                 collection.updateIntakeState();
             }
 
-            if (elapsedTime1.milliseconds() > 500){
+            if (elapsedTime1.milliseconds() > 800){
                 collection.setState(Collection.intakePowerState.off);
                 collection.updateIntakeState();
             }
