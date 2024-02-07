@@ -712,14 +712,14 @@ public class mecanumFollower {
             if (Math.abs(pointToTurnOff.getX() - odometry.X) < 15 && Math.abs(pointToTurnOff.getY() - odometry.Y) < 15){
                 collection.setState(Collection.intakePowerState.off);
                 collection.updateIntakeState();
-
-                delivery.setGripperState(Delivery.GripperState.closed);
-                delivery.updateGrippers();
             }
 
             if (Math.abs(pointToReverse.getX() - odometry.X) < 15 && Math.abs(pointToReverse.getY() - odometry.Y) < 15){
                 collection.setState(Collection.intakePowerState.reversed);
                 collection.updateIntakeState();
+
+                delivery.setGripperState(Delivery.GripperState.closed);
+                delivery.updateGrippers();
             }
 
             odometry.update();
