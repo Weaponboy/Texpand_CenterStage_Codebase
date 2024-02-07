@@ -686,7 +686,7 @@ public class mecanumFollower {
     }
 
     //turn intake on method
-    public void followPathCollection(double targetHeading, Odometry odometry, Drivetrain drive, Collection collection, Vector2D pointToTurnOn){
+    public void followPathCollection(double targetHeading, Odometry odometry, Drivetrain drive, Collection collection, Delivery delivery, Delivery_Slides deliverySlides, Vector2D pointToTurnOn, Vector2D pointToTurnOff, Vector2D pointToReverse){
 
         //for getting pathing power and corrective as well
         Vector2D robotPositionVector = new Vector2D(odometry.X, odometry.Y);
@@ -697,13 +697,42 @@ public class mecanumFollower {
 
         boolean closeToTarget = false;
 
+        boolean onlyOnce = false;
+
         xI = 0;
         yI = 0;
 
         do {
 
-            if (Math.abs(pointToTurnOn.getX() - odometry.X) < 20 && Math.abs(pointToTurnOn.getY() - odometry.Y) < 20){
+            if (odometry.X > 180 && odometry.getVerticalVelocity() > 5 && !onlyOnce){
+
+                onlyOnce = true;
+
+                deliverySlides.DeliverySlides(400, 0.8);
+
+                delivery.setGripperState(Delivery.GripperState.closed);
+                delivery.updateGrippers();
+
+                delivery.setArmTargetState(Delivery.armState.deliverAuto);
+                delivery.updateArm(deliverySlides.getCurrentposition());
+
+            }
+
+            if (Math.abs(pointToTurnOn.getX() - odometry.X) < 15 && Math.abs(pointToTurnOn.getY() - odometry.Y) < 15){
                 collection.setState(Collection.intakePowerState.on);
+                collection.updateIntakeState();
+            }
+
+            if (Math.abs(pointToTurnOff.getX() - odometry.X) < 15 && Math.abs(pointToTurnOff.getY() - odometry.Y) < 15){
+                collection.setState(Collection.intakePowerState.off);
+                collection.updateIntakeState();
+
+                delivery.setGripperState(Delivery.GripperState.closed);
+                delivery.updateGrippers();
+            }
+
+            if (Math.abs(pointToReverse.getX() - odometry.X) < 15 && Math.abs(pointToReverse.getY() - odometry.Y) < 15){
+                collection.setState(Collection.intakePowerState.reversed);
                 collection.updateIntakeState();
             }
 
