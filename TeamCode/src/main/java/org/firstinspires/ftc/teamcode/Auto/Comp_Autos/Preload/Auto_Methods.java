@@ -79,12 +79,14 @@ public interface Auto_Methods {
         boolean reachedTarget = false;
 
         while (!reachedTarget){
-            delivery.updateArm(deliverySlides.getCurrentposition());
+            delivery.updateArm(deliverySlides.getCurrentposition(), telemetry);
             reachedTarget = delivery.getArmState() == Delivery.armState.delivery;
             telemetry.addData("reachedTarget", reachedTarget);
             telemetry.addData("state", delivery.getArmState());
             telemetry.update();
         }
+
+        sleep(400);
 
         delivery.setRightGripperState(Delivery.rightGripperState.openDeliver);
         delivery.updateGrippers();
