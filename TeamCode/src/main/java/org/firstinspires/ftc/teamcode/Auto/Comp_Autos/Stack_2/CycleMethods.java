@@ -87,7 +87,7 @@ public interface CycleMethods extends Auto_Methods {
         collection.setState(Collection.intakePowerState.on);
         collection.updateIntakeState();
 
-        sleep(100);
+        sleep(800);
 
         delivery.setGripperState(Delivery.GripperState.closed);
         delivery.updateGrippers();

@@ -29,6 +29,7 @@ public class Delivery {
     ServoImplEx secondRotate;
 
     ElapsedTime pivotMoveTimeDelivery = new ElapsedTime();
+    ElapsedTime pivotMoveTimeAuto = new ElapsedTime();
     ElapsedTime pivotMoveTimeCollection = new ElapsedTime();
 
     Sensors sensors = new Sensors();

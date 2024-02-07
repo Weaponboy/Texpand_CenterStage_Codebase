@@ -79,8 +79,9 @@ public interface Auto_Methods {
         boolean reachedTarget = false;
 
         while (!reachedTarget){
-            reachedTarget = delivery.getArmState() == Delivery.armState.delivery;
             delivery.updateArm(deliverySlides.getCurrentposition());
+            reachedTarget = delivery.getArmState() == Delivery.armState.delivery;
+            telemetry.addData("reachedTarget", reachedTarget);
             telemetry.addData("state", delivery.getArmState());
             telemetry.update();
         }
