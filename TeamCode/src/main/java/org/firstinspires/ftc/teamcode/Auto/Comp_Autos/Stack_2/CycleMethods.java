@@ -84,9 +84,6 @@ public interface CycleMethods extends Auto_Methods {
 
     default void collectPixels() throws InterruptedException {
 
-        collection.setState(Collection.intakePowerState.on);
-        collection.updateIntakeState();
-
         sleep(800);
 
         delivery.setGripperState(Delivery.GripperState.closed);
