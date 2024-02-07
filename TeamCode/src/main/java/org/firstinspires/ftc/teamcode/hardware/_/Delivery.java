@@ -431,7 +431,7 @@ public class Delivery {
 
                 armstateTarget = armState.moving;
 
-                pivotMoveTimeDelivery.reset();
+                pivotMoveTimeAuto.reset();
 
                 DeliveryMovingAuto = true;
 
@@ -461,10 +461,157 @@ public class Delivery {
                 DeliveryMoving = false;
             }
 
-            if (DeliveryMovingAuto && pivotMoveTimeDelivery.milliseconds() >= timeToWaitDelivery) {
+            if (DeliveryMovingAuto && pivotMoveTimeAuto.milliseconds() >= timeToWaitDelivery) {
                 armstateCurrent = armState.deliverAuto;
                 DeliveryMovingAuto = false;
             }
+
+            if (intermediateMoving && pivotMoveTimeCollection.milliseconds() >= timeToWaitCollection) {
+                armstateCurrent = armState.intermediate;
+                intermediateMoving = false;
+            }
+
+            if (CollectionMoving && pivotMoveTimeCollection.milliseconds() >= timeToWaitCollection) {
+                armstateCurrent = armState.collect;
+                CollectionMoving = false;
+            }
+        }
+
+    }
+
+    public void updateArm (double slidesPos, Telemetry telemetry){
+
+        switch (armstateTarget){
+
+            case collect:
+
+                mainPivotOffSet = 0;
+
+                secondRotate.setPosition(secondRotateMiddleCollect);
+
+                armstateCurrent = armState.moving;
+
+                armstateTarget = armState.moving;
+
+                pivotMoveTimeCollection.reset();
+
+                CollectionMoving = true;
+
+                timeToWaitCollection = Math.max((Math.abs(getSecondPivotPosition() - collectSecondPivot) * 180) * timePerDegree, (Math.abs(getTopPivotPosition() - intermediateTopPivot) * 180) * timePerDegree);
+
+                setSecondPivot(collectSecondPivot);
+
+                setMainPivot(collectTopPivotPos);
+
+                setClaws(clawClosed);
+
+                RotateClaw.setPosition(rotateCollect);
+
+                break;
+            case intermediate:
+
+                setClaws(clawClosed);
+                setGripperState(GripperState.closed);
+
+                mainPivotOffSet = 0;
+
+                secondRotate.setPosition(secondRotateMiddleCollect);
+
+                armstateCurrent = armState.moving;
+
+                armstateTarget = armState.moving;
+
+                pivotMoveTimeCollection.reset();
+
+                intermediateMoving = true;
+
+                timeToWaitCollection = Math.max((Math.abs(getSecondPivotPosition() - collectSecondPivot) * 180) * timePerDegree, (Math.abs(getTopPivotPosition() - intermediateTopPivot) * 180) * timePerDegree);
+
+                setSecondPivot(collectSecondPivot);
+
+                setMainPivot(intermediateTopPivot);
+
+                RotateClaw.setPosition(rotateCollect);
+
+                break;
+            case delivery:
+
+                mainPivotOffSet = 0.2;
+
+                secondRotate.setPosition(secondRotateMiddle);
+
+                armstateCurrent = armState.moving;
+
+                armstateTarget = armState.moving;
+
+                pivotMoveTimeDelivery.reset();
+
+                DeliveryMoving = true;
+
+                setClaws(clawClosed);
+                setGripperState(GripperState.closed);
+
+                double distance = sensors.backBoard.getDistance(DistanceUnit.CM);
+
+                if(distance > mindistancemm && distance < maxdistancemm){
+                    mainPivotOffSet = 0.174 + (( distance - mindistancemm) * mainservopospermm);
+                }
+
+                targetMainPivot = deliveryTopPivot - slidesPos * servoPosPerTick + mainPivotOffSet;
+
+                setMainPivot(targetMainPivot);
+                setSecondPivot(deliverySecondPivot + (-slidesPos * servoPosPerTick + mainPivotOffSet) * mainToSecondConst);
+
+                RotateClaw.setPosition(rotateDeliver);
+
+                timeToWaitDelivery = Math.max((Math.abs(getSecondPivotPosition() - targetMainPivot) * 180) * timePerDegree, (Math.abs(getTopPivotPosition() - deliveryTopPivot) * 180) * timePerDegree);
+
+                break;
+            case deliverAuto:
+
+                secondRotate.setPosition(secondRotateMiddle);
+
+                armstateCurrent = armState.moving;
+
+                armstateTarget = armState.moving;
+
+                pivotMoveTimeAuto.reset();
+
+                DeliveryMovingAuto = true;
+
+                timeToWaitDelivery = Math.max((Math.abs(getSecondPivotPosition()-deliverySecondPivotAuto)*180)*timePerDegree, (Math.abs(getTopPivotPosition()-deliveryTopPivotAuto)*180)*timePerDegree);
+
+                setClaws(clawClosed);
+
+                setGripperState(GripperState.closed);
+
+                setSecondPivot(deliverySecondPivotAuto);
+
+                setMainPivot(deliveryTopPivotAuto);
+
+                RotateClaw.setPosition(rotateDeliver);
+
+                break;
+            case moving:
+
+                break;
+            default:
+        }
+
+        if (Objects.requireNonNull(armstateCurrent) == armState.moving) {
+
+            telemetry.addData("time for state", pivotMoveTimeDelivery.milliseconds());
+            telemetry.update();
+
+            if (DeliveryMoving && pivotMoveTimeDelivery.milliseconds() >= timeToWaitDelivery) {
+                armstateCurrent = armState.delivery;
+                DeliveryMoving = false;
+            }
+//
+//            if (DeliveryMovingAuto && pivotMoveTimeAuto.milliseconds() >= timeToWaitDelivery) {
+//                armstateCurrent = armState.deliverAuto;
+//                DeliveryMovingAuto = false;
+//            }
 
             if (intermediateMoving && pivotMoveTimeCollection.milliseconds() >= timeToWaitCollection) {
                 armstateCurrent = armState.intermediate;

@@ -61,7 +61,7 @@ public class Constants {
     public static double velocityDecreasePerPoint = 2.5;
 
     //in cm's per sec, these need to be tuned
-    public static final double maxXAcceleration = 30;
+    public static final double maxXAcceleration = 40;
     public static final double maxYAcceleration =  maxXAcceleration*0.66;
 
     /**teleop driver constants*/
