@@ -704,6 +704,74 @@ public class mecanumFollower {
 
         do {
 
+            if (Math.abs(pointToTurnOn.getX() - odometry.X) < 15 && Math.abs(pointToTurnOn.getY() - odometry.Y) < 15){
+                collection.setState(Collection.intakePowerState.on);
+                collection.updateIntakeState();
+            }
+
+            if (Math.abs(pointToTurnOff.getX() - odometry.X) < 15 && Math.abs(pointToTurnOff.getY() - odometry.Y) < 15){
+                collection.setState(Collection.intakePowerState.off);
+                collection.updateIntakeState();
+
+                delivery.setGripperState(Delivery.GripperState.closed);
+                delivery.updateGrippers();
+            }
+
+            if (Math.abs(pointToReverse.getX() - odometry.X) < 15 && Math.abs(pointToReverse.getY() - odometry.Y) < 15){
+                collection.setState(Collection.intakePowerState.reversed);
+                collection.updateIntakeState();
+            }
+
+            odometry.update();
+
+            robotPositionVector.set(odometry.X, odometry.Y);
+
+            if (Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 3 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 5 && Math.abs(odometry.getVerticalVelocity()) < 5 && Math.abs(odometry.getHorizontalVelocity()) < 5 && Math.abs(targetHeading - odometry.heading) < 2){
+                reachedTarget = true;
+            }
+
+            basePower(robotPositionVector, targetPoint, closeToTarget, odometry, targetHeading);
+
+            double denominator = Math.max(Math.abs(vertical) + Math.abs(horizontal) + Math.abs(pivot), 1);
+
+            double left_Front = (vertical + horizontal + pivot) / denominator;
+            double left_Back = (vertical - horizontal + pivot) / denominator;
+            double right_Front = (vertical - horizontal - pivot) / denominator;
+            double right_Back = (vertical + horizontal - pivot) / denominator;
+
+            drive.RF.setPower(right_Front);
+            drive.RB.setPower(right_Back);
+            drive.LF.setPower(left_Front);
+            drive.LB.setPower(left_Back);
+
+        }while(!reachedTarget);
+
+        drive.RF.setPower(0);
+        drive.RB.setPower(0);
+        drive.LF.setPower(0);
+        drive.LB.setPower(0);
+
+    }
+
+    //turn intake on method
+    public void followPathCollection(double targetHeading, Odometry odometry, Drivetrain drive, Collection collection, Delivery delivery, Delivery_Slides deliverySlides, Vector2D pointToTurnOn, Vector2D pointToTurnOff, Vector2D pointToReverse, boolean arm){
+
+        //for getting pathing power and corrective as well
+        Vector2D robotPositionVector = new Vector2D(odometry.X, odometry.Y);
+
+        Vector2D targetPoint = pathfollow.getPointOnFollowable(pathfollow.getLastPoint());
+
+        boolean reachedTarget = false;
+
+        boolean closeToTarget = false;
+
+        boolean onlyOnce = false;
+
+        xI = 0;
+        yI = 0;
+
+        do {
+
             if (odometry.X > 180 && odometry.getVerticalVelocity() > 5 && !onlyOnce){
 
                 onlyOnce = true;
