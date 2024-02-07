@@ -601,7 +601,6 @@ public class Delivery {
         if (Objects.requireNonNull(armstateCurrent) == armState.moving) {
 
             telemetry.addData("time for state", pivotMoveTimeDelivery.milliseconds());
-            telemetry.update();
 
             if (DeliveryMoving && pivotMoveTimeDelivery.milliseconds() >= timeToWaitDelivery) {
                 armstateCurrent = armState.delivery;
