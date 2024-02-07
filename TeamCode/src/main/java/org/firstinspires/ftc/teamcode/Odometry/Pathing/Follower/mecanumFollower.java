@@ -686,6 +686,59 @@ public class mecanumFollower {
     }
 
     //turn intake on method
+    public void followPathCollection(double targetHeading, Odometry odometry, Drivetrain drive, Collection collection, Vector2D pointToTurnOn){
+
+        //for getting pathing power and corrective as well
+        Vector2D robotPositionVector = new Vector2D(odometry.X, odometry.Y);
+
+        Vector2D targetPoint = pathfollow.getPointOnFollowable(pathfollow.getLastPoint());
+
+        boolean reachedTarget = false;
+
+        boolean closeToTarget = false;
+
+        xI = 0;
+        yI = 0;
+
+        do {
+
+            if (Math.abs(pointToTurnOn.getX() - odometry.X) < 20 && Math.abs(pointToTurnOn.getY() - odometry.Y) < 20){
+                collection.setState(Collection.intakePowerState.on);
+                collection.updateIntakeState();
+            }
+
+            odometry.update();
+
+            robotPositionVector.set(odometry.X, odometry.Y);
+
+            if (Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 1.4 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 1.4 && Math.abs(odometry.getVerticalVelocity()) < 3 && Math.abs(odometry.getHorizontalVelocity()) < 3 && Math.abs(targetHeading - odometry.heading) < 2){
+                reachedTarget = true;
+            }
+
+            basePower(robotPositionVector, targetPoint, closeToTarget, odometry, targetHeading);
+
+            double denominator = Math.max(Math.abs(vertical) + Math.abs(horizontal) + Math.abs(pivot), 1);
+
+            double left_Front = (vertical + horizontal + pivot) / denominator;
+            double left_Back = (vertical - horizontal + pivot) / denominator;
+            double right_Front = (vertical - horizontal - pivot) / denominator;
+            double right_Back = (vertical + horizontal - pivot) / denominator;
+
+            drive.RF.setPower(right_Front);
+            drive.RB.setPower(right_Back);
+            drive.LF.setPower(left_Front);
+            drive.LB.setPower(left_Back);
+
+        }while(!reachedTarget);
+
+        drive.RF.setPower(0);
+        drive.RB.setPower(0);
+        drive.LF.setPower(0);
+        drive.LB.setPower(0);
+
+    }
+
+    //turn intake on method
     public void followPath(double targetHeading, Odometry odometry, Drivetrain drive, Collection collection, Vector2D pointToTurnOn){
 
         //for getting pathing power and corrective as well
