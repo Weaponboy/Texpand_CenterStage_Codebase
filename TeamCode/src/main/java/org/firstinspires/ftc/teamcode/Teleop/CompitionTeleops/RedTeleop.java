@@ -51,6 +51,7 @@ public class RedTeleop extends OpMode implements TeleopPathing {
     teleopPathBuilder path5 = new teleopPathBuilder();
     teleopPathBuilder path6 = new teleopPathBuilder();
     teleopPathBuilder path7 = new teleopPathBuilder();
+    teleopPathBuilder droneLauncher = new teleopPathBuilder();
 
     Vector2D robotPos = new Vector2D();
 
@@ -120,6 +121,24 @@ public class RedTeleop extends OpMode implements TeleopPathing {
         currentGamepad2.copy(gamepad2);
 
         /**drive code*/
+
+        if (gamepad1.left_trigger > 0.5 && odometry.X > 205){
+
+            double xerror = Math.abs(getRealCoords(250) - robotPos.getX());
+
+            if (xerror < 4){
+
+            }else {
+
+                droneLauncher.buildPathLine(robotPos, new Vector2D(getRealCoords(250), robotPos.getY()));
+
+                follower.setPath(droneLauncher.followablePath, droneLauncher.pathingVelocity);
+
+                pathing = true;
+
+            }
+
+        }
 
         if (gamepad1.dpad_left){
             headingLock = true;

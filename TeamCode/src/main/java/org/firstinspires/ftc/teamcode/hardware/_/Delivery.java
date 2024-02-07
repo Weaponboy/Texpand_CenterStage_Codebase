@@ -606,7 +606,7 @@ public class Delivery {
                 armstateCurrent = armState.delivery;
                 DeliveryMoving = false;
             }
-//
+
 //            if (DeliveryMovingAuto && pivotMoveTimeAuto.milliseconds() >= timeToWaitDelivery) {
 //                armstateCurrent = armState.deliverAuto;
 //                DeliveryMovingAuto = false;
