@@ -94,7 +94,7 @@ public interface CycleMethods extends Auto_Methods {
         collection.setState(Collection.intakePowerState.reversed);
         collection.updateIntakeState();
 
-        sleep(100);
+        sleep(200);
 
         collection.setState(Collection.intakePowerState.off);
         collection.updateIntakeState();
