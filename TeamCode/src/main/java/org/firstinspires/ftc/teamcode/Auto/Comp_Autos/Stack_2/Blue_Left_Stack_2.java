@@ -124,12 +124,10 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements CycleMethods {
             collection.updateIntakeHeight();
 
             follower.followPathCollection(180, odometry, drive, collection, delivery, deliverySlides, new Vector2D(125, 180), new Vector2D(43, 119), new Vector2D(86, 139));
-//
-//            collectPixels();
-//
-//            follower.setPath(deliver.followablePath, deliver.pathingVelocity);
-//
-//            follower.followPath(180, odometry, drive, delivery, deliverySlides, collection);
+
+            follower.setPath(deliver.followablePath, deliver.pathingVelocity);
+
+            follower.followPathCollection(180, odometry, drive, collection, delivery, deliverySlides, new Vector2D(125, 180), new Vector2D(43, 119), new Vector2D(86, 139));
 
             deployArm();
 
