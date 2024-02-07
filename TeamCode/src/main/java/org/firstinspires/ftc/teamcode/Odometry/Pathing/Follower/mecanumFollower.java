@@ -408,6 +408,10 @@ public class mecanumFollower {
 
         Vector2D targetPoint = pathfollow.getPointOnFollowable(pathfollow.getLastPoint());
 
+        ElapsedTime elapsedTime1 = new ElapsedTime();
+
+        elapsedTime1.reset();
+
         boolean reachedTarget = false;
 
         boolean closeToTarget = false;
@@ -422,20 +426,23 @@ public class mecanumFollower {
 
             robotPositionVector.set(odometry.X, odometry.Y);
 
-            if (odometry.X > 260 && odometry.getVerticalVelocity() > 5 && !onlyOnce){
+            if (odometry.X > 180 && odometry.getVerticalVelocity() > 5 && !onlyOnce){
 
                 onlyOnce = true;
 
-                collection.setIntakeHeight(Collection.intakeHeightState.letClawThrough);
-                collection.updateIntakeHeight();
+                deliverySlides.DeliverySlides(400, 0.8);
 
-                sleep(200);
-
-                deliverySlides.DeliverySlides(220, 0.6);
+                delivery.setGripperState(Delivery.GripperState.closed);
+                delivery.updateGrippers();
 
                 delivery.setArmTargetState(Delivery.armState.deliverAuto);
                 delivery.updateArm(deliverySlides.getCurrentposition());
 
+            }
+
+            if (elapsedTime1.milliseconds() > 400){
+                collection.setState(Collection.intakePowerState.off);
+                collection.updateIntakeState();
             }
 
             if (Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 1 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 1 && Math.abs(odometry.getVerticalVelocity()) < 3 && Math.abs(odometry.getHorizontalVelocity()) < 3 && Math.abs(targetHeading - odometry.heading) < 1){
