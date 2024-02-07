@@ -441,6 +441,15 @@ public class mecanumFollower {
             }
 
             if (elapsedTime1.milliseconds() > 400){
+
+                delivery.setGripperState(Delivery.GripperState.closed);
+                delivery.updateGrippers();
+
+                collection.setState(Collection.intakePowerState.reversed);
+                collection.updateIntakeState();
+            }
+
+            if (elapsedTime1.milliseconds() > 500){
                 collection.setState(Collection.intakePowerState.off);
                 collection.updateIntakeState();
             }
