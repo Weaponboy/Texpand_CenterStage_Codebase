@@ -67,7 +67,7 @@ public interface Auto_Methods {
 
     }
 
-    default void dropYellowPixel(Telemetry telemetry) throws InterruptedException {
+    default void dropYellowPixel(Telemetry telemetry) throws InterruptedException{
 
         deliverySlides.DeliverySlides(220, 1);
 
@@ -92,8 +92,6 @@ public interface Auto_Methods {
 
         delivery.setArmTargetState(Delivery.armState.collect);
         delivery.updateArm(deliverySlides.getCurrentposition());
-
-        sleep(500);
 
         deliverySlides.DeliverySlides(0, -0.6);
 
