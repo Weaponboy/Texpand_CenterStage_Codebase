@@ -67,7 +67,7 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements CycleMethods {
 
             odometry.update();
 
-            dropYellowPixel();
+            dropYellowPixel(telemetry);
 
             collect.buildPath(blueLeftBuilder.Section.collect);
 
@@ -109,7 +109,7 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements CycleMethods {
 
             odometry.update();
 
-            dropYellowPixel();
+            dropYellowPixel(telemetry);
 
             collect.buildPath(blueLeftBuilder.Section.collect);
 
@@ -157,7 +157,7 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements CycleMethods {
 
             odometry.update();
 
-            dropYellowPixel();
+            dropYellowPixel(telemetry);
 
             collect.buildPath(blueLeftBuilder.Section.collect);
 

@@ -67,7 +67,7 @@ public class Blue_Left_Preload extends LinearOpMode implements Auto_Methods {
 
             Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
 
-            dropYellowPixel(telemetry);
+            dropYellowPixel();
 
             lastToBackboard.buildPathLine(startPos, new Vector2D(290, 30));
 
@@ -91,7 +91,7 @@ public class Blue_Left_Preload extends LinearOpMode implements Auto_Methods {
 
             Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
 
-            dropYellowPixel(telemetry);
+            dropYellowPixel();
 
             lastToBackboard.buildPathLine(startPos, new Vector2D(290, 30));
 
@@ -121,7 +121,7 @@ public class Blue_Left_Preload extends LinearOpMode implements Auto_Methods {
 
             Vector2D startPos = new Vector2D(odometry.X, odometry.Y);
 
-            dropYellowPixel(telemetry);
+            dropYellowPixel();
 
             lastToBackboard.buildPathLine(startPos, new Vector2D(290, 30));
 
