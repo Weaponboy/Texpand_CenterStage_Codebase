@@ -37,6 +37,10 @@ public class TestingPhaseAuto extends LinearOpMode implements Auto_Methods {
 
     blueLeftBuilder secondPath = new blueLeftBuilder();
 
+    blueLeftBuilder collect = new blueLeftBuilder();
+
+    blueLeftBuilder deliver = new blueLeftBuilder();
+
     blueRightBuilder lastToBackboard = new blueRightBuilder();
 
     mecanumFollower follower = new mecanumFollower();
@@ -46,7 +50,15 @@ public class TestingPhaseAuto extends LinearOpMode implements Auto_Methods {
     enum Phase{
         purple,
         yellow,
+        first2,
+        second2,
         finished
+    }
+
+    enum Auto{
+        preload,
+        two,
+        four
     }
 
     boolean pathing = false;
@@ -55,10 +67,34 @@ public class TestingPhaseAuto extends LinearOpMode implements Auto_Methods {
 
     Phase phase = Phase.purple;
 
+    Auto auto = Auto.preload;
+
+    boolean lockIn = false;
+
     @Override
     public void runOpMode() throws InterruptedException {
 
         initialize();
+
+        while(opModeInInit() && !lockIn){
+
+            telemetry.addData("Auto activated", auto);
+            telemetry.addData("press y for 2+0", "");
+            telemetry.addData("press a for 2+2", "");
+            telemetry.addData("press b for 2+4", "");
+            telemetry.addData("press x to lock in!!!!", "");
+
+            if (gamepad1.a){
+                auto = Auto.two;
+            } else if (gamepad1.b) {
+                auto = Auto.four;
+            } else if (gamepad1.y) {
+                auto = Auto.preload;
+            }else if (gamepad1.x) {
+                lockIn = true;
+            }
+
+        }
 
         waitForStart();
 
@@ -104,6 +140,38 @@ public class TestingPhaseAuto extends LinearOpMode implements Auto_Methods {
                             pathing = follower.followPathAuto(targetHeading, odometry, drive);
 
                         }else if (Math.abs(300 - odometry.X) < 2 && Math.abs(82.5 - odometry.Y) < 2){
+                            if (auto == Auto.preload){
+                                dropYellowPixelWait();
+                                phase = Phase.finished;
+                            }else {
+                                dropYellowPixel();
+
+                                collect.buildPath(blueLeftBuilder.Section.collect);
+
+                                deliver.buildPath(blueLeftBuilder.Section.deliver);
+
+                                phase = Phase.first2;
+                            }
+                        }
+
+                        break;
+                    case first2:
+
+                        if (!builtPath){
+                            builtPath = true;
+                            follower.setPath(collect.followablePath, collect.pathingVelocity);
+                            targetHeading = 180;
+                        }
+
+                        if (pathing){
+                            pathing = follower.followPathAuto(targetHeading, odometry, drive);
+
+                            if (Math.abs(250 - odometry.X) < 15 && Math.abs(46 - odometry.Y) < 15){
+                                targetHeading = 180;
+                                phase = Phase.yellow;
+                            }
+
+                        }else if (Math.abs(300 - odometry.X) < 2 && Math.abs(110 - odometry.Y) < 2){
                             dropYellowPixelWait();
                             phase = Phase.finished;
                         }
