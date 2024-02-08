@@ -61,9 +61,9 @@ public interface Auto_Methods {
         delivery.setArmTargetState(Delivery.armState.collect);
         delivery.updateArm(deliverySlides.getCurrentposition());
 
-        sleep(500);
+        sleep(400);
 
-        deliverySlides.DeliverySlides(0, -0.6);
+        deliverySlides.DeliverySlides(0, -1);
 
     }
 
@@ -96,7 +96,7 @@ public interface Auto_Methods {
         delivery.setArmTargetState(Delivery.armState.collect);
         delivery.updateArm(deliverySlides.getCurrentposition());
 
-        deliverySlides.DeliverySlides(0, -0.6);
+        deliverySlides.DeliverySlides(0, -1);
 
     }
 
@@ -127,40 +127,34 @@ public interface Auto_Methods {
 
     default void dropYellowPixelWait() throws InterruptedException {
 
-        collection.setIntakeHeight(Collection.intakeHeightState.letClawThrough);
-        collection.updateIntakeHeight();
-
-        sleep(200);
-
-        deliverySlides.DeliverySlides(220, 0.6);
+        deliverySlides.DeliverySlides(220, 1);
 
         while (deliverySlides.getCurrentposition() < 210){}
 
         delivery.setArmTargetState(Delivery.armState.delivery);
         delivery.updateArm(deliverySlides.getCurrentposition());
 
-        sleep(1000);
+        boolean reachedTarget = false;
+
+        while (!reachedTarget){
+            reachedTarget = delivery.getArmState() == Delivery.armState.delivery;
+            delivery.updateArm(deliverySlides.getCurrentposition());
+        }
 
         delivery.setRightGripperState(Delivery.rightGripperState.openDeliver);
         delivery.updateGrippers();
-
-        deliverySlides.DeliverySlides(320, 0.6);
-
-        while (deliverySlides.getCurrentposition() < 310){}
 
         sleep(400);
 
         delivery.setArmTargetState(Delivery.armState.collect);
         delivery.updateArm(deliverySlides.getCurrentposition());
 
-        sleep(1000);
+        sleep(400);
 
-        deliverySlides.DeliverySlides(0, -0.6);
+        deliverySlides.DeliverySlides(0, -1);
 
         while (deliverySlides.getCurrentposition() > 30){
-
         }
-
     }
 
 
