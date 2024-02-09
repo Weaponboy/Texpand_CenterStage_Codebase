@@ -413,7 +413,7 @@ public class Delivery {
                 double distance = sensors.backBoard.getDistance(DistanceUnit.CM);
 
                 if(distance > mindistancemm && distance < maxdistancemm){
-                    mainPivotOffSet = 0.174 + (( distance - mindistancemm) * mainservopospermm);
+                    mainPivotOffSet = 0.23 + (( distance - mindistancemm) * mainservopospermm);
                 }
 
                 targetMainPivot = deliveryTopPivot - slidesPos * servoPosPerTick + mainPivotOffSet;

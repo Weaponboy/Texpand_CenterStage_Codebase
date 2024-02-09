@@ -593,25 +593,26 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                             builtPath = true;
                             pathing = true;
+
                             follower.setPath(collect.followablePath, collect.pathingVelocity);
 
                             delivery.setGripperState(Delivery.GripperState.open);
                             delivery.updateGrippers();
 
-                            collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
+                            collection.setIntakeHeight(Collection.intakeHeightState.secondPixel);
                             collection.updateIntakeHeight();
 
                             targetHeading = 180;
                         }
 
-                        if (pathing){
+                        odometry.update();
 
-                            pathing = follower.followPathAuto(targetHeading, odometry, drive);
+                        if (Math.abs(125 - odometry.X) < 30 && Math.abs(180 - odometry.Y) < 30){
+                            collection.setState(Collection.intakePowerState.on);
+                            collection.updateIntakeState();
+                        }
 
-                            if (Math.abs(125 - odometry.X) < 15 && Math.abs(180 - odometry.Y) < 15){
-                                collection.setState(Collection.intakePowerState.on);
-                                collection.updateIntakeState();
-                            }
+                        if (delivering){
 
                             if (Math.abs(121 - odometry.X) < 15 && Math.abs(153 - odometry.Y) < 15){
 
@@ -630,7 +631,7 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                             }
 
-                            if (odometry.X > 180 && odometry.getVerticalVelocity() > 5 && !onlyOnce){
+                            if (odometry.X > 180 && odometry.getVerticalVelocity() > -5 && !onlyOnce){
 
                                 onlyOnce = true;
 
@@ -644,13 +645,27 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                             }
 
-                        }else if (Math.abs(38 - odometry.X) < 5 && Math.abs(130 - odometry.Y) < 5){
+                        }
+
+                        if (pathing){
+
+                            if (delivering){
+                                pathing = follower.followPathAuto(targetHeading, odometry, drive, 5);
+                            }else {
+                                pathing = follower.followPathAuto(targetHeading, odometry, drive);
+                            }
+
+                        }else if (Math.abs(41 - odometry.X) < 5 && Math.abs(130 - odometry.Y) < 5){
 
                             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
+                            pathing = true;
+
+                            delivering = true;
+
                             onlyOnce = false;
 
-                        } else if (Math.abs(300 - odometry.X) < 5 && Math.abs(90 - odometry.Y) < 5){
+                        }else if (Math.abs(300 - odometry.X) < 5 && Math.abs(90 - odometry.Y) < 5){
 
                             drive.RF.setPower(0);
                             drive.RB.setPower(0);
@@ -661,8 +676,12 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                             dropPixels();
 
-                            retractWait();
+                            drive.RF.setPower(0);
+                            drive.RB.setPower(0);
+                            drive.LF.setPower(0);
+                            drive.LB.setPower(0);
 
+                            retractWait();
                             phase = Phase.finished;
 
                         }
