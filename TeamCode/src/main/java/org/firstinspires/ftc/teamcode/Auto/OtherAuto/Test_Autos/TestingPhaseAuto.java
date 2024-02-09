@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Preload.Auto_Methods;
+import org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Stack_2.CycleMethods;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower.mecanumFollower;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.blueLeftBuilder;
@@ -14,12 +15,13 @@ import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilde
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.redRightBuilder;
 import org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount;
 import org.firstinspires.ftc.teamcode.hardware._.Collection;
+import org.firstinspires.ftc.teamcode.hardware._.Delivery;
 import org.firstinspires.ftc.teamcode.hardware._.Drivetrain;
 import org.firstinspires.ftc.teamcode.hardware._.Odometry;
 import org.firstinspires.ftc.vision.VisionPortal;
 
 @Autonomous(name = "Testing Phase blue preload left", group = "Preload")
-public class TestingPhaseAuto extends LinearOpMode implements Auto_Methods {
+public class TestingPhaseAuto extends LinearOpMode implements CycleMethods {
 
     public WebcamName frontCam;
 
@@ -70,6 +72,8 @@ public class TestingPhaseAuto extends LinearOpMode implements Auto_Methods {
     Auto auto = Auto.preload;
 
     boolean lockIn = false;
+
+    boolean onlyOnce = true;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -160,6 +164,11 @@ public class TestingPhaseAuto extends LinearOpMode implements Auto_Methods {
                         if (!builtPath){
                             builtPath = true;
                             follower.setPath(collect.followablePath, collect.pathingVelocity);
+                            delivery.setGripperState(Delivery.GripperState.open);
+                            delivery.updateGrippers();
+
+                            collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
+                            collection.updateIntakeHeight();
                             targetHeading = 180;
                         }
 
@@ -171,9 +180,58 @@ public class TestingPhaseAuto extends LinearOpMode implements Auto_Methods {
                                 phase = Phase.yellow;
                             }
 
-                        }else if (Math.abs(300 - odometry.X) < 2 && Math.abs(110 - odometry.Y) < 2){
-                            dropYellowPixelWait();
+                            if (Math.abs(125 - odometry.X) < 15 && Math.abs(180 - odometry.Y) < 15){
+                                collection.setState(Collection.intakePowerState.on);
+                                collection.updateIntakeState();
+                            }
+
+                            if (Math.abs(121 - odometry.X) < 15 && Math.abs(153 - odometry.Y) < 15){
+
+                                collection.setState(Collection.intakePowerState.off);
+                                collection.updateIntakeState();
+
+                            }
+
+                            if (Math.abs(86 - odometry.X) < 15 && Math.abs(139 - odometry.Y) < 15){
+
+                                collection.setState(Collection.intakePowerState.reversed);
+                                collection.updateIntakeState();
+
+                                delivery.setGripperState(Delivery.GripperState.closed);
+                                delivery.updateGrippers();
+
+                            }
+
+                            if (odometry.X > 180 && odometry.getVerticalVelocity() > 5 && !onlyOnce){
+
+                                onlyOnce = true;
+
+                                deliverySlides.DeliverySlides(400, 0.8);
+
+                                delivery.setGripperState(Delivery.GripperState.closed);
+                                delivery.updateGrippers();
+
+                                delivery.setArmTargetState(Delivery.armState.deliverAuto);
+                                delivery.updateArm(deliverySlides.getCurrentposition());
+
+                            }
+
+                        }else if (Math.abs(38 - odometry.X) < 2 && Math.abs(130 - odometry.Y) < 2){
+
+                            follower.setPath(deliver.followablePath, deliver.pathingVelocity);
+
+                            onlyOnce = false;
+
+                        } else if (Math.abs(300 - odometry.X) < 2 && Math.abs(90 - odometry.Y) < 2){
+
+                            deployArm();
+
+                            dropPixels();
+
+                            retractWait();
+
                             phase = Phase.finished;
+
                         }
 
                         break;
