@@ -131,10 +131,12 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                             follower.setPath(firstPath.followablePath, firstPath.pathingVelocity);
 
                             targetHeading = 240;
+
                             pathing = true;
                         }
 
                         if (pathing){
+
                             pathing = follower.followPathAuto(targetHeading, odometry, drive);
 
                             if (Math.abs(250 - odometry.X) < 15 && Math.abs(46 - odometry.Y) < 15){
@@ -159,6 +161,7 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                             pathing = follower.followPathAuto(targetHeading, odometry, drive);
 
                         }else if (Math.abs(300 - odometry.X) < 2 && Math.abs(82.5 - odometry.Y) < 2){
+
                             if (auto == Auto.preload){
 
                                 drive.RF.setPower(0);
@@ -177,7 +180,10 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                                 deliver.buildPath(blueLeftBuilder.Section.deliver);
 
                                 phase = Phase.first2;
+
+                                builtPath = false;
                             }
+
                         }
 
                         break;
@@ -197,11 +203,6 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                         if (pathing){
                             pathing = follower.followPathAuto(targetHeading, odometry, drive);
-
-                            if (Math.abs(250 - odometry.X) < 15 && Math.abs(46 - odometry.Y) < 15){
-                                targetHeading = 180;
-                                phase = Phase.yellow;
-                            }
 
                             if (Math.abs(125 - odometry.X) < 15 && Math.abs(180 - odometry.Y) < 15){
                                 collection.setState(Collection.intakePowerState.on);
@@ -272,6 +273,8 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                                 drive.RB.setPower(0);
                                 drive.LF.setPower(0);
                                 drive.LB.setPower(0);
+
+                                builtPath = false;
 
                                 retract();
                                 phase = Phase.second2;
@@ -449,6 +452,8 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                                 deliver.buildPath(blueLeftBuilder.Section.deliver);
 
+                                builtPath = false;
+
                                 phase = Phase.first2;
                             }
 
@@ -471,11 +476,6 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                         if (pathing){
                             pathing = follower.followPathAuto(targetHeading, odometry, drive);
-
-                            if (Math.abs(250 - odometry.X) < 15 && Math.abs(46 - odometry.Y) < 15){
-                                targetHeading = 180;
-                                phase = Phase.yellow;
-                            }
 
                             if (Math.abs(125 - odometry.X) < 15 && Math.abs(180 - odometry.Y) < 15){
                                 collection.setState(Collection.intakePowerState.on);
@@ -547,6 +547,8 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                                 drive.LF.setPower(0);
                                 drive.LB.setPower(0);
 
+                                builtPath = false;
+
                                 retract();
                                 phase = Phase.second2;
 
@@ -576,11 +578,6 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                         if (pathing){
 
                             pathing = follower.followPathAuto(targetHeading, odometry, drive);
-
-                            if (Math.abs(250 - odometry.X) < 15 && Math.abs(46 - odometry.Y) < 15){
-                                targetHeading = 180;
-                                phase = Phase.yellow;
-                            }
 
                             if (Math.abs(125 - odometry.X) < 15 && Math.abs(180 - odometry.Y) < 15){
                                 collection.setState(Collection.intakePowerState.on);
@@ -720,6 +717,9 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                                 deliver.buildPath(blueLeftBuilder.Section.deliver);
 
                                 phase = Phase.first2;
+
+                                builtPath = false;
+
                             }
                         }
 
@@ -815,6 +815,8 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                                 drive.RB.setPower(0);
                                 drive.LF.setPower(0);
                                 drive.LB.setPower(0);
+
+                                builtPath = false;
 
                                 retract();
                                 phase = Phase.second2;
