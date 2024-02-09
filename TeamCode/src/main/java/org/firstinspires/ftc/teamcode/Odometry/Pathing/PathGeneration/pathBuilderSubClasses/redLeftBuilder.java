@@ -275,17 +275,9 @@ public class redLeftBuilder extends pathBuilderMain implements Red_Points_Overla
 
     private void secondPositionCollect(){
 
-        buildCurveSegment(CS1S, CC1S, CE1S);
-
-        buildCurveSegment(CS2S, CC2S, CE2S);
-
     }
 
     private void secondPositionDeliver(){
-
-        buildCurveSegment(DS1S, DC1S, DE1S);
-
-        buildCurveSegment(DS2S, DC2S, DE2S);
 
     }
 
@@ -313,18 +305,10 @@ public class redLeftBuilder extends pathBuilderMain implements Red_Points_Overla
     /**third Position*/
     private void thirdPositionCollect(){
 
-        buildCurveSegment(CS1T, CC1T, CE1T);
-
-        buildCurveSegment(CS2T, CC2T, CE2T);
-
     }
 
     /**third Position*/
     private void thirdPositionDeliver(){
-
-        buildCurveSegment(DS1T, DC1T, DE1T);
-
-        buildCurveSegment(DS2T, DC2T, DE2T);
 
     }
 }
