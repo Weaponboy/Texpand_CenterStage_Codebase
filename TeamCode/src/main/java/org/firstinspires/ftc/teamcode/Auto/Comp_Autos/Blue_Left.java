@@ -75,7 +75,7 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
     boolean onlyOnce = true;
 
-    boolean delivering = true;
+    boolean delivering = false;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -584,7 +584,6 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                                 phase = Phase.second2;
 
                             }
-
 
                         }
 
