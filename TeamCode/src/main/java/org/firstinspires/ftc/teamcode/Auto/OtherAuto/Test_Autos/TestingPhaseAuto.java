@@ -80,7 +80,7 @@ public class TestingPhaseAuto extends LinearOpMode implements CycleMethods {
 
         initialize();
 
-        while(opModeInInit() && !lockIn){
+        while(!lockIn){
 
             telemetry.addData("Auto activated", auto);
             telemetry.addData("press y for 2+0", "");
