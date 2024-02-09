@@ -53,6 +53,8 @@ public interface Auto_Methods {
             delivery.updateArm(deliverySlides.getCurrentposition());
         }
 
+        sleep(400);
+
         delivery.setRightGripperState(Delivery.rightGripperState.openDeliver);
         delivery.updateGrippers();
 

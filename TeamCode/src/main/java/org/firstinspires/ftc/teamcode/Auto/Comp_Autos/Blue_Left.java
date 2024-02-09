@@ -160,7 +160,7 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                             pathing = follower.followPathAuto(targetHeading, odometry, drive);
 
-                        }else if (Math.abs(300 - odometry.X) < 2 && Math.abs(82.5 - odometry.Y) < 2){
+                        }else if (Math.abs(300 - odometry.X) < 5 && Math.abs(82.5 - odometry.Y) < 5){
 
                             if (auto == Auto.preload){
 
