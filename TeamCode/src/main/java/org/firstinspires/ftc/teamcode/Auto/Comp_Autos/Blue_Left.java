@@ -75,6 +75,8 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
     boolean onlyOnce = true;
 
+    boolean delivering = true;
+
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -493,34 +495,38 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                             collection.updateIntakeState();
                         }
 
-                        if (Math.abs(121 - odometry.X) < 15 && Math.abs(153 - odometry.Y) < 15){
+                        if (delivering){
 
-                            collection.setState(Collection.intakePowerState.off);
-                            collection.updateIntakeState();
+                            if (Math.abs(121 - odometry.X) < 15 && Math.abs(153 - odometry.Y) < 15){
 
-                        }
+                                collection.setState(Collection.intakePowerState.off);
+                                collection.updateIntakeState();
 
-                        if (Math.abs(86 - odometry.X) < 15 && Math.abs(139 - odometry.Y) < 15){
+                            }
 
-                            collection.setState(Collection.intakePowerState.reversed);
-                            collection.updateIntakeState();
+                            if (Math.abs(86 - odometry.X) < 15 && Math.abs(139 - odometry.Y) < 15){
 
-                            delivery.setGripperState(Delivery.GripperState.closed);
-                            delivery.updateGrippers();
+                                collection.setState(Collection.intakePowerState.reversed);
+                                collection.updateIntakeState();
 
-                        }
+                                delivery.setGripperState(Delivery.GripperState.closed);
+                                delivery.updateGrippers();
 
-                        if (odometry.X > 180 && odometry.getVerticalVelocity() > -5 && !onlyOnce){
+                            }
 
-                            onlyOnce = true;
+                            if (odometry.X > 180 && odometry.getVerticalVelocity() > -5 && !onlyOnce){
 
-                            deliverySlides.DeliverySlides(400, 0.8);
+                                onlyOnce = true;
 
-                            delivery.setGripperState(Delivery.GripperState.closed);
-                            delivery.updateGrippers();
+                                deliverySlides.DeliverySlides(400, 0.8);
 
-                            delivery.setArmTargetState(Delivery.armState.deliverAuto);
-                            delivery.updateArm(deliverySlides.getCurrentposition());
+                                delivery.setGripperState(Delivery.GripperState.closed);
+                                delivery.updateGrippers();
+
+                                delivery.setArmTargetState(Delivery.armState.deliverAuto);
+                                delivery.updateArm(deliverySlides.getCurrentposition());
+
+                            }
 
                         }
 
@@ -531,6 +537,10 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                         }else if (Math.abs(38 - odometry.X) < 5 && Math.abs(130 - odometry.Y) < 5){
 
                             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
+
+                            pathing = true;
+
+                            delivering = true;
 
                             onlyOnce = false;
 
