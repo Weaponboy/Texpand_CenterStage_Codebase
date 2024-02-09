@@ -482,7 +482,7 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                             delivery.setGripperState(Delivery.GripperState.open);
                             delivery.updateGrippers();
 
-                            collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
+                            collection.setIntakeHeight(Collection.intakeHeightState.secondPixel);
                             collection.updateIntakeHeight();
 
                             targetHeading = 180;

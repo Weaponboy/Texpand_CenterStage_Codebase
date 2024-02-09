@@ -40,7 +40,7 @@ public class Delivery {
 
     double timePerDegree = 7;
 
-    double collectTopPivotPos = 0.2;
+    double collectTopPivotPos = 0.15;
     double intermediateTopPivot = 0.3;
     double deliveryTopPivot = 0.7;
     double deliveryTopPivotNew = 1;
@@ -395,7 +395,7 @@ public class Delivery {
                 break;
             case delivery:
 
-                mainPivotOffSet = 0.2;
+                mainPivotOffSet = 0.25;
 
                 secondRotate.setPosition(secondRotateMiddle);
 
