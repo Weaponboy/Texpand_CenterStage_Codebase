@@ -240,7 +240,7 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                             }
 
-                        }else if (Math.abs(38 - odometry.X) < 2 && Math.abs(130 - odometry.Y) < 2){
+                        }else if (Math.abs(38 - odometry.X) < 5 && Math.abs(130 - odometry.Y) < 5){
 
                             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
@@ -347,13 +347,13 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                             }
 
-                        }else if (Math.abs(38 - odometry.X) < 2 && Math.abs(130 - odometry.Y) < 2){
+                        }else if (Math.abs(38 - odometry.X) < 5 && Math.abs(130 - odometry.Y) < 5){
 
                             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
                             onlyOnce = false;
 
-                        } else if (Math.abs(300 - odometry.X) < 2 && Math.abs(90 - odometry.Y) < 2){
+                        } else if (Math.abs(300 - odometry.X) < 5 && Math.abs(90 - odometry.Y) < 5){
 
                             drive.RF.setPower(0);
                             drive.RB.setPower(0);
@@ -428,7 +428,7 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                             pathing = follower.followPathAuto(targetHeading, odometry, drive);
 
-                        }else if (Math.abs(300 - odometry.X) < 2 && Math.abs(97.5 - odometry.Y) < 2){
+                        }else if (Math.abs(300 - odometry.X) < 5 && Math.abs(97.5 - odometry.Y) < 5){
 
                             drive.RF.setPower(0);
                             drive.RB.setPower(0);
@@ -519,7 +519,7 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                             onlyOnce = false;
 
-                        }else if (Math.abs(300 - odometry.X) < 2 && Math.abs(90 - odometry.Y) < 2){
+                        }else if (Math.abs(300 - odometry.X) < 5 && Math.abs(90 - odometry.Y) < 5){
 
                             drive.RF.setPower(0);
                             drive.RB.setPower(0);
@@ -615,13 +615,13 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                             }
 
-                        }else if (Math.abs(38 - odometry.X) < 2 && Math.abs(130 - odometry.Y) < 2){
+                        }else if (Math.abs(38 - odometry.X) < 5 && Math.abs(130 - odometry.Y) < 5){
 
                             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
                             onlyOnce = false;
 
-                        } else if (Math.abs(300 - odometry.X) < 2 && Math.abs(90 - odometry.Y) < 2){
+                        } else if (Math.abs(300 - odometry.X) < 5 && Math.abs(90 - odometry.Y) < 5){
 
                             drive.RF.setPower(0);
                             drive.RB.setPower(0);
@@ -674,7 +674,7 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                                 targetHeading = 0;
                             }
 
-                        }else if (Math.abs(210 - odometry.X) < 2 && Math.abs(90 - odometry.Y) < 2){
+                        }else if (Math.abs(210 - odometry.X) < 5 && Math.abs(90 - odometry.Y) < 5){
                             phase = Phase.yellow;
                             builtPath = false;
                         }
@@ -698,7 +698,7 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                                 targetHeading = 180;
                             }
 
-                        }else if (Math.abs(300 - odometry.X) < 2 && Math.abs(110 - odometry.Y) < 2){
+                        }else if (Math.abs(300 - odometry.X) < 5 && Math.abs(110 - odometry.Y) < 5){
                             if (auto == Auto.preload){
 
                                 drive.RF.setPower(0);
@@ -782,13 +782,13 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                             }
 
-                        }else if (Math.abs(38 - odometry.X) < 2 && Math.abs(130 - odometry.Y) < 2){
+                        }else if (Math.abs(38 - odometry.X) < 5 && Math.abs(130 - odometry.Y) < 5){
 
                             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
                             onlyOnce = false;
 
-                        }else if (Math.abs(300 - odometry.X) < 2 && Math.abs(90 - odometry.Y) < 2){
+                        }else if (Math.abs(300 - odometry.X) < 5 && Math.abs(90 - odometry.Y) < 5){
 
                             drive.RF.setPower(0);
                             drive.RB.setPower(0);
@@ -889,13 +889,13 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                             }
 
-                        }else if (Math.abs(38 - odometry.X) < 2 && Math.abs(130 - odometry.Y) < 2){
+                        }else if (Math.abs(38 - odometry.X) < 5 && Math.abs(130 - odometry.Y) < 5){
 
                             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
                             onlyOnce = false;
 
-                        } else if (Math.abs(300 - odometry.X) < 2 && Math.abs(90 - odometry.Y) < 2){
+                        } else if (Math.abs(300 - odometry.X) < 5 && Math.abs(90 - odometry.Y) < 5){
 
                             drive.RF.setPower(0);
                             drive.RB.setPower(0);
