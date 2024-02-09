@@ -119,11 +119,17 @@ public class TestingPhaseAuto extends LinearOpMode implements CycleMethods {
                 switch (phase){
                     case purple:
 
+                        telemetry.addData("dropping purple", "");
+                        telemetry.update();
+
                         odometry.update();
 
                         if (!builtPath){
+
                             builtPath = true;
+
                             follower.setPath(firstPath.followablePath, firstPath.pathingVelocity);
+
                             targetHeading = 240;
                             pathing = true;
                         }
@@ -264,16 +270,18 @@ public class TestingPhaseAuto extends LinearOpMode implements CycleMethods {
                         }
 
                         if (pathing){
+
                             pathing = follower.followPathAuto(targetHeading, odometry, drive);
 
                             if (Math.abs(236 - odometry.X) < 15 && Math.abs(60 - odometry.Y) < 15){
                                 targetHeading = 180;
-                                phase = Phase.yellow;
+//                                phase = Phase.yellow;
                             }
 
                         }
 
                         break;
+
                     case yellow:
 
                         odometry.update();
