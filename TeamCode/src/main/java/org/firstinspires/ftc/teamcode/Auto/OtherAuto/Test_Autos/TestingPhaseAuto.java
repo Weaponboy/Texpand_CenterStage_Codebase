@@ -300,7 +300,10 @@ public class TestingPhaseAuto extends LinearOpMode implements CycleMethods {
                             pathing = follower.followPathAuto(targetHeading, odometry, drive);
 
                         }else if (Math.abs(300 - odometry.X) < 2 && Math.abs(97.5 - odometry.Y) < 2){
-
+                            drive.RF.setPower(0);
+                            drive.RB.setPower(0);
+                            drive.LF.setPower(0);
+                            drive.LB.setPower(0);
                             dropYellowPixelWait();
                             phase = Phase.finished;
 
