@@ -34,7 +34,7 @@ public interface CycleMethods extends Auto_Methods {
 
 //        boolean armReady = false;
 
-        sleep(700);
+        sleep(800);
 
 //        while (!armReady){
 //
