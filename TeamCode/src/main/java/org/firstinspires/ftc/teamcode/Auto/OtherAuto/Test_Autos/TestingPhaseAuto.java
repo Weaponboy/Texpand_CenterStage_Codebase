@@ -279,9 +279,14 @@ public class TestingPhaseAuto extends LinearOpMode implements CycleMethods {
 
                             if (Math.abs(236 - odometry.X) < 15 && Math.abs(60 - odometry.Y) < 15){
                                 targetHeading = 180;
-//                                phase = Phase.yellow;
+                                phase = Phase.yellow;
                             }
 
+                        }else {
+                            drive.RF.setPower(0);
+                            drive.RB.setPower(0);
+                            drive.LF.setPower(0);
+                            drive.LB.setPower(0);
                         }
 
                         break;
