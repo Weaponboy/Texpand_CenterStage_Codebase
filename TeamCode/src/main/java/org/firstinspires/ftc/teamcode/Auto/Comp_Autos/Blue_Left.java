@@ -422,6 +422,9 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                     case yellow:
 
+                        telemetry.addData("dropping yellow", "");
+                        telemetry.update();
+
                         odometry.update();
 
                         if (pathing){
@@ -446,6 +449,10 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                                 phase = Phase.finished;
 
                             }else {
+
+                                telemetry.addData("dropping white to next", "");
+                                telemetry.update();
+
                                 dropYellowPixel();
 
                                 collect.buildPath(blueLeftBuilder.Section.collect);
