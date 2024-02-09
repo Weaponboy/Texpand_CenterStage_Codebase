@@ -423,6 +423,7 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                     case yellow:
 
                         telemetry.addData("dropping yellow", "");
+                        telemetry.addData("pathing", pathing);
                         telemetry.update();
 
                         odometry.update();
