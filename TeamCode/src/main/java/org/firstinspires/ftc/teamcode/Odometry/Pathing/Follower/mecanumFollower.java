@@ -1174,6 +1174,8 @@ public class mecanumFollower {
 
     public boolean followPathAuto(double targetHeading, Odometry odometry, Drivetrain drive){
 
+        odometry.update();
+
         Vector2D robotPositionVector = new Vector2D(odometry.X, odometry.Y);
 
         Vector2D targetPoint = pathfollow.getPointOnFollowable(pathfollow.getLastPoint());
