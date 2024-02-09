@@ -87,6 +87,7 @@ public class TestingPhaseAuto extends LinearOpMode implements CycleMethods {
             telemetry.addData("press a for 2+2", "");
             telemetry.addData("press b for 2+4", "");
             telemetry.addData("press x to lock in!!!!", "");
+            telemetry.update();
 
             if (gamepad1.a){
                 auto = Auto.two;
@@ -99,6 +100,8 @@ public class TestingPhaseAuto extends LinearOpMode implements CycleMethods {
             }
 
         }
+
+        telemetry.update();
 
         waitForStart();
 
@@ -122,6 +125,7 @@ public class TestingPhaseAuto extends LinearOpMode implements CycleMethods {
                             builtPath = true;
                             follower.setPath(firstPath.followablePath, firstPath.pathingVelocity);
                             targetHeading = 240;
+                            pathing = true;
                         }
 
                         if (pathing){
@@ -163,6 +167,7 @@ public class TestingPhaseAuto extends LinearOpMode implements CycleMethods {
 
                         if (!builtPath){
                             builtPath = true;
+                            pathing = true;
                             follower.setPath(collect.followablePath, collect.pathingVelocity);
                             delivery.setGripperState(Delivery.GripperState.open);
                             delivery.updateGrippers();
@@ -255,6 +260,7 @@ public class TestingPhaseAuto extends LinearOpMode implements CycleMethods {
                             builtPath = true;
                             follower.setPath(firstPath.followablePath, firstPath.pathingVelocity);
                             targetHeading = 270;
+                            pathing = true;
                         }
 
                         if (pathing){
@@ -306,6 +312,7 @@ public class TestingPhaseAuto extends LinearOpMode implements CycleMethods {
                             builtPath = true;
                             follower.setPath(firstPath.followablePath, firstPath.pathingVelocity);
                             targetHeading = 270;
+                            pathing = true;
                         }
 
                         if (pathing){
@@ -329,6 +336,7 @@ public class TestingPhaseAuto extends LinearOpMode implements CycleMethods {
                             builtPath = true;
                             follower.setPath(secondPath.followablePath, secondPath.pathingVelocity);
                             targetHeading = 0;
+                            pathing = true;
                         }
 
                         if (pathing){
