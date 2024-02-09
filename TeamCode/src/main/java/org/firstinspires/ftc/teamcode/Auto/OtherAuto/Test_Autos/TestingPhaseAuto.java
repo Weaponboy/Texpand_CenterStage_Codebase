@@ -263,9 +263,13 @@ public class TestingPhaseAuto extends LinearOpMode implements CycleMethods {
                         odometry.update();
 
                         if (!builtPath){
+
                             builtPath = true;
+
                             follower.setPath(firstPath.followablePath, firstPath.pathingVelocity);
+
                             targetHeading = 270;
+
                             pathing = true;
                         }
 

@@ -1186,25 +1186,31 @@ public class mecanumFollower {
             pathing = false;
         }
 
-        PathingPower correctivePower;
+        boolean closeToTarget = Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 10 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 10;
+
+        PathingPower correctivePower = new PathingPower();
         PathingPower pathingPower;
 
         if(Math.abs(odometry.getHorizontalVelocity()) < 3){
-            yI += 0.01;
+            yI += 0.005;
         }else {
             yI = 0;
         }
 
         if(Math.abs(odometry.getVerticalVelocity()) < 3){
-            xI += 0.008;
+            xI += 0.005;
         }else {
             xI = 0;
         }
 
         double heading = odometry.heading;
 
-        pathingPower = getPathingPower(robotPositionVector, heading);
-        correctivePower = getCorrectivePowerAtEnd(robotPositionVector, targetPoint, heading);
+        if (!closeToTarget){
+            pathingPower = getFullPathingPower(robotPositionVector, heading);
+        }else {
+            correctivePower = getCorrectivePowerAtEnd(robotPositionVector, targetPoint, heading);
+            pathingPower = new PathingPower(0,0);
+        }
 
         vertical = correctivePower.getVertical() + pathingPower.getVertical();
         horizontal = correctivePower.getHorizontal() + pathingPower.getHorizontal();
