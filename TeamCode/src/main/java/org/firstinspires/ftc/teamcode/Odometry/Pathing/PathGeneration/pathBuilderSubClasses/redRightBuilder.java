@@ -85,32 +85,10 @@ public class redRightBuilder extends pathBuilderMain implements Red_Points_Overl
                 }
                 break;
             case collect:
-                switch (propPosition) {
-                    case left:
-                        firstPositionCollect();
-                        break;
-                    case right:
-                        thirdPositionCollect();
-                        break;
-                    case center:
-                        secondPositionCollect();
-                        break;
-                    default:
-                }
+                Collect();
                 break;
             case deliver:
-                switch (propPosition) {
-                    case left:
-                        firstPositionDeliver();
-                        break;
-                    case right:
-                        thirdPositionDeliver();
-                        break;
-                    case center:
-                        secondPositionDeliver();
-                        break;
-                    default:
-                }
+                Deliver();
                 break;
             default:
         }
@@ -146,32 +124,27 @@ public class redRightBuilder extends pathBuilderMain implements Red_Points_Overl
                 }
                 break;
             case collect:
-                switch (propPosition) {
-                    case left:
-                        firstPositionCollect();
-                        break;
-                    case right:
-                        thirdPositionCollect();
-                        break;
-                    case center:
-                        secondPositionCollect();
-                        break;
-                    default:
-                }
+                Collect();
                 break;
             case deliver:
-                switch (propPosition) {
-                    case left:
-                        firstPositionDeliver();
-                        break;
-                    case right:
-                        thirdPositionDeliver();
-                        break;
-                    case center:
-                        secondPositionDeliver();
-                        break;
-                    default:
-                }
+                Deliver();
+                break;
+            default:
+        }
+
+        pathBuilder(originalPath);
+
+        motionProfile();
+    }
+
+    public void buildPath(Section section){
+
+        switch (section) {
+            case collect:
+                Collect();
+                break;
+            case deliver:
+                Deliver();
                 break;
             default:
         }
@@ -204,7 +177,7 @@ public class redRightBuilder extends pathBuilderMain implements Red_Points_Overl
         buildLineSegment(DYS1F, DYE1F);
     }
 
-    private void firstPositionCollect(){
+    private void Collect(){
 
         buildCurveSegment(CS1F, CC1F, CE1F);
 
@@ -212,7 +185,7 @@ public class redRightBuilder extends pathBuilderMain implements Red_Points_Overl
 
     }
 
-    private void firstPositionDeliver(){
+    private void Deliver(){
 
         buildCurveSegment(DS1F, DC1F, DE1F);
 
@@ -233,22 +206,6 @@ public class redRightBuilder extends pathBuilderMain implements Red_Points_Overl
 
     }
 
-    private void secondPositionCollect(){
-
-        buildCurveSegment(CS1S, CC1S, CE1S);
-
-        buildCurveSegment(CS2S, CC2S, CE2S);
-
-    }
-
-    private void secondPositionDeliver(){
-
-        buildCurveSegment(DS1S, DC1S, DE1S);
-
-        buildCurveSegment(DS2S, DC2S, DE2S);
-
-    }
-
     /**
      * Third Position
      * */
@@ -260,23 +217,6 @@ public class redRightBuilder extends pathBuilderMain implements Red_Points_Overl
 
         // drop yellow pixel
         buildCurveSegment(DYS1T, DYC1T, DYE1T);
-
-    }
-
-    private void thirdPositionCollect(){
-
-        buildCurveSegment(CS1T, CC1T, CE1T);
-
-        buildCurveSegment(CS2T, CC2T, CE2T);
-
-
-    }
-
-    private void thirdPositionDeliver(){
-
-        buildCurveSegment(DS1T, DC1T, DE1T);
-
-        buildCurveSegment(DS2T, DC2T, DE2T);
 
     }
 
