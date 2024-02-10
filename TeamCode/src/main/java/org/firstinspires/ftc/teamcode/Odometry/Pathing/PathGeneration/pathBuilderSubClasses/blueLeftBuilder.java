@@ -30,7 +30,7 @@ public class blueLeftBuilder extends pathBuilderMain implements Blue_Points_Over
     //second pos
     Vector2D DPS1S = new Vector2D(getRealCoords(210), getRealCoords(23));
     Vector2D DPC1S = new Vector2D(getRealCoords(225), getRealCoords(76));
-    Vector2D DPCT1S = new Vector2D(getRealCoords(165), getRealCoords(122));
+    Vector2D DPCT1S = new Vector2D(getRealCoords(165), getRealCoords(113));
     Vector2D DPE1S = new Vector2D(getRealCoords(300), getRealCoords(94));
 
     Vector2D DPS1T = new Vector2D(getRealCoords(210), getRealCoords(23));
