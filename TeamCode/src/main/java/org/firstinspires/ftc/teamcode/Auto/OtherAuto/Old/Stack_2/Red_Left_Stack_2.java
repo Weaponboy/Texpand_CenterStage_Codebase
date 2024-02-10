@@ -1,9 +1,10 @@
-package org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Stack_2;
+package org.firstinspires.ftc.teamcode.Auto.OtherAuto.Old.Stack_2;
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.propPos;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.UsefulMethods.getRealCoords;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -14,7 +15,7 @@ import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilde
 import org.firstinspires.ftc.teamcode.hardware._.Drivetrain;
 import org.firstinspires.ftc.teamcode.hardware._.Odometry;
 import org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Preload.Auto_Methods;
-
+@Disabled
 @Autonomous(name = "Red_Left_Stack+2", group = "Stack 2+2")
 /**start red right*/
 public class Red_Left_Stack_2 extends LinearOpMode implements Auto_Methods {

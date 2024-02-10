@@ -1,14 +1,16 @@
-package org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Stack_2;
+package org.firstinspires.ftc.teamcode.Auto.OtherAuto.Old.Stack_4;
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.propPos;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.UsefulMethods.getRealCoords;
 
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Preload.Auto_Methods;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower.mecanumFollower;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.blueRightBuilder;
@@ -16,15 +18,14 @@ import org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propD
 import org.firstinspires.ftc.teamcode.hardware._.Drivetrain;
 import org.firstinspires.ftc.teamcode.hardware._.Odometry;
 import org.firstinspires.ftc.teamcode.hardware._.Sensors;
-import org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Preload.Auto_Methods;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;
-
-@Autonomous(name = "Blue_Right_Stack+2", group = "Stack 2+2")
+@Disabled
+@Autonomous(name = "Blue_Right_Stack+4", group = "Stack 2+4")
 /**start red right*/
-public class Blue_Right_Stack_2 extends LinearOpMode implements Auto_Methods{
+public class Blue_Right_Stack_4 extends LinearOpMode implements Auto_Methods{
 
     public WebcamName frontCam;
 

@@ -37,17 +37,17 @@ public class redRightBuilder extends pathBuilderMain implements Red_Points_Overl
 
     //drop yellow pixel first
     Vector2D DYS1F = new Vector2D(DPE1F.getX(), DPE1F.getY());
-    Vector2D DYE1F = new Vector2D(getRealCoords(305), getRealCoords(260));
+    Vector2D DYE1F = new Vector2D(getRealCoords(300), getRealCoords(259));
 
     //drop yellow pixel second
     Vector2D DYS1S = new Vector2D(DPE1S.getX(), DPE1S.getY());
     Vector2D DYC1S = new Vector2D(getRealCoords(210), getRealCoords(325));
-    Vector2D DYE1S = new Vector2D(getRealCoords(305), getRealCoords(278));
+    Vector2D DYE1S = new Vector2D(getRealCoords(300), getRealCoords(274));
 
     //drop yellow pixel third
     Vector2D DYS1T = new Vector2D(DPE1T.getX(), DPE1T.getY());
     Vector2D DYC1T = new Vector2D(getRealCoords(233), getRealCoords(341));
-    Vector2D DYE1T = new Vector2D(getRealCoords(305), getRealCoords(290));
+    Vector2D DYE1T = new Vector2D(getRealCoords(300), getRealCoords(289));
 
 
     public enum Position {

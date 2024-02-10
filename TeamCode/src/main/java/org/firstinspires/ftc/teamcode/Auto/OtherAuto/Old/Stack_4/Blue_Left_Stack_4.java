@@ -1,11 +1,13 @@
-package org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Stack_2;
+package org.firstinspires.ftc.teamcode.Auto.OtherAuto.Old.Stack_4;
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.propPos;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Preload.CycleMethods;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower.mecanumFollower;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.blueLeftBuilder;
@@ -17,10 +19,10 @@ import org.firstinspires.ftc.teamcode.hardware._.Delivery;
 import org.firstinspires.ftc.teamcode.hardware._.Drivetrain;
 import org.firstinspires.ftc.teamcode.hardware._.Odometry;
 import org.firstinspires.ftc.vision.VisionPortal;
-
-@Autonomous(name = "Blue_Left_Stack+2", group = "Stack 2+2")
+@Disabled
+@Autonomous(name = "Blue_Left_Stack+4", group = "Stack 2+4")
 /**start red right*/
-public class Blue_Left_Stack_2 extends LinearOpMode implements CycleMethods {
+public class Blue_Left_Stack_4 extends LinearOpMode implements CycleMethods {
 
     public WebcamName frontCam;
 
@@ -67,7 +69,7 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements CycleMethods {
 
             odometry.update();
 
-            dropYellowPixel(telemetry);
+            dropYellowPixel();
 
             collect.buildPath(blueLeftBuilder.Section.collect);
 
@@ -87,7 +89,26 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements CycleMethods {
 
             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
-            follower.followPath(180, odometry, drive, delivery, deliverySlides, collection);
+            follower.followPath(180, odometry, drive);
+
+            deployArm();
+
+            dropPixels();
+
+            retract();
+
+            collection.setIntakeHeight(Collection.intakeHeightState.firstPixel);
+            collection.updateIntakeHeight();
+
+            follower.setPath(collect.followablePath, collect.pathingVelocity);
+
+            follower.followPath(180, odometry, drive, collection, new Vector2D(125, 180));
+
+            collectPixels();
+
+            follower.setPath(deliver.followablePath, deliver.pathingVelocity);
+
+            follower.followPath(180, odometry, drive);
 
             deployArm();
 
@@ -109,7 +130,7 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements CycleMethods {
 
             odometry.update();
 
-            dropYellowPixel(telemetry);
+            dropYellowPixel();
 
             collect.buildPath(blueLeftBuilder.Section.collect);
 
@@ -123,11 +144,32 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements CycleMethods {
             collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
             collection.updateIntakeHeight();
 
-            follower.followPathCollection(180, odometry, drive, collection, delivery, deliverySlides, new Vector2D(125, 180), new Vector2D(121, 153), new Vector2D(86, 139));
+            follower.followPath(180, odometry, drive, collection, new Vector2D(125, 180));
+
+            collectPixels();
 
             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
-            follower.followPathCollection(180, odometry, drive, collection, delivery, deliverySlides, new Vector2D(125, 180), new Vector2D(121, 153), new Vector2D(86, 139), true);
+            follower.followPath(180, odometry, drive);
+
+            deployArm();
+
+            dropPixels();
+
+            retract();
+
+            collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
+            collection.updateIntakeHeight();
+
+            follower.setPath(collect.followablePath, collect.pathingVelocity);
+
+            follower.followPath(180, odometry, drive, collection, new Vector2D(125, 180));
+
+            collectPixels();
+
+            follower.setPath(deliver.followablePath, deliver.pathingVelocity);
+
+            follower.followPath(180, odometry, drive);
 
             deployArm();
 
@@ -155,7 +197,7 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements CycleMethods {
 
             odometry.update();
 
-            dropYellowPixel(telemetry);
+            dropYellowPixel();
 
             collect.buildPath(blueLeftBuilder.Section.collect);
 
@@ -175,7 +217,26 @@ public class Blue_Left_Stack_2 extends LinearOpMode implements CycleMethods {
 
             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
-            follower.followPath(180, odometry, drive, delivery, deliverySlides, collection);
+            follower.followPath(180, odometry, drive);
+
+            deployArm();
+
+            dropPixels();
+
+            retract();
+
+            collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
+            collection.updateIntakeHeight();
+
+            follower.setPath(collect.followablePath, collect.pathingVelocity);
+
+            follower.followPath(180, odometry, drive, collection, new Vector2D(125, 180));
+
+            collectPixels();
+
+            follower.setPath(deliver.followablePath, deliver.pathingVelocity);
+
+            follower.followPath(180, odometry, drive);
 
             deployArm();
 

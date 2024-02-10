@@ -1,10 +1,11 @@
-package org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Stack_2;
+package org.firstinspires.ftc.teamcode.Auto.OtherAuto.Old.Stack_2;
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.propPos;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -18,7 +19,7 @@ import org.firstinspires.ftc.teamcode.hardware._.Drivetrain;
 import org.firstinspires.ftc.teamcode.hardware._.Odometry;
 import org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Preload.Auto_Methods;
 import org.firstinspires.ftc.vision.VisionPortal;
-
+@Disabled
 @Autonomous(name = "Red_Right_Stack+2", group = "Stack 2+2")
 /**start red right*/
 public class Red_Right_Stack_2 extends LinearOpMode implements Auto_Methods {

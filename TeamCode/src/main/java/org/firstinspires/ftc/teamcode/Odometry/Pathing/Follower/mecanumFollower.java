@@ -22,7 +22,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Stack_2.CycleMethods;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathingUtility.PathingPower;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathingUtility.PathingVelocity;
