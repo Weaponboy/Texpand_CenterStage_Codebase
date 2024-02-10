@@ -37,9 +37,9 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
     Drivetrain drive = new Drivetrain();
 
-    Odometry odometry = new Odometry(90, 23, 270);
+    Odometry odometry = new Odometry(90, 23, 180);
 
-    Odometry odometryArc = new Odometry(90, 23, 270);
+    Odometry odometryArc = new Odometry(90, 23, 180);
 
     Delivery delivery = new Delivery();
 
