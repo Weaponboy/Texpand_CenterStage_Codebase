@@ -29,8 +29,9 @@ public class blueLeftBuilder extends pathBuilderMain implements Blue_Points_Over
 
     //second pos
     Vector2D DPS1S = new Vector2D(getRealCoords(210), getRealCoords(23));
-    Vector2D DPC1S = new Vector2D(getRealCoords(204), getRealCoords(120));
-    Vector2D DPE1S = new Vector2D(getRealCoords(230), getRealCoords(51));
+    Vector2D DPC1S = new Vector2D(getRealCoords(225), getRealCoords(76));
+    Vector2D DPCT1S = new Vector2D(getRealCoords(165), getRealCoords(122));
+    Vector2D DPE1S = new Vector2D(getRealCoords(300), getRealCoords(94));
 
     Vector2D DPS1T = new Vector2D(getRealCoords(210), getRealCoords(23));
     Vector2D DPE1T = new Vector2D(getRealCoords(210), getRealCoords(90));
@@ -203,10 +204,7 @@ public class blueLeftBuilder extends pathBuilderMain implements Blue_Points_Over
     private void secondPositionPreload(){
 
         // drop purple pixel
-        buildCurveSegment(DPS1S, DPC1S, DPE1S);
-
-        // drop yellow pixel
-        buildCurveSegment(DYS1S, DYC1S, DYE1S);
+        buildCurveSegment(DPS1S, DPC1S, DPCT1S, DPE1S);
 
     }
 

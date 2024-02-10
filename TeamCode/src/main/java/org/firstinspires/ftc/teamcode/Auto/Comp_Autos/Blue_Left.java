@@ -386,9 +386,6 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                 switch (phase){
                     case purple:
 
-                        telemetry.addData("dropping purple", "");
-                        telemetry.update();
-
                         odometry.update();
 
                         if (!builtPath){
@@ -406,38 +403,24 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                             pathing = follower.followPathAuto(targetHeading, odometry, drive);
 
-                            if (Math.abs(236 - odometry.X) < 15 && Math.abs(60 - odometry.Y) < 15){
+                            if (Math.abs(216 - odometry.X) < 5 && Math.abs(95 - odometry.Y) < 5){
+                                targetHeading = 290;
+                            }
+
+                            if (Math.abs(241 - odometry.X) < 5 && Math.abs(93 - odometry.Y) < 5){
                                 targetHeading = 180;
-                                phase = Phase.yellow;
+
+                                deliverySlides.DeliverySlides(210, 1);
+
+                                delivery.setGripperState(Delivery.GripperState.closed);
+                                delivery.updateGrippers();
+
+                                delivery.setArmTargetState(Delivery.armState.deliverAuto);
+                                delivery.updateArm(deliverySlides.getCurrentposition());
+
                             }
 
                         }else {
-                            drive.RF.setPower(0);
-                            drive.RB.setPower(0);
-                            drive.LF.setPower(0);
-                            drive.LB.setPower(0);
-                        }
-
-                        break;
-
-                    case yellow:
-
-                        telemetry.addData("dropping yellow", "");
-                        telemetry.addData("pathing", pathing);
-                        telemetry.update();
-
-                        odometry.update();
-
-                        if (pathing){
-
-                            pathing = follower.followPathAuto(targetHeading, odometry, drive);
-
-                        }else if (Math.abs(300 - odometry.X) < 5 && Math.abs(97.5 - odometry.Y) < 5){
-
-                            drive.RF.setPower(0);
-                            drive.RB.setPower(0);
-                            drive.LF.setPower(0);
-                            drive.LB.setPower(0);
 
                             if (auto == Auto.preload){
 
@@ -451,9 +434,6 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                             }else {
 
-                                telemetry.addData("dropping white to next", "");
-                                telemetry.update();
-
                                 dropYellowPixel();
 
                                 collect.buildPath(blueLeftBuilder.Section.collect);
@@ -464,10 +444,10 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                                 phase = Phase.first2;
                             }
-
                         }
 
                         break;
+
                     case first2:
 
                         if (!builtPath){
@@ -488,9 +468,11 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                         odometry.update();
 
-                        if (Math.abs(125 - odometry.X) < 30 && Math.abs(180 - odometry.Y) < 30){
-                            collection.setState(Collection.intakePowerState.on);
-                            collection.updateIntakeState();
+                        if (!delivering){
+                            if (Math.abs(125 - odometry.X) < 30 && Math.abs(180 - odometry.Y) < 30){
+                                collection.setState(Collection.intakePowerState.on);
+                                collection.updateIntakeState();
+                            }
                         }
 
                         if (delivering){

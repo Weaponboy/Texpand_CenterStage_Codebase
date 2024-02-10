@@ -46,7 +46,7 @@ public class Delivery {
     double deliveryTopPivotNew = 1;
     double safeTopPivot = 0.3;
 
-    double deliveryTopPivotAuto = 0.55;
+    double deliveryTopPivotAuto = 0.6;
     double deliverySecondPivotAuto = 0.45;
     double distancecalc;
     double avoidIntakeSecondPivot = 0.8;
