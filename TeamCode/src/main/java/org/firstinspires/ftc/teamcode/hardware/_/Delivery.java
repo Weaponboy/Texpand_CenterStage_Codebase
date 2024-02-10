@@ -40,7 +40,7 @@ public class Delivery {
 
     double timePerDegree = 7;
 
-    double collectTopPivotPos = 0.15;
+    double collectTopPivotPos = 0.04;
     double intermediateTopPivot = 0.3;
     double deliveryTopPivot = 0.7;
     double deliveryTopPivotNew = 1;
