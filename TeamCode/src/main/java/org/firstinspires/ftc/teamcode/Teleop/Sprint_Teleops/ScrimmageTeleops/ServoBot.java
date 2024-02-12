@@ -38,7 +38,6 @@ public class ServoBot extends OpMode {
         GripperRight.setDirection(Servo.Direction.REVERSE);
         RightDrive.setDirection(Servo.Direction.REVERSE);
 
-
         currentGamepad1 = new Gamepad();
         previousGamepad1 = new Gamepad();
 
@@ -51,14 +50,39 @@ public class ServoBot extends OpMode {
 
         currentGamepad1.copy(gamepad1);
 
-        double vertical = gamepad1.left_stick_y*1.2;
-        double pivot = -gamepad1.right_stick_x*1.2;
+        double vertical = (gamepad1.left_stick_y/2) + 0.5;
+        double pivot = (-gamepad1.right_stick_x/2) + 0.5;
 
-        double denominator = Math.max(Math.abs(vertical) + Math.abs(pivot), 1);
-        RightDrive.setPosition(0.6*((vertical - pivot)/denominator));
-        LeftDrive.setPosition(0.6*((vertical + pivot)/denominator));
+        boolean forward = gamepad1.left_stick_y > 0.5;
+        boolean backwards = gamepad1.left_stick_y < -0.5;
+        boolean turnLeft = gamepad1.left_stick_x > 0.5;
+        boolean turnRight = gamepad1.left_stick_x < -0.5;
 
+        if (forward){
+            RightDrive.setPosition(1);
+            LeftDrive.setPosition(1);
+        } else if (backwards) {
+            RightDrive.setPosition(0);
+            LeftDrive.setPosition(0);
+        }else if (turnRight) {
+            RightDrive.setPosition(0);
+            LeftDrive.setPosition(1);
+        }else if (turnLeft) {
+            RightDrive.setPosition(1);
+            LeftDrive.setPosition(0);
+        }else {
+            RightDrive.setPosition(0);
+            LeftDrive.setPosition(0.5);
+        }
 
+//        double denominator = Math.max(Math.abs(vertical) + Math.abs(pivot), 1);
+//
+//        RightDrive.setPosition(((vertical - pivot)/denominator));
+//        LeftDrive.setPosition(((vertical + pivot)/denominator));
+
+        telemetry.addData("Left Drive", LeftDrive.getPosition());
+        telemetry.addData("Right Drive", RightDrive.getPosition());
+        telemetry.update();
 
         if (gamepad1.start){
             SetGrippers(0.5);
@@ -75,3 +99,5 @@ public class ServoBot extends OpMode {
         GripperLeft.setPosition(Position);
     }
 }
+
+
