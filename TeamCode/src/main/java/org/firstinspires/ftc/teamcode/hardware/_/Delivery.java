@@ -46,8 +46,8 @@ public class Delivery {
     double deliveryTopPivotNew = 1;
     double safeTopPivot = 0.3;
 
-    double deliveryTopPivotAuto = 0.6;
-    double deliverySecondPivotAuto = 0.45;
+    double deliveryTopPivotAuto = 0.7;
+    double deliverySecondPivotAuto = 0.2;
     double distancecalc;
     double avoidIntakeSecondPivot = 0.8;
     double collectSecondPivot = 0.92;
@@ -78,8 +78,9 @@ public class Delivery {
     static final double servoPosPerTick = 0.00004100;
     static final double mainToSecondConst = 0.5/0.3;
     static final double mainservopospermm = 0.0126;
-    static final double mindistancemm = 12;
-    static final double maxdistancemm = 28;
+    static final double mindistancemm = 8;
+    static final double maxdistancemm = 20;
+    static final double distanceToPivot = 0.1575;
 
     boolean DeliveryMovingAuto = false;
     boolean DeliveryMoving = false;
@@ -176,16 +177,16 @@ public class Delivery {
 
                 timeToWaitCollection = Math.max((Math.abs(getSecondPivotPosition() - collectSecondPivot) * 180) * timePerDegree, (Math.abs(getTopPivotPosition() - intermediateTopPivot) * 180) * timePerDegree);
 
-                setSecondPivot(collectSecondPivot);
+                setSecondPivot(deliverySecondPivotAuto);
 
-                setMainPivot(intermediateTopPivot);
+                setMainPivot(deliveryTopPivotAuto);
 
                 RotateClaw.setPosition(rotateCollect);
 
                 break;
             case delivery:
 
-                mainPivotOffSet = 0.25;
+                mainPivotOffSet = 0;
 
                 secondRotate.setPosition(secondRotateMiddle);
 
@@ -203,7 +204,7 @@ public class Delivery {
                 double distance = sensors.backBoard.getDistance(DistanceUnit.CM);
 
                 if(distance > mindistancemm && distance < maxdistancemm){
-                    mainPivotOffSet = 0.174 + (( distance - mindistancemm) * mainservopospermm);
+                    mainPivotOffSet = distanceToPivot + (( distance - mindistancemm) * mainservopospermm);
                 }
 
                 targetMainPivot = deliveryTopPivot - slidesPos * servoPosPerTick + mainPivotOffSet;
@@ -211,7 +212,6 @@ public class Delivery {
                 targetMainPivot = Range.clip(targetMainPivot, 0,1);
 
                 timeToWaitDelivery = Math.max((Math.abs(getSecondPivotPosition() - targetMainPivot) * 180) * timePerDegree, (Math.abs(getTopPivotPosition() - (deliverySecondPivot + (-slidesPos * servoPosPerTick + mainPivotOffSet) * mainToSecondConst)) * 180) * timePerDegree);
-
 
                 setMainPivot(targetMainPivot);
 
@@ -395,8 +395,6 @@ public class Delivery {
                 break;
             case delivery:
 
-                mainPivotOffSet = 0.3;
-
                 secondRotate.setPosition(secondRotateMiddle);
 
                 armstateCurrent = armState.moving;
@@ -413,7 +411,7 @@ public class Delivery {
                 double distance = sensors.backBoard.getDistance(DistanceUnit.CM);
 
                 if(distance > mindistancemm && distance < maxdistancemm){
-                    mainPivotOffSet = 0.23 + (( distance - mindistancemm) * mainservopospermm);
+                    mainPivotOffSet = distanceToPivot + (( distance - mindistancemm) * mainservopospermm);
                 }
 
                 targetMainPivot = deliveryTopPivot - slidesPos * servoPosPerTick + mainPivotOffSet;
@@ -454,6 +452,25 @@ public class Delivery {
 
                 break;
             case moving:
+                if (DeliveryMoving && pivotMoveTimeDelivery.milliseconds() >= timeToWaitDelivery) {
+                    armstateCurrent = armState.delivery;
+                    DeliveryMoving = false;
+                }
+
+//                if (DeliveryMovingAuto && pivotMoveTimeAuto.milliseconds() >= timeToWaitDelivery) {
+//                    armstateCurrent = armState.deliverAuto;
+//                    DeliveryMovingAuto = false;
+//                }
+
+                if (intermediateMoving && pivotMoveTimeCollection.milliseconds() >= timeToWaitCollection) {
+                    armstateCurrent = armState.intermediate;
+                    intermediateMoving = false;
+                }
+
+                if (CollectionMoving && pivotMoveTimeCollection.milliseconds() >= timeToWaitCollection) {
+                    armstateCurrent = armState.collect;
+                    CollectionMoving = false;
+                }
 
                 break;
             default:
@@ -466,10 +483,10 @@ public class Delivery {
                 DeliveryMoving = false;
             }
 
-            if (DeliveryMovingAuto && pivotMoveTimeAuto.milliseconds() >= timeToWaitDelivery) {
-                armstateCurrent = armState.deliverAuto;
-                DeliveryMovingAuto = false;
-            }
+//            if (DeliveryMovingAuto && pivotMoveTimeAuto.milliseconds() >= timeToWaitDelivery) {
+//                armstateCurrent = armState.deliverAuto;
+//                DeliveryMovingAuto = false;
+//            }
 
             if (intermediateMoving && pivotMoveTimeCollection.milliseconds() >= timeToWaitCollection) {
                 armstateCurrent = armState.intermediate;
@@ -538,7 +555,7 @@ public class Delivery {
         RightClaw.setDirection(Servo.Direction.FORWARD);
         LeftClaw.setDirection(Servo.Direction.REVERSE);
 
-        RightClaw.setPwmRange(new PwmControl.PwmRange(900, 1900));
+        RightClaw.setPwmRange(new PwmControl.PwmRange(800, 1900));
         LeftClaw.setPwmRange(new PwmControl.PwmRange(1200, 2300));
 
         mainPivotLeft = hardwareMap.get(ServoImplEx.class, "leftmain");

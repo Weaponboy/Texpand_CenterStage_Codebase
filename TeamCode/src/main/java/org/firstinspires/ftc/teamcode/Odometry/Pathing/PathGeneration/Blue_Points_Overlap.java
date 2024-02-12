@@ -22,13 +22,13 @@ public interface Blue_Points_Overlap {
 
     /**second segment*/
     Vector2D CS3F = CE2F;
-    Vector2D CC3F = new Vector2D(getRealCoords(27), getRealCoords(98));
-    Vector2D CE3F = new Vector2D(getRealCoords(86), getRealCoords(140));
+    Vector2D CC3F = new Vector2D(getRealCoords(29), getRealCoords(169));
+    Vector2D CE3F = new Vector2D(getRealCoords(76), getRealCoords(175));
 
     //second segment
     Vector2D CS4F = CE3F;
     Vector2D CC4F = new Vector2D(getRealCoords(305), getRealCoords(208));
-    Vector2D CE4F = new Vector2D(getRealCoords(300), getRealCoords(90));
+    Vector2D CE4F = new Vector2D(getRealCoords(300), getRealCoords(105));
 
 //    /**third position*/
 //    Vector2D CS1T = new Vector2D(getRealCoords(300), getRealCoords(105));

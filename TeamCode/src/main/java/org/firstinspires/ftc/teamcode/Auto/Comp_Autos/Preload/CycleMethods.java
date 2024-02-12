@@ -32,22 +32,14 @@ public interface CycleMethods extends Auto_Methods {
         delivery.setGripperState(Delivery.GripperState.closed);
         delivery.updateGrippers();
 
-//        boolean armReady = false;
+        boolean reachedTarget = false;
 
-        sleep(800);
+        while (!reachedTarget){
+            reachedTarget = delivery.getArmState() == Delivery.armState.delivery;
+            delivery.updateArm(deliverySlides.getCurrentposition());
+        }
 
-//        while (!armReady){
-//
-//            switch (delivery.getArmState()){
-//                case delivery:
-//                    armReady = true;
-//                    break;
-//                default:
-//            }
-//
-//            delivery.updateArm(deliverySlides.getCurrentposition());
-//
-//        }
+        sleep(200);
 
         delivery.setGripperState(Delivery.GripperState.open);
         delivery.updateGrippers();
@@ -61,7 +53,7 @@ public interface CycleMethods extends Auto_Methods {
         delivery.setArmTargetState(Delivery.armState.collect);
         delivery.updateArm(deliverySlides.getCurrentposition());
 
-        deliverySlides.DeliverySlides(0, -0.5);
+        deliverySlides.DeliverySlides(0, -1);
 
         deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
 
@@ -72,7 +64,7 @@ public interface CycleMethods extends Auto_Methods {
         delivery.setArmTargetState(Delivery.armState.collect);
         delivery.updateArm(deliverySlides.getCurrentposition());
 
-        deliverySlides.DeliverySlides(0, -0.5);
+        deliverySlides.DeliverySlides(0, -1);
 
         while (deliverySlides.getCurrentposition() > 20){
 

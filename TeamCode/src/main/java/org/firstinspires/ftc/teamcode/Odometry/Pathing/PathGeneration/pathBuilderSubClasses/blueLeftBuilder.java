@@ -24,17 +24,20 @@ public class blueLeftBuilder extends pathBuilderMain implements Blue_Points_Over
 
     //first pos
     Vector2D DPS1F = new Vector2D(getRealCoords(210), getRealCoords(23));
-    Vector2D DPC1F = new Vector2D(getRealCoords(205), getRealCoords(95));
-    Vector2D DPE1F = new Vector2D(getRealCoords(227), getRealCoords(57));
+    Vector2D DPC1F = new Vector2D(getRealCoords(223), getRealCoords(79));
+    Vector2D DPCT1F = new Vector2D(getRealCoords(164), getRealCoords(110));
+    Vector2D DPE1F = new Vector2D(getRealCoords(305), getRealCoords(82.5));
 
     //second pos
     Vector2D DPS1S = new Vector2D(getRealCoords(210), getRealCoords(23));
     Vector2D DPC1S = new Vector2D(getRealCoords(225), getRealCoords(76));
-    Vector2D DPCT1S = new Vector2D(getRealCoords(165), getRealCoords(113));
-    Vector2D DPE1S = new Vector2D(getRealCoords(300), getRealCoords(94));
+    Vector2D DPCT1S = new Vector2D(getRealCoords(166), getRealCoords(98));
+    Vector2D DPE1S = new Vector2D(getRealCoords(305), getRealCoords(94));
 
     Vector2D DPS1T = new Vector2D(getRealCoords(210), getRealCoords(23));
-    Vector2D DPE1T = new Vector2D(getRealCoords(210), getRealCoords(90));
+    Vector2D DPC1T = new Vector2D(getRealCoords(223), getRealCoords(79));
+    Vector2D DPCT1T = new Vector2D(getRealCoords(164), getRealCoords(110));
+    Vector2D DPE1T = new Vector2D(getRealCoords(305), getRealCoords(110));
 
     /**
      * drop yellow pixel
@@ -107,7 +110,7 @@ public class blueLeftBuilder extends pathBuilderMain implements Blue_Points_Over
                         firstPositionPreload();
                         break;
                     case right:
-                        thirdPositionPreload1();
+                        thirdPositionPreload();
                         break;
                     case center:
                         secondPositionPreload();
@@ -138,15 +141,7 @@ public class blueLeftBuilder extends pathBuilderMain implements Blue_Points_Over
                         firstPositionPreload();
                         break;
                     case right:
-                        switch (pathsplit){
-                            case first:
-                                thirdPositionPreload1();
-                                break;
-                            case second:
-                                thirdPositionPreload2();
-                                break;
-                            default:
-                        }
+                        thirdPositionPreload();
                         break;
                     case center:
                         secondPositionPreload();
@@ -209,18 +204,10 @@ public class blueLeftBuilder extends pathBuilderMain implements Blue_Points_Over
     }
 
     /**third Position*/
-    private void thirdPositionPreload1(){
+    private void thirdPositionPreload(){
 
         // drop purple pixel
-        buildLineSegment(DPS1T, DPE1T);
-
-    }
-
-    /**third Position*/
-    private void thirdPositionPreload2(){
-
-        // drop yellow pixel
-        buildLineSegment(DYS1T, DYE1T);
+        buildCurveSegment(DPS1T, DPC1T, DPCT1T, DPE1T);
 
     }
 

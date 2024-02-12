@@ -22,8 +22,8 @@ public class Collection {
     double stowed = 0.3;
     double letClawThrough = 0.25;
     double firstPixel = 0;
-    double secondPixel = 0.19;
-    double thirdPixel = 0.21;
+    double secondPixel = 0.14;
+    double thirdPixel = 0.18;
     double forthPixel = 0.27;
     double fifthPixel = 0.31;
 

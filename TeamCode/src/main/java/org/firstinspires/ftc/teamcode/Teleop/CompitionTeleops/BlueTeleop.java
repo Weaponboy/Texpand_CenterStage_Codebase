@@ -16,6 +16,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower.mecanumFollower;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.teleopPathBuilder;
@@ -129,7 +130,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
             }else {
 
-                droneLauncher.buildPathLine(robotPos, new Vector2D(getRealCoords(250), robotPos.getY()));
+                droneLauncher.buildPathLine(robotPos, new Vector2D(getRealCoords(240), robotPos.getY()));
 
                 follower.setPath(droneLauncher.followablePath, droneLauncher.pathingVelocity);
 
@@ -145,7 +146,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
             headingLock = false;
         }
 
-        inBackboardArea = odometry.X > 210 && odometry.Y > 210 && odometry.X < 340;
+        inBackboardArea = odometry.X > 210 && odometry.Y < 150 && odometry.X < 340;
 
         if(gamepad1.right_trigger > 0 && inBackboardArea){
             snapToBackboard = true;
@@ -563,6 +564,8 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         telemetry.addData("X", odometry.X);
         telemetry.addData("Y", odometry.Y);
         telemetry.addData("heading", odometry.heading);
+        telemetry.addData("distance", sensors.backBoard.getDistance(DistanceUnit.CM));
+        telemetry.addData("main pivot", delivery.getMainPivotPosition());
         telemetry.addData("loop time", loopTime);
         telemetry.update();
 
