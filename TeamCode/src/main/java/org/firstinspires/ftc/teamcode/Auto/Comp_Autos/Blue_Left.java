@@ -80,6 +80,10 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
         initialize();
 
+        auto = Auto.preload;
+
+        boolean runOnce = false;
+
         while(!lockIn){
 
             telemetry.addData("Auto activated", auto);
@@ -136,11 +140,12 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                             pathing = follower.followPathAuto(targetHeading, odometry, drive);
 
-                            if (Math.abs(233 - odometry.X) < 15 && Math.abs(75 - odometry.Y) < 15){
-                                targetHeading = 300;
+                            if (Math.abs(226 - odometry.X) < 5 && Math.abs(55 - odometry.Y) < 5 && !runOnce){
+                                runOnce = true;
+                                targetHeading = 310;
                             }
 
-                            if (Math.abs(255 - odometry.X) < 15 && Math.abs(80 - odometry.Y) < 15 && deliverySlides.getCurrentposition() < 50){
+                            if (Math.abs(270 - odometry.X) < 5 && Math.abs(80 - odometry.Y) < 5 && deliverySlides.getCurrentposition() < 50){
 
                                 targetHeading = 180;
 
@@ -154,7 +159,7 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                             }
 
-                        }else if  (Math.abs(305 - odometry.X) < 5 && Math.abs(82.5 - odometry.Y) < 5){
+                        }else if  (Math.abs(305 - odometry.X) < 5 && Math.abs(82.5 - odometry.Y) < 5 && !pathing){
                             if (auto == Auto.preload){
 
                                 drive.RF.setPower(0);
@@ -166,6 +171,12 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                                 phase = Phase.finished;
 
                             }else {
+
+                                drive.RF.setPower(0);
+                                drive.RB.setPower(0);
+                                drive.LF.setPower(0);
+                                drive.LB.setPower(0);
+
                                 dropYellowPixel();
 
                                 collect.buildPath(blueLeftBuilder.Section.collect);
@@ -180,6 +191,8 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                         break;
                     case first2:
+
+                        delivery.updateArm(deliverySlides.getCurrentposition());
 
                         if (!builtPath){
 
@@ -206,16 +219,16 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                             }
                         }
 
-                        if (delivering){
+                        if (delivering) {
 
-                            if (Math.abs(121 - odometry.X) < 15 && Math.abs(180 - odometry.Y) < 15){
+                            if (Math.abs(121 - odometry.X) < 15 && Math.abs(180 - odometry.Y) < 15) {
 
                                 collection.setState(Collection.intakePowerState.off);
                                 collection.updateIntakeState();
 
                             }
 
-                            if (Math.abs(70 - odometry.X) < 15 && Math.abs(180 - odometry.Y) < 15){
+                            if (Math.abs(70 - odometry.X) < 15 && Math.abs(180 - odometry.Y) < 15) {
 
                                 collection.setState(Collection.intakePowerState.reversed);
                                 collection.updateIntakeState();
@@ -225,31 +238,87 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                             }
 
-                            if (odometry.X > 180 && odometry.getVerticalVelocity() > -5 && !onlyOnce){
+                            if (odometry.X > 180 && odometry.getVerticalVelocity() > -5 && !onlyOnce) {
 
                                 onlyOnce = true;
 
-                                deliverySlides.DeliverySlides(400, 0.8);
+                                deliverySlides.DeliverySlides(500, 1);
 
                                 delivery.setGripperState(Delivery.GripperState.closed);
                                 delivery.updateGrippers();
 
-                                delivery.setArmTargetState(Delivery.armState.intermediate);
+                                delivery.setArmTargetState(Delivery.armState.deliverAuto);
                                 delivery.updateArm(deliverySlides.getCurrentposition());
 
                             }
 
+                            if (Math.abs(300 - odometry.X) < 5 && Math.abs(90 - odometry.Y) < 16) {
+
+                                drive.RF.setPower(0);
+                                drive.RB.setPower(0);
+                                drive.LF.setPower(0);
+                                drive.LB.setPower(0);
+
+                                delivery.setArmTargetState(Delivery.armState.delivery);
+                                delivery.updateArm(deliverySlides.getCurrentposition());
+
+//                                boolean reachedTarget = false;
+//
+//                                while (!reachedTarget){
+//                                    reachedTarget = delivery.getArmState() == Delivery.armState.delivery;
+//                                    delivery.updateArm(deliverySlides.getCurrentposition());
+//                                }
+
+                                delivery.setGripperState(Delivery.GripperState.open);
+                                delivery.updateGrippers();
+
+                                sleep(100);
+
+                                drive.RF.setPower(0);
+                                drive.RB.setPower(0);
+                                drive.LF.setPower(0);
+                                drive.LB.setPower(0);
+
+                                if (auto == Auto.two) {
+
+                                    drive.RF.setPower(0);
+                                    drive.RB.setPower(0);
+                                    drive.LF.setPower(0);
+                                    drive.LB.setPower(0);
+
+                                    retractWait();
+                                    phase = Phase.finished;
+
+                                } else {
+
+                                    drive.RF.setPower(0);
+                                    drive.RB.setPower(0);
+                                    drive.LF.setPower(0);
+                                    drive.LB.setPower(0);
+
+                                    builtPath = false;
+                                    delivering = false;
+
+                                    retract();
+                                    phase = Phase.second2;
+
+                                }
+
+
+                            }
                         }
 
                         if (pathing){
 
-                            if (delivering){
-                                pathing = follower.followPathAuto(targetHeading, odometry, drive, 5);
-                            }else {
-                                pathing = follower.followPathAuto(targetHeading, odometry, drive);
-                            }
+                            pathing = follower.followPathAuto(targetHeading, odometry, drive, 5);
 
-                        }else if (Math.abs(41 - odometry.X) < 5 && Math.abs(130 - odometry.Y) < 5){
+//                            if (delivering){
+//                                pathing = follower.followPathAuto(targetHeading, odometry, drive, 5);
+//                            }else {
+//                                pathing = follower.followPathAuto(targetHeading, odometry, drive);
+//                            }
+
+                        }else if (Math.abs(41 - odometry.X) < 5 && Math.abs(135 - odometry.Y) < 5){
 
                             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
@@ -259,46 +328,13 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                             onlyOnce = false;
 
-                        }else if (Math.abs(300 - odometry.X) < 5 && Math.abs(105 - odometry.Y) < 5){
-
-                            drive.RF.setPower(0);
-                            drive.RB.setPower(0);
-                            drive.LF.setPower(0);
-                            drive.LB.setPower(0);
-
-                            deployArm();
-
-                            dropPixels();
-
-                            if (auto == Auto.two){
-
-                                drive.RF.setPower(0);
-                                drive.RB.setPower(0);
-                                drive.LF.setPower(0);
-                                drive.LB.setPower(0);
-
-                                retractWait();
-                                phase = Phase.finished;
-
-                            }else {
-
-                                drive.RF.setPower(0);
-                                drive.RB.setPower(0);
-                                drive.LF.setPower(0);
-                                drive.LB.setPower(0);
-
-                                builtPath = false;
-                                delivering = false;
-
-                                retract();
-                                phase = Phase.second2;
-
-                            }
-
                         }
+
 
                         break;
                     case second2:
+
+                        delivery.updateArm(deliverySlides.getCurrentposition());
 
                         if (!builtPath){
 
@@ -325,16 +361,16 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                             }
                         }
 
-                        if (delivering){
+                        if (delivering) {
 
-                            if (Math.abs(121 - odometry.X) < 15 && Math.abs(180 - odometry.Y) < 15){
+                            if (Math.abs(121 - odometry.X) < 15 && Math.abs(180 - odometry.Y) < 15) {
 
                                 collection.setState(Collection.intakePowerState.off);
                                 collection.updateIntakeState();
 
                             }
 
-                            if (Math.abs(70 - odometry.X) < 15 && Math.abs(180 - odometry.Y) < 15){
+                            if (Math.abs(70 - odometry.X) < 15 && Math.abs(180 - odometry.Y) < 15) {
 
                                 collection.setState(Collection.intakePowerState.reversed);
                                 collection.updateIntakeState();
@@ -344,31 +380,58 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                             }
 
-                            if (odometry.X > 180 && odometry.getVerticalVelocity() > -5 && !onlyOnce){
+                            if (odometry.X > 180 && odometry.getVerticalVelocity() > -5 && !onlyOnce) {
 
                                 onlyOnce = true;
 
-                                deliverySlides.DeliverySlides(400, 0.8);
+                                deliverySlides.DeliverySlides(500, 1);
 
                                 delivery.setGripperState(Delivery.GripperState.closed);
                                 delivery.updateGrippers();
 
-                                delivery.setArmTargetState(Delivery.armState.intermediate);
+                                delivery.setArmTargetState(Delivery.armState.deliverAuto);
                                 delivery.updateArm(deliverySlides.getCurrentposition());
 
                             }
 
+                            if (Math.abs(300 - odometry.X) < 5 && Math.abs(90 - odometry.Y) < 16) {
+
+                                drive.RF.setPower(0);
+                                drive.RB.setPower(0);
+                                drive.LF.setPower(0);
+                                drive.LB.setPower(0);
+
+                                delivery.setArmTargetState(Delivery.armState.delivery);
+                                delivery.updateArm(deliverySlides.getCurrentposition());
+
+//                                boolean reachedTarget = false;
+//
+//                                while (!reachedTarget){
+//                                    reachedTarget = delivery.getArmState() == Delivery.armState.delivery;
+//                                    delivery.updateArm(deliverySlides.getCurrentposition());
+//                                }
+
+                                delivery.setGripperState(Delivery.GripperState.open);
+                                delivery.updateGrippers();
+
+                                sleep(100);
+
+                                drive.RF.setPower(0);
+                                drive.RB.setPower(0);
+                                drive.LF.setPower(0);
+                                drive.LB.setPower(0);
+
+                                retractWait();
+                                phase = Phase.finished;
+
+                            }
                         }
 
                         if (pathing){
 
-                            if (delivering){
-                                pathing = follower.followPathAuto(targetHeading, odometry, drive, 5);
-                            }else {
-                                pathing = follower.followPathAuto(targetHeading, odometry, drive);
-                            }
+                            pathing = follower.followPathAuto(targetHeading, odometry, drive, 5);
 
-                        }else if (Math.abs(41 - odometry.X) < 10 && Math.abs(130 - odometry.Y) < 10){
+                        }else if (Math.abs(41 - odometry.X) < 10 && Math.abs(135 - odometry.Y) < 10){
 
                             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
@@ -378,24 +441,9 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                             onlyOnce = false;
 
-                        }else if (Math.abs(300 - odometry.X) < 5 && Math.abs(105 - odometry.Y) < 5){
-
-                            drive.RF.setPower(0);
-                            drive.RB.setPower(0);
-                            drive.LF.setPower(0);
-                            drive.LB.setPower(0);
-
-                            deployArm();
-
-                            dropPixels();
-
-                            retractWait();
-                            phase = Phase.finished;
-
                         }
 
                         break;
-
                     default:
                 }
 
@@ -445,7 +493,7 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                             }
 
-                        }else {
+                        }else if (Math.abs(305 - odometry.X) < 5 && Math.abs(94 - odometry.Y) < 5 && !pathing) {
 
                             if (auto == Auto.preload){
 
@@ -478,8 +526,9 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                         }
 
                         break;
-
                     case first2:
+
+                        delivery.updateArm(deliverySlides.getCurrentposition());
 
                         if (!builtPath){
 
@@ -506,16 +555,16 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                             }
                         }
 
-                        if (delivering){
+                        if (delivering) {
 
-                            if (Math.abs(121 - odometry.X) < 15 && Math.abs(180 - odometry.Y) < 15){
+                            if (Math.abs(121 - odometry.X) < 15 && Math.abs(180 - odometry.Y) < 15) {
 
                                 collection.setState(Collection.intakePowerState.off);
                                 collection.updateIntakeState();
 
                             }
 
-                            if (Math.abs(70 - odometry.X) < 15 && Math.abs(180 - odometry.Y) < 15){
+                            if (Math.abs(70 - odometry.X) < 15 && Math.abs(180 - odometry.Y) < 15) {
 
                                 collection.setState(Collection.intakePowerState.reversed);
                                 collection.updateIntakeState();
@@ -525,31 +574,87 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                             }
 
-                            if (odometry.X > 180 && odometry.getVerticalVelocity() > -5 && !onlyOnce){
+                            if (odometry.X > 180 && odometry.getVerticalVelocity() > -5 && !onlyOnce) {
 
                                 onlyOnce = true;
 
-                                deliverySlides.DeliverySlides(400, 0.8);
+                                deliverySlides.DeliverySlides(500, 1);
 
                                 delivery.setGripperState(Delivery.GripperState.closed);
                                 delivery.updateGrippers();
 
-                                delivery.setArmTargetState(Delivery.armState.intermediate);
+                                delivery.setArmTargetState(Delivery.armState.deliverAuto);
                                 delivery.updateArm(deliverySlides.getCurrentposition());
 
                             }
 
+                            if (Math.abs(300 - odometry.X) < 5 && Math.abs(90 - odometry.Y) < 16) {
+
+                                drive.RF.setPower(0);
+                                drive.RB.setPower(0);
+                                drive.LF.setPower(0);
+                                drive.LB.setPower(0);
+
+                                delivery.setArmTargetState(Delivery.armState.delivery);
+                                delivery.updateArm(deliverySlides.getCurrentposition());
+
+//                                boolean reachedTarget = false;
+//
+//                                while (!reachedTarget){
+//                                    reachedTarget = delivery.getArmState() == Delivery.armState.delivery;
+//                                    delivery.updateArm(deliverySlides.getCurrentposition());
+//                                }
+
+                                delivery.setGripperState(Delivery.GripperState.open);
+                                delivery.updateGrippers();
+
+                                sleep(100);
+
+                                drive.RF.setPower(0);
+                                drive.RB.setPower(0);
+                                drive.LF.setPower(0);
+                                drive.LB.setPower(0);
+
+                                if (auto == Auto.two) {
+
+                                    drive.RF.setPower(0);
+                                    drive.RB.setPower(0);
+                                    drive.LF.setPower(0);
+                                    drive.LB.setPower(0);
+
+                                    retractWait();
+                                    phase = Phase.finished;
+
+                                } else {
+
+                                    drive.RF.setPower(0);
+                                    drive.RB.setPower(0);
+                                    drive.LF.setPower(0);
+                                    drive.LB.setPower(0);
+
+                                    builtPath = false;
+                                    delivering = false;
+
+                                    retract();
+                                    phase = Phase.second2;
+
+                                }
+
+
+                            }
                         }
 
                         if (pathing){
 
-                            if (delivering){
-                                pathing = follower.followPathAuto(targetHeading, odometry, drive, 5);
-                            }else {
-                                pathing = follower.followPathAuto(targetHeading, odometry, drive);
-                            }
+                            pathing = follower.followPathAuto(targetHeading, odometry, drive, 5);
 
-                        }else if (Math.abs(41 - odometry.X) < 5 && Math.abs(130 - odometry.Y) < 5){
+//                            if (delivering){
+//                                pathing = follower.followPathAuto(targetHeading, odometry, drive, 5);
+//                            }else {
+//                                pathing = follower.followPathAuto(targetHeading, odometry, drive);
+//                            }
+
+                        }else if (Math.abs(41 - odometry.X) < 5 && Math.abs(135 - odometry.Y) < 5){
 
                             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
@@ -559,46 +664,13 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                             onlyOnce = false;
 
-                        }else if (Math.abs(300 - odometry.X) < 5 && Math.abs(105 - odometry.Y) < 5){
-
-                            drive.RF.setPower(0);
-                            drive.RB.setPower(0);
-                            drive.LF.setPower(0);
-                            drive.LB.setPower(0);
-
-                            deployArm();
-
-                            dropPixels();
-
-                            if (auto == Auto.two){
-
-                                drive.RF.setPower(0);
-                                drive.RB.setPower(0);
-                                drive.LF.setPower(0);
-                                drive.LB.setPower(0);
-
-                                retractWait();
-                                phase = Phase.finished;
-
-                            }else {
-
-                                drive.RF.setPower(0);
-                                drive.RB.setPower(0);
-                                drive.LF.setPower(0);
-                                drive.LB.setPower(0);
-
-                                builtPath = false;
-                                delivering = false;
-
-                                retract();
-                                phase = Phase.second2;
-
-                            }
-
                         }
+
 
                         break;
                     case second2:
+
+                        delivery.updateArm(deliverySlides.getCurrentposition());
 
                         if (!builtPath){
 
@@ -625,16 +697,16 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                             }
                         }
 
-                        if (delivering){
+                        if (delivering) {
 
-                            if (Math.abs(121 - odometry.X) < 15 && Math.abs(180 - odometry.Y) < 15){
+                            if (Math.abs(121 - odometry.X) < 15 && Math.abs(180 - odometry.Y) < 15) {
 
                                 collection.setState(Collection.intakePowerState.off);
                                 collection.updateIntakeState();
 
                             }
 
-                            if (Math.abs(70 - odometry.X) < 15 && Math.abs(180 - odometry.Y) < 15){
+                            if (Math.abs(70 - odometry.X) < 15 && Math.abs(180 - odometry.Y) < 15) {
 
                                 collection.setState(Collection.intakePowerState.reversed);
                                 collection.updateIntakeState();
@@ -644,31 +716,58 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                             }
 
-                            if (odometry.X > 180 && odometry.getVerticalVelocity() > -5 && !onlyOnce){
+                            if (odometry.X > 180 && odometry.getVerticalVelocity() > -5 && !onlyOnce) {
 
                                 onlyOnce = true;
 
-                                deliverySlides.DeliverySlides(400, 0.8);
+                                deliverySlides.DeliverySlides(500, 1);
 
                                 delivery.setGripperState(Delivery.GripperState.closed);
                                 delivery.updateGrippers();
 
-                                delivery.setArmTargetState(Delivery.armState.intermediate);
+                                delivery.setArmTargetState(Delivery.armState.deliverAuto);
                                 delivery.updateArm(deliverySlides.getCurrentposition());
 
                             }
 
+                            if (Math.abs(300 - odometry.X) < 5 && Math.abs(90 - odometry.Y) < 16) {
+
+                                drive.RF.setPower(0);
+                                drive.RB.setPower(0);
+                                drive.LF.setPower(0);
+                                drive.LB.setPower(0);
+
+                                delivery.setArmTargetState(Delivery.armState.delivery);
+                                delivery.updateArm(deliverySlides.getCurrentposition());
+
+//                                boolean reachedTarget = false;
+//
+//                                while (!reachedTarget){
+//                                    reachedTarget = delivery.getArmState() == Delivery.armState.delivery;
+//                                    delivery.updateArm(deliverySlides.getCurrentposition());
+//                                }
+
+                                delivery.setGripperState(Delivery.GripperState.open);
+                                delivery.updateGrippers();
+
+                                sleep(100);
+
+                                drive.RF.setPower(0);
+                                drive.RB.setPower(0);
+                                drive.LF.setPower(0);
+                                drive.LB.setPower(0);
+
+                                retractWait();
+                                phase = Phase.finished;
+
+                            }
                         }
 
                         if (pathing){
 
-                            if (delivering){
-                                pathing = follower.followPathAuto(targetHeading, odometry, drive, 5);
-                            }else {
-                                pathing = follower.followPathAuto(targetHeading, odometry, drive);
-                            }
+                            pathing = follower.followPathAuto(targetHeading, odometry, drive, 5);
 
-                        }else if (Math.abs(41 - odometry.X) < 10 && Math.abs(130 - odometry.Y) < 10){
+                        }else if (Math.abs(41 - odometry.X) < 10 && Math.abs(135 - odometry.Y) < 10){
 
                             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
@@ -677,20 +776,6 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                             delivering = true;
 
                             onlyOnce = false;
-
-                        }else if (Math.abs(300 - odometry.X) < 5 && Math.abs(105 - odometry.Y) < 5){
-
-                            drive.RF.setPower(0);
-                            drive.RB.setPower(0);
-                            drive.LF.setPower(0);
-                            drive.LB.setPower(0);
-
-                            deployArm();
-
-                            dropPixels();
-
-                            retractWait();
-                            phase = Phase.finished;
 
                         }
 
@@ -726,11 +811,11 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                             pathing = follower.followPathAuto(targetHeading, odometry, drive);
 
-                            if (Math.abs(210 - odometry.X) < 15 && Math.abs(70 - odometry.Y) < 15){
+                            if (Math.abs(210 - odometry.X) < 10 && Math.abs(60 - odometry.Y) < 10){
                                 targetHeading = 0;
                             }
 
-                            if (Math.abs(241 - odometry.X) < 15 && Math.abs(86 - odometry.Y) < 15 && deliverySlides.getCurrentposition() < 50){
+                            if (Math.abs(241 - odometry.X) < 15 && Math.abs(100 - odometry.Y) < 15 && deliverySlides.getCurrentposition() < 50){
 
                                 targetHeading = 180;
 
@@ -745,7 +830,7 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                             }
 
 
-                        }else if (Math.abs(305 - odometry.X) < 5 && Math.abs(110 - odometry.Y) < 5){
+                        }else if (Math.abs(305 - odometry.X) < 5 && Math.abs(110 - odometry.Y) < 5 && !pathing){
 
                             if (auto == Auto.preload){
 
@@ -758,6 +843,11 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                                 phase = Phase.finished;
 
                             }else {
+
+                                drive.RF.setPower(0);
+                                drive.RB.setPower(0);
+                                drive.LF.setPower(0);
+                                drive.LB.setPower(0);
 
                                 dropYellowPixel();
 
@@ -774,6 +864,8 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                         break;
                     case first2:
+
+                        delivery.updateArm(deliverySlides.getCurrentposition());
 
                         if (!builtPath){
 
@@ -800,16 +892,16 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                             }
                         }
 
-                        if (delivering){
+                        if (delivering) {
 
-                            if (Math.abs(121 - odometry.X) < 15 && Math.abs(180 - odometry.Y) < 15){
+                            if (Math.abs(121 - odometry.X) < 15 && Math.abs(180 - odometry.Y) < 15) {
 
                                 collection.setState(Collection.intakePowerState.off);
                                 collection.updateIntakeState();
 
                             }
 
-                            if (Math.abs(70 - odometry.X) < 15 && Math.abs(180 - odometry.Y) < 15){
+                            if (Math.abs(70 - odometry.X) < 15 && Math.abs(180 - odometry.Y) < 15) {
 
                                 collection.setState(Collection.intakePowerState.reversed);
                                 collection.updateIntakeState();
@@ -819,31 +911,87 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                             }
 
-                            if (odometry.X > 180 && odometry.getVerticalVelocity() > -5 && !onlyOnce){
+                            if (odometry.X > 180 && odometry.getVerticalVelocity() > -5 && !onlyOnce) {
 
                                 onlyOnce = true;
 
-                                deliverySlides.DeliverySlides(400, 0.8);
+                                deliverySlides.DeliverySlides(500, 1);
 
                                 delivery.setGripperState(Delivery.GripperState.closed);
                                 delivery.updateGrippers();
 
-                                delivery.setArmTargetState(Delivery.armState.intermediate);
+                                delivery.setArmTargetState(Delivery.armState.deliverAuto);
                                 delivery.updateArm(deliverySlides.getCurrentposition());
 
                             }
 
+                            if (Math.abs(300 - odometry.X) < 5 && Math.abs(90 - odometry.Y) < 16) {
+
+                                drive.RF.setPower(0);
+                                drive.RB.setPower(0);
+                                drive.LF.setPower(0);
+                                drive.LB.setPower(0);
+
+                                delivery.setArmTargetState(Delivery.armState.delivery);
+                                delivery.updateArm(deliverySlides.getCurrentposition());
+
+//                                boolean reachedTarget = false;
+//
+//                                while (!reachedTarget){
+//                                    reachedTarget = delivery.getArmState() == Delivery.armState.delivery;
+//                                    delivery.updateArm(deliverySlides.getCurrentposition());
+//                                }
+
+                                delivery.setGripperState(Delivery.GripperState.open);
+                                delivery.updateGrippers();
+
+                                sleep(100);
+
+                                drive.RF.setPower(0);
+                                drive.RB.setPower(0);
+                                drive.LF.setPower(0);
+                                drive.LB.setPower(0);
+
+                                if (auto == Auto.two) {
+
+                                    drive.RF.setPower(0);
+                                    drive.RB.setPower(0);
+                                    drive.LF.setPower(0);
+                                    drive.LB.setPower(0);
+
+                                    retractWait();
+                                    phase = Phase.finished;
+
+                                } else {
+
+                                    drive.RF.setPower(0);
+                                    drive.RB.setPower(0);
+                                    drive.LF.setPower(0);
+                                    drive.LB.setPower(0);
+
+                                    builtPath = false;
+                                    delivering = false;
+
+                                    retract();
+                                    phase = Phase.second2;
+
+                                }
+
+
+                            }
                         }
 
                         if (pathing){
 
-                            if (delivering){
-                                pathing = follower.followPathAuto(targetHeading, odometry, drive, 5);
-                            }else {
-                                pathing = follower.followPathAuto(targetHeading, odometry, drive);
-                            }
+                            pathing = follower.followPathAuto(targetHeading, odometry, drive, 5);
 
-                        }else if (Math.abs(41 - odometry.X) < 5 && Math.abs(130 - odometry.Y) < 5){
+//                            if (delivering){
+//                                pathing = follower.followPathAuto(targetHeading, odometry, drive, 5);
+//                            }else {
+//                                pathing = follower.followPathAuto(targetHeading, odometry, drive);
+//                            }
+
+                        }else if (Math.abs(41 - odometry.X) < 5 && Math.abs(135 - odometry.Y) < 5){
 
                             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
@@ -853,46 +1001,13 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                             onlyOnce = false;
 
-                        }else if (Math.abs(300 - odometry.X) < 5 && Math.abs(105 - odometry.Y) < 5){
-
-                            drive.RF.setPower(0);
-                            drive.RB.setPower(0);
-                            drive.LF.setPower(0);
-                            drive.LB.setPower(0);
-
-                            deployArm();
-
-                            dropPixels();
-
-                            if (auto == Auto.two){
-
-                                drive.RF.setPower(0);
-                                drive.RB.setPower(0);
-                                drive.LF.setPower(0);
-                                drive.LB.setPower(0);
-
-                                retractWait();
-                                phase = Phase.finished;
-
-                            }else {
-
-                                drive.RF.setPower(0);
-                                drive.RB.setPower(0);
-                                drive.LF.setPower(0);
-                                drive.LB.setPower(0);
-
-                                builtPath = false;
-                                delivering = false;
-
-                                retract();
-                                phase = Phase.second2;
-
-                            }
-
                         }
+
 
                         break;
                     case second2:
+
+                        delivery.updateArm(deliverySlides.getCurrentposition());
 
                         if (!builtPath){
 
@@ -919,16 +1034,16 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                             }
                         }
 
-                        if (delivering){
+                        if (delivering) {
 
-                            if (Math.abs(121 - odometry.X) < 15 && Math.abs(180 - odometry.Y) < 15){
+                            if (Math.abs(121 - odometry.X) < 15 && Math.abs(180 - odometry.Y) < 15) {
 
                                 collection.setState(Collection.intakePowerState.off);
                                 collection.updateIntakeState();
 
                             }
 
-                            if (Math.abs(70 - odometry.X) < 15 && Math.abs(180 - odometry.Y) < 15){
+                            if (Math.abs(70 - odometry.X) < 15 && Math.abs(180 - odometry.Y) < 15) {
 
                                 collection.setState(Collection.intakePowerState.reversed);
                                 collection.updateIntakeState();
@@ -938,31 +1053,58 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                             }
 
-                            if (odometry.X > 180 && odometry.getVerticalVelocity() > -5 && !onlyOnce){
+                            if (odometry.X > 180 && odometry.getVerticalVelocity() > -5 && !onlyOnce) {
 
                                 onlyOnce = true;
 
-                                deliverySlides.DeliverySlides(400, 0.8);
+                                deliverySlides.DeliverySlides(500, 1);
 
                                 delivery.setGripperState(Delivery.GripperState.closed);
                                 delivery.updateGrippers();
 
-                                delivery.setArmTargetState(Delivery.armState.intermediate);
+                                delivery.setArmTargetState(Delivery.armState.deliverAuto);
                                 delivery.updateArm(deliverySlides.getCurrentposition());
 
                             }
 
+                            if (Math.abs(300 - odometry.X) < 5 && Math.abs(90 - odometry.Y) < 16) {
+
+                                drive.RF.setPower(0);
+                                drive.RB.setPower(0);
+                                drive.LF.setPower(0);
+                                drive.LB.setPower(0);
+
+                                delivery.setArmTargetState(Delivery.armState.delivery);
+                                delivery.updateArm(deliverySlides.getCurrentposition());
+
+//                                boolean reachedTarget = false;
+//
+//                                while (!reachedTarget){
+//                                    reachedTarget = delivery.getArmState() == Delivery.armState.delivery;
+//                                    delivery.updateArm(deliverySlides.getCurrentposition());
+//                                }
+
+                                delivery.setGripperState(Delivery.GripperState.open);
+                                delivery.updateGrippers();
+
+                                sleep(100);
+
+                                drive.RF.setPower(0);
+                                drive.RB.setPower(0);
+                                drive.LF.setPower(0);
+                                drive.LB.setPower(0);
+
+                                retractWait();
+                                phase = Phase.finished;
+
+                            }
                         }
 
                         if (pathing){
 
-                            if (delivering){
-                                pathing = follower.followPathAuto(targetHeading, odometry, drive, 5);
-                            }else {
-                                pathing = follower.followPathAuto(targetHeading, odometry, drive);
-                            }
+                            pathing = follower.followPathAuto(targetHeading, odometry, drive, 5);
 
-                        }else if (Math.abs(41 - odometry.X) < 10 && Math.abs(130 - odometry.Y) < 10){
+                        }else if (Math.abs(41 - odometry.X) < 10 && Math.abs(135 - odometry.Y) < 10){
 
                             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
@@ -971,20 +1113,6 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                             delivering = true;
 
                             onlyOnce = false;
-
-                        }else if (Math.abs(300 - odometry.X) < 5 && Math.abs(105 - odometry.Y) < 5){
-
-                            drive.RF.setPower(0);
-                            drive.RB.setPower(0);
-                            drive.LF.setPower(0);
-                            drive.LB.setPower(0);
-
-                            deployArm();
-
-                            dropPixels();
-
-                            retractWait();
-                            phase = Phase.finished;
 
                         }
 

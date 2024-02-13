@@ -18,7 +18,7 @@ public interface Blue_Points_Overlap {
     //second segment
     Vector2D CS2F = CE1F;
     Vector2D CC2F = new Vector2D(getRealCoords(23), getRealCoords(199));
-    Vector2D CE2F = new Vector2D(getRealCoords(41), getRealCoords(130));
+    Vector2D CE2F = new Vector2D(getRealCoords(41), getRealCoords(135));
 
     /**second segment*/
     Vector2D CS3F = CE2F;
@@ -28,7 +28,7 @@ public interface Blue_Points_Overlap {
     //second segment
     Vector2D CS4F = CE3F;
     Vector2D CC4F = new Vector2D(getRealCoords(305), getRealCoords(208));
-    Vector2D CE4F = new Vector2D(getRealCoords(300), getRealCoords(105));
+    Vector2D CE4F = new Vector2D(getRealCoords(300), getRealCoords(95));
 
 //    /**third position*/
 //    Vector2D CS1T = new Vector2D(getRealCoords(300), getRealCoords(105));

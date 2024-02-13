@@ -46,12 +46,12 @@ public class Delivery {
     double deliveryTopPivotNew = 1;
     double safeTopPivot = 0.3;
 
-    double deliveryTopPivotAuto = 0.7;
+    double deliveryTopPivotAuto = 0.85;
     double deliverySecondPivotAuto = 0.2;
     double distancecalc;
     double avoidIntakeSecondPivot = 0.8;
     double collectSecondPivot = 0.92;
-    double deliverySecondPivot = -0.18;
+    double deliverySecondPivot = -0.1;
     double lowdeliveryTopPivot = 1;
 
     double clawOpenDeliver = 0.35;
@@ -80,7 +80,7 @@ public class Delivery {
     static final double mainservopospermm = 0.0126;
     static final double mindistancemm = 8;
     static final double maxdistancemm = 20;
-    static final double distanceToPivot = 0.1575;
+    static final double distanceToPivot = 0.1375;
 
     boolean DeliveryMovingAuto = false;
     boolean DeliveryMoving = false;

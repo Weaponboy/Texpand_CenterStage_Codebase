@@ -39,12 +39,6 @@ public interface Auto_Methods {
 
     default void dropYellowPixel() throws InterruptedException {
 
-        deliverySlides.DeliverySlides(300, 1);
-
-        while (deliverySlides.getCurrentposition() < 295){
-
-        }
-
         delivery.setArmTargetState(Delivery.armState.delivery);
         delivery.updateArm(deliverySlides.getCurrentposition());
 
@@ -54,8 +48,6 @@ public interface Auto_Methods {
             reachedTarget = delivery.getArmState() == Delivery.armState.delivery;
             delivery.updateArm(deliverySlides.getCurrentposition());
         }
-
-        sleep(200);
 
         delivery.setRightGripperState(Delivery.rightGripperState.openDeliver);
         delivery.updateGrippers();
