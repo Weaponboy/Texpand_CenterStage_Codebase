@@ -68,6 +68,10 @@ public class mecanumFollower {
         pathfollow = new FollowPath(trajectory, pathingVelocity);
     }
 
+    public void resetClosestPoint(Vector2D robotPos){
+        pathfollow.getClosestPositionOnPathFullPath(robotPos);
+    }
+
     public PathingPower getPathingPower(Vector2D robotPos, double heading){
 
         PathingPower pathingPower;

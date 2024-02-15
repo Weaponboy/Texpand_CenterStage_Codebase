@@ -199,6 +199,30 @@ public class FollowPath {
         return index;
     }
 
+    public int getClosestPositionOnPathFullPath(Vector2D robotPos) {
+
+        int index = 0;
+
+        double minDistance = Double.MAX_VALUE;
+
+        for (Vector2D pos : followablePath) {
+
+            double distance = Math.sqrt(
+                    Math.pow(robotPos.getX() - pos.getX(), 2) +
+                            Math.pow(robotPos.getY() - pos.getY(), 2)
+            );
+
+            if (distance < minDistance) {
+                minDistance = distance;
+                index = followablePath.indexOf(pos);
+            }
+        }
+
+        lastPointOnPath = index;
+
+        return index;
+    }
+
     public Vector2D getErrorToPath(Vector2D robotPos) {
 
         int index = 0;

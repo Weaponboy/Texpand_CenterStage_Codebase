@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propD
 import org.firstinspires.ftc.teamcode.hardware._.Drivetrain;
 import org.firstinspires.ftc.teamcode.hardware._.Odometry;
 import org.firstinspires.ftc.teamcode.hardware._.Sensors;
-import org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Preload.Auto_Methods;
+import org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Methods.Auto_Methods;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 

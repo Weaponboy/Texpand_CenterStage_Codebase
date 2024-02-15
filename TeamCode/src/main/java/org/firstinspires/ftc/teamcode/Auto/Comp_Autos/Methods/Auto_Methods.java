@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Preload;
+package org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Methods;
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.UsefulMethods.getRealCoords;
 import static java.lang.Thread.sleep;
@@ -60,6 +60,31 @@ public interface Auto_Methods {
         deliverySlides.DeliverySlides(0, -1);
 
     }
+
+    default void dropYellowPixel(boolean both) throws InterruptedException {
+
+        delivery.setArmTargetState(Delivery.armState.delivery);
+        delivery.updateArm(deliverySlides.getCurrentposition());
+
+        boolean reachedTarget = false;
+
+        while (!reachedTarget){
+            reachedTarget = delivery.getArmState() == Delivery.armState.delivery;
+            delivery.updateArm(deliverySlides.getCurrentposition());
+        }
+
+        delivery.setGripperState(Delivery.GripperState.openDeliver);
+        delivery.updateGrippers();
+
+        sleep(200);
+
+        delivery.setArmTargetState(Delivery.armState.collect);
+        delivery.updateArm(deliverySlides.getCurrentposition());
+
+        deliverySlides.DeliverySlides(0, -1);
+
+    }
+
 
     default void dropYellowPixel(Telemetry telemetry) throws InterruptedException{
 

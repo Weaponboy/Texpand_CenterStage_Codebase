@@ -130,7 +130,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
             }else {
 
-                droneLauncher.buildPathLine(robotPos, new Vector2D(getRealCoords(240), robotPos.getY()));
+                droneLauncher.buildPathLine(robotPos, new Vector2D(getRealCoords(250), robotPos.getY()));
 
                 follower.setPath(droneLauncher.followablePath, droneLauncher.pathingVelocity);
 
@@ -564,8 +564,8 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         telemetry.addData("X", odometry.X);
         telemetry.addData("Y", odometry.Y);
         telemetry.addData("heading", odometry.heading);
-        telemetry.addData("distance", sensors.backBoard.getDistance(DistanceUnit.CM));
-        telemetry.addData("main pivot", delivery.getMainPivotPosition());
+        telemetry.addData("intake current draw", collection.getIntakeCurrentUse());
+        telemetry.addData("slides current draw", deliverySlides.getCurrentDraw());
         telemetry.addData("loop time", loopTime);
         telemetry.update();
 

@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilde
 import org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount;
 import org.firstinspires.ftc.teamcode.hardware._.Drivetrain;
 import org.firstinspires.ftc.teamcode.hardware._.Odometry;
-import org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Preload.Auto_Methods;
+import org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Methods.Auto_Methods;
 import org.firstinspires.ftc.vision.VisionPortal;
 @Disabled
 @Autonomous(name = "Red_Right_Stack+2", group = "Stack 2+2")

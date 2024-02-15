@@ -24,8 +24,8 @@ public class blueLeftBuilder extends pathBuilderMain implements Blue_Points_Over
 
     //first pos
     Vector2D DPS1F = new Vector2D(getRealCoords(210), getRealCoords(23));
-    Vector2D DPC1F = new Vector2D(getRealCoords(223), getRealCoords(79));
-    Vector2D DPCT1F = new Vector2D(getRealCoords(164), getRealCoords(110));
+    Vector2D DPC1F = new Vector2D(getRealCoords(223), getRealCoords(77));
+    Vector2D DPCT1F = new Vector2D(getRealCoords(164), getRealCoords(108));
     Vector2D DPE1F = new Vector2D(getRealCoords(305), getRealCoords(82.5));
 
     //second pos
@@ -188,10 +188,6 @@ public class blueLeftBuilder extends pathBuilderMain implements Blue_Points_Over
         buildCurveSegment(CS3F, CC3F, CE3F);
 
         buildCurveSegment(CS4F, CC4F, CE4F);
-
-//        buildCurveSegment(DS1F, DC1F, DE1F);
-//
-//        buildCurveSegment(DS2F, DC2F, DE2F);
 
     }
 

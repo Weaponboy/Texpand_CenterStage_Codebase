@@ -46,7 +46,7 @@ public class Delivery {
     double deliveryTopPivotNew = 1;
     double safeTopPivot = 0.3;
 
-    double deliveryTopPivotAuto = 0.85;
+    double deliveryTopPivotAuto = 0.7;
     double deliverySecondPivotAuto = 0.2;
     double distancecalc;
     double avoidIntakeSecondPivot = 0.8;
@@ -80,14 +80,14 @@ public class Delivery {
     static final double mainservopospermm = 0.0126;
     static final double mindistancemm = 8;
     static final double maxdistancemm = 20;
-    static final double distanceToPivot = 0.1375;
+    static final double distanceToPivot = 0.1595;
 
     boolean DeliveryMovingAuto = false;
     boolean DeliveryMoving = false;
     boolean CollectionMoving = false;
     boolean intermediateMoving = false;
 
-    double deliveryIncrement = 0.01;
+    double deliveryIncrement = 0.02;
 
     HardwareMap hmap;
 
@@ -186,7 +186,7 @@ public class Delivery {
                 break;
             case delivery:
 
-                mainPivotOffSet = 0;
+                mainPivotOffSet = 0.15;
 
                 secondRotate.setPosition(secondRotateMiddle);
 
@@ -406,11 +406,20 @@ public class Delivery {
                 DeliveryMoving = true;
 
                 setClaws(clawClosed);
+
                 setGripperState(GripperState.closed);
 
                 double distance = sensors.backBoard.getDistance(DistanceUnit.CM);
 
-                if(distance > mindistancemm && distance < maxdistancemm){
+                if(distance > 6 && distance < 26){
+                    distance = sensors.backBoard.getDistance(DistanceUnit.CM);
+                }
+
+                if(distance > 6 && distance < 26){
+                    distance = sensors.backBoard.getDistance(DistanceUnit.CM);
+                }
+
+                if(distance > 6 && distance < 26){
                     mainPivotOffSet = distanceToPivot + (( distance - mindistancemm) * mainservopospermm);
                 }
 
@@ -421,6 +430,7 @@ public class Delivery {
                 timeToWaitDelivery = Math.max((Math.abs(getSecondPivotPosition() - targetMainPivot) * 180) * timePerDegree, (Math.abs(getTopPivotPosition() - (deliverySecondPivot + (-slidesPos * servoPosPerTick + mainPivotOffSet) * mainToSecondConst)) * 180) * timePerDegree);
 
                 setMainPivot(targetMainPivot);
+
                 setSecondPivot(deliverySecondPivot + (-slidesPos * servoPosPerTick + mainPivotOffSet) * mainToSecondConst);
 
                 RotateClaw.setPosition(rotateDeliver);
@@ -452,6 +462,7 @@ public class Delivery {
 
                 break;
             case moving:
+
                 if (DeliveryMoving && pivotMoveTimeDelivery.milliseconds() >= timeToWaitDelivery) {
                     armstateCurrent = armState.delivery;
                     DeliveryMoving = false;

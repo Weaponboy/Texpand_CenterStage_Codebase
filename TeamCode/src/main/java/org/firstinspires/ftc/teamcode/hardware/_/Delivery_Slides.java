@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
+
 import java.util.Objects;
 
 public class  Delivery_Slides {
@@ -112,6 +114,10 @@ public class  Delivery_Slides {
         Right_Slide.setPower(power);
         Left_Slide.setPower(power);
 
+    }
+
+    public double getCurrentDraw(){
+        return (Left_Slide.getCurrent(CurrentUnit.MILLIAMPS) + Right_Slide.getCurrent(CurrentUnit.MILLIAMPS))/2;
     }
 
     public void SlidesBothPower(double power){
