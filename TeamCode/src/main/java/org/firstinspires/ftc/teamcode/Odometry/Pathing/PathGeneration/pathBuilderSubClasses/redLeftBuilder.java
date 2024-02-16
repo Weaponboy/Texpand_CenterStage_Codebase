@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.Red_Points_Overlap;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderMain;
 
-public class redLeftBuilder extends pathBuilderMain implements Red_Points_Overlap {
+public class redLeftBuilder extends pathBuilderMain{
 
     Vector2D startPos = new Vector2D(getRealCoords(90), getRealCoords(337));
 
@@ -48,7 +48,7 @@ public class redLeftBuilder extends pathBuilderMain implements Red_Points_Overla
 
     Vector2D DYS3F = DYE2F;
     Vector2D DYC3F = new Vector2D(getRealCoords(285), getRealCoords(219));
-    Vector2D DYE3F = new Vector2D(getRealCoords(300), getRealCoords(285));
+    Vector2D DYE3F = new Vector2D(getRealCoords(305), getRealCoords(280));
 
     /**drop yellow second*/
     Vector2D DYS1S = DPE1S;
@@ -61,7 +61,7 @@ public class redLeftBuilder extends pathBuilderMain implements Red_Points_Overla
 
     Vector2D DYS3S = DYE2S;
     Vector2D DYC3S = new Vector2D(getRealCoords(293), getRealCoords(224));
-    Vector2D DYE3S = new Vector2D(getRealCoords(300), getRealCoords(273));
+    Vector2D DYE3S = new Vector2D(getRealCoords(305), getRealCoords(265));
 
     /**drop yellow third*/
 
@@ -75,7 +75,22 @@ public class redLeftBuilder extends pathBuilderMain implements Red_Points_Overla
 
     Vector2D DYS3T = DYE2T;
     Vector2D DYC3T = new Vector2D(getRealCoords(276), getRealCoords(202));
-    Vector2D DYE3T = new Vector2D(getRealCoords(300), getRealCoords(250));
+    Vector2D DYE3T = new Vector2D(getRealCoords(305), getRealCoords(250));
+
+    /**first position*/
+    Vector2D CS1F = new Vector2D(getRealCoords(300), getRealCoords(270));
+    Vector2D CC1F = new Vector2D(getRealCoords(284), getRealCoords(213));
+    Vector2D CE1F = new Vector2D(getRealCoords(179), getRealCoords(208));
+
+    //second segment
+    Vector2D CS2F = CE1F;
+    Vector2D CC2F = new Vector2D(getRealCoords(107), getRealCoords(211));
+    Vector2D CE2F = new Vector2D(getRealCoords(84), getRealCoords(200));
+
+    Vector2D CS3F = CE2F;
+    Vector2D CC3F = new Vector2D(getRealCoords(37), getRealCoords(179));
+    Vector2D CE3F = new Vector2D(getRealCoords(47), getRealCoords(240));
+
 
     public enum Position {
         left,
@@ -203,21 +218,23 @@ public class redLeftBuilder extends pathBuilderMain implements Red_Points_Overla
 
     }
 
-    /**First Position*/
     private void Collect(){
 
         buildCurveSegment(CS1F, CC1F, CE1F);
 
         buildCurveSegment(CS2F, CC2F, CE2F);
 
+        buildCurveSegment(CS3F, CC3F, CE3F);
+
     }
 
-    /**First Position*/
     private void Deliver(){
 
-        buildCurveSegment(DS1F, DC1F, DE1F);
+        buildCurveSegment(CE3F, CC3F, CS3F);
 
-        buildCurveSegment(DS2F, DC2F, DE2F);
+        buildCurveSegment(CE2F, CC2F, CS2F);
+
+        buildCurveSegment(CE1F, CC1F, CS1F);
 
     }
 

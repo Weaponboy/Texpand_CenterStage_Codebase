@@ -92,6 +92,10 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
     int waitTimeSensors;
 
+    ElapsedTime sweeper = new ElapsedTime();
+
+    boolean resettingSlides = false;
+
     @Override
     public void loop() {
 
@@ -143,6 +147,10 @@ public class RedTeleop extends OpMode implements TeleopPathing {
         if (gamepad1.dpad_left){
             headingLock = true;
         } else if (gamepad1.dpad_right) {
+            headingLock = false;
+        }
+
+        if (headingLock && odometry.X < 270){
             headingLock = false;
         }
 
@@ -509,6 +517,33 @@ public class RedTeleop extends OpMode implements TeleopPathing {
             deliverySlides.DeliverySlides(0, -0.5);
 
             deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
+        }
+
+        if (gamepad2.left_stick_button){
+            deliverySlides.SlidesBothPower(-0.4);
+            resettingSlides = true;
+        }
+
+        if (resettingSlides){
+
+            if (deliverySlides.getCurrentDraw() >= 2000){
+
+                deliverySlides.SlidesBothPower(0);
+                resettingSlides = false;
+                deliverySlides.resetZero();
+
+            }else {
+
+            }
+        }
+
+        if (gamepad1.y){
+            collection.setSweeperState(Collection.sweeperState.push);
+            collection.updateSweeper();
+            sweeper.reset();
+        } else if (sweeper.milliseconds() > 100 && sweeper.milliseconds() < 200) {
+            collection.setSweeperState(Collection.sweeperState.retract);
+            collection.updateSweeper();
         }
 
         if (gamepad2.left_trigger > 0){

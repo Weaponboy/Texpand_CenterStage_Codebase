@@ -151,10 +151,34 @@ public class FollowPath {
     }
 
     public double calculateTotalDistance() {
+
         double totalDistance = 0.0;
+
         for (int i = 0; i < followablePath.size() - 1; i++) {
             Vector2D point1 = followablePath.get(i);
             Vector2D point2 = followablePath.get(i + 1);
+            totalDistance += calculateDistance(point1, point2);
+        }
+        return totalDistance;
+    }
+
+    public double calculateDistancePointToPoint(Vector2D robotPos, Vector2D endpoint) {
+
+        int index = 0;
+
+        int startIndex = getClosestPositionOnPath(robotPos);
+
+        int endIndex = followablePath.size()-1;
+
+        List<Vector2D> subList = followablePath.subList(startIndex, endIndex);
+
+        ArrayList<Vector2D> sectionToLook = new ArrayList<>(subList);
+
+        double totalDistance = 0.0;
+
+        for (int i = 0; i < sectionToLook.size() - 1; i++) {
+            Vector2D point1 = sectionToLook.get(i);
+            Vector2D point2 = sectionToLook.get(i + 1);
             totalDistance += calculateDistance(point1, point2);
         }
         return totalDistance;

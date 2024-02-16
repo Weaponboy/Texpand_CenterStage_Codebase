@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.Blue_Points_Overlap;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderMain;
 
-public class blueLeftBuilder extends pathBuilderMain implements Blue_Points_Overlap {
+public class blueLeftBuilder extends pathBuilderMain{
 
     /** control point naming key
      * don't need start position because i have sub classes for each one
@@ -31,13 +31,13 @@ public class blueLeftBuilder extends pathBuilderMain implements Blue_Points_Over
     //second pos
     Vector2D DPS1S = new Vector2D(getRealCoords(210), getRealCoords(23));
     Vector2D DPC1S = new Vector2D(getRealCoords(225), getRealCoords(76));
-    Vector2D DPCT1S = new Vector2D(getRealCoords(166), getRealCoords(98));
+    Vector2D DPCT1S = new Vector2D(getRealCoords(180), getRealCoords(90));
     Vector2D DPE1S = new Vector2D(getRealCoords(305), getRealCoords(94));
 
     Vector2D DPS1T = new Vector2D(getRealCoords(210), getRealCoords(23));
     Vector2D DPC1T = new Vector2D(getRealCoords(223), getRealCoords(79));
     Vector2D DPCT1T = new Vector2D(getRealCoords(164), getRealCoords(110));
-    Vector2D DPE1T = new Vector2D(getRealCoords(305), getRealCoords(110));
+    Vector2D DPE1T = new Vector2D(getRealCoords(305), getRealCoords(105));
 
     /**
      * drop yellow pixel
@@ -56,6 +56,20 @@ public class blueLeftBuilder extends pathBuilderMain implements Blue_Points_Over
     //drop yellow pixel first
     Vector2D DYS1T = new Vector2D(DPE1F.getX(), DPE1F.getY());
     Vector2D DYE1T = new Vector2D(getRealCoords(300), getRealCoords(110));
+
+    /**first position*/
+    Vector2D CS1F = new Vector2D(getRealCoords(300), getRealCoords(100));
+    Vector2D CC1F = new Vector2D(getRealCoords(284), getRealCoords(147));
+    Vector2D CE1F = new Vector2D(getRealCoords(179), getRealCoords(152));
+
+    //second segment
+    Vector2D CS2F = CE1F;
+    Vector2D CC2F = new Vector2D(getRealCoords(107), getRealCoords(149));
+    Vector2D CE2F = new Vector2D(getRealCoords(84), getRealCoords(160));
+
+    Vector2D CS3F = CE2F;
+    Vector2D CC3F = new Vector2D(getRealCoords(37), getRealCoords(181));
+    Vector2D CE3F = new Vector2D(getRealCoords(47), getRealCoords(120));
 
     public enum Position {
         left,
@@ -181,13 +195,17 @@ public class blueLeftBuilder extends pathBuilderMain implements Blue_Points_Over
 
         buildCurveSegment(CS2F, CC2F, CE2F);
 
+        buildCurveSegment(CS3F, CC3F, CE3F);
+
     }
 
     private void Deliver(){
 
-        buildCurveSegment(CS3F, CC3F, CE3F);
+        buildCurveSegment(CE3F, CC3F, CS3F);
 
-        buildCurveSegment(CS4F, CC4F, CE4F);
+        buildCurveSegment(CE2F, CC2F, CS2F);
+
+        buildCurveSegment(CE1F, CC1F, CS1F);
 
     }
 

@@ -4,7 +4,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.ServoImplEx;
 
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
@@ -15,6 +17,8 @@ public class Collection {
     public Servo IntakeHeightLeft;
     public Servo IntakeHeightRight;
 
+    ServoImplEx sweeper;
+
     HardwareMap hmap;
 
     double collect = 0;
@@ -22,18 +26,25 @@ public class Collection {
     double stowed = 0.3;
     double letClawThrough = 0.25;
     double firstPixel = 0;
-    double secondPixel = 0.14;
+    double secondPixel = 0.08;
     double thirdPixel = 0.22;
     double forthPixel = 0.27;
     double fifthPixel = 0.29;
 
     intakePowerState statePower = intakePowerState.off;
     intakeHeightState heightState = intakeHeightState.stowed;
+    sweeperState sweeperstate = sweeperState.retract;
+
+    public enum sweeperState{
+        push,
+        retract
+    }
 
     public enum intakePowerState{
         on,
         off,
-        reversed
+        reversed,
+        reversedHalf
     }
 
     public enum intakeHeightState{
@@ -59,6 +70,23 @@ public class Collection {
                 break;
             case reversed:
                 Intake.setPower(-1);
+                break;
+            case reversedHalf:
+                Intake.setPower(-0.6);
+                break;
+            default:
+        }
+
+    }
+
+    public void updateSweeper(){
+
+        switch (sweeperstate){
+            case push:
+                sweeper.setPosition(0);
+                break;
+            case retract:
+                sweeper.setPosition(0.13);
                 break;
             default:
         }
@@ -115,6 +143,12 @@ public class Collection {
 
         Intake = hardwareMap.get(DcMotorEx.class, "Intake");
 
+        sweeper = hardwareMap.get(ServoImplEx.class, "sweeper");
+
+        sweeper.setPwmRange(new PwmControl.PwmRange(600, 2400));
+
+        sweeper.setPosition(0.13);
+
         IntakeHeightRight = hardwareMap.get(Servo.class, "IntakeServoRight");
 
         IntakeHeightRight.setDirection(Servo.Direction.REVERSE);
@@ -145,6 +179,10 @@ public class Collection {
 
     public void setIntakeHeight(intakeHeightState heightState) {
         this.heightState = heightState;
+    }
+
+    public void setSweeperState(sweeperState heightState) {
+        this.sweeperstate = heightState;
     }
 
     public double getIntakePower() {

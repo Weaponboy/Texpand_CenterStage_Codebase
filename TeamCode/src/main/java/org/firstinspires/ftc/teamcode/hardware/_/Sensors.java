@@ -31,6 +31,8 @@ public class Sensors {
     public TouchSensor RightClawSensor;
     public TouchSensor LeftClawSensor;
 
+    public TouchSensor armSensor;
+
     public AprilTagDetection rightTag;
 
     private AprilTagProcessor aprilTag;
@@ -43,6 +45,8 @@ public class Sensors {
 
         RightClawSensor = hardwareMap.get(TouchSensor.class, "rightclaw");
         LeftClawSensor = hardwareMap.get(TouchSensor.class, "leftclaw");
+
+        armSensor = hardwareMap.get(TouchSensor.class, "armangle");
 
         backBoard = hardwareMap.get(DistanceSensor.class, "backboard");
 

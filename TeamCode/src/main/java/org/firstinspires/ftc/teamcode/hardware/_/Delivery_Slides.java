@@ -125,6 +125,14 @@ public class  Delivery_Slides {
         Left_Slide.setPower(power);
     }
 
+    public void resetZero(){
+        Right_Slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Left_Slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        Right_Slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Left_Slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
     public int getCurrentposition(){
         return Right_Slide.getCurrentPosition() + Left_Slide.getCurrentPosition()/2;
     }

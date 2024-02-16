@@ -1385,6 +1385,10 @@ public class mecanumFollower {
         return this.pathfollow.calculateTotalDistance();
     }
 
+    public double getSectionLength(Vector2D robotPos, Vector2D endpoint){
+        return this.pathfollow.calculateDistancePointToPoint(robotPos, endpoint);
+    }
+
     public double calculateDistance(Vector2D point1, Vector2D point2) {
         double dx = point2.getX() - point1.getX();
         double dy = point2.getY() - point1.getY();

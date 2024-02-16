@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -88,9 +89,13 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
     ElapsedTime closeRight = new ElapsedTime();
     ElapsedTime closeLeft = new ElapsedTime();
 
+    ElapsedTime sweeper = new ElapsedTime();
+
     List<LynxModule> allHubs;
 
     int waitTimeSensors;
+
+    boolean resettingSlides = false;
 
     @Override
     public void loop() {
@@ -143,6 +148,10 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         if (gamepad1.dpad_left){
             headingLock = true;
         } else if (gamepad1.dpad_right) {
+            headingLock = false;
+        }
+
+        if (headingLock && odometry.X < 270){
             headingLock = false;
         }
 
@@ -403,7 +412,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
         //Move to delivery position
         if (gamepad2.dpad_up || gamepad1.dpad_up && deliverySlides.getCurrentposition() > 150){
-            delivery.setArmTargetState(Delivery.armState.delivery);
+            delivery.setArmTargetState(Delivery.armState.deliverAuto);
         } else if (gamepad2.dpad_down || gamepad1.dpad_down && deliverySlides.getCurrentposition() > 100) {
             delivery.setArmTargetState(Delivery.armState.collect);
         }
@@ -543,6 +552,33 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
             delivery.setRotateClaw(1);
         }
 
+        if (gamepad2.left_stick_button){
+            deliverySlides.SlidesBothPower(-0.4);
+            resettingSlides = true;
+        }
+
+        if (resettingSlides){
+
+            if (deliverySlides.getCurrentDraw() >= 2000){
+
+                deliverySlides.SlidesBothPower(0);
+                resettingSlides = false;
+                deliverySlides.resetZero();
+
+            }else {
+
+            }
+        }
+
+        if (gamepad1.y){
+            collection.setSweeperState(Collection.sweeperState.push);
+            collection.updateSweeper();
+            sweeper.reset();
+        } else if (sweeper.milliseconds() > 100 && sweeper.milliseconds() < 200) {
+            collection.setSweeperState(Collection.sweeperState.retract);
+            collection.updateSweeper();
+        }
+
 
         if (gamepad1.b){
             sensors.getDetections();
@@ -556,7 +592,13 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         collection.updateIntakeState();
 
         //update delivery state
-        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
+//        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
+
+//        if (delivery.getMainPivotPosition() >= 0.7){
+//            delivery.setArmTargetState(Delivery.armState.delivery);
+//        }
+
+        delivery.updateArm(deliverySlides.getCurrentposition(), true);
         delivery.updateGrippers();
 
         RobotLog.d("loop time: " + loopTime);
@@ -564,6 +606,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         telemetry.addData("X", odometry.X);
         telemetry.addData("Y", odometry.Y);
         telemetry.addData("heading", odometry.heading);
+        telemetry.addData("arm pposition", Range.clip(1.2, 0, 1));
         telemetry.addData("intake current draw", collection.getIntakeCurrentUse());
         telemetry.addData("slides current draw", deliverySlides.getCurrentDraw());
         telemetry.addData("loop time", loopTime);

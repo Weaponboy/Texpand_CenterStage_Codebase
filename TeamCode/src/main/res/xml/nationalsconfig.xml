@@ -6,6 +6,7 @@
             <goBILDA5202SeriesMotor name="Right_Slide" port="2"/>
             <goBILDA5202SeriesMotor name="Left_Slide" port="3"/>
             <Servo name="IntakeServoRight" port="0"/>
+            <Servo name="sweeper" port="1"/>
             <Servo name="IntakeServoLeft" port="2"/>
             <Servo name="RightPivot" port="3"/>
             <Servo name="LeftPivot" port="4"/>
@@ -25,6 +26,7 @@
             <Servo name="LeftClaw" port="4"/>
             <Servo name="RightClaw" port="5"/>
             <RevTouchSensor name="rightclaw" port="3"/>
+            <RevTouchSensor name="armangle" port="2"/>
             <RevTouchSensor name="leftclaw" port="1"/>
             <REV_VL53L0X_RANGE_SENSOR name="backboard" port="0" bus="1"/>
             <LynxEmbeddedIMU name="imu" port="0" bus="0"/>
