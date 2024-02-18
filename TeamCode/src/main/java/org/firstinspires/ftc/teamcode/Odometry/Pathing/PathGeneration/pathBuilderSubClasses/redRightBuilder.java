@@ -2,11 +2,11 @@ package org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuild
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.UsefulMethods.getRealCoords;
 
-import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
+import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.Red_Points_Overlap;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderMain;
 
-public class redRightBuilder extends pathBuilderMain implements Red_Points_Overlap {
+public class redRightBuilder extends pathBuilderMain{
 
     /** control point naming key
      * don't need start position because i have sub classes for each one
@@ -20,34 +20,64 @@ public class redRightBuilder extends pathBuilderMain implements Red_Points_Overl
 
     /**drop purple pixel*/
 
+    //first pos
     Vector2D DPS1F = new Vector2D(getRealCoords(210), getRealCoords(337));
-    Vector2D DPE1F = new Vector2D(getRealCoords(210), getRealCoords(270));
+    Vector2D DPC1F = new Vector2D(getRealCoords(233), getRealCoords(283));
+    Vector2D DPCT1F = new Vector2D(getRealCoords(164), getRealCoords(250));
+    Vector2D DPE1F = new Vector2D(getRealCoords(302), getRealCoords(290));
 
     //second pos
     Vector2D DPS1S = new Vector2D(getRealCoords(210), getRealCoords(337));
-    Vector2D DPC1S = new Vector2D(getRealCoords(204), getRealCoords(245));
-    Vector2D DPE1S = new Vector2D(getRealCoords(230), getRealCoords(301));
+    Vector2D DPC1S = new Vector2D(getRealCoords(225), getRealCoords(284));
+    Vector2D DPCT1S = new Vector2D(getRealCoords(180), getRealCoords(270));
+    Vector2D DPE1S = new Vector2D(getRealCoords(305), getRealCoords(274));
 
-    //third pos
     Vector2D DPS1T = new Vector2D(getRealCoords(210), getRealCoords(337));
-    Vector2D DPC1T = new Vector2D(getRealCoords(210), getRealCoords(265));
-    Vector2D DPE1T = new Vector2D(getRealCoords(227), getRealCoords(303));
+    Vector2D DPC1T = new Vector2D(getRealCoords(223), getRealCoords(281));
+    Vector2D DPCT1T = new Vector2D(getRealCoords(164), getRealCoords(250));
+    Vector2D DPE1T = new Vector2D(getRealCoords(305), getRealCoords(265));
 
     /**drop yellow pixel*/
 
-    //drop yellow pixel first
     Vector2D DYS1F = new Vector2D(DPE1F.getX(), DPE1F.getY());
-    Vector2D DYE1F = new Vector2D(getRealCoords(305), getRealCoords(260));
+    Vector2D DYC1F = new Vector2D(getRealCoords(242), getRealCoords(334));
+    Vector2D DYE1F = new Vector2D(getRealCoords(300), getRealCoords(285));
 
     //drop yellow pixel second
     Vector2D DYS1S = new Vector2D(DPE1S.getX(), DPE1S.getY());
     Vector2D DYC1S = new Vector2D(getRealCoords(210), getRealCoords(325));
-    Vector2D DYE1S = new Vector2D(getRealCoords(305), getRealCoords(278));
+    Vector2D DYE1S = new Vector2D(getRealCoords(300), getRealCoords(274));
 
     //drop yellow pixel third
     Vector2D DYS1T = new Vector2D(DPE1T.getX(), DPE1T.getY());
     Vector2D DYC1T = new Vector2D(getRealCoords(233), getRealCoords(341));
-    Vector2D DYE1T = new Vector2D(getRealCoords(305), getRealCoords(290));
+    Vector2D DYE1T = new Vector2D(getRealCoords(300), getRealCoords(289));
+
+    /**first position*/
+    Vector2D CS1F = new Vector2D(getRealCoords(300), getRealCoords(270));
+    Vector2D CC1F = new Vector2D(getRealCoords(284), getRealCoords(213));
+    Vector2D CE1F = new Vector2D(getRealCoords(179), getRealCoords(208));
+
+    //second segment
+    Vector2D CS2F = CE1F;
+    Vector2D CC2F = new Vector2D(getRealCoords(107), getRealCoords(211));
+    Vector2D CE2F = new Vector2D(getRealCoords(84), getRealCoords(200));
+
+    Vector2D CS3F = CE2F;
+    Vector2D CC3F = new Vector2D(getRealCoords(32), getRealCoords(179));
+    Vector2D CE3F = new Vector2D(getRealCoords(42), getRealCoords(240));
+
+
+
+    /**first position*/
+    Vector2D DS1F = new Vector2D(CE2F.getX(), CE2F.getY());
+    Vector2D DC1F = new Vector2D(getRealCoords(20), getRealCoords(209));
+    Vector2D DE1F = new Vector2D(getRealCoords(96), getRealCoords(207));
+
+    Vector2D DS2F = DE1F;
+    Vector2D DC2F = new Vector2D(getRealCoords(290), getRealCoords(196));
+    Vector2D DE2F = new Vector2D(getRealCoords(300), getRealCoords(270));
+
 
 
     public enum Position {
@@ -73,7 +103,7 @@ public class redRightBuilder extends pathBuilderMain implements Red_Points_Overl
             case preload:
                 switch (propPosition) {
                     case left:
-                        firstPositionPreload1();
+                        firstPositionPreload();
                         break;
                     case right:
                         thirdPositionPreload();
@@ -85,32 +115,10 @@ public class redRightBuilder extends pathBuilderMain implements Red_Points_Overl
                 }
                 break;
             case collect:
-                switch (propPosition) {
-                    case left:
-                        firstPositionCollect();
-                        break;
-                    case right:
-                        thirdPositionCollect();
-                        break;
-                    case center:
-                        secondPositionCollect();
-                        break;
-                    default:
-                }
+                Collect();
                 break;
             case deliver:
-                switch (propPosition) {
-                    case left:
-                        firstPositionDeliver();
-                        break;
-                    case right:
-                        thirdPositionDeliver();
-                        break;
-                    case center:
-                        secondPositionDeliver();
-                        break;
-                    default:
-                }
+                Deliver();
                 break;
             default:
         }
@@ -126,15 +134,7 @@ public class redRightBuilder extends pathBuilderMain implements Red_Points_Overl
             case preload:
                 switch (propPosition) {
                     case left:
-                        switch (pathsplit){
-                            case first:
-                                firstPositionPreload1();
-                                break;
-                            case second:
-                                firstPositionPreload2();
-                                break;
-                            default:
-                        }
+                        firstPositionPreload();
                         break;
                     case right:
                         thirdPositionPreload();
@@ -146,32 +146,27 @@ public class redRightBuilder extends pathBuilderMain implements Red_Points_Overl
                 }
                 break;
             case collect:
-                switch (propPosition) {
-                    case left:
-                        firstPositionCollect();
-                        break;
-                    case right:
-                        thirdPositionCollect();
-                        break;
-                    case center:
-                        secondPositionCollect();
-                        break;
-                    default:
-                }
+                Collect();
                 break;
             case deliver:
-                switch (propPosition) {
-                    case left:
-                        firstPositionDeliver();
-                        break;
-                    case right:
-                        thirdPositionDeliver();
-                        break;
-                    case center:
-                        secondPositionDeliver();
-                        break;
-                    default:
-                }
+                Deliver();
+                break;
+            default:
+        }
+
+        pathBuilder(originalPath);
+
+        motionProfile();
+    }
+
+    public void buildPath(Section section){
+
+        switch (section) {
+            case collect:
+                Collect();
+                break;
+            case deliver:
+                Deliver();
                 break;
             default:
         }
@@ -195,28 +190,34 @@ public class redRightBuilder extends pathBuilderMain implements Red_Points_Overl
      * First Position
      * */
 
-    private void firstPositionPreload1(){
-        buildLineSegment(DPS1F, DPE1F);
+    private void thirdPositionPreload(){
+
+        // drop purple pixel
+        buildCurveSegment(DPS1F, DPC1F,  DPE1F);
+
+        // drop yellow pixel
+        buildCurveSegment(DYS1F, DYC1F, DYE1F);
+
     }
 
-    private void firstPositionPreload2(){
-//        //drop yellow pixel
-        buildLineSegment(DYS1F, DYE1F);
-    }
-
-    private void firstPositionCollect(){
+    private void Collect(){
 
         buildCurveSegment(CS1F, CC1F, CE1F);
 
         buildCurveSegment(CS2F, CC2F, CE2F);
 
+        buildCurveSegment(CS3F, CC3F, CE3F);
+
     }
 
-    private void firstPositionDeliver(){
+    private void Deliver(){
 
-        buildCurveSegment(DS1F, DC1F, DE1F);
+        buildCurveSegment(CE3F, CC3F, CS3F);
 
-        buildCurveSegment(DS2F, DC2F, DE2F);
+        buildCurveSegment(CE2F, CC2F, CS2F);
+
+        buildCurveSegment(CE1F, CC1F, CS1F);
+
     }
 
     /**
@@ -226,26 +227,7 @@ public class redRightBuilder extends pathBuilderMain implements Red_Points_Overl
     private void secondPositionPreload(){
 
         // drop purple pixel
-        buildCurveSegment(DPS1S, DPC1S, DPE1S);
-
-        // drop yellow pixel
-        buildCurveSegment(DYS1S, DYC1S, DYE1S);
-
-    }
-
-    private void secondPositionCollect(){
-
-        buildCurveSegment(CS1S, CC1S, CE1S);
-
-        buildCurveSegment(CS2S, CC2S, CE2S);
-
-    }
-
-    private void secondPositionDeliver(){
-
-        buildCurveSegment(DS1S, DC1S, DE1S);
-
-        buildCurveSegment(DS2S, DC2S, DE2S);
+        buildCurveSegment(DPS1S, DPC1S, DPCT1S, DPE1S);
 
     }
 
@@ -253,30 +235,9 @@ public class redRightBuilder extends pathBuilderMain implements Red_Points_Overl
      * Third Position
      * */
 
-    private void thirdPositionPreload(){
+    private void firstPositionPreload(){
 
-        // drop purple pixel
-        buildCurveSegment(DPS1T, DPC1T, DPE1T);
-
-        // drop yellow pixel
-        buildCurveSegment(DYS1T, DYC1T, DYE1T);
-
-    }
-
-    private void thirdPositionCollect(){
-
-        buildCurveSegment(CS1T, CC1T, CE1T);
-
-        buildCurveSegment(CS2T, CC2T, CE2T);
-
-
-    }
-
-    private void thirdPositionDeliver(){
-
-        buildCurveSegment(DS1T, DC1T, DE1T);
-
-        buildCurveSegment(DS2T, DC2T, DE2T);
+        buildCurveSegment(DPS1T, DPC1T, DPCT1T, DPE1T);
 
     }
 

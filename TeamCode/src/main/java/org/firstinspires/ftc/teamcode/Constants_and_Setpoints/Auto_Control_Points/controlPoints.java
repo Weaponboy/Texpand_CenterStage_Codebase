@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Auto_Control_Points;
 
-import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
+import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 
 public class controlPoints {
 

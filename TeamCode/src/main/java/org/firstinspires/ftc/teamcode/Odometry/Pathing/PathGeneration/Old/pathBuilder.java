@@ -3,10 +3,10 @@ package org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.Old;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Auto_Control_Points.controlPoints.ePThirdSeg;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.maxYAcceleration;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.velocityDecreasePerPoint;
-import static org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry.getMaxVelocity;
+import static org.firstinspires.ftc.teamcode.hardware._.Odometry.getMaxVelocity;
 
 import org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Auto_Control_Points.controlPoints;
-import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
+import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.SegmentGenerator;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.Enums.TargetPoint;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.Enums.whatPath;

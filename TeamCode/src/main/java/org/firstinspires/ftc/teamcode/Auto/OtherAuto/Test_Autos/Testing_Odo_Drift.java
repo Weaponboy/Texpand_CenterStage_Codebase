@@ -5,16 +5,16 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
+import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower.mecanumFollower;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.blueLeftBuilder;
 import org.firstinspires.ftc.teamcode.VisionTesting.VisionPortalProcessers.propDetectionByAmount;
-import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Collection;
-import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Delivery;
-import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Delivery_Slides;
-import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Drivetrain;
-import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry;
-import org.firstinspires.ftc.teamcode.hardware.Method_Interfaces.Auto_Methods;
+import org.firstinspires.ftc.teamcode.hardware._.Collection;
+import org.firstinspires.ftc.teamcode.hardware._.Delivery;
+import org.firstinspires.ftc.teamcode.hardware._.Delivery_Slides;
+import org.firstinspires.ftc.teamcode.hardware._.Drivetrain;
+import org.firstinspires.ftc.teamcode.hardware._.Odometry;
+import org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Methods.Auto_Methods;
 import org.firstinspires.ftc.vision.VisionPortal;
 
 @Autonomous
@@ -101,8 +101,6 @@ public class Testing_Odo_Drift extends LinearOpMode implements Auto_Methods {
         follower.setPath(secondPath.followablePath, secondPath.pathingVelocity);
 
         follower.followPath(180, odometry, drive);
-
-        dropWhitePixels();
 
         while (opModeIsActive()){
 

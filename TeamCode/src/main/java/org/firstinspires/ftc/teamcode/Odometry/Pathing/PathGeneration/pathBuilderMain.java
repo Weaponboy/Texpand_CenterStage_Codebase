@@ -2,10 +2,9 @@ package org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration;
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.maxYAcceleration;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.velocityDecreasePerPoint;
-import static org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry.getMaxVelocity;
+import static org.firstinspires.ftc.teamcode.hardware._.Odometry.getMaxVelocity;
 
-import org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Auto_Control_Points.controlPoints;
-import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
+import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathingUtility.PathingVelocity;
 
 import java.util.ArrayList;
@@ -15,13 +14,9 @@ public class pathBuilderMain {
 
     public SegmentGenerator segmentGenerator = new SegmentGenerator();
 
-    public controlPoints controlPoints = new controlPoints();
-
     public ArrayList<Vector2D> originalPath = new ArrayList<>();
 
     public ArrayList<Vector2D> followablePath = new ArrayList<>();
-
-    public Vector2D firstPoint = new Vector2D();
 
     public ArrayList<PathingVelocity> pathingVelocity = new ArrayList<>();
 
@@ -287,6 +282,12 @@ public class pathBuilderMain {
     public void buildLineSegment(Vector2D start, Vector2D end){
         segmentGenerator.buildPath(start, end);
         originalPath.addAll(segmentGenerator.copyPath());
+    }
+
+    public void clearAll(){
+        followablePath.clear();
+        originalPath.clear();
+        pathingVelocity.clear();
     }
 
 }

@@ -2,16 +2,14 @@ package org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower;
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.maxYAcceleration;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.velocityDecreasePerPoint;
-import static org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry.getMaxVelocity;
+import static org.firstinspires.ftc.teamcode.hardware._.Odometry.getMaxVelocity;
 
 import com.acmerobotics.dashboard.FtcDashboard;
-import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
+import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathingUtility.PathingVelocity;
 
-import java.awt.font.NumericShaper;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -153,10 +151,34 @@ public class FollowPath {
     }
 
     public double calculateTotalDistance() {
+
         double totalDistance = 0.0;
+
         for (int i = 0; i < followablePath.size() - 1; i++) {
             Vector2D point1 = followablePath.get(i);
             Vector2D point2 = followablePath.get(i + 1);
+            totalDistance += calculateDistance(point1, point2);
+        }
+        return totalDistance;
+    }
+
+    public double calculateDistancePointToPoint(Vector2D robotPos, Vector2D endpoint) {
+
+        int index = 0;
+
+        int startIndex = getClosestPositionOnPath(robotPos);
+
+        int endIndex = followablePath.size()-1;
+
+        List<Vector2D> subList = followablePath.subList(startIndex, endIndex);
+
+        ArrayList<Vector2D> sectionToLook = new ArrayList<>(subList);
+
+        double totalDistance = 0.0;
+
+        for (int i = 0; i < sectionToLook.size() - 1; i++) {
+            Vector2D point1 = sectionToLook.get(i);
+            Vector2D point2 = sectionToLook.get(i + 1);
             totalDistance += calculateDistance(point1, point2);
         }
         return totalDistance;
@@ -174,13 +196,11 @@ public class FollowPath {
 
         int startIndex = Math.max(lastPointOnPath - 20, 0);
 
-        int endIndex = Math.min(lastPointOnPath + 20, followablePath.size());
-
-        int length = endIndex - startIndex + 1;
+        int endIndex = Math.min(lastPointOnPath + 20, followablePath.size()-1);
 
         double minDistance = Double.MAX_VALUE;
 
-        List<Vector2D> subList = followablePath.subList(startIndex, endIndex + 1);
+        List<Vector2D> subList = followablePath.subList(startIndex, endIndex);
 
         ArrayList<Vector2D> sectionToLook = new ArrayList<>(subList);
 
@@ -196,6 +216,30 @@ public class FollowPath {
                 index = followablePath.indexOf(pos);
             }
 
+        }
+
+        lastPointOnPath = index;
+
+        return index;
+    }
+
+    public int getClosestPositionOnPathFullPath(Vector2D robotPos) {
+
+        int index = 0;
+
+        double minDistance = Double.MAX_VALUE;
+
+        for (Vector2D pos : followablePath) {
+
+            double distance = Math.sqrt(
+                    Math.pow(robotPos.getX() - pos.getX(), 2) +
+                            Math.pow(robotPos.getY() - pos.getY(), 2)
+            );
+
+            if (distance < minDistance) {
+                minDistance = distance;
+                index = followablePath.indexOf(pos);
+            }
         }
 
         lastPointOnPath = index;
@@ -298,7 +342,15 @@ public class FollowPath {
     }
 
     public int getLastPoint(){
-        return followablePath.size()-1;
+        int one;
+
+        if (followablePath.size() == 0){
+            one = 0;
+        }else {
+            one = followablePath.size()-1;
+        }
+
+        return one;
     }
 
 

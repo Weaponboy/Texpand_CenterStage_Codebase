@@ -1,9 +1,11 @@
 package org.firstinspires.ftc.teamcode.Odometry.Pathing.Testing;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.hardware.Base_SubSystems.Odometry;
+import org.firstinspires.ftc.teamcode.hardware._.Odometry;
 
+@TeleOp
 public class ArcOdometrytesting extends LinearOpMode {
 
     Odometry lineOdo = new Odometry();
@@ -20,6 +22,7 @@ public class ArcOdometrytesting extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()){
+
             arcOdo.updateArc();
             lineOdo.update();
 
@@ -27,6 +30,7 @@ public class ArcOdometrytesting extends LinearOpMode {
             telemetry.addData("arcOdo Y", arcOdo.Y);
             telemetry.addData("arcOdo Heading", arcOdo.heading);
             telemetry.addLine();
+
             telemetry.addData("lineOdo X", lineOdo.X);
             telemetry.addData("lineOdo Y", lineOdo.Y);
             telemetry.addData("lineOdo Heading", lineOdo.heading);

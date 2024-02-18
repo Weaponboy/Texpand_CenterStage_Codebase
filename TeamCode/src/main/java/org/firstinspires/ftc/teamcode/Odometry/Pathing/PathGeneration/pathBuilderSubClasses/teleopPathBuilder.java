@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses;
 
-import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.UsefulMethods.getRealCoords;
-
-import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.Vector2D;
+import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderMain;
 
 public class teleopPathBuilder extends pathBuilderMain {
@@ -48,7 +46,21 @@ public class teleopPathBuilder extends pathBuilderMain {
         blue,
     }
 
+    public void buildPathLine(Vector2D startPos, Vector2D targetPos){
+
+        clearAll();
+
+        buildLineSegment(startPos, targetPos);
+
+        pathBuilder(originalPath);
+
+        motionProfile();
+
+    }
+
     public void buildPath(TeleopPath allianceColor, Vector2D startPos, Vector2D endPos){
+
+        clearAll();
 
         switch (allianceColor) {
             case red:
