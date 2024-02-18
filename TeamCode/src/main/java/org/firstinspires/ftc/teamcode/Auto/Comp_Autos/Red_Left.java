@@ -94,7 +94,7 @@ public class Red_Left extends LinearOpMode implements CycleMethods {
 
     ElapsedTime sweeper = new ElapsedTime();
 
-    double armOffset = 0.065;
+    double armOffset = 0.08;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -451,7 +451,7 @@ public class Red_Left extends LinearOpMode implements CycleMethods {
 
                             }
 
-                            if (Math.abs(300 - odometry.X) < 2 && Math.abs(270 - odometry.Y) < 10) {
+                            if (Math.abs(300 - odometry.X) < 2 && Math.abs(260 - odometry.Y) < 10) {
 
                                 drive.RF.setPower(0);
                                 drive.RB.setPower(0);
@@ -515,7 +515,7 @@ public class Red_Left extends LinearOpMode implements CycleMethods {
                                 pathing = follower.followPathAuto(targetHeading, odometry, drive, 5);
                             }
 
-                        }else if (Math.abs(47 - odometry.X) < 6 && Math.abs(240 - odometry.Y) < 6){
+                        }else if (Math.abs(44 - odometry.X) < 6 && Math.abs(240 - odometry.Y) < 6){
 
                             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
@@ -701,7 +701,7 @@ public class Red_Left extends LinearOpMode implements CycleMethods {
 
                             }
 
-                            if (Math.abs(300 - odometry.X) < 2 && Math.abs(270 - odometry.Y) < 10) {
+                            if (Math.abs(300 - odometry.X) < 2 && Math.abs(260 - odometry.Y) < 10) {
 
                                 drive.RF.setPower(0);
                                 drive.RB.setPower(0);
@@ -744,7 +744,7 @@ public class Red_Left extends LinearOpMode implements CycleMethods {
                                 pathing = follower.followPathAuto(targetHeading, odometry, drive, 5);
                             }
 
-                        }else if (Math.abs(47 - odometry.X) < 5 && Math.abs(240 - odometry.Y) < 5) {
+                        }else if (Math.abs(44 - odometry.X) < 5 && Math.abs(240 - odometry.Y) < 5) {
 
                             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
@@ -1103,7 +1103,7 @@ public class Red_Left extends LinearOpMode implements CycleMethods {
 
                             }
 
-                            if (Math.abs(300 - odometry.X) < 2 && Math.abs(270 - odometry.Y) < 10) {
+                            if (Math.abs(300 - odometry.X) < 2 && Math.abs(260 - odometry.Y) < 10) {
 
                                 drive.RF.setPower(0);
                                 drive.RB.setPower(0);
@@ -1167,7 +1167,7 @@ public class Red_Left extends LinearOpMode implements CycleMethods {
                                 pathing = follower.followPathAuto(targetHeading, odometry, drive, 5);
                             }
 
-                        }else if (Math.abs(47 - odometry.X) < 6 && Math.abs(240 - odometry.Y) < 6){
+                        }else if (Math.abs(44 - odometry.X) < 6 && Math.abs(240 - odometry.Y) < 6){
 
                             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
@@ -1353,7 +1353,7 @@ public class Red_Left extends LinearOpMode implements CycleMethods {
 
                             }
 
-                            if (Math.abs(300 - odometry.X) < 2 && Math.abs(270 - odometry.Y) < 10) {
+                            if (Math.abs(300 - odometry.X) < 2 && Math.abs(260 - odometry.Y) < 10) {
 
                                 drive.RF.setPower(0);
                                 drive.RB.setPower(0);
@@ -1396,7 +1396,7 @@ public class Red_Left extends LinearOpMode implements CycleMethods {
                                 pathing = follower.followPathAuto(targetHeading, odometry, drive, 5);
                             }
 
-                        }else if (Math.abs(47 - odometry.X) < 5 && Math.abs(240 - odometry.Y) < 5) {
+                        }else if (Math.abs(44 - odometry.X) < 5 && Math.abs(240 - odometry.Y) < 5) {
 
                             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
@@ -1520,7 +1520,7 @@ public class Red_Left extends LinearOpMode implements CycleMethods {
 
                                 targetHeading = 180;
 
-                                deliverySlides.DeliverySlides(250, 1);
+                                deliverySlides.DeliverySlides(200, 1);
 
                                 delivery.setGripperState(Delivery.GripperState.closed);
                                 delivery.updateGrippers();
@@ -1530,7 +1530,7 @@ public class Red_Left extends LinearOpMode implements CycleMethods {
 
                             }
 
-                        }else if  (Math.abs(305 - odometry.X) < 5 && Math.abs(280 - odometry.Y) < 5 && !pathing){
+                        }else if  (Math.abs(300 - odometry.X) < 5 && Math.abs(280 - odometry.Y) < 5 && !pathing){
 
                             if (auto == Red_Left.Auto.preload){
 
@@ -1767,7 +1767,7 @@ public class Red_Left extends LinearOpMode implements CycleMethods {
 
                             }
 
-                            if (Math.abs(300 - odometry.X) < 2 && Math.abs(270 - odometry.Y) < 10) {
+                            if (Math.abs(300 - odometry.X) < 2 && Math.abs(260 - odometry.Y) < 10) {
 
                                 drive.RF.setPower(0);
                                 drive.RB.setPower(0);
@@ -1831,7 +1831,7 @@ public class Red_Left extends LinearOpMode implements CycleMethods {
                                 pathing = follower.followPathAuto(targetHeading, odometry, drive, 5);
                             }
 
-                        }else if (Math.abs(47 - odometry.X) < 6 && Math.abs(240 - odometry.Y) < 6){
+                        }else if (Math.abs(44 - odometry.X) < 6 && Math.abs(240 - odometry.Y) < 6){
 
                             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
@@ -2017,7 +2017,7 @@ public class Red_Left extends LinearOpMode implements CycleMethods {
 
                             }
 
-                            if (Math.abs(300 - odometry.X) < 2 && Math.abs(270 - odometry.Y) < 10) {
+                            if (Math.abs(300 - odometry.X) < 2 && Math.abs(260 - odometry.Y) < 10) {
 
                                 drive.RF.setPower(0);
                                 drive.RB.setPower(0);
@@ -2060,7 +2060,7 @@ public class Red_Left extends LinearOpMode implements CycleMethods {
                                 pathing = follower.followPathAuto(targetHeading, odometry, drive, 5);
                             }
 
-                        }else if (Math.abs(47 - odometry.X) < 5 && Math.abs(240 - odometry.Y) < 5) {
+                        }else if (Math.abs(44 - odometry.X) < 5 && Math.abs(240 - odometry.Y) < 5) {
 
                             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 

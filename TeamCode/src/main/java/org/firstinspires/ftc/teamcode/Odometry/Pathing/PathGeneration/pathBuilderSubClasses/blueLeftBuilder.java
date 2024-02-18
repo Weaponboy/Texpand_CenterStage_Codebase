@@ -68,8 +68,8 @@ public class blueLeftBuilder extends pathBuilderMain{
     Vector2D CE2F = new Vector2D(getRealCoords(84), getRealCoords(160));
 
     Vector2D CS3F = CE2F;
-    Vector2D CC3F = new Vector2D(getRealCoords(37), getRealCoords(181));
-    Vector2D CE3F = new Vector2D(getRealCoords(47), getRealCoords(120));
+    Vector2D CC3F = new Vector2D(getRealCoords(32), getRealCoords(181));
+    Vector2D CE3F = new Vector2D(getRealCoords(42), getRealCoords(120));
 
     public enum Position {
         left,

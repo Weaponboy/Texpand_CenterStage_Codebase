@@ -64,8 +64,10 @@ public class redRightBuilder extends pathBuilderMain{
     Vector2D CE2F = new Vector2D(getRealCoords(84), getRealCoords(200));
 
     Vector2D CS3F = CE2F;
-    Vector2D CC3F = new Vector2D(getRealCoords(37), getRealCoords(179));
-    Vector2D CE3F = new Vector2D(getRealCoords(47), getRealCoords(240));
+    Vector2D CC3F = new Vector2D(getRealCoords(32), getRealCoords(179));
+    Vector2D CE3F = new Vector2D(getRealCoords(42), getRealCoords(240));
+
+
 
     /**first position*/
     Vector2D DS1F = new Vector2D(CE2F.getX(), CE2F.getY());

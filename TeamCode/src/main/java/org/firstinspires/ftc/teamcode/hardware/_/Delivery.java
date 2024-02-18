@@ -309,21 +309,23 @@ public class Delivery {
                 setMainPivot(targetMainPivot);
                 setSecondPivot(deliverySecondPivot + (-slidesPos * servoPosPerTick + mainPivotOffSet) * mainToSecondConst);
 
-                double heading = odometry.heading;
-
-                if (odometry.heading > 180 && odometry.heading < 270) {
-                    heading = odometry.heading - 180;
-                } else if (odometry.heading > 90 && odometry.heading < 180) {
-                    heading = odometry.heading - 180;
-                } else if (odometry.heading > 270) {
-                    heading = 90;
-                }else if (odometry.heading < 90) {
-                    heading = -90;
-                }
-
-                targetRotatePos = 0.5 + (heading / 180);
-
-                secondRotate.setPosition(targetRotatePos);
+//                odometry.update();
+//
+//                double heading = odometry.heading;
+//
+//                if (odometry.heading > 180 && odometry.heading < 270) {
+//                    heading = odometry.heading - 180;
+//                } else if (odometry.heading > 90 && odometry.heading < 180) {
+//                    heading = odometry.heading - 180;
+//                } else if (odometry.heading > 270) {
+//                    heading = 90;
+//                } else if (odometry.heading < 90) {
+//                    heading = -90;
+//                }
+//
+//                targetRotatePos = 0.5 + (heading / 180);
+//
+//                secondRotate.setPosition(targetRotatePos);
 
             case intermediate:
 
@@ -334,8 +336,6 @@ public class Delivery {
                 break;
             default:
         }
-
-        odometry.update();
 
     }
 

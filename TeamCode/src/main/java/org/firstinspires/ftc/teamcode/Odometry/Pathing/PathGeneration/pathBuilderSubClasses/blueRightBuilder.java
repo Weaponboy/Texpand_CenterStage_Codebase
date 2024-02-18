@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.Blue_Points_Overlap;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderMain;
 
-public class blueRightBuilder extends pathBuilderMain implements Blue_Points_Overlap {
+public class blueRightBuilder extends pathBuilderMain{
 
     Vector2D startPos = new Vector2D(getRealCoords(90), getRealCoords(23));
 
@@ -24,8 +24,8 @@ public class blueRightBuilder extends pathBuilderMain implements Blue_Points_Ove
     /**drop purple pixel*/
 
     Vector2D DPS1F = startPos;
-    Vector2D DPC1F = new Vector2D(getRealCoords(100), getRealCoords(125));
-    Vector2D DPE1F = new Vector2D(getRealCoords(70), getRealCoords(98));
+    Vector2D DPC1F = new Vector2D(getRealCoords(103), getRealCoords(120));
+    Vector2D DPE1F = new Vector2D(getRealCoords(66), getRealCoords(98));
 
     //second pos
     Vector2D DPS1S = startPos;
@@ -40,8 +40,8 @@ public class blueRightBuilder extends pathBuilderMain implements Blue_Points_Ove
 
     /**drop yellow first*/
     Vector2D DYS1F = DPE1F;
-    Vector2D DYC1F = new Vector2D(getRealCoords(25), getRealCoords(70));
-    Vector2D DYE1F = new Vector2D(getRealCoords(68), getRealCoords(154));
+    Vector2D DYC1F = new Vector2D(getRealCoords(10), getRealCoords(67));
+    Vector2D DYE1F = new Vector2D(getRealCoords(62), getRealCoords(154));
 
     Vector2D DYS2F = DYE1F;
     Vector2D DYC2F = new Vector2D(getRealCoords(132), getRealCoords(186));
@@ -53,8 +53,8 @@ public class blueRightBuilder extends pathBuilderMain implements Blue_Points_Ove
 
     /**drop yellow second*/
     Vector2D DYS1S = DPE1S;
-    Vector2D DYC1S = new Vector2D(getRealCoords(31), getRealCoords(36));
-    Vector2D DYE1S = new Vector2D(getRealCoords(45), getRealCoords(120));
+    Vector2D DYC1S = new Vector2D(getRealCoords(27), getRealCoords(36));
+    Vector2D DYE1S = new Vector2D(getRealCoords(39), getRealCoords(120));
 
     Vector2D DYS2S = DYE1S;
     Vector2D DYC2S = new Vector2D(getRealCoords(67), getRealCoords(189));
@@ -62,10 +62,9 @@ public class blueRightBuilder extends pathBuilderMain implements Blue_Points_Ove
 
     Vector2D DYS3S = DYE2S;
     Vector2D DYC3S = new Vector2D(getRealCoords(293), getRealCoords(136));
-    Vector2D DYE3S = new Vector2D(getRealCoords(300), getRealCoords(97));
+    Vector2D DYE3S = new Vector2D(getRealCoords(305), getRealCoords(102));
 
     /**drop yellow third*/
-
     Vector2D DYS1T = DPE1T;
     Vector2D DYC1T = new Vector2D(getRealCoords(95), getRealCoords(52));
     Vector2D DYE1T = new Vector2D(getRealCoords(85), getRealCoords(142));
@@ -77,6 +76,20 @@ public class blueRightBuilder extends pathBuilderMain implements Blue_Points_Ove
     Vector2D DYS3T = DYE2T;
     Vector2D DYC3T = new Vector2D(getRealCoords(276), getRealCoords(158));
     Vector2D DYE3T = new Vector2D(getRealCoords(300), getRealCoords(120));
+
+    /**first position*/
+    Vector2D CS1F = new Vector2D(getRealCoords(300), getRealCoords(100));
+    Vector2D CC1F = new Vector2D(getRealCoords(290), getRealCoords(154));
+    Vector2D CE1F = new Vector2D(getRealCoords(179), getRealCoords(152));
+
+    //second segment
+    Vector2D CS2F = CE1F;
+    Vector2D CC2F = new Vector2D(getRealCoords(107), getRealCoords(149));
+    Vector2D CE2F = new Vector2D(getRealCoords(84), getRealCoords(160));
+
+    Vector2D CS3F = CE2F;
+    Vector2D CC3F = new Vector2D(getRealCoords(30), getRealCoords(181));
+    Vector2D CE3F = new Vector2D(getRealCoords(40), getRealCoords(120));
 
     public enum Position {
         left,
@@ -234,16 +247,19 @@ public class blueRightBuilder extends pathBuilderMain implements Blue_Points_Ove
 
         buildCurveSegment(CS2F, CC2F, CE2F);
 
+        buildCurveSegment(CS3F, CC3F, CE3F);
+
     }
 
     private void Deliver(){
 
-        buildCurveSegment(CS3F, CC3F, CE3F);
+        buildCurveSegment(CE3F, CC3F, CS3F);
 
-        buildCurveSegment(CS4F, CC4F, CE4F);
+        buildCurveSegment(CE2F, CC2F, CS2F);
+
+        buildCurveSegment(CE1F, CC1F, CS1F);
 
     }
-
 
     /**
      * Second Position

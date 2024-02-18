@@ -97,6 +97,12 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
     boolean resettingSlides = false;
 
+    boolean turnedOff;
+
+    double lastX;
+    double lastY;
+    int xCounter;
+
     @Override
     public void loop() {
 
@@ -151,7 +157,16 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
             headingLock = false;
         }
 
-        if (headingLock && odometry.X < 270){
+        xCounter++;
+
+        if (xCounter > 10){
+            xCounter = 0;
+            lastX = odometry.X;
+        }
+
+        if (odometry.X < 240 && lastX > 240 && headingLock){
+            headingLock = false;
+        } else if (odometry.Y > 150 && lastY < 150 && headingLock) {
             headingLock = false;
         }
 
@@ -412,7 +427,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
         //Move to delivery position
         if (gamepad2.dpad_up || gamepad1.dpad_up && deliverySlides.getCurrentposition() > 150){
-            delivery.setArmTargetState(Delivery.armState.deliverAuto);
+            delivery.setArmTargetState(Delivery.armState.delivery);
         } else if (gamepad2.dpad_down || gamepad1.dpad_down && deliverySlides.getCurrentposition() > 100) {
             delivery.setArmTargetState(Delivery.armState.collect);
         }
@@ -455,8 +470,13 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
                 }
                 break;
             case open:
-                if (currentGamepad2.start && !previousGamepad2.start) {
-                    delivery.setLeftGripperState(Delivery.leftGripperState.closed);
+                if (currentGamepad2.back && !previousGamepad2.back) {
+                    delivery.setRightGripperState(Delivery.rightGripperState.closed);
+                }
+                break;
+            case openDeliver:
+                if (currentGamepad2.back && !previousGamepad2.back) {
+                    delivery.setRightGripperState(Delivery.rightGripperState.closed);
                 }
                 break;
             default:
@@ -473,6 +493,11 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
                 }
                 break;
             case open:
+                if (currentGamepad2.back && !previousGamepad2.back) {
+                    delivery.setRightGripperState(Delivery.rightGripperState.closed);
+                }
+                break;
+            case openDeliver:
                 if (currentGamepad2.back && !previousGamepad2.back) {
                     delivery.setRightGripperState(Delivery.rightGripperState.closed);
                 }
@@ -568,6 +593,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
             }else {
 
             }
+
         }
 
         if (gamepad1.y){
@@ -592,13 +618,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         collection.updateIntakeState();
 
         //update delivery state
-//        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
-
-//        if (delivery.getMainPivotPosition() >= 0.7){
-//            delivery.setArmTargetState(Delivery.armState.delivery);
-//        }
-
-        delivery.updateArm(deliverySlides.getCurrentposition(), true);
+        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
         delivery.updateGrippers();
 
         RobotLog.d("loop time: " + loopTime);

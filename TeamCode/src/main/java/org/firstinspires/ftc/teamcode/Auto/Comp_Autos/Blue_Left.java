@@ -22,7 +22,7 @@ import org.firstinspires.ftc.teamcode.hardware._.Odometry;
 import org.firstinspires.ftc.vision.VisionPortal;
 
 @Autonomous(name = "Blue Left", group = "State")
-public class Blue_Left extends LinearOpMode implements CycleMethods {
+public class Blue_Left extends LinearOpMode implements CycleMethods{
 
     public WebcamName frontCam;
 
@@ -86,7 +86,7 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
     ElapsedTime sweeper = new ElapsedTime();
 
-    double armOffset = 0.06;
+    double armOffset = 0.08;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -153,7 +153,7 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
 
                             pathing = follower.followPathAuto(targetHeading, odometry, drive);
 
-                            if (Math.abs(212 - odometry.X) < 5 && Math.abs(50 - odometry.Y) < 5 && !runOnce){
+                            if (Math.abs(218 - odometry.X) < 8 && Math.abs(62 - odometry.Y) < 10 && !runOnce){
                                 runOnce = true;
                                 targetHeading = 310;
                             }
@@ -441,7 +441,7 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                                 pathing = follower.followPathAuto(targetHeading, odometry, drive, 5);
                             }
 
-                        }else if (Math.abs(47 - odometry.X) < 6 && Math.abs(120 - odometry.Y) < 6){
+                        }else if (Math.abs(42 - odometry.X) < 6 && Math.abs(120 - odometry.Y) < 6){
 
                             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
@@ -669,7 +669,7 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                                 pathing = follower.followPathAuto(targetHeading, odometry, drive, 5);
                             }
 
-                        }else if (Math.abs(47 - odometry.X) < 5 && Math.abs(120 - odometry.Y) < 5) {
+                        }else if (Math.abs(42 - odometry.X) < 5 && Math.abs(120 - odometry.Y) < 5) {
 
                             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
@@ -1002,7 +1002,7 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                                 pathing = follower.followPathAuto(targetHeading, odometry, drive, 5);
                             }
 
-                        }else if (Math.abs(47 - odometry.X) < 6 && Math.abs(120 - odometry.Y) < 6){
+                        }else if (Math.abs(42 - odometry.X) < 6 && Math.abs(120 - odometry.Y) < 6){
 
                             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
@@ -1230,7 +1230,7 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                                 pathing = follower.followPathAuto(targetHeading, odometry, drive, 5);
                             }
 
-                        }else if (Math.abs(47 - odometry.X) < 5 && Math.abs(120 - odometry.Y) < 5) {
+                        }else if (Math.abs(42 - odometry.X) < 5 && Math.abs(120 - odometry.Y) < 5) {
 
                             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
@@ -1565,7 +1565,7 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                                 pathing = follower.followPathAuto(targetHeading, odometry, drive, 5);
                             }
 
-                        }else if (Math.abs(47 - odometry.X) < 6 && Math.abs(120 - odometry.Y) < 6){
+                        }else if (Math.abs(42 - odometry.X) < 6 && Math.abs(120 - odometry.Y) < 6){
 
                             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
@@ -1793,7 +1793,7 @@ public class Blue_Left extends LinearOpMode implements CycleMethods {
                                 pathing = follower.followPathAuto(targetHeading, odometry, drive, 5);
                             }
 
-                        }else if (Math.abs(47 - odometry.X) < 5 && Math.abs(120 - odometry.Y) < 5) {
+                        }else if (Math.abs(42 - odometry.X) < 5 && Math.abs(120 - odometry.Y) < 5) {
 
                             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 

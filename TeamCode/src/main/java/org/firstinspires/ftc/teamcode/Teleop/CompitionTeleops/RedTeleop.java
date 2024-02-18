@@ -96,6 +96,10 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
     boolean resettingSlides = false;
 
+    double lastX;
+    double lastY;
+    int xCounter;
+
     @Override
     public void loop() {
 
@@ -150,7 +154,16 @@ public class RedTeleop extends OpMode implements TeleopPathing {
             headingLock = false;
         }
 
-        if (headingLock && odometry.X < 270){
+        xCounter++;
+
+        if (xCounter > 10){
+            xCounter = 0;
+            lastX = odometry.X;
+        }
+
+        if (odometry.X < 240 && lastX > 240 && headingLock){
+            headingLock = false;
+        } else if (odometry.Y < 210 && lastY > 210 && headingLock) {
             headingLock = false;
         }
 
@@ -454,8 +467,9 @@ public class RedTeleop extends OpMode implements TeleopPathing {
                 }
                 break;
             case open:
-                if (currentGamepad2.start && !previousGamepad2.start) {
-                    delivery.setLeftGripperState(Delivery.leftGripperState.closed);
+            case openDeliver:
+                if (currentGamepad2.back && !previousGamepad2.back) {
+                    delivery.setRightGripperState(Delivery.rightGripperState.closed);
                 }
                 break;
             default:
@@ -472,6 +486,7 @@ public class RedTeleop extends OpMode implements TeleopPathing {
                 }
                 break;
             case open:
+            case openDeliver:
                 if (currentGamepad2.back && !previousGamepad2.back) {
                     delivery.setRightGripperState(Delivery.rightGripperState.closed);
                 }

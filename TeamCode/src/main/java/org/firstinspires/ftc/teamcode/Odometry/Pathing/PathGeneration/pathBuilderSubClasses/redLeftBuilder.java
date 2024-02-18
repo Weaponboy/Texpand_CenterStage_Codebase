@@ -23,7 +23,7 @@ public class redLeftBuilder extends pathBuilderMain{
     /**drop purple pixel*/
 
     Vector2D DPS1T = startPos;
-    Vector2D DPC1T = new Vector2D(getRealCoords(105), getRealCoords(245));
+    Vector2D DPC1T = new Vector2D(getRealCoords(98), getRealCoords(240));
     Vector2D DPE1T = new Vector2D(getRealCoords(66), getRealCoords(262));
 
     //second pos
@@ -39,8 +39,8 @@ public class redLeftBuilder extends pathBuilderMain{
 
     /**drop yellow first*/
     Vector2D DYS1F = DPE1T;
-    Vector2D DYC1F = new Vector2D(getRealCoords(15), getRealCoords(293));
-    Vector2D DYE1F = new Vector2D(getRealCoords(68), getRealCoords(206));
+    Vector2D DYC1F = new Vector2D(getRealCoords(10), getRealCoords(293));
+    Vector2D DYE1F = new Vector2D(getRealCoords(62), getRealCoords(206));
 
     Vector2D DYS2F = DYE1F;
     Vector2D DYC2F = new Vector2D(getRealCoords(132), getRealCoords(174));
@@ -48,12 +48,12 @@ public class redLeftBuilder extends pathBuilderMain{
 
     Vector2D DYS3F = DYE2F;
     Vector2D DYC3F = new Vector2D(getRealCoords(285), getRealCoords(219));
-    Vector2D DYE3F = new Vector2D(getRealCoords(305), getRealCoords(280));
+    Vector2D DYE3F = new Vector2D(getRealCoords(300), getRealCoords(280));
 
     /**drop yellow second*/
     Vector2D DYS1S = DPE1S;
-    Vector2D DYC1S = new Vector2D(getRealCoords(31), getRealCoords(324));
-    Vector2D DYE1S = new Vector2D(getRealCoords(45), getRealCoords(240));
+    Vector2D DYC1S = new Vector2D(getRealCoords(27), getRealCoords(324));
+    Vector2D DYE1S = new Vector2D(getRealCoords(39), getRealCoords(240));
 
     Vector2D DYS2S = DYE1S;
     Vector2D DYC2S = new Vector2D(getRealCoords(67), getRealCoords(171));
@@ -78,8 +78,8 @@ public class redLeftBuilder extends pathBuilderMain{
     Vector2D DYE3T = new Vector2D(getRealCoords(305), getRealCoords(250));
 
     /**first position*/
-    Vector2D CS1F = new Vector2D(getRealCoords(300), getRealCoords(270));
-    Vector2D CC1F = new Vector2D(getRealCoords(284), getRealCoords(213));
+    Vector2D CS1F = new Vector2D(getRealCoords(300), getRealCoords(260));
+    Vector2D CC1F = new Vector2D(getRealCoords(290), getRealCoords(206));
     Vector2D CE1F = new Vector2D(getRealCoords(179), getRealCoords(208));
 
     //second segment
@@ -88,8 +88,8 @@ public class redLeftBuilder extends pathBuilderMain{
     Vector2D CE2F = new Vector2D(getRealCoords(84), getRealCoords(200));
 
     Vector2D CS3F = CE2F;
-    Vector2D CC3F = new Vector2D(getRealCoords(37), getRealCoords(179));
-    Vector2D CE3F = new Vector2D(getRealCoords(47), getRealCoords(240));
+    Vector2D CC3F = new Vector2D(getRealCoords(33), getRealCoords(179));
+    Vector2D CE3F = new Vector2D(getRealCoords(43), getRealCoords(240));
 
 
     public enum Position {
