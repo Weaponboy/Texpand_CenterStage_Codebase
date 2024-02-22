@@ -112,6 +112,9 @@ public class mecanumFollower {
         PathingPower pathingPower;
         PathingPower actualPathingPower = new PathingPower();
 
+        double kyfull = 0.0349;
+        double kxfull = 0.0234;
+
         double ky = 0.0234;
         double kx = 0.0154;
 
@@ -129,14 +132,19 @@ public class mecanumFollower {
         double robotRelativeXError = yDist * Math.sin(Math.toRadians(heading)) + xDist * Math.cos(Math.toRadians(heading));
         double robotRelativeYError = yDist * Math.cos(Math.toRadians(heading)) - xDist * Math.sin(Math.toRadians(heading));
 
-        double xPowerC = XCorrective.calculate(-robotRelativeXError)*1.2;
-        double yPowerC = YCorrective.calculate(-robotRelativeYError)*1.4;
+        double xPowerC = XCorrective.calculate(-robotRelativeXError);
+        double yPowerC = YCorrective.calculate(-robotRelativeYError)*1.5;
 
         double xPower = pathingVelocity.getYVelocity() * Math.sin(Math.toRadians(heading)) + pathingVelocity.getXVelocity() * Math.cos(Math.toRadians(heading));
         double yPower = pathingVelocity.getYVelocity() * Math.cos(Math.toRadians(heading)) - pathingVelocity.getXVelocity() * Math.sin(Math.toRadians(heading));
 
-        vertical = kx * xPower;
-        horizontal = ky * yPower;
+        vertical = kxfull * xPower;
+        horizontal = kyfull * yPower;
+
+        if(horizontal > 1){
+            vertical = kx * xPower;
+            horizontal = ky * yPower;
+        }
 
         actualPathingPower.set(xPowerC+vertical, yPowerC+horizontal);
 
@@ -1260,13 +1268,13 @@ public class mecanumFollower {
         PathingPower pathingPower;
 
         if(Math.abs(odometry.getHorizontalVelocity()) < 3){
-            yI += 0.005;
+            yI += 0.008;
         }else {
             yI = 0;
         }
 
         if(Math.abs(odometry.getVerticalVelocity()) < 3){
-            xI += 0.005;
+            xI += 0.008;
         }else {
             xI = 0;
         }

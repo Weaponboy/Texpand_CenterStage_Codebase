@@ -563,9 +563,9 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
         }
 
-        if (currentGamepad2.a && !previousGamepad2.a && planelauncher.getTriggerPosition() < 0.1){
+        if (currentGamepad2.right_stick_button && !previousGamepad2.right_stick_button && planelauncher.getTriggerPosition() < 0.1){
             planelauncher.setTrigger(0.6);
-        }else if (currentGamepad2.a && !previousGamepad2.a && planelauncher.getTriggerPosition() > 0.45){
+        }else if (currentGamepad2.right_stick_button && !previousGamepad2.right_stick_button && planelauncher.getTriggerPosition() > 0.45){
             planelauncher.setTrigger(0);
         }
 
@@ -604,7 +604,6 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
             collection.setSweeperState(Collection.sweeperState.retract);
             collection.updateSweeper();
         }
-
 
         if (gamepad1.b){
             sensors.getDetections();
