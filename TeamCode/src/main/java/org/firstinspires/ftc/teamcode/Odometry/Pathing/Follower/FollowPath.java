@@ -19,6 +19,8 @@ public class FollowPath {
 
     ArrayList<PathingVelocity> pathingVelocity = new ArrayList<>();
 
+    ArrayList<Double> pathCurve = new ArrayList<>();
+
     FtcDashboard dashboard = FtcDashboard.getInstance();
 
     Telemetry dashboardTelemetry = dashboard.getTelemetry();
@@ -28,6 +30,12 @@ public class FollowPath {
     public FollowPath(ArrayList<Vector2D> followablePath, ArrayList<PathingVelocity> pathingVelocity){
         this.followablePath = followablePath;
         this.pathingVelocity = pathingVelocity;
+    }
+
+    public FollowPath(ArrayList<Vector2D> followablePath, ArrayList<PathingVelocity> pathingVelocity, ArrayList<Double> pathCurve){
+        this.followablePath = followablePath;
+        this.pathingVelocity = pathingVelocity;
+        this.pathCurve = pathCurve;
     }
 
     public double findAngle(PathingVelocity targetVelocity){
@@ -321,7 +329,6 @@ public class FollowPath {
         return error;
     }
 
-
     public PathingVelocity getTargetVelocity(int index){
 
         PathingVelocity targetVelocity = new PathingVelocity();
@@ -352,6 +359,5 @@ public class FollowPath {
 
         return one;
     }
-
 
 }

@@ -18,6 +18,8 @@ public class pathBuilderMain {
 
     public ArrayList<Vector2D> followablePath = new ArrayList<>();
 
+    public ArrayList<Double> curvature = new ArrayList<>();
+
     public ArrayList<PathingVelocity> pathingVelocity = new ArrayList<>();
 
     public Vector2D secondPoint = new Vector2D();
@@ -272,16 +274,19 @@ public class pathBuilderMain {
     public void buildCurveSegment(Vector2D start, Vector2D control, Vector2D end){
         segmentGenerator.buildPath(start, control, end);
         originalPath.addAll(segmentGenerator.copyPath());
+        curvature.addAll(segmentGenerator.copyCurvature());
     }
 
     public void buildCurveSegment(Vector2D start, Vector2D control1, Vector2D control2, Vector2D end){
         segmentGenerator.buildPath(start, control1, control2, end);
         originalPath.addAll(segmentGenerator.copyPath());
+        curvature.addAll(segmentGenerator.copyCurvature());
     }
 
     public void buildLineSegment(Vector2D start, Vector2D end){
         segmentGenerator.buildPath(start, end);
         originalPath.addAll(segmentGenerator.copyPath());
+        curvature.addAll(segmentGenerator.copyCurvature());
     }
 
     public void clearAll(){
