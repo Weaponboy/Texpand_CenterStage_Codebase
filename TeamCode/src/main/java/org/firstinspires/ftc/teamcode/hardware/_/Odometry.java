@@ -102,6 +102,7 @@ public class Odometry {
     }
 
     public double X, Y, heading;
+    public double headingRaw;
 
     public double dtheta;
 
@@ -128,6 +129,8 @@ public class Odometry {
         YawAngle = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         botHeading = -YawAngle.firstAngle;
 
+        headingRaw = botHeading;
+
         botHeading += getCorrectStartHeading(startHeading);
 
         if (botHeading <= 0) {
@@ -151,7 +154,6 @@ public class Odometry {
 
         X += dx * Math.cos(Math.toRadians(heading)) - dy * Math.sin(Math.toRadians(heading));
         Y += dx * Math.sin(Math.toRadians(heading)) + dy * Math.cos(Math.toRadians(heading));
-        heading += dtheta;
 
 //        oldCenterPod = currentCenterPod;
 //        oldLeftPod = currentLeftPod;

@@ -27,6 +27,7 @@ public class TestingPositioning extends OpMode {
         telemetry.addData("x", odometry.X);
         telemetry.addData("y", odometry.Y);
         telemetry.addData("heading", odometry.heading);
+        telemetry.addData("heading raw", odometry.headingRaw);
         telemetry.update();
     }
 
