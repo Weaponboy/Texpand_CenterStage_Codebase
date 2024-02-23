@@ -572,9 +572,9 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         if (gamepad2.left_stick_y < -0.9 && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery){
             delivery.setRotateClaw(0.5);
         }else if (gamepad2.left_stick_x > 0.9 && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery){
-            delivery.setRotateClaw(0.3);
+            delivery.setRotateClaw(0.08);
         } else if (gamepad2.left_stick_x < -0.9 && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery) {
-            delivery.setRotateClaw(0.7);
+            delivery.setRotateClaw(0.91);
         }
 
         if (gamepad2.left_stick_button){

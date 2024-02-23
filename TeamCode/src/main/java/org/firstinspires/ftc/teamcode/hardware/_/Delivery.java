@@ -41,7 +41,7 @@ public class Delivery {
 
     double timePerDegree = 7;
 
-    double collectTopPivotPos = 0;
+    double collectTopPivotPos = 0.23;
     double intermediateTopPivot = 0.3;
     double deliveryTopPivot = 0.7;
     double deliveryTopPivotNew = 1;
@@ -51,13 +51,13 @@ public class Delivery {
     double deliverySecondPivotAuto = 0.2;
     double distancecalc;
     double avoidIntakeSecondPivot = 0.8;
-    double collectSecondPivot = 0.92;
-    double deliverySecondPivot = -0.2;
+    double collectSecondPivot = 0.85;
+    double deliverySecondPivot = -0.16;
     double lowdeliveryTopPivot = 1;
 
-    double clawOpenDeliver = 0.35;
-    double clawOpen = 0.25;
-    double clawClosed = 0;
+    double clawOpenDeliver = 0.5;
+    double clawOpen = 0.4;
+    double clawClosed = 1;
 
     double rotateCollect = 0.55;
     double rotateDeliver = 0.55;
@@ -1088,8 +1088,8 @@ public class Delivery {
         RightClaw.setDirection(Servo.Direction.FORWARD);
         LeftClaw.setDirection(Servo.Direction.REVERSE);
 
-        RightClaw.setPwmRange(new PwmControl.PwmRange(800, 1900));
-        LeftClaw.setPwmRange(new PwmControl.PwmRange(1200, 2300));
+        RightClaw.setPwmRange(new PwmControl.PwmRange(600, 2500));
+        LeftClaw.setPwmRange(new PwmControl.PwmRange(600, 2500));
 
         mainPivotLeft = hardwareMap.get(ServoImplEx.class, "leftmain");
         mainPivotRight = hardwareMap.get(ServoImplEx.class, "rightmain");
@@ -1109,7 +1109,7 @@ public class Delivery {
 
         secondRotate.setPwmRange(new PwmControl.PwmRange(600, 2500));
 
-        setMainPivot(0);
+        setMainPivot(collectTopPivotPos);
 
         secondRotate.setPosition(secondRotateMiddleCollect);
 
@@ -1117,8 +1117,8 @@ public class Delivery {
 
         RotateClaw.setPosition(rotateCollect);
 
-        RightClaw.setPosition(clawClosed);
-        LeftClaw.setPosition(clawClosed);
+        RightClaw.setPosition(clawOpen);
+        LeftClaw.setPosition(clawOpen);
 
     }
 
