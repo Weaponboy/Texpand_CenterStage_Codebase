@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.hardware._.Odometry;
 @TeleOp
 public class TestingPositioning extends OpMode {
 
-    Odometry odometry = new Odometry(0, 0, 90);
+    Odometry odometry = new Odometry(0, 0, 0);
 
     FtcDashboard dashboard = FtcDashboard.getInstance();
 
