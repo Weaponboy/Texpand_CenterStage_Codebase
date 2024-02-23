@@ -578,18 +578,18 @@ public class RedTeleop extends OpMode implements TeleopPathing {
             deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
         }
 
-        if (currentGamepad2.a && !previousGamepad2.a && planelauncher.getTriggerPosition() < 0.1){
+        if (currentGamepad2.right_stick_button && !previousGamepad2.right_stick_button && planelauncher.getTriggerPosition() < 0.1){
             planelauncher.setTrigger(0.6);
-        }else if (currentGamepad2.a && !previousGamepad2.a && planelauncher.getTriggerPosition() > 0.45){
+        }else if (currentGamepad2.right_stick_button && !previousGamepad2.right_stick_button && planelauncher.getTriggerPosition() > 0.45){
             planelauncher.setTrigger(0);
         }
 
         if (gamepad2.left_stick_y < -0.9 && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery){
             delivery.setRotateClaw(0.5);
         }else if (gamepad2.left_stick_x > 0.9 && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery){
-            delivery.setRotateClaw(0);
+            delivery.setRotateClaw(0.3);
         } else if (gamepad2.left_stick_x < -0.9 && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery) {
-            delivery.setRotateClaw(1);
+            delivery.setRotateClaw(0.7);
         }
 
 
