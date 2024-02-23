@@ -14,7 +14,6 @@ import org.firstinspires.ftc.teamcode.hardware._.Drivetrain;
 import org.firstinspires.ftc.teamcode.hardware._.Odometry;
 
 @TeleOp
-@Disabled
 public class LineTest extends LinearOpMode {
 
     FtcDashboard dashboard = FtcDashboard.getInstance();
