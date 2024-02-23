@@ -148,7 +148,7 @@ public class Odometry {
         int dn2 = currentRightPod - oldRightPod;
         int dn3 = currentCenterPod - oldCenterPod;
 
-        double headingTheta = ticks_per_degree * (lastHeading - heading);
+        double headingTheta = ticks_per_degree * (heading - lastHeading);
         dx = cm_per_tick * (dn2 - (headingTheta) * rightPodOffset / trackwidth);
         dy = cm_per_tick * (dn3 - (headingTheta) * centerPodOffset / trackwidth);
 
