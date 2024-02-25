@@ -89,7 +89,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
     ElapsedTime closeRight = new ElapsedTime();
     ElapsedTime closeLeft = new ElapsedTime();
 
-    ElapsedTime sweeper = new ElapsedTime();
+//    ElapsedTime sweeper = new ElapsedTime();
 
     List<LynxModule> allHubs;
 
@@ -629,6 +629,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         telemetry.addData("intake current draw", collection.getIntakeCurrentUse());
         telemetry.addData("slides current draw", deliverySlides.getCurrentDraw());
         telemetry.addData("loop time", loopTime);
+        telemetry.addData("Arm Rotate", delivery.RotateArm.getPosition());
         telemetry.update();
 
     }

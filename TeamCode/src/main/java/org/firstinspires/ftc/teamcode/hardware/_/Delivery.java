@@ -24,7 +24,7 @@ public class Delivery {
     ServoImplEx LeftClaw;
 
     ServoImplEx RotateClaw;
-    ServoImplEx RotateArm;
+    public Servo RotateArm;
     ServoImplEx mainPivotLeft;
     ServoImplEx mainPivotRight;
 
@@ -41,7 +41,8 @@ public class Delivery {
 
     double timePerDegree = 7;
 
-    double collectTopPivotPos = 0.3;
+    double ArmPosition = 0.5;
+    double collectTopPivotPos = 0.235;
     double intermediateTopPivot = 0.3;
     double deliveryTopPivot = 0.7;
     double deliveryTopPivotNew = 1;
@@ -51,7 +52,7 @@ public class Delivery {
     double deliverySecondPivotAuto = 0.2;
     double distancecalc;
     double avoidIntakeSecondPivot = 0.8;
-    double collectSecondPivot = 0.82;
+    double collectSecondPivot = 0.88;
     double deliverySecondPivot = -0.16;
     double lowdeliveryTopPivot = 1;
 
@@ -137,6 +138,7 @@ public class Delivery {
         switch (armstateTarget){
 
             case collect:
+                RotateArm.setPosition(ArmPosition);
 
                 mainPivotOffSet = 0;
 
@@ -160,7 +162,7 @@ public class Delivery {
 
                 break;
             case intermediate:
-
+                RotateArm.setPosition(ArmPosition);
                 setClaws(clawClosed);
                 setGripperState(GripperState.closed);
 
@@ -186,6 +188,7 @@ public class Delivery {
 
                 break;
             case delivery:
+                RotateArm.setPosition(ArmPosition);
 
                 mainPivotOffSet = 0.15;
 
@@ -222,6 +225,7 @@ public class Delivery {
 
                 break;
             case deliverAuto:
+                RotateArm.setPosition(ArmPosition);
 
                 secondRotate.setPosition(secondRotateMiddle);
 
@@ -254,7 +258,7 @@ public class Delivery {
 
         switch (armstateCurrent){
             case moving:
-
+                RotateArm.setPosition(ArmPosition);
                 if (DeliveryMoving && pivotMoveTimeDelivery.milliseconds() >= timeToWaitDelivery){
                     armstateCurrent = armState.delivery;
                     DeliveryMoving = false;
@@ -285,7 +289,7 @@ public class Delivery {
                 break;
 
             case delivery:
-
+                RotateArm.setPosition(ArmPosition);
 //                if(firtloop){
 //                    double distance = sensors.backBoard.getDistance(DistanceUnit.CM);
 //                    if(distance > mindistancemm && distance < maxdistancemm){
@@ -328,7 +332,7 @@ public class Delivery {
 //                secondRotate.setPosition(targetRotatePos);
 
             case intermediate:
-
+                RotateArm.setPosition(ArmPosition);
                 if (slidesPos < 50){
                     setArmTargetState(armState.collect);
                 }
@@ -1109,7 +1113,10 @@ public class Delivery {
 
         secondRotate.setPwmRange(new PwmControl.PwmRange(600, 2500));
 
-        RotateArm = hardwareMap.get(ServoImplEx.class, "DiffPivot");
+        RotateArm  = hardwareMap.get(Servo.class,"RotateArm");
+
+
+        RotateArm.setPosition(ArmPosition);
 
         setMainPivot(collectTopPivotPos);
 
@@ -1121,6 +1128,7 @@ public class Delivery {
 
         RightClaw.setPosition(clawOpen);
         LeftClaw.setPosition(clawOpen);
+
 
     }
 
