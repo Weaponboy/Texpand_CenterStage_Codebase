@@ -24,7 +24,7 @@ public class Delivery {
     ServoImplEx LeftClaw;
 
     ServoImplEx RotateClaw;
-
+    ServoImplEx RotateArm;
     ServoImplEx mainPivotLeft;
     ServoImplEx mainPivotRight;
 
@@ -41,7 +41,7 @@ public class Delivery {
 
     double timePerDegree = 7;
 
-    double collectTopPivotPos = 0.23;
+    double collectTopPivotPos = 0.3;
     double intermediateTopPivot = 0.3;
     double deliveryTopPivot = 0.7;
     double deliveryTopPivotNew = 1;
@@ -51,12 +51,12 @@ public class Delivery {
     double deliverySecondPivotAuto = 0.2;
     double distancecalc;
     double avoidIntakeSecondPivot = 0.8;
-    double collectSecondPivot = 0.85;
+    double collectSecondPivot = 0.82;
     double deliverySecondPivot = -0.16;
     double lowdeliveryTopPivot = 1;
 
-    double clawOpenDeliver = 0.5;
-    double clawOpen = 0.4;
+    double clawOpenDeliver = 0.65;
+    double clawOpen = 0.65;
     double clawClosed = 1;
 
     double rotateCollect = 0.55;
@@ -1108,6 +1108,8 @@ public class Delivery {
         secondRotate = hardwareMap.get(ServoImplEx.class, "secondRotate");
 
         secondRotate.setPwmRange(new PwmControl.PwmRange(600, 2500));
+
+        RotateArm = hardwareMap.get(ServoImplEx.class, "RotateArm");
 
         setMainPivot(collectTopPivotPos);
 
