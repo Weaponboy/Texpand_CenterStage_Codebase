@@ -185,8 +185,6 @@ public class TestingArmPositions extends OpMode {
 
         DiffPivot = hardwareMap.get(ServoImplEx.class, "DiffPivot");
 
-        DiffPivot.setPwmRange(new PwmControl.PwmRange(600, 2500));
-
         DiffPivot.setPosition(0.5);
 
         setMainPivot(collectTopPivotPos);

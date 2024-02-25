@@ -1109,7 +1109,7 @@ public class Delivery {
 
         secondRotate.setPwmRange(new PwmControl.PwmRange(600, 2500));
 
-        RotateArm = hardwareMap.get(ServoImplEx.class, "RotateArm");
+        RotateArm = hardwareMap.get(ServoImplEx.class, "DiffPivot");
 
         setMainPivot(collectTopPivotPos);
 
