@@ -143,7 +143,7 @@ public class Collection {
 
         Intake = hardwareMap.get(DcMotorEx.class, "Intake");
 
-        sweeper = hardwareMap.get(ServoImplEx.class, "sweeper");
+//        sweeper = hardwareMap.get(ServoImplEx.class, "sweeper");
 
         sweeper.setPwmRange(new PwmControl.PwmRange(600, 2400));
 

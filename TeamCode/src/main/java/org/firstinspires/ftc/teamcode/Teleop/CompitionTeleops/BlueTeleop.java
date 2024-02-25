@@ -596,14 +596,14 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
         }
 
-        if (gamepad1.y){
-            collection.setSweeperState(Collection.sweeperState.push);
-            collection.updateSweeper();
-            sweeper.reset();
-        } else if (sweeper.milliseconds() > 100 && sweeper.milliseconds() < 200) {
-            collection.setSweeperState(Collection.sweeperState.retract);
-            collection.updateSweeper();
-        }
+//        if (gamepad1.y){
+//            collection.setSweeperState(Collection.sweeperState.push);
+//            collection.updateSweeper();
+//            sweeper.reset();
+//        } else if (sweeper.milliseconds() > 100 && sweeper.milliseconds() < 200) {
+//            collection.setSweeperState(Collection.sweeperState.retract);
+//            collection.updateSweeper();
+//        }
 
         if (gamepad1.b){
             sensors.getDetections();

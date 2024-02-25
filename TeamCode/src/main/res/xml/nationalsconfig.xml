@@ -6,7 +6,7 @@
             <goBILDA5202SeriesMotor name="Right_Slide" port="2"/>
             <goBILDA5202SeriesMotor name="Left_Slide" port="3"/>
             <Servo name="IntakeServoRight" port="0"/>
-            <Servo name="sweeper" port="1"/>
+            <Servo name="DiffPivot" port="1"/>
             <Servo name="IntakeServoLeft" port="2"/>
             <Servo name="RightPivot" port="3"/>
             <Servo name="LeftPivot" port="4"/>

@@ -45,7 +45,7 @@ public class Odometry {
     public double trackwidth = 36.65835571289;
     public static double rightPodOffset = 18.949177856445;
     public double centerPodOffset = 18.7227783203125;
-    public static double ticks_per_degree = 171603/360;
+    public static double ticks_per_degree = 476;
     public double wheelRadius = 1.75;
     public double podTicks = 8192;
 
@@ -139,6 +139,18 @@ public class Odometry {
             heading = (0 + botHeading);
         }
 
+        double headingTheta;
+
+        if (lastHeading < 2 && heading > 358){
+            double adaptedHeading = (360 - heading)+lastHeading;
+            headingTheta = ticks_per_degree * (adaptedHeading);
+        }else if (heading < 2 && lastHeading > 358){
+            double adaptedHeading = (360 - lastHeading) + heading;
+            headingTheta = ticks_per_degree * (adaptedHeading);
+        } else {
+            headingTheta = ticks_per_degree * (heading - lastHeading);
+        }
+
         oldCenterPod = currentCenterPod;
         oldRightPod = currentRightPod;
 
@@ -148,7 +160,6 @@ public class Odometry {
         int dn2 = currentRightPod - oldRightPod;
         int dn3 = currentCenterPod - oldCenterPod;
 
-        double headingTheta = ticks_per_degree * (heading - lastHeading);
         dx = cm_per_tick * (dn2 - (headingTheta) * rightPodOffset / trackwidth);
         dy = cm_per_tick * (dn3 - (headingTheta) * centerPodOffset / trackwidth);
 

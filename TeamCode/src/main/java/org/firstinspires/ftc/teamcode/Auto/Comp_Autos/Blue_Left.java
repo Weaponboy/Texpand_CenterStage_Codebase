@@ -36,6 +36,7 @@ public class Blue_Left extends LinearOpMode implements CycleMethods{
     Drivetrain drive = new Drivetrain();
 
     /**pathing objects*/
+
     blueLeftBuilder firstPath = new blueLeftBuilder();
 
     blueLeftBuilder secondPath = new blueLeftBuilder();

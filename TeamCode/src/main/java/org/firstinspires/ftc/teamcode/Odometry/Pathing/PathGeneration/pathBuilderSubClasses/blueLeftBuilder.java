@@ -79,7 +79,7 @@ public class blueLeftBuilder extends pathBuilderMain{
 
     public enum pathSplit {
         first,
-        second,
+        second
     }
 
     public enum Section {

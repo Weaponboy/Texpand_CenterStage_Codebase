@@ -176,11 +176,6 @@ public class pathBuilderMain {
 
     }
 
-    public Vector2D findPoint(){
-        Vector2D point = new Vector2D();
-        return point;
-    }
-
     public double calculateTotalDistance(List<Vector2D> path) {
         double totalDistance = 0.0;
         for (int i = 0; i < path.size() - 1; i++) {
