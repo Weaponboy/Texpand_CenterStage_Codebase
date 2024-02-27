@@ -27,11 +27,22 @@ public class FollowPath {
 
     int lastPointOnPath;
 
+    /**
+     *
+     * @param followablePath
+     * @param pathingVelocity
+     */
     public FollowPath(ArrayList<Vector2D> followablePath, ArrayList<PathingVelocity> pathingVelocity){
         this.followablePath = followablePath;
         this.pathingVelocity = pathingVelocity;
     }
 
+    /**
+     *
+     * @param followablePath
+     * @param pathingVelocity
+     * @param pathCurve
+     */
     public FollowPath(ArrayList<Vector2D> followablePath, ArrayList<PathingVelocity> pathingVelocity, ArrayList<Double> pathCurve){
         this.followablePath = followablePath;
         this.pathingVelocity = pathingVelocity;
@@ -52,6 +63,7 @@ public class FollowPath {
 
         return degrees;
     }
+
 
     public double acceleration_distance(){
 

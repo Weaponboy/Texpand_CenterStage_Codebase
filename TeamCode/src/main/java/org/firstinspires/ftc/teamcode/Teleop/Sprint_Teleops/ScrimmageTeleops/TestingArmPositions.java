@@ -138,6 +138,10 @@ public class TestingArmPositions extends OpMode {
 
     }
 
+    /**
+     *
+     * @param hardwareMap this gets the hardwaremap from whatever opmode we are running
+     */
     public void init(HardwareMap hardwareMap){
         hmap = hardwareMap;
 

@@ -765,6 +765,7 @@ public class Blue_Left extends LinearOpMode implements CycleMethods{
                         }
 
                         break;
+
                     case first2:
 
                         delivery.updateArm(deliverySlides.getCurrentposition());
@@ -786,6 +787,7 @@ public class Blue_Left extends LinearOpMode implements CycleMethods{
                             collection.updateIntakeHeight();
 
                             targetHeading = 180;
+
                         }
 
                         odometry.update();
