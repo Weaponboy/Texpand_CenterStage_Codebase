@@ -105,8 +105,8 @@ public class  Delivery_Slides {
 
     public void DeliverySlides(int setpoint, double power){
 
-        Right_Slide.setTargetPosition(setpoint);
-        Left_Slide.setTargetPosition(setpoint);
+        Right_Slide.setTargetPosition(setpoint-40);
+        Left_Slide.setTargetPosition(setpoint-40);
 
         Right_Slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Left_Slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
