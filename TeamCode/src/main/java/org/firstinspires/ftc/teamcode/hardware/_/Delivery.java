@@ -41,7 +41,7 @@ public class Delivery {
 
     double timePerDegree = 7;
 
-    double ArmPosition = 0.5;
+    double ArmPosition = 0.48;
     double collectTopPivotPos = 0.235;
     double intermediateTopPivot = 0.3;
     double deliveryTopPivot = 0.7;
@@ -52,7 +52,7 @@ public class Delivery {
     double deliverySecondPivotAuto = 0.2;
     double distancecalc;
     double avoidIntakeSecondPivot = 0.8;
-    double collectSecondPivot = 0.88;
+    double collectSecondPivot = 0.845;
     double deliverySecondPivot = -0.16;
     double lowdeliveryTopPivot = 1;
 

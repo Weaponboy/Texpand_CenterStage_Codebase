@@ -518,23 +518,23 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
             waitTimeSensors = 600;
 
-           if (closeLeft.milliseconds() > waitTimeSensors && closeRight.milliseconds() > waitTimeSensors) {
-
-               delivery.setGripperState(Delivery.GripperState.closed);
-               collection.setState(Collection.intakePowerState.off);
-               collection.setIntakeHeight(Collection.intakeHeightState.stowed);
-               collection.updateIntakeHeight();
-               collection.updateIntakeState();
-
-           }else {
-
-               if(closeLeft.milliseconds() > waitTimeSensors){
-                   delivery.setLeftGripperState(Delivery.leftGripperState.closed);
-               } else if(closeRight.milliseconds() > waitTimeSensors){
-                   delivery.setRightGripperState(Delivery.rightGripperState.closed);
-               }
-
-           }
+//           if (closeLeft.milliseconds() > waitTimeSensors && closeRight.milliseconds() > waitTimeSensors) {
+//
+//               delivery.setGripperState(Delivery.GripperState.closed);
+//               collection.setState(Collection.intakePowerState.off);
+//               collection.setIntakeHeight(Collection.intakeHeightState.stowed);
+//               collection.updateIntakeHeight();
+//               collection.updateIntakeState();
+//
+//           }else {
+//
+//               if(closeLeft.milliseconds() > waitTimeSensors){
+//                   delivery.setLeftGripperState(Delivery.leftGripperState.closed);
+//               } else if(closeRight.milliseconds() > waitTimeSensors){
+//                   delivery.setRightGripperState(Delivery.rightGripperState.closed);
+//               }
+//
+//           }
         }
 
         if (gamepad2.right_trigger > 0){
