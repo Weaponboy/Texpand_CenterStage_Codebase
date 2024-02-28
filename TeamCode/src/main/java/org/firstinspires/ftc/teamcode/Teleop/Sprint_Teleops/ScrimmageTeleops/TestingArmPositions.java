@@ -59,7 +59,7 @@ public class TestingArmPositions extends OpMode {
     double lowdeliveryTopPivot = 1;
 
     double clawOpenDeliver = 0.5;
-    double clawOpen = 0.6;
+    double clawOpen = 0.8;
     double clawClosed = 1;
 
     double rotateCollect = 0.55;

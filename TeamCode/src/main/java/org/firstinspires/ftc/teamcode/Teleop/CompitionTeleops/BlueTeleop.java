@@ -443,12 +443,13 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
             delivery.setGripperState(slidesGripppers);
         }
 
-        /**Pivot code*/
+        /**Arm code*/
+
 
         //Move to delivery position
-        if (gamepad2.dpad_up || gamepad1.dpad_up && deliverySlides.getCurrentposition() > 150){
+        if (gamepad1.dpad_up && deliverySlides.getCurrentposition() > 150){
             delivery.setArmTargetState(Delivery.armState.delivery);
-        } else if (gamepad2.dpad_down || gamepad1.dpad_down && deliverySlides.getCurrentposition() > 100) {
+        } else if (gamepad1.dpad_down && deliverySlides.getCurrentposition() > 100) {
             delivery.setArmTargetState(Delivery.armState.collect);
         }
 
