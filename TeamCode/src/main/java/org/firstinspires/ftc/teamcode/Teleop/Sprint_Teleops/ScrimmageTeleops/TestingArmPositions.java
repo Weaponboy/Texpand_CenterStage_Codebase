@@ -1,9 +1,7 @@
 package org.firstinspires.ftc.teamcode.Teleop.Sprint_Teleops.ScrimmageTeleops;
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Non_Hardware_Objects.currentGamepad1;
-import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Non_Hardware_Objects.currentGamepad2;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Non_Hardware_Objects.previousGamepad1;
-import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Non_Hardware_Objects.previousGamepad2;
 import static java.lang.Thread.sleep;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -78,11 +76,12 @@ public class TestingArmPositions extends OpMode {
     public void setMainPivotOffSet(double mainPivotOffSet) {
         this.mainPivotOffSet = mainPivotOffSet;
     }
+
     boolean firtloop = true;
     double mainPivotOffSet = 0;
     double targetMainPivot = 0;
     static final double servoPosPerTick = 0.00004100;
-    static final double mainToSecondConst = 0.5/0.3;
+    static final double mainToSecondConst = 0.5 / 0.3;
     static final double mainservopospermm = 0.0126;
     static final double mindistancemm = 8;
     static final double maxdistancemm = 20;
@@ -96,8 +95,19 @@ public class TestingArmPositions extends OpMode {
     double deliveryIncrement = 0.02;
     public RobotArm[][] robotArmState = new RobotArm[11][];
     RobotArm robotArmHome;
+    RobotArm robotArmmid;
     int armPosition = 1;
     HardwareMap hmap;
+
+
+    double armrotatetomainconstLEFT = 0.2722;
+    double armrotatetosecondrotateconstLEFT = -1.407;
+    double armrotatetosecondpivotconstLEFT = 0.2726;
+
+    double armrotatetomainconstRIGHT = -0.2862;
+    double armrotatetosecondrotateconstRIGHT = -1.407;
+    double armrotatetosecondpivotconstRIGHT = -0.2726;
+
 
     @Override
     public void init() {
@@ -108,66 +118,98 @@ public class TestingArmPositions extends OpMode {
     public void loop() {
         previousGamepad1.copy(currentGamepad1);
         currentGamepad1.copy(gamepad1);
-        if (gamepad1.dpad_up){
-            setMainPivot(getMainPivotPosition()+0.001);
+        if (gamepad1.dpad_up) {
+            setMainPivot(getMainPivotPosition() + 0.001);
         }
         if (gamepad1.dpad_down) {
-            setMainPivot(getMainPivotPosition()-0.001);
+            setMainPivot(getMainPivotPosition() - 0.001);
         }
 
-        if (gamepad1.a){
-            setSecondPivot(getSecondPivotPosition()+0.001);
+        if (gamepad1.a) {
+            setSecondPivot(getSecondPivotPosition() + 0.001);
         }
         if (gamepad1.b) {
-            setSecondPivot(getSecondPivotPosition()-0.001);
+            setSecondPivot(getSecondPivotPosition() - 0.001);
         }
 
-        if (gamepad1.back){
-            RotateArm.setPosition(RotateArm.getPosition()+0.001);
+        if (gamepad1.back) {
+            RotateArm.setPosition(RotateArm.getPosition() + 0.001);
         }
         if (gamepad1.start) {
-            RotateArm.setPosition(RotateArm.getPosition()-0.001);
+            RotateArm.setPosition(RotateArm.getPosition() - 0.001);
         }
 
-        if (gamepad1.left_trigger > 0){
-            secondRotate.setPosition(secondRotate.getPosition()+0.001);
+        if (gamepad1.left_trigger > 0) {
+            secondRotate.setPosition(secondRotate.getPosition() + 0.001);
         }
         if (gamepad1.right_trigger > 0) {
-            secondRotate.setPosition(secondRotate.getPosition()-0.001);
+            secondRotate.setPosition(secondRotate.getPosition() - 0.001);
         }
 
-        if (gamepad1.x){
-            RotateClaw.setPosition(RotateClaw.getPosition()+0.001);
+        if (gamepad1.x) {
+            RotateClaw.setPosition(RotateClaw.getPosition() + 0.001);
         }
         if (gamepad1.y) {
-            RotateClaw.setPosition(RotateClaw.getPosition()-0.001);
+            RotateClaw.setPosition(RotateClaw.getPosition() - 0.001);
         }
         if (currentGamepad1.right_bumper && !previousGamepad1.right_bumper && RightClaw.getPosition() == clawOpen) {
             RightClaw.setPosition(clawClosed);
 
-        }else if(currentGamepad1.right_bumper && !previousGamepad1.right_bumper && RightClaw.getPosition() == clawClosed){
+        } else if (currentGamepad1.right_bumper && !previousGamepad1.right_bumper && RightClaw.getPosition() == clawClosed) {
             RightClaw.setPosition(clawOpen);
         }
 
         if (currentGamepad1.left_bumper && !previousGamepad1.left_bumper && LeftClaw.getPosition() == clawOpen) {
             LeftClaw.setPosition(clawClosed);
 
-        }else if(currentGamepad1.left_bumper && !previousGamepad1.left_bumper && LeftClaw.getPosition() == clawClosed){
+        } else if (currentGamepad1.left_bumper && !previousGamepad1.left_bumper && LeftClaw.getPosition() == clawClosed) {
             LeftClaw.setPosition(clawOpen);
         }
 
-        if ((!previousGamepad1.dpad_left && gamepad1.dpad_left) || (!previousGamepad1.dpad_right && gamepad1.dpad_right)) {
+        if (gamepad1.dpad_right) {
+            RotateArm.setPosition(RotateArm.getPosition() + 0.005);
+            if (RotateArm.getPosition() > robotArmmid.armRotate) {
+                secondRotate.setPosition((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetosecondrotateconstLEFT + robotArmmid.secondRotate);
+                setMainPivot((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetomainconstLEFT + robotArmmid.mainPivot);
+                setSecondPivot((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetosecondpivotconstLEFT + robotArmmid.secondPivot);
 
-            if (!previousGamepad1.dpad_right && gamepad1.dpad_right) {
-                armPosition +=1;
-            }else if (!previousGamepad1.dpad_left && gamepad1.dpad_left) {
-                armPosition -=1;
+            } else {
+                secondRotate.setPosition((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetosecondrotateconstRIGHT + robotArmmid.secondRotate);
+                setMainPivot((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetomainconstRIGHT + robotArmmid.mainPivot);
+                setSecondPivot((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetosecondpivotconstRIGHT + robotArmmid.secondPivot);
+
             }
-            if (armPosition < 5) {
-                setArmPosition(1,armPosition);
+
+
+        } else if (gamepad1.dpad_left) {
+            RotateArm.setPosition(RotateArm.getPosition() - 0.005);
+            if (RotateArm.getPosition() > robotArmmid.armRotate) {
+                secondRotate.setPosition((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetosecondrotateconstLEFT + robotArmmid.secondRotate);
+                setMainPivot((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetomainconstLEFT + robotArmmid.mainPivot);
+                setSecondPivot((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetosecondpivotconstLEFT + robotArmmid.secondPivot);
+
+            } else {
+                secondRotate.setPosition((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetosecondrotateconstRIGHT + robotArmmid.secondRotate);
+                setMainPivot((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetomainconstRIGHT + robotArmmid.mainPivot);
+                setSecondPivot((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetosecondpivotconstRIGHT + robotArmmid.secondPivot);
             }
 
         }
+
+
+//        if ((!previousGamepad1.dpad_left && gamepad1.dpad_left) || (!previousGamepad1.dpad_right && gamepad1.dpad_right)) {
+//
+//            if (!previousGamepad1.dpad_right && gamepad1.dpad_right) {
+//                armPosition +=1;
+//            }else if (!previousGamepad1.dpad_left && gamepad1.dpad_left) {
+//                armPosition -=1;
+//            }
+//            if (armPosition < 5) {
+//                setArmPosition(1,armPosition);
+//            }
+//
+//        }
+
 
         telemetry.addData("Main Pivot", mainPivotLeft.getPosition());
         telemetry.addData("Arm Rotate", RotateArm.getPosition());
@@ -182,10 +224,9 @@ public class TestingArmPositions extends OpMode {
     }
 
     /**
-     *
      * @param hardwareMap this gets the hardwaremap from whatever opmode we are running
      */
-    public void init(HardwareMap hardwareMap){
+    public void init(HardwareMap hardwareMap) {
         hmap = hardwareMap;
         delivery_slides.init(hmap);
         pivotMoveTimeDelivery.reset();
@@ -240,7 +281,6 @@ public class TestingArmPositions extends OpMode {
         secondRotate.setPosition(secondRotateMiddleCollect);
 
 
-
         RotateClaw.setPosition(rotateCollect);
 
         RightClaw.setPosition(clawClosed);
@@ -254,58 +294,59 @@ public class TestingArmPositions extends OpMode {
         }
 
         robotArmState[1][1] = new RobotArm(0.876, 0.637, 0.294, 0.103, 0.578, 120);
-        robotArmState[1][2] = new RobotArm(0.852, 0.500, 0.483, 0.0826, 0.539, 0);
-        robotArmState[1][3] = new RobotArm(0.848, 0.389, 0.629, 0.127, 0.509, 0);
+        robotArmState[1][2] = new RobotArm(0.852, 0.500, 0.483, 0.0826, 0.539, 1);
+        robotArmState[1][3] = new RobotArm(0.848, 0.389, 0.629, 0.127, 0.509, 1);
         robotArmState[1][4] = new RobotArm(0.919, 0.229, 0.808, 0.183, 0.457, 250);
         robotArmHome = new RobotArm(0.780, 0.48, 0.5, -0.16, 0.55, 150);
+        robotArmmid = new RobotArm(0.834, 0.470, 0.493, 0.123, 0.530, 0);
 
-
-
+        setArmPositionInstant(robotArmmid);
 
     }
 
-    public void setRotateClaw(double position){
+    public void setRotateClaw(double position) {
         RotateClaw.setPosition(position);
     }
 
-    public double getSecondPivotPosition(){
-        return (secondPivotLeft.getPosition() + secondPivotRight.getPosition())/2;
+    public double getSecondPivotPosition() {
+        return (secondPivotLeft.getPosition() + secondPivotRight.getPosition()) / 2;
     }
 
-    public double getMainPivotPosition(){
+    public double getMainPivotPosition() {
         return (mainPivotLeft.getPosition() + mainPivotRight.getPosition()) / 2;
     }
 
-    private void setMainPivot(double position){
+    private void setMainPivot(double position) {
         mainPivotLeft.setPosition(position);
         mainPivotRight.setPosition(position);
     }
 
-    public double getTopPivotPosition(){
+    public double getTopPivotPosition() {
         return secondPivotLeft.getPosition();
     }
 
-    private void setClaws(double position){
+    private void setClaws(double position) {
         LeftClaw.setPosition(position);
         RightClaw.setPosition(position);
     }
 
-    private void setSecondPivot(double position){
+    private void setSecondPivot(double position) {
         secondPivotLeft.setPosition(position);
         secondPivotRight.setPosition(position);
     }
-    public void setArmPositionInstant(RobotArm robotArm){
+
+    public void setArmPositionInstant(RobotArm robotArm) {
         int sleep;
-        if (getMainPivotPosition() < 0.7){
+        if (getMainPivotPosition() < 0.7) {
             sleep = 600;
-            delivery_slides.DeliverySlides(robotArm.slides,0.5);
-        }else{
+//            delivery_slides.DeliverySlides(robotArm.slides,0.5);
+        } else {
             sleep = 50;
         }
 
-        try{
+        try {
             sleep(50);
-        }catch(Exception e){
+        } catch (Exception e) {
 
         }
         setMainPivot(robotArm.mainPivot);
@@ -313,55 +354,59 @@ public class TestingArmPositions extends OpMode {
         secondRotate.setPosition(robotArm.secondRotate);
         setRotateClaw(robotArm.ClawRotate);
         RotateArm.setPosition(robotArm.armRotate);
-        try{
+        try {
             sleep(sleep);
-        }catch(Exception e){
+        } catch (Exception e) {
 
         }
     }
-    public void setArmPosition(int Row, int Column){
+
+    public void setArmPosition(int Row, int Column) {
         setArmPositionInstant(robotArmHome);
 
-        delivery_slides.DeliverySlides(robotArmState[Row][Column].slides,0.5);
+        delivery_slides.DeliverySlides(robotArmState[Row][Column].slides, 0.5);
         setSecondPivot(robotArmState[Row][Column].secondPivot);
         secondRotate.setPosition(robotArmState[Row][Column].secondRotate);
         setRotateClaw(robotArmState[Row][Column].ClawRotate);
 
-        try{
+        try {
             sleep(100);
-        }catch(Exception e){
+        } catch (Exception e) {
 
         }
         RotateArm.setPosition(robotArmState[Row][Column].armRotate);
         setMainPivot(0.8);
-        try{
+        try {
             sleep(150);
-        }catch(Exception e){
+        } catch (Exception e) {
 
         }
         setMainPivot(robotArmState[Row][Column].mainPivot);
         delivery_slides.SlidesBothPower(0.0005);
     }
-    public class RobotArm {
-        private double mainPivot;
-        private double armRotate;
-        private double secondRotate;
-        private double secondPivot;
-        private double ClawRotate;
-        private int slides;
-
-        public RobotArm(double mainPivot, double armRotate, double secondRotate, double secondPivot, double ClawRotate, int slides) {
-            this.mainPivot = mainPivot;
-            this.armRotate = armRotate;
-            this.secondRotate = secondRotate;
-            this.secondPivot = secondPivot;
-            this.ClawRotate = ClawRotate;
-            this.slides = slides;
-        }
-
-
-    }
-
-
 }
+class RobotArm {
+    double mainPivot;
+    double armRotate;
+    double secondRotate;
+    double secondPivot;
+    double ClawRotate;
+    int slides;
+
+    public RobotArm(double mainPivot, double armRotate, double secondRotate, double secondPivot, double ClawRotate, int slides) {
+        this.mainPivot = mainPivot;
+        this.armRotate = armRotate;
+        this.secondRotate = secondRotate;
+        this.secondPivot = secondPivot;
+        this.ClawRotate = ClawRotate;
+        this.slides = slides;
+    }
+}
+
+
+
+
+
+
+
 
