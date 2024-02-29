@@ -89,13 +89,14 @@ public class Delivery {
     boolean CollectionMoving = false;
     boolean intermediateMoving = false;
 
-    double deliveryIncrement = 0.015;
+    double deliveryMainIncrement = 0.015;
+    double deliveryArmIncrement = 0.02;
     double armrotatetomainconstLEFT = 0.2722;
     double armrotatetosecondrotateconstLEFT = -1.407;
     double armrotatetosecondpivotconstLEFT = 0.2726;
 
     double armrotatetomainconstRIGHT = -0.2862;
-    double armrotatetosecondrotateconstRIGHT = -1.407;
+    double armrotatetosecondrotateconstRIGHT = -1.507;
     double armrotatetosecondpivotconstRIGHT = -0.2726;
     HardwareMap hmap;
 
@@ -309,17 +310,17 @@ public class Delivery {
                 odometry.update();
 
                 if (gamepad2.dpad_up && mainPivotRight.getPosition() < lowdeliveryTopPivot) {
-                    mainPivotOffSet = mainPivotOffSet + deliveryIncrement;
+                    mainPivotOffSet = mainPivotOffSet + deliveryMainIncrement;
                 }
 
                 if (gamepad2.dpad_down && mainPivotRight.getPosition() > deliveryTopPivot-0.04) {
-                    mainPivotOffSet = mainPivotOffSet - deliveryIncrement;
+                    mainPivotOffSet = mainPivotOffSet - deliveryMainIncrement;
                 }
                 if (gamepad2.dpad_right) {
-                    RotateArm.setPosition(RotateArm.getPosition() - 0.015);
+                    RotateArm.setPosition(RotateArm.getPosition() - deliveryArmIncrement);
 
                 } else if (gamepad2.dpad_left) {
-                    RotateArm.setPosition(RotateArm.getPosition() + 0.015);
+                    RotateArm.setPosition(RotateArm.getPosition() + deliveryArmIncrement);
                 }
 
                 targetMainPivot = deliveryTopPivot - slidesPos * servoPosPerTick + mainPivotOffSet;
