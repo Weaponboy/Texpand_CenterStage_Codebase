@@ -638,7 +638,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         collection.updateIntakeState();
 
         //update delivery state
-        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
+        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad2);
         delivery.updateGrippers();
 
         RobotLog.d("loop time: " + loopTime);
@@ -646,7 +646,6 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         telemetry.addData("X", odometry.X);
         telemetry.addData("Y", odometry.Y);
         telemetry.addData("heading", odometry.heading);
-        telemetry.addData("arm pposition", Range.clip(1.2, 0, 1));
         telemetry.addData("intake current draw", collection.getIntakeCurrentUse());
         telemetry.addData("slides current draw", deliverySlides.getCurrentDraw());
         telemetry.addData("loop time", loopTime);

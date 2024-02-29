@@ -607,7 +607,7 @@ public class RedTeleop extends OpMode implements TeleopPathing {
         collection.updateIntakeState();
 
         //update delivery state
-        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
+        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad2);
         delivery.updateGrippers();
 
         RobotLog.d("loop time: " + loopTime);
