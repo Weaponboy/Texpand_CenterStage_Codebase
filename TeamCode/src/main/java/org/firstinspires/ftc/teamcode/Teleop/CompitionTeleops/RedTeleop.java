@@ -357,12 +357,12 @@ public class RedTeleop extends OpMode implements TeleopPathing {
         /**intake code*/
 
         //this is to toggle fully up and fully down on the intake
-        if (currentGamepad2.left_bumper && !previousGamepad2.left_bumper && collection.getIntakeHeight() > 0){
+        if (currentGamepad2.left_bumper && !previousGamepad2.left_bumper && collection.getIntakeHeightRight() > 0){
             collection.setState(Collection.intakePowerState.on);
             collection.setIntakeHeight(Collection.intakeHeightState.collect);
             collection.updateIntakeHeight();
             collection.updateIntakeState();
-        } else if (currentGamepad2.left_bumper && !previousGamepad2.left_bumper && collection.getIntakeHeight() < 0.5) {
+        } else if (currentGamepad2.left_bumper && !previousGamepad2.left_bumper && collection.getIntakeHeightRight() < 0.5) {
             collection.setState(Collection.intakePowerState.off);
             collection.setIntakeHeight(Collection.intakeHeightState.stowed);
             collection.updateIntakeHeight();

@@ -32,6 +32,7 @@ public class TestingArmPositions extends OpMode {
     ServoImplEx secondRotate;
 
     Servo RotateArm;
+    Servo ArmExtension;
 
     ElapsedTime pivotMoveTimeDelivery = new ElapsedTime();
     ElapsedTime pivotMoveTimeAuto = new ElapsedTime();
@@ -73,12 +74,9 @@ public class TestingArmPositions extends OpMode {
     static final double adjustFactor = 1.1;
     boolean closeToCollection;
 
-    public void setMainPivotOffSet(double mainPivotOffSet) {
-        this.mainPivotOffSet = mainPivotOffSet;
-    }
-
     boolean firtloop = true;
-    double mainPivotOffSet = 0;
+    double mainPivotOffet = 0;
+    double mainPivotOffset = 0;
     double targetMainPivot = 0;
     static final double servoPosPerTick = 0.00004100;
     static final double mainToSecondConst = 0.5 / 0.3;
@@ -98,15 +96,21 @@ public class TestingArmPositions extends OpMode {
     RobotArm robotArmmid;
     int armPosition = 1;
     HardwareMap hmap;
+    double ArmExtensionHome = 0;
+    double ArmExtensionFull = 0.6;
 
+    double armrotatetomainconstLEFT = 0.032;
+    double armrotatetosecondrotateconstLEFT = -1.704;
+    double armrotatetosecondpivotconstLEFT = 0.164;
+    double armrotatetoarmextendconstLEFT = 3.244;
 
-    double armrotatetomainconstLEFT = 0.2722;
-    double armrotatetosecondrotateconstLEFT = -1.407;
-    double armrotatetosecondpivotconstLEFT = 0.2726;
+    double armrotatetomainconstRIGHT = -0.032;
+    double armrotatetosecondrotateconstRIGHT = -1.744;
+    double armrotatetosecondpivotconstRIGHT = -0.164;
+    double armrotatetoarmextendconstRIGHT = -3.244;
 
-    double armrotatetomainconstRIGHT = -0.2862;
-    double armrotatetosecondrotateconstRIGHT = -1.407;
-    double armrotatetosecondpivotconstRIGHT = -0.2726;
+    double Mainpivottoextendconst = -10.89;
+    double Mainpivottosecondconst = 1.45;
 
 
     @Override
@@ -118,12 +122,7 @@ public class TestingArmPositions extends OpMode {
     public void loop() {
         previousGamepad1.copy(currentGamepad1);
         currentGamepad1.copy(gamepad1);
-        if (gamepad1.dpad_up) {
-            setMainPivot(getMainPivotPosition() + 0.001);
-        }
-        if (gamepad1.dpad_down) {
-            setMainPivot(getMainPivotPosition() - 0.001);
-        }
+
 
         if (gamepad1.a) {
             setSecondPivot(getSecondPivotPosition() + 0.001);
@@ -146,54 +145,52 @@ public class TestingArmPositions extends OpMode {
             secondRotate.setPosition(secondRotate.getPosition() - 0.001);
         }
 
-        if (gamepad1.x) {
-            RotateClaw.setPosition(RotateClaw.getPosition() + 0.001);
-        }
-        if (gamepad1.y) {
-            RotateClaw.setPosition(RotateClaw.getPosition() - 0.001);
-        }
-        if (currentGamepad1.right_bumper && !previousGamepad1.right_bumper && RightClaw.getPosition() == clawOpen) {
-            RightClaw.setPosition(clawClosed);
+//        if (gamepad1.x) {
+//            ArmExtension.setPosition(ArmExtension.getPosition() + 0.001);
+//        }
+//        if (gamepad1.y) {
+//            ArmExtension.setPosition(ArmExtension.getPosition() - 0.001);
+//        }
 
-        } else if (currentGamepad1.right_bumper && !previousGamepad1.right_bumper && RightClaw.getPosition() == clawClosed) {
-            RightClaw.setPosition(clawOpen);
-        }
 
-        if (currentGamepad1.left_bumper && !previousGamepad1.left_bumper && LeftClaw.getPosition() == clawOpen) {
-            LeftClaw.setPosition(clawClosed);
-
-        } else if (currentGamepad1.left_bumper && !previousGamepad1.left_bumper && LeftClaw.getPosition() == clawClosed) {
-            LeftClaw.setPosition(clawOpen);
-        }
 
         if (gamepad1.dpad_right) {
             RotateArm.setPosition(RotateArm.getPosition() + 0.005);
-            if (RotateArm.getPosition() > robotArmmid.armRotate) {
-                secondRotate.setPosition((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetosecondrotateconstLEFT + robotArmmid.secondRotate);
-                setMainPivot((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetomainconstLEFT + robotArmmid.mainPivot);
-                setSecondPivot((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetosecondpivotconstLEFT + robotArmmid.secondPivot);
-
-            } else {
-                secondRotate.setPosition((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetosecondrotateconstRIGHT + robotArmmid.secondRotate);
-                setMainPivot((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetomainconstRIGHT + robotArmmid.mainPivot);
-                setSecondPivot((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetosecondpivotconstRIGHT + robotArmmid.secondPivot);
-
-            }
-
 
         } else if (gamepad1.dpad_left) {
             RotateArm.setPosition(RotateArm.getPosition() - 0.005);
+
+        }
+
+        if (gamepad1.y) {
+            mainPivotOffset = mainPivotOffset + 0.001;
+
+        }
+        else if (gamepad1.x) {
+            mainPivotOffset = mainPivotOffset - 0.001;
+        }
+
+        if (gamepad1.dpad_up) {
+            mainPivotOffet = mainPivotOffet + 0.001;
+
+        }
+        else if (gamepad1.dpad_down) {
+            mainPivotOffet = mainPivotOffet - 0.001;
+        }
+        if (gamepad1.dpad_right || gamepad1.dpad_left || gamepad1.dpad_up || gamepad1.dpad_down || gamepad1.y || gamepad1.x) {
             if (RotateArm.getPosition() > robotArmmid.armRotate) {
+                setMainPivot((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetomainconstLEFT + robotArmmid.mainPivot - mainPivotOffet + mainPivotOffset);
                 secondRotate.setPosition((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetosecondrotateconstLEFT + robotArmmid.secondRotate);
-                setMainPivot((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetomainconstLEFT + robotArmmid.mainPivot);
-                setSecondPivot((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetosecondpivotconstLEFT + robotArmmid.secondPivot);
+                setSecondPivot((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetosecondpivotconstLEFT + robotArmmid.secondPivot - (mainPivotOffet * Mainpivottosecondconst));
+                ArmExtension.setPosition((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetoarmextendconstLEFT + robotArmmid.ArmExtension + (mainPivotOffet * Mainpivottoextendconst));
 
             } else {
-                secondRotate.setPosition((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetosecondrotateconstRIGHT + robotArmmid.secondRotate);
-                setMainPivot((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetomainconstRIGHT + robotArmmid.mainPivot);
-                setSecondPivot((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetosecondpivotconstRIGHT + robotArmmid.secondPivot);
-            }
+                setMainPivot((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetomainconstRIGHT + robotArmmid.mainPivot - mainPivotOffet + mainPivotOffset);
 
+                secondRotate.setPosition((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetosecondrotateconstRIGHT + robotArmmid.secondRotate);
+                setSecondPivot((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetosecondpivotconstRIGHT + robotArmmid.secondPivot - (mainPivotOffet * Mainpivottosecondconst));
+                ArmExtension.setPosition((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetoarmextendconstRIGHT + robotArmmid.ArmExtension + (mainPivotOffet * Mainpivottoextendconst));
+            }
         }
 
 
@@ -218,6 +215,9 @@ public class TestingArmPositions extends OpMode {
         telemetry.addData("Gripper Rotate", RotateClaw.getPosition());
         telemetry.addData("Slides height", delivery_slides.getCurrentposition());
         telemetry.addData("armPosition", armPosition);
+        telemetry.addData("ArmExtension", ArmExtension.getPosition());
+        telemetry.addData("mainPivotOffSet", mainPivotOffet);
+
         telemetry.update();
 
         delivery_slides.SlidesBothPower(0.0005);
@@ -275,7 +275,8 @@ public class TestingArmPositions extends OpMode {
         RotateArm = hardwareMap.get(Servo.class, "RotateArm");
 
         RotateArm.setPosition(0.5);
-
+        ArmExtension = hardwareMap.get(ServoImplEx.class, "ArmExtension");
+        ArmExtension.setPosition(ArmExtensionHome);
         setMainPivot(collectTopPivotPos);
 
         secondRotate.setPosition(secondRotateMiddleCollect);
@@ -293,12 +294,12 @@ public class TestingArmPositions extends OpMode {
             robotArmState[i] = new RobotArm[elementsInRow];
         }
 
-        robotArmState[1][1] = new RobotArm(0.876, 0.637, 0.294, 0.103, 0.578, 120);
-        robotArmState[1][2] = new RobotArm(0.852, 0.500, 0.483, 0.0826, 0.539, 1);
-        robotArmState[1][3] = new RobotArm(0.848, 0.389, 0.629, 0.127, 0.509, 1);
-        robotArmState[1][4] = new RobotArm(0.919, 0.229, 0.808, 0.183, 0.457, 250);
-        robotArmHome = new RobotArm(0.780, 0.48, 0.5, -0.16, 0.55, 150);
-        robotArmmid = new RobotArm(0.834, 0.470, 0.493, 0.123, 0.530, 0);
+        robotArmState[1][1] = new RobotArm(0.876, 0.637, 0.294, 0.103, 0.578, 0,120);
+        robotArmState[1][2] = new RobotArm(0.852, 0.500, 0.483, 0.0826, 0.539, 0,1);
+        robotArmState[1][3] = new RobotArm(0.848, 0.389, 0.629, 0.127, 0.509, 0,1);
+        robotArmState[1][4] = new RobotArm(0.919, 0.229, 0.808, 0.183, 0.457, 0,250);
+        robotArmHome = new RobotArm(0.780, 0.48, 0.5, -0.16, 0.55, 0,150);
+        robotArmmid = new RobotArm(0.844, 0.490, 0.5, 0.090, 0.530, 0,0);
 
         setArmPositionInstant(robotArmmid);
 
@@ -391,15 +392,17 @@ class RobotArm {
     double secondRotate;
     double secondPivot;
     double ClawRotate;
+    double ArmExtension;
     int slides;
 
-    public RobotArm(double mainPivot, double armRotate, double secondRotate, double secondPivot, double ClawRotate, int slides) {
+    public RobotArm(double mainPivot, double armRotate, double secondRotate, double secondPivot, double ClawRotate, double ArmExtension, int slides) {
         this.mainPivot = mainPivot;
         this.armRotate = armRotate;
         this.secondRotate = secondRotate;
         this.secondPivot = secondPivot;
         this.ClawRotate = ClawRotate;
         this.slides = slides;
+        this.ArmExtension = ArmExtension;
     }
 }
 

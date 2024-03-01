@@ -14,10 +14,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.util.RobotLog;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower.mecanumFollower;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.teleopPathBuilder;
@@ -380,12 +378,12 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         /**intake code*/
 
         //this is to toggle fully up and fully down on the intake
-        if (currentGamepad2.left_bumper && !previousGamepad2.left_bumper && collection.getIntakeHeight() > 0){
+        if (currentGamepad2.left_bumper && !previousGamepad2.left_bumper && collection.getIntakeHeightRight() > 0){
             collection.setState(Collection.intakePowerState.on);
             collection.setIntakeHeight(Collection.intakeHeightState.collect);
             collection.updateIntakeHeight();
             collection.updateIntakeState();
-        } else if (currentGamepad2.left_bumper && !previousGamepad2.left_bumper && collection.getIntakeHeight() < 0.5) {
+        } else if (currentGamepad2.left_bumper && !previousGamepad2.left_bumper && collection.getIntakeHeightRight() < 0.5) {
             collection.setState(Collection.intakePowerState.off);
             collection.setIntakeHeight(Collection.intakeHeightState.stowed);
             collection.updateIntakeHeight();
@@ -447,9 +445,9 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
 
         //Move to delivery position
-        if (gamepad1.dpad_up && deliverySlides.getCurrentposition() > 150){
+        if ((gamepad1.dpad_up || gamepad2.dpad_up) && deliverySlides.getCurrentposition() > 150){
             delivery.setArmTargetState(Delivery.armState.delivery);
-        } else if (gamepad1.dpad_down && deliverySlides.getCurrentposition() > 100) {
+        } else if ((gamepad1.dpad_down || gamepad2.dpad_down) && deliverySlides.getCurrentposition() > 100) {
             delivery.setArmTargetState(Delivery.armState.collect);
         }
 
@@ -590,18 +588,18 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
             planelauncher.setTrigger(0);
         }
 
-        if (gamepad2.left_stick_y < -0.9 && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery){
-            delivery.setRotateClaw(0.5);
-        }else if (gamepad2.left_stick_x > 0.9 && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery){
-            delivery.setRotateClaw(0.08);
-        } else if (gamepad2.left_stick_x < -0.9 && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery) {
-            delivery.setRotateClaw(0.91);
-        }
+//        if (gamepad2.left_stick_y < -0.9 && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery){
+//            delivery.setRotateClaw(0.5);
+//        }else if (gamepad2.left_stick_x > 0.9 && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery){
+//            delivery.setRotateClaw(0.08);
+//        } else if (gamepad2.left_stick_x < -0.9 && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery) {
+//            delivery.setRotateClaw(0.91);
+//        }
 
-        if (gamepad2.left_stick_button){
-            deliverySlides.SlidesBothPower(-0.4);
-            resettingSlides = true;
-        }
+//        if (gamepad2.left_stick_button){
+//            deliverySlides.SlidesBothPower(-0.4);
+//            resettingSlides = true;
+//        }
 
         if (resettingSlides){
 

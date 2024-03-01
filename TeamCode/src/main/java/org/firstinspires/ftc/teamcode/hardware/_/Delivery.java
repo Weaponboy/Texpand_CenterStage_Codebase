@@ -25,6 +25,7 @@ public class Delivery {
 
     ServoImplEx RotateClaw;
     public Servo RotateArm;
+    Servo ArmExtension;
     ServoImplEx mainPivotLeft;
     ServoImplEx mainPivotRight;
 
@@ -42,7 +43,7 @@ public class Delivery {
 
     double timePerDegree = 7;
 
-    double ArmPositionMid = 0.47;
+    double ArmPositionMid = 0.49;
     double collectTopPivotPos = 0.235;
     double intermediateTopPivot = 0.3;
     double deliveryTopPivot = 0.7;
@@ -77,6 +78,7 @@ public class Delivery {
     }
     boolean firtloop = true;
     double mainPivotOffSet = 0;
+    double mainPivotVertOffSet = 0;
     double targetMainPivot = 0;
     static final double servoPosPerTick = 0.00004100;
     static final double mainToSecondConst = 0.5/0.3;
@@ -88,16 +90,20 @@ public class Delivery {
     boolean DeliveryMovingAuto = false;
     boolean DeliveryMoving = false;
     boolean CollectionMoving = false;
-
+    double ArmExtensionHome = 0;
     double deliveryMainIncrement = 0.015;
     double deliveryArmIncrement = 0.02;
-    double armrotatetomainconstLEFT = 0.2722;
-    double armrotatetosecondrotateconstLEFT = -1.407;
-    double armrotatetosecondpivotconstLEFT = 0.2726;
+    double armrotatetomainconstLEFT = 0.032;
+    double armrotatetosecondrotateconstLEFT = -1.704;
+    double armrotatetosecondpivotconstLEFT = 0.164;
+    double armrotatetoarmextendconstLEFT = 3.244;
 
-    double armrotatetomainconstRIGHT = -0.2862;
-    double armrotatetosecondrotateconstRIGHT = -1.507;
-    double armrotatetosecondpivotconstRIGHT = -0.2726;
+    double armrotatetomainconstRIGHT = -0.032;
+    double armrotatetosecondrotateconstRIGHT = -1.744;
+    double armrotatetosecondpivotconstRIGHT = -0.164;
+    double armrotatetoarmextendconstRIGHT = -3.244;
+    double Mainpivottoextendconst = -10.89;
+    double Mainpivottosecondconst = 1.45;
     HardwareMap hmap;
 
     public enum armState {
@@ -150,6 +156,7 @@ public class Delivery {
                 timeToWaitSideMove = (Math.abs(RotateArm.getPosition() - ArmPositionMid) * 180) * 5;
 
                 mainPivotOffSet = 0;
+                mainPivotVertOffSet = 0;
 
                 secondRotate.setPosition(secondRotateMiddleCollect);
 
@@ -170,7 +177,8 @@ public class Delivery {
                 break;
             case delivery:
 
-                mainPivotOffSet = 0.15;
+                mainPivotOffSet = 0;
+                mainPivotVertOffSet = 0;
 
                 secondRotate.setPosition(secondRotateMiddle);
 
@@ -271,34 +279,41 @@ public class Delivery {
 
                 odometry.update();
 
-                if (gamepad2.dpad_up && mainPivotRight.getPosition() < lowdeliveryTopPivot) {
+                if (gamepad2.dpad_right) {
                     mainPivotOffSet = mainPivotOffSet + deliveryMainIncrement;
-                }
 
-                if (gamepad2.dpad_down && mainPivotRight.getPosition() > deliveryTopPivot-0.04) {
+                } else if (gamepad2.dpad_left) {
                     mainPivotOffSet = mainPivotOffSet - deliveryMainIncrement;
                 }
 
-                if (gamepad2.dpad_right) {
-                    RotateArm.setPosition(RotateArm.getPosition() - deliveryArmIncrement);
+                if (gamepad2.left_stick_y < -0.1){
+                    mainPivotVertOffSet = mainPivotVertOffSet + gamepad2.left_stick_y/100;
+                }else if (gamepad2.left_stick_y > 0.1){
+                    mainPivotVertOffSet = mainPivotVertOffSet + gamepad2.left_stick_y/100;
+                }
 
-                } else if (gamepad2.dpad_left) {
-                    RotateArm.setPosition(RotateArm.getPosition() + deliveryArmIncrement);
+                if (gamepad2.left_stick_x > 0.05) {
+                    RotateArm.setPosition(RotateArm.getPosition() + gamepad2.left_stick_x/70);
+                }else if (gamepad2.left_stick_x < -0.05) {
+                    RotateArm.setPosition(RotateArm.getPosition() + gamepad2.left_stick_x/70);
                 }
 
                 targetMainPivot = deliveryTopPivot - slidesPos * servoPosPerTick + mainPivotOffSet;
 
                 if (RotateArm.getPosition() > ArmPositionMid) {
                     secondRotate.setPosition((RotateArm.getPosition() - ArmPositionMid) * armrotatetosecondrotateconstLEFT + secondRotateMiddle);
-                    setMainPivot((RotateArm.getPosition() - ArmPositionMid) * armrotatetomainconstLEFT + targetMainPivot);
-                    setSecondPivot((RotateArm.getPosition() - ArmPositionMid) * armrotatetosecondpivotconstLEFT + (deliverySecondPivot + (-slidesPos * servoPosPerTick + mainPivotOffSet) * mainToSecondConst));
-
+                    setMainPivot((RotateArm.getPosition() - ArmPositionMid) * armrotatetomainconstLEFT + targetMainPivot + mainPivotVertOffSet);
+                    setSecondPivot((RotateArm.getPosition() - ArmPositionMid) * armrotatetosecondpivotconstLEFT + (deliverySecondPivot + (-slidesPos * servoPosPerTick + mainPivotOffSet) * mainToSecondConst) + (mainPivotVertOffSet * Mainpivottosecondconst));
+                    ArmExtension.setPosition((RotateArm.getPosition() - ArmPositionMid) * armrotatetoarmextendconstLEFT+ (mainPivotVertOffSet*Mainpivottoextendconst) + ArmExtensionHome);
                 } else {
                     secondRotate.setPosition((RotateArm.getPosition() - ArmPositionMid) * armrotatetosecondrotateconstRIGHT + secondRotateMiddle);
-                    setMainPivot((RotateArm.getPosition() - ArmPositionMid) * armrotatetomainconstRIGHT + targetMainPivot);
-                    setSecondPivot((RotateArm.getPosition() - ArmPositionMid) * armrotatetosecondpivotconstRIGHT + (deliverySecondPivot + (-slidesPos * servoPosPerTick + mainPivotOffSet) * mainToSecondConst));
+                    setMainPivot((RotateArm.getPosition() - ArmPositionMid) * armrotatetomainconstRIGHT + targetMainPivot + mainPivotVertOffSet);
+                    setSecondPivot((RotateArm.getPosition() - ArmPositionMid) * armrotatetosecondpivotconstRIGHT + (deliverySecondPivot + (-slidesPos * servoPosPerTick + mainPivotOffSet) * mainToSecondConst) + (mainPivotVertOffSet * Mainpivottosecondconst));
+                    ArmExtension.setPosition((RotateArm.getPosition() - ArmPositionMid) * armrotatetoarmextendconstRIGHT + (mainPivotVertOffSet*Mainpivottoextendconst) + ArmExtensionHome);
 
                 }
+
+
 
 //                odometry.update();
 //
@@ -827,7 +842,8 @@ public class Delivery {
         secondRotate.setPwmRange(new PwmControl.PwmRange(600, 2500));
 
         RotateArm  = hardwareMap.get(Servo.class,"RotateArm");
-
+        ArmExtension = hardwareMap.get(ServoImplEx.class, "ArmExtension");
+        ArmExtension.setPosition(ArmExtensionHome);
         RotateArm.setPosition(ArmPositionMid);
 
         setMainPivot(collectTopPivotPos);

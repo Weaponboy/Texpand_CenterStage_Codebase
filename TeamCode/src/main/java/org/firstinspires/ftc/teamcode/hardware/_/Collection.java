@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoImplEx;
 
@@ -98,39 +97,39 @@ public class Collection {
         switch (heightState){
             case hangStowed:
                 IntakeHeightRight.setPosition(hangStowed);
-                IntakeHeightLeft.setPosition(hangStowed);
+//                IntakeHeightLeft.setPosition(hangStowed);
                 break;
             case stowed:
                 IntakeHeightRight.setPosition(stowed);
-                IntakeHeightLeft.setPosition(stowed);
+//                IntakeHeightLeft.setPosition(stowed);
                 break;
             case collect:
                 IntakeHeightRight.setPosition(collect);
-                IntakeHeightLeft.setPosition(collect);
+//                IntakeHeightLeft.setPosition(collect);
                 break;
             case letClawThrough:
                 IntakeHeightRight.setPosition(letClawThrough);
-                IntakeHeightLeft.setPosition(letClawThrough);
+//                IntakeHeightLeft.setPosition(letClawThrough);
                 break;
             case firstPixel:
                 IntakeHeightRight.setPosition(firstPixel);
-                IntakeHeightLeft.setPosition(firstPixel);
+//                IntakeHeightLeft.setPosition(firstPixel);
                 break;
             case secondPixel:
                 IntakeHeightRight.setPosition(secondPixel);
-                IntakeHeightLeft.setPosition(secondPixel);
+//                IntakeHeightLeft.setPosition(secondPixel);
                 break;
             case thirdPixel:
                 IntakeHeightRight.setPosition(thirdPixel);
-                IntakeHeightLeft.setPosition(thirdPixel);
+//                IntakeHeightLeft.setPosition(thirdPixel);
                 break;
             case forthPixel:
                 IntakeHeightRight.setPosition(forthPixel);
-                IntakeHeightLeft.setPosition(forthPixel);
+//                IntakeHeightLeft.setPosition(forthPixel);
                 break;
             case fifthPixel:
                 IntakeHeightRight.setPosition(fifthPixel);
-                IntakeHeightLeft.setPosition(fifthPixel);
+//                IntakeHeightLeft.setPosition(fifthPixel);
                 break;
             default:
         }
@@ -151,11 +150,10 @@ public class Collection {
 
         IntakeHeightRight = hardwareMap.get(Servo.class, "IntakeServoRight");
 
-        IntakeHeightRight.setDirection(Servo.Direction.REVERSE);
+        IntakeHeightRight.setDirection(Servo.Direction.FORWARD);
+//        IntakeHeightLeft = hardwareMap.get(Servo.class, "IntakeServoLeft");
 
-        IntakeHeightLeft = hardwareMap.get(Servo.class, "IntakeServoLeft");
-
-        IntakeHeightLeft.setDirection(Servo.Direction.FORWARD);
+//        IntakeHeightLeft.setDirection(Servo.Direction.FORWARD);
 
         Intake.setDirection(DcMotorSimple.Direction.FORWARD);
 
@@ -189,8 +187,11 @@ public class Collection {
         return Intake.getPower();
     }
 
+    public double getIntakeHeightRight() {
+        return IntakeHeightRight.getPosition();
+    }
     public double getIntakeHeight() {
-        return (IntakeHeightLeft.getPosition() + IntakeHeightLeft.getPosition())/2;
+        return (IntakeHeightRight.getPosition() + IntakeHeightLeft.getPosition())/2;
     }
 
     public double getIntakeCurrentUse(){
