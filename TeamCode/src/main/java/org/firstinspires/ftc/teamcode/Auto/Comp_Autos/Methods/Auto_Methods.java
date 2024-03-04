@@ -5,12 +5,14 @@ import static java.lang.Thread.sleep;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.hardware._.Collection;
 import org.firstinspires.ftc.teamcode.hardware._.Delivery;
 import org.firstinspires.ftc.teamcode.hardware._.Delivery_Slides;
+import org.firstinspires.ftc.teamcode.hardware._.Odometry;
 import org.firstinspires.ftc.teamcode.hardware._.Sensors;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
@@ -29,12 +31,17 @@ public interface Auto_Methods {
 
     ElapsedTime autoTimer = new ElapsedTime();
 
+    ElapsedTime waitForSideArm = new ElapsedTime();
+
     default void init(HardwareMap hardwareMap){
+
         delivery.init(hardwareMap);
 
         deliverySlides.init(hardwareMap);
 
         collection.init(hardwareMap);
+
+        sensors.init(hardwareMap);
     }
 
     default void dropYellowPixel() throws InterruptedException {
@@ -45,8 +52,10 @@ public interface Auto_Methods {
         boolean reachedTarget = false;
 
         while (!reachedTarget){
+
             reachedTarget = delivery.getArmState() == Delivery.armState.delivery;
             delivery.updateArm(deliverySlides.getCurrentposition());
+
         }
 
         delivery.setRightGripperState(Delivery.rightGripperState.openDeliver);
@@ -56,6 +65,91 @@ public interface Auto_Methods {
 
         delivery.setArmTargetState(Delivery.armState.collect);
         delivery.updateArm(deliverySlides.getCurrentposition());
+
+        deliverySlides.DeliverySlides(0, -1);
+
+    }
+
+    default void dropYellowPixel(double armPos, Odometry odometry, Telemetry telemetry) throws InterruptedException {
+
+        sensors.portal.setProcessorEnabled(sensors.propDetectionByAmount, false);
+
+        delivery.setArmTargetState(Delivery.armState.delivery);
+        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, true);
+
+        boolean reachedTarget = false;
+
+//        while (!reachedTarget){
+//
+//            reachedTarget = delivery.getArmState() == Delivery.armState.delivery;
+//            delivery.updateArm(deliverySlides.getCurrentposition(), odometry, true);
+//
+//            sensors.getDetections();
+//            resetOdo(odometry, telemetry);
+//
+//        }
+
+        double timeToWaitSideMove = (Math.abs(delivery.RotateArm.getPosition() - delivery.ArmPositionMid) * 180) * 8;
+        waitForSideArm.reset();
+
+        boolean waitDone = false;
+
+        while (!waitDone){
+
+            if (delivery.RotateArm.getPosition() < armPos){
+                delivery.RotateArm.setPosition(delivery.RotateArm.getPosition() + 0.006);
+            } else if (delivery.RotateArm.getPosition() > armPos) {
+                delivery.RotateArm.setPosition(delivery.RotateArm.getPosition() - 0.006);
+            }
+
+            delivery.updateArm(deliverySlides.getCurrentposition(), odometry, false);
+
+            if (delivery.RotateArm.getPosition() > (armPos-0.01) && delivery.RotateArm.getPosition() < (armPos+0.01)){
+                waitDone = true;
+            }
+
+            sensors.getDetections();
+            resetOdo(odometry, telemetry);
+
+        }
+
+        delivery.setArmTargetState(Delivery.armState.delivery);
+        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, false);
+
+        reachedTarget = false;
+
+        while (!reachedTarget){
+
+            reachedTarget = delivery.getArmState() == Delivery.armState.delivery;
+            delivery.updateArm(deliverySlides.getCurrentposition(), odometry, false);
+
+            sensors.getDetections();
+            resetOdo(odometry, telemetry);
+
+        }
+
+        delivery.setLeftGripperState(Delivery.leftGripperState.openDeliver);
+        delivery.updateGrippers();
+
+        sleep(400);
+
+        delivery.RotateArm.setPosition(delivery.ArmPositionMid);
+
+        delivery.ArmExtension.setPosition(1);
+
+        delivery.setArmTargetState(Delivery.armState.collect);
+
+        boolean reachedTargetCollection = false;
+
+        while (!reachedTargetCollection){
+
+            reachedTargetCollection = delivery.getArmState() == Delivery.armState.collect;
+            delivery.updateArm(deliverySlides.getCurrentposition(), odometry, false);
+
+            sensors.getDetections();
+            resetOdo(odometry, telemetry);
+
+        }
 
         deliverySlides.DeliverySlides(0, -1);
 
@@ -85,12 +179,11 @@ public interface Auto_Methods {
 
     }
 
+    default void dropYellowPixelWait(double armPos) throws InterruptedException {
 
-    default void dropYellowPixel(Telemetry telemetry) throws InterruptedException{
+        deliverySlides.DeliverySlides(350, 1);
 
-        deliverySlides.DeliverySlides(220, 1);
-
-        while (deliverySlides.getCurrentposition() < 210){}
+        while (deliverySlides.getCurrentposition() < 345){}
 
         delivery.setArmTargetState(Delivery.armState.delivery);
         delivery.updateArm(deliverySlides.getCurrentposition());
@@ -98,56 +191,41 @@ public interface Auto_Methods {
         boolean reachedTarget = false;
 
         while (!reachedTarget){
-            delivery.updateArm(deliverySlides.getCurrentposition());
             reachedTarget = delivery.getArmState() == Delivery.armState.delivery;
-            telemetry.addData("state", delivery.getArmState());
-            telemetry.update();
+            delivery.updateArm(deliverySlides.getCurrentposition());
         }
 
-        sleep(400);
+        delivery.RotateArm.setPosition(armPos);
+
+        sleep((long) ((Math.abs(delivery.RotateArm.getPosition() - armPos) * 180) * 15));
 
         delivery.setRightGripperState(Delivery.rightGripperState.openDeliver);
         delivery.updateGrippers();
 
         sleep(400);
 
+        delivery.RotateArm.setPosition(delivery.ArmPositionMid);
+        delivery.setArmTargetState(Delivery.armState.collect);
+
+        sleep((long) ((Math.abs(delivery.RotateArm.getPosition() - delivery.ArmPositionMid) * 180) * 5));
+
         delivery.setArmTargetState(Delivery.armState.collect);
         delivery.updateArm(deliverySlides.getCurrentposition());
+
+        sleep(400);
 
         deliverySlides.DeliverySlides(0, -1);
 
-    }
-
-    default void dropYellowPixelDrive() throws InterruptedException {
-
-        delivery.setArmTargetState(Delivery.armState.delivery);
-        delivery.updateArm(deliverySlides.getCurrentposition());
-
-        sleep(800);
-
-        delivery.setRightGripperState(Delivery.rightGripperState.openDeliver);
-        delivery.updateGrippers();
-
-        deliverySlides.DeliverySlides(320, 0.6);
-
-        while (deliverySlides.getCurrentposition() < 310){}
-
-        sleep(400);
-
-        delivery.setArmTargetState(Delivery.armState.collect);
-        delivery.updateArm(deliverySlides.getCurrentposition());
-
-        sleep(1000);
-
-        deliverySlides.DeliverySlides(0, -0.6);
+        while (deliverySlides.getCurrentposition() > 30){
+        }
 
     }
 
     default void dropYellowPixelWait() throws InterruptedException {
 
-        deliverySlides.DeliverySlides(250, 1);
+        deliverySlides.DeliverySlides(350, 1);
 
-        while (deliverySlides.getCurrentposition() < 245){}
+        while (deliverySlides.getCurrentposition() < 345){}
 
         delivery.setArmTargetState(Delivery.armState.delivery);
         delivery.updateArm(deliverySlides.getCurrentposition());
@@ -173,17 +251,14 @@ public interface Auto_Methods {
 
         while (deliverySlides.getCurrentposition() > 30){
         }
+
     }
 
+    default void resetOdo(Odometry odometry, Telemetry telemetry){
 
-    default Vector2D getDetections(AprilTagProcessor aprilTag) {
+        if (!(sensors.rightTag == null)){
 
-        List<AprilTagDetection> currentDetections = aprilTag.getDetections();
-
-        // Step through the list of detections and display info for each one.
-        for (AprilTagDetection detection : currentDetections) {
-
-            if (detection.id == 4 || detection.id == 5 || detection.id == 6){
+            if (sensors.rightTag.id == 1 || sensors.rightTag.id == 2 || sensors.rightTag.id == 3){
 
                 double NewY;
                 double NewX;
@@ -192,29 +267,36 @@ public interface Auto_Methods {
 
                 Vector2D newPosition;
 
-                if (sensors.rightTag.id == 4){
+                if (sensors.rightTag.id == 1){
                     aprilTagOffset = getRealCoords(75);
-                }else if (sensors.rightTag.id == 5){
+                }else if (sensors.rightTag.id == 2){
                     aprilTagOffset = getRealCoords(90);
                 }else{
                     aprilTagOffset = getRealCoords(105);
                 }
 
-                double realNewY = -(Math.cos(sensors.rightTag.ftcPose.bearing)) * (sensors.rightTag.ftcPose.x * 0.1);
                 double realNewX = (sensors.rightTag.ftcPose.y * 0.1);
+                double realNewY = (sensors.rightTag.ftcPose.x * 0.1);
 
-                NewY = aprilTagOffset + realNewY;
+                NewY = (realNewY + aprilTagOffset)-12;
                 NewX = 360 - (realNewX + 45);
 
-                newPosition = new Vector2D(NewX, NewY - 12.5);
+                RobotLog.d("NewX" + NewX);
+                RobotLog.d("NewY" + NewY);
 
-                return newPosition;
+                telemetry.addData("X reset pos", NewX);
+                telemetry.addData("Y reset pos", NewY);
+                telemetry.update();
+
+                newPosition = new Vector2D(NewX, NewY);
+
+                odometry.reset(newPosition);
+
+                odometry.update();
 
             }
-
         }
 
-        return null;
     }
 
 }

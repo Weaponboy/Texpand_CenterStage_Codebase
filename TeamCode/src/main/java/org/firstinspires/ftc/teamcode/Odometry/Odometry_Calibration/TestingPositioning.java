@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.hardware._.Odometry;
 @TeleOp
 public class TestingPositioning extends OpMode {
 
-    Odometry odometry = new Odometry(0, 0, 0);
+    Odometry odometry = new Odometry(210, 23, 270);
 
     FtcDashboard dashboard = FtcDashboard.getInstance();
 
@@ -44,19 +44,18 @@ public class TestingPositioning extends OpMode {
 
     @Override
     public void loop() {
+
         odometry.update();
 
+        telemetry.addData("rightPod", odometry.rightPod.getCurrentPosition());
+        telemetry.addData("centerPod", odometry.centerPod.getCurrentPosition());
         telemetry.addData("x", odometry.X);
-
         telemetry.addData("y", odometry.Y);
-
         telemetry.addData("heading", odometry.heading);
-
         YawAngle = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-
         telemetry.addData("heading raw", YawAngle.firstAngle);
-
         telemetry.update();
+
     }
 
 }

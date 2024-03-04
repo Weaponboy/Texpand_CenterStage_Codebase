@@ -60,12 +60,6 @@ public class SegmentGenerator {
             //call method with equations, pass it the start, control and end point. as well as t
             onTheCurve = calculateQuadraticBezier(startPoint, controlPoint, endPoint, t);
 
-            double radius = calculateRadius(startPoint, controlPoint, endPoint, t);
-
-            double curvature = 1 / radius;
-
-            curvaturePoints.add(curvature);
-
             //increment t slightly, i prefer having this very low just to increase accuracy
             t += 0.001;
 

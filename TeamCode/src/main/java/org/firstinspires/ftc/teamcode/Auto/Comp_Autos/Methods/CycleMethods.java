@@ -2,9 +2,11 @@ package org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Methods;
 
 import static java.lang.Thread.sleep;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.hardware._.Collection;
 import org.firstinspires.ftc.teamcode.hardware._.Delivery;
 import org.firstinspires.ftc.teamcode.hardware._.Delivery_Slides;
+import org.firstinspires.ftc.teamcode.hardware._.Odometry;
 
 public interface CycleMethods extends Auto_Methods {
 
@@ -73,12 +75,84 @@ public interface CycleMethods extends Auto_Methods {
 
     }
 
-    default void collectPixels() throws InterruptedException {
+    default void dropWhitePixels(double armPos, Odometry odometry, Telemetry telemetry) throws InterruptedException {
 
-        sleep(800);
+        sensors.portal.setProcessorEnabled(sensors.propDetectionByAmount, false);
 
-        delivery.setGripperState(Delivery.GripperState.closed);
+        delivery.setArmTargetState(Delivery.armState.delivery);
+        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, true);
+
+        boolean reachedTarget = false;
+
+//        while (!reachedTarget){
+//
+//            reachedTarget = delivery.getArmState() == Delivery.armState.delivery;
+//            delivery.updateArm(deliverySlides.getCurrentposition(), odometry, true);
+//
+//            sensors.getDetections();
+//            resetOdo(odometry, telemetry);
+//
+//        }
+
+        double timeToWaitSideMove = (Math.abs(delivery.RotateArm.getPosition() - delivery.ArmPositionMid) * 180) * 5;
+        waitForSideArm.reset();
+
+        boolean waitDone = false;
+
+        while (!waitDone){
+
+            if (delivery.RotateArm.getPosition() < armPos){
+                delivery.RotateArm.setPosition(delivery.RotateArm.getPosition() + 0.006);
+            } else if (delivery.RotateArm.getPosition() > armPos) {
+                delivery.RotateArm.setPosition(delivery.RotateArm.getPosition() - 0.006);
+            }
+
+            delivery.updateArm(deliverySlides.getCurrentposition(), odometry, false);
+
+            if (delivery.RotateArm.getPosition() > (armPos-0.01) && delivery.RotateArm.getPosition() < (armPos+0.01)){
+                waitDone = true;
+            }
+
+        }
+
+        delivery.setArmTargetState(Delivery.armState.delivery);
+        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, false);
+
+        reachedTarget = false;
+
+        while (!reachedTarget){
+
+            reachedTarget = delivery.getArmState() == Delivery.armState.delivery;
+            delivery.updateArm(deliverySlides.getCurrentposition(), odometry, false);
+
+        }
+
+        sleep(1000);
+
+        delivery.setGripperState(Delivery.GripperState.open);
         delivery.updateGrippers();
+
+        sleep(400);
+
+        delivery.RotateArm.setPosition(delivery.ArmPositionMid);
+
+        delivery.ArmExtension.setPosition(1);
+
+        delivery.setArmTargetState(Delivery.armState.collect);
+
+        boolean reachedTargetCollection = false;
+
+        while (!reachedTargetCollection){
+
+            reachedTargetCollection = delivery.getArmState() == Delivery.armState.collect;
+            delivery.updateArm(deliverySlides.getCurrentposition(), odometry, false);
+
+            sensors.getDetections();
+            resetOdo(odometry, telemetry);
+
+        }
+
+        deliverySlides.DeliverySlides(0, -1);
 
     }
 

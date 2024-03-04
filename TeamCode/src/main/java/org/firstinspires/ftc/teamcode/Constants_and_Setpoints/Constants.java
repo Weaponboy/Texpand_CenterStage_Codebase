@@ -25,7 +25,7 @@ public class Constants {
     public static double strafeD = 0.001;
     public static double strafeF = 0;
 
-    public static double rotationP = 0.02;
+    public static double rotationP = 0.03;
     public static double rotationD = 0.001;
     public static double rotationF = 0;
 

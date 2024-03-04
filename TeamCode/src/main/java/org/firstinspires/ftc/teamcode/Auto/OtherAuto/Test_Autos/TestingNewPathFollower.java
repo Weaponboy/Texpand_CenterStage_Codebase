@@ -28,8 +28,6 @@ public class TestingNewPathFollower extends LinearOpMode {
 
         follower.setPath(preloadPurple.followablePath, preloadPurple.pathingVelocity);
 
-        follower.TestNewPathingMethod(odometry);
-
     }
 
 }

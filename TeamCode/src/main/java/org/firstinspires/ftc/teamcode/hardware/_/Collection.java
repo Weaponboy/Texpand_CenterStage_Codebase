@@ -25,10 +25,10 @@ public class Collection {
     double stowed = 0.3;
     double letClawThrough = 0.25;
     double firstPixel = 0;
-    double secondPixel = 0.08;
-    double thirdPixel = 0.22;
-    double forthPixel = 0.27;
-    double fifthPixel = 0.29;
+    double secondPixel = 0.06;
+    double thirdPixel = 0.16;
+    double forthPixel = 0.225;
+    double fifthPixel = 0.26;
 
     intakePowerState statePower = intakePowerState.off;
     intakeHeightState heightState = intakeHeightState.stowed;
@@ -43,7 +43,8 @@ public class Collection {
         on,
         off,
         reversed,
-        reversedHalf
+        reversedHalf,
+        onHalf
     }
 
     public enum intakeHeightState{
@@ -72,6 +73,9 @@ public class Collection {
                 break;
             case reversedHalf:
                 Intake.setPower(-0.6);
+                break;
+            case onHalf:
+                Intake.setPower(0.8);
                 break;
             default:
         }

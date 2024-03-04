@@ -52,6 +52,19 @@ public class Sensors {
 
     }
 
+    public void initAprilTag() {
+
+        // Create the AprilTag processor.
+        aprilTag = new AprilTagProcessor.Builder()
+                .setTagFamily(AprilTagProcessor.TagFamily.TAG_36h11)
+                .setTagLibrary(AprilTagGameDatabase.getCenterStageTagLibrary())
+                .setOutputUnits(DistanceUnit.MM, AngleUnit.DEGREES)
+                .build();
+
+        portal = VisionPortal.easyCreateWithDefaults(frontCam, aprilTag);
+
+    }
+
     public void initAprilTag(Telemetry telemetry, boolean red) {
 
         // Create the AprilTag processor.
@@ -75,6 +88,10 @@ public class Sensors {
 
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
 
+        if (currentDetections.size() == 0){
+            rightTag = null;
+        }
+
         // Step through the list of detections and display info for each one.
         for (AprilTagDetection detection : currentDetections) {
 
@@ -92,15 +109,32 @@ public class Sensors {
 
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
 
+        if (currentDetections.size() == 0){
+            rightTag = null;
+        }
+        double arraysize = currentDetections.size();
+        telemetry.addData("detection size", arraysize );
+        telemetry.update();
+
         // Step through the list of detections and display info for each one.
         for (AprilTagDetection detection : currentDetections) {
 
-            if (detection.id == 4 || detection.id == 5 || detection.id == 6){
-                rightTag = detection;
+//            try {
+//                telemetry.addData("detection size", currentDetections.size());
+//                telemetry.update();
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+//
+//            telemetry.addData("detection size", currentDetections.size());
+//            telemetry.update();
 
+            if (detection.id == 4 || detection.id == 5 || detection.id == 6 || detection.id == 1 || detection.id == 2 || detection.id == 3){
+                rightTag = detection;
+            }else {
+                rightTag = null;
             }
-            telemetry.addData("id", detection.id);
-            telemetry.update();
+
         }
 
     }

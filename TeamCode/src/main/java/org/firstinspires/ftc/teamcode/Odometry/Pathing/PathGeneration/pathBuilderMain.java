@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration;
 
+import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.maxXAcceleration;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.maxYAcceleration;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.velocityDecreasePerPoint;
 import static org.firstinspires.ftc.teamcode.hardware._.Odometry.getMaxVelocity;
@@ -17,8 +18,6 @@ public class pathBuilderMain {
     public ArrayList<Vector2D> originalPath = new ArrayList<>();
 
     public ArrayList<Vector2D> followablePath = new ArrayList<>();
-
-    public ArrayList<Double> curvature = new ArrayList<>();
 
     public ArrayList<PathingVelocity> pathingVelocity = new ArrayList<>();
 
@@ -107,11 +106,11 @@ public class pathBuilderMain {
 
         double deltaTime;
 
-        double decelerationNumber = 0;
+        int decelerationNumber = 0;
 
         double pathLength = calculateTotalDistance(followablePath);
 
-        double acceleration_dt = (getMaxVelocity() * getMaxVelocity()) / (maxYAcceleration * 2);
+        double acceleration_dt = (getMaxVelocity() * getMaxVelocity()) / (maxXAcceleration * 2);
 
         // If we can't accelerate to max velocity in the given distance, we'll accelerate as much as possible
         double halfway_distance = pathLength / 2;
@@ -122,9 +121,13 @@ public class pathBuilderMain {
 
         double new_max_velocity = ((acceleration_dt*0.25)*2.5);
 
-        double deceleration_dt = acceleration_dt;
+        double deceleration_dt = acceleration_dt*4;
 
-        double decIndex = deceleration_dt/2.5;
+        int decIndex = (int) (deceleration_dt/2.5);
+
+        System.out.println(acceleration_dt);
+
+        int range = Math.abs(decIndex);
 
         double velocitySlope = new_max_velocity/getMaxVelocity();
 
@@ -132,9 +135,13 @@ public class pathBuilderMain {
 
             if (i + decIndex >= followablePath.size()){
 
-                velocitySlope -= velocityDecreasePerPoint;
+                decelerationNumber += 1;
 
-                decelerationNumber = decelerationNumber/deceleration_dt;
+                range = Math.abs(decIndex - decelerationNumber);
+
+                double DecSlope = (double) range / (double) Math.abs(decIndex) * 100;
+
+                DecSlope = DecSlope*0.01;
 
                 Vector2D currentPoint = followablePath.get(i);
                 Vector2D nextPoint = followablePath.get(i + 1);
@@ -142,28 +149,36 @@ public class pathBuilderMain {
                 double deltaX = nextPoint.getX() - currentPoint.getX();
                 double deltaY = nextPoint.getY() - currentPoint.getY();
 
-                deltaTime = Math.hypot(deltaY, deltaX) / getMaxVelocity();
+                deltaTime = Math.hypot(deltaY, deltaX) / 65;
 
-                double velocityXValue = (deltaX / deltaTime) * decelerationNumber;
-                double velocityYValue = (deltaY / deltaTime) * decelerationNumber;
+                double velocityXValue = (deltaX / deltaTime) * DecSlope;
+                double velocityYValue = (deltaY / deltaTime) * DecSlope;
 
-                pathVelo = new PathingVelocity(velocityXValue, velocityYValue);
+                System.out.println("X gen" + velocityXValue);
+                System.out.println("Y gen" + velocityYValue);
+
+                pathVelo = new PathingVelocity(velocityXValue,velocityYValue);
 
                 pathingVelocity.add(pathVelo);
 
             }else {
+
                 Vector2D currentPoint = followablePath.get(i);
                 Vector2D nextPoint = followablePath.get(i + 1);
 
-                decelerationNumber = velocitySlope;
+//                decelerationNumber = velocitySlope;
 
                 double deltaX = nextPoint.getX() - currentPoint.getX();
                 double deltaY = nextPoint.getY() - currentPoint.getY();
 
-                deltaTime = Math.hypot(deltaY, deltaX) / getMaxVelocity();
+                deltaTime = Math.hypot(deltaY, deltaX) / 65;
 
-                double velocityXValue = (deltaX / deltaTime) * decelerationNumber;
-                double velocityYValue = (deltaY / deltaTime) * decelerationNumber;
+                double velocityXValue = (deltaX / deltaTime) * velocitySlope;
+                double velocityYValue = (deltaY / deltaTime) * velocitySlope;
+
+                System.out.println("size" + followablePath.size());
+                System.out.println("X" + velocityXValue);
+                System.out.println("Y" + velocityYValue);
 
                 pathVelo = new PathingVelocity(velocityXValue, velocityYValue);
 
@@ -269,19 +284,16 @@ public class pathBuilderMain {
     public void buildCurveSegment(Vector2D start, Vector2D control, Vector2D end){
         segmentGenerator.buildPath(start, control, end);
         originalPath.addAll(segmentGenerator.copyPath());
-        curvature.addAll(segmentGenerator.copyCurvature());
     }
 
     public void buildCurveSegment(Vector2D start, Vector2D control1, Vector2D control2, Vector2D end){
         segmentGenerator.buildPath(start, control1, control2, end);
         originalPath.addAll(segmentGenerator.copyPath());
-        curvature.addAll(segmentGenerator.copyCurvature());
     }
 
     public void buildLineSegment(Vector2D start, Vector2D end){
         segmentGenerator.buildPath(start, end);
         originalPath.addAll(segmentGenerator.copyPath());
-        curvature.addAll(segmentGenerator.copyCurvature());
     }
 
     public void clearAll(){
