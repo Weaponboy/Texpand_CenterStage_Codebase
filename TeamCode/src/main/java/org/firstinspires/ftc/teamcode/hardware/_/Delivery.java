@@ -1146,23 +1146,3 @@ public class Delivery {
 
 
 }
-
-class RobotArm {
-
-    double mainPivot;
-    double armRotate;
-    double secondRotate;
-    double secondPivot;
-    double ClawRotate;
-    int slides;
-
-    public RobotArm(double mainPivot, double armRotate, double secondRotate, double secondPivot, double ClawRotate, int slides) {
-        this.mainPivot = mainPivot;
-        this.armRotate = armRotate;
-        this.secondRotate = secondRotate;
-        this.secondPivot = secondPivot;
-        this.ClawRotate = ClawRotate;
-        this.slides = slides;
-    }
-
-}

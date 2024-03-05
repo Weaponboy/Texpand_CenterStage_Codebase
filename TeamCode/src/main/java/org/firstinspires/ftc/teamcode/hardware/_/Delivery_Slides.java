@@ -146,7 +146,6 @@ public class  Delivery_Slides {
 
     }
 
-
     public void motionProfile(){
 
         slidesProfile.clear();
