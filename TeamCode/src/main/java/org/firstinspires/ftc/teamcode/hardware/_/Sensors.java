@@ -50,6 +50,7 @@ public class Sensors {
 
         backBoard = hardwareMap.get(DistanceSensor.class, "backboard");
 
+
     }
 
     public void initAprilTag() {
@@ -118,16 +119,6 @@ public class Sensors {
 
         // Step through the list of detections and display info for each one.
         for (AprilTagDetection detection : currentDetections) {
-
-//            try {
-//                telemetry.addData("detection size", currentDetections.size());
-//                telemetry.update();
-//            } catch (InterruptedException e) {
-//                throw new RuntimeException(e);
-//            }
-//
-//            telemetry.addData("detection size", currentDetections.size());
-//            telemetry.update();
 
             if (detection.id == 4 || detection.id == 5 || detection.id == 6 || detection.id == 1 || detection.id == 2 || detection.id == 3){
                 rightTag = detection;

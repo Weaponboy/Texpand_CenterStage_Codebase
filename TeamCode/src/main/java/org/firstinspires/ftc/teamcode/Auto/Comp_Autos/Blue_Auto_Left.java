@@ -61,6 +61,11 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
 
     Vector2D lastPoint = new Vector2D(getRealCoords(38), getRealCoords(150));
 
+    /**Action points*/
+    Vector2D turnIntakeOn = new Vector2D(getRealCoords(183), getRealCoords(153));
+    Vector2D turnIntakeOff = new Vector2D(getRealCoords(102), getRealCoords(150));
+    Vector2D reverseIntake = new Vector2D(getRealCoords(72), getRealCoords(150));
+
     blueLeftMethods preloadPaths = new blueLeftMethods();
     blueLeftMethods collect = new blueLeftMethods();
     blueLeftMethods deliver = new blueLeftMethods();
@@ -200,7 +205,7 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
                             drive.LB.setPower(0);
 
                             if (auto == Auto.preload){
-                                dropYellowPixelWait(0.61);
+                                dropYellowPixelWait(0.61, odometry, telemetry);
                                 phase = Phase.finished;
                             }else {
 
@@ -481,16 +486,12 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
             collection.setIntakeHeight(Collection.intakeHeightState.stowed);
             collection.updateIntakeHeight();
 
-            while (!(phase == Blue_Auto_Left.Phase.finished)){
+            while (!(phase == Blue_Auto_Left.Phase.finished) && opModeIsActive()){
 
                 switch (phase){
                     case preload:
 
                         odometry.update();
-
-                        telemetry.addData("x", odometry.X);
-                        telemetry.addData("y", odometry.Y);
-                        telemetry.update();
 
                         if (build == Build.notBuilt){
                             follower.setPath(preloadPaths.followablePath, preloadPaths.pathingVelocity);
@@ -522,7 +523,7 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
                             }
 
 
-                        }else if (Math.abs(296 - odometry.X) < 5 && Math.abs(95 - odometry.Y) < 5 && !pathing){
+                        }else if (Math.abs(DPE1S.getX() - odometry.X) < 5 && Math.abs(DPE1S.getY() - odometry.Y) < 5 && !pathing){
 
                             drive.RF.setPower(0);
                             drive.RB.setPower(0);
@@ -530,8 +531,11 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
                             drive.LB.setPower(0);
 
                             if (auto == Auto.preload){
-                                dropYellowPixelWait(0.5);
+
+                                dropYellowPixelWait(0.5, odometry, telemetry);
+
                                 phase = Phase.finished;
+
                             }else {
 
                                 dropYellowPixel(0.5, odometry, telemetry);
@@ -560,21 +564,29 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
                         telemetry.addData("y", odometry.Y);
 
                         if (build == Build.notBuilt){
+
                             follower.setPath(collect.followablePath, collect.pathingVelocity);
+
                             follower.resetClosestPoint(new Vector2D(odometry.X, odometry.Y));
+
                             pathing = true;
+
                             build = Build.built;
+
                             targetHeading = 180;
+
                             delivering = false;
+
                             delivery.setGripperState(Delivery.GripperState.open);
                             delivery.updateGrippers();
+
                             collection.setIntakeHeight(Collection.intakeHeightState.stowed);
                             collection.updateIntakeHeight();
                         }
 
                         if (!delivering){
 
-                            if (Math.abs(183 - odometry.X) < 30 && Math.abs(153 - odometry.Y) < 30){
+                            if (Math.abs(turnIntakeOn.getX() - odometry.X) < 30 && Math.abs(turnIntakeOn.getY() - odometry.Y) < 30){
                                 collection.setState(Collection.intakePowerState.on);
                                 collection.updateIntakeState();
 
@@ -583,7 +595,7 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
                             }
 
                         }
-//
+
 //                        if (!gotTwo && !sensors.RightClawSensor.isPressed()){
 //                            delivery.setRightGripperState(Delivery.rightGripperState.closed);
 //                            delivery.updateGrippers();
@@ -662,7 +674,6 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
 //                            delivery.updateGrippers();
 //
 //                        }
-
                         if (delivering){
 
                             if (odometry.X > 180 && odometry.getVerticalVelocity() > -5 && !onlyOnce) {
@@ -687,7 +698,7 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
 
                             }
 
-                            if (Math.abs(102 - odometry.X) < 10 && Math.abs(150 - odometry.Y) < 10 && !gotTwo) {
+                            if (Math.abs(turnIntakeOff.getX() - odometry.X) < 10 && Math.abs(turnIntakeOff.getY() - odometry.Y) < 10 && !gotTwo) {
 
                                 delivery.setGripperState(Delivery.GripperState.closed);
                                 delivery.updateGrippers();
@@ -697,7 +708,7 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
 
                             }
 
-                            if (Math.abs(72 - odometry.X) < 10 && Math.abs(150 - odometry.Y) < 10 && !gotTwo){
+                            if (Math.abs(reverseIntake.getX() - odometry.X) < 10 && Math.abs(reverseIntake.getY() - odometry.Y) < 10 && !gotTwo){
 
                                 delivery.setGripperState(Delivery.GripperState.closed);
                                 delivery.updateGrippers();
@@ -707,7 +718,7 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
 
                             }
 
-                            if (Math.abs(300 - odometry.X) < 2 && Math.abs(135 - odometry.Y) < 10) {
+                            if (Math.abs(DS1F.getX() - odometry.X) < 2 && Math.abs(DS1F.getY() - odometry.Y) < 10) {
 
                                 drive.RF.setPower(0);
                                 drive.RB.setPower(0);
@@ -741,7 +752,7 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
 
                             pathing = follower.followPathAuto(targetHeading, odometry, drive);
 
-                        }else if (Math.abs(65 - odometry.X) < 6 && Math.abs(150 - odometry.Y) < 6){
+                        }else if (Math.abs(CE2F.getX() - odometry.X) < 6 && Math.abs(CE2F.getY() - odometry.Y) < 6){
 
                             deliverLast.twoPoints(new Vector2D(odometry.X, odometry.Y), lastPoint, true);
 
@@ -749,7 +760,7 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
 
                             pathing = true;
 
-                        } else if (Math.abs(38 - odometry.X) < 6 && Math.abs(150 - odometry.Y) < 6){
+                        } else if (Math.abs(lastPoint.getX() - odometry.X) < 6 && Math.abs(lastPoint.getY() - odometry.Y) < 6){
 
                             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
@@ -762,15 +773,10 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
 
                                 delivery.ArmExtension.setPosition(1);
 
-                                delivery.setGripperState(Delivery.GripperState.open);
-                                delivery.updateGrippers();
-
-                                sleep(1000);
-
                                 collection.setIntakeHeight(Collection.intakeHeightState.fifthPixel);
                                 collection.updateIntakeHeight();
 
-                                sleep(1000);
+                                sleep(500);
 
                                 collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
                                 collection.updateIntakeHeight();
@@ -780,10 +786,7 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
                                 delivery.setGripperState(Delivery.GripperState.closed);
                                 delivery.updateGrippers();
 
-                                sleep(400);
-
-                                collection.setState(Collection.intakePowerState.reversedHalf);
-                                collection.updateIntakeState();
+                                sleep(500);
 
                             }else {
                                 gotTwo = false;
@@ -856,7 +859,7 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
 
                             if (auto == Auto.preload){
 
-                                dropYellowPixelWait(0.35);
+                                dropYellowPixelWait(0.35, odometry, telemetry);
                                 phase = Phase.finished;
 
                             }else {
@@ -1160,6 +1163,7 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
                         break;
                     default:
                 }
+
             }
 
         }
@@ -1167,6 +1171,7 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
     }
 
     public void initialize(){
+
         //init hardware
         odometry.init(hardwareMap);
 
@@ -1178,6 +1183,7 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
 
         delivery.setGripperState(Delivery.GripperState.closed);
         delivery.updateGrippers();
+
     }
 
 }

@@ -57,6 +57,9 @@ public class Odometry {
     public int currentLeftPod = 0;
     public int currentCenterPod = 0;
 
+    public static double degreesToCmRightPod =  0.3301112222;
+    public static double degreesToCmLeftPod =  0.3267612874;
+
     public int oldRightPod = 0;
     public int oldLeftPod = 0;
     public int oldCenterPod = 0;
@@ -126,6 +129,8 @@ public class Odometry {
 
     public void update(){
 
+        double lastHeading = heading;
+
         YawAngle = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         botHeading = -YawAngle.firstAngle;
 
@@ -139,6 +144,8 @@ public class Odometry {
 
         heading = ConvertedHeadingForPosition;
 
+        dtheta = lastHeading - heading;
+
         oldCenterPod = currentCenterPod;
         oldLeftPod = currentLeftPod;
         oldRightPod = currentRightPod;
@@ -149,16 +156,12 @@ public class Odometry {
 
         int dn1 = currentLeftPod - oldLeftPod;
         int dn2 = currentRightPod - oldRightPod;
-        int dn3 = currentCenterPod - oldCenterPod;
 
-        dtheta = cm_per_tick * ((dn2-dn1) / trackwidth);
-        dx = cm_per_tick * (dn1+dn2)/2.0;
-        dy = cm_per_tick * (dn3 - (dn2-dn1) * centerPodOffset / trackwidth);
+        dx = (cm_per_tick * dn2) - (dtheta * degreesToCmRightPod);
+        dy = (cm_per_tick * dn1) - (dtheta * degreesToCmLeftPod);
 
-        double theta = heading + (dtheta / 2.0);
-        X += dx * Math.cos(Math.toRadians(ConvertedHeadingForPosition)) - dy * Math.sin(Math.toRadians(ConvertedHeadingForPosition));
-        Y += dx * Math.sin(Math.toRadians(ConvertedHeadingForPosition)) + dy * Math.cos(Math.toRadians(ConvertedHeadingForPosition));
-        heading += dtheta;
+        X += dx * Math.cos(Math.toRadians(heading)) - dy * Math.sin(Math.toRadians(heading));
+        Y += dx * Math.sin(Math.toRadians(heading)) + dy * Math.cos(Math.toRadians(heading));
 
 //        oldCenterPod = currentCenterPod;
 //        oldLeftPod = currentLeftPod;

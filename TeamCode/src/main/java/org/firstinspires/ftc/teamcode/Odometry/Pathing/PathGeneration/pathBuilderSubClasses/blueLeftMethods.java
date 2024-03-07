@@ -13,7 +13,6 @@ public class blueLeftMethods extends pathBuilderMain {
         pathBuilder(originalPath);
 
         motionProfile();
-
     }
 
     public void twoPoints(Vector2D start, Vector2D end){
@@ -43,4 +42,5 @@ public class blueLeftMethods extends pathBuilderMain {
     public void fourPoints(Vector2D start, Vector2D control1, Vector2D control2, Vector2D end){
         buildCurveSegment(start, control1, control2, end);
     }
+    
 }
