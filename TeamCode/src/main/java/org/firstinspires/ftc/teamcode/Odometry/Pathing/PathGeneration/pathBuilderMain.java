@@ -154,7 +154,7 @@ public class pathBuilderMain {
                 double deltaX = nextPoint.getX() - currentPoint.getX();
                 double deltaY = nextPoint.getY() - currentPoint.getY();
 
-                double percentSum = (deltaX/0.25)+(deltaY/0.25);
+                double percentSum = (Math.abs(deltaX)/0.25)+(Math.abs(deltaY)/0.25);
 
                 double Xfactor = (deltaX/0.25) * (1/percentSum);
                 double Yfactor = (deltaY/0.25) * (1/percentSum);
@@ -176,7 +176,7 @@ public class pathBuilderMain {
                 double deltaX = nextPoint.getX() - currentPoint.getX();
                 double deltaY = nextPoint.getY() - currentPoint.getY();
 
-                double percentSum = (deltaX/0.25)+(deltaY/0.25);
+                double percentSum = (Math.abs(deltaX)/0.25)+(Math.abs(deltaY)/0.25);
 
                 double Xfactor = (deltaX/0.25) * (1/percentSum);
                 double Yfactor = (deltaY/0.25) * (1/percentSum);
