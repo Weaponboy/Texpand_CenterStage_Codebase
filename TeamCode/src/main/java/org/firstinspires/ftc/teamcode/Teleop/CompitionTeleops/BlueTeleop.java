@@ -39,8 +39,6 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
     Odometry odometry = new Odometry(90, 23, 180);
 
-    Odometry odometryArc = new Odometry(90, 23, 180);
-
     Delivery delivery = new Delivery();
 
     Delivery_Slides deliverySlides = new Delivery_Slides();
@@ -377,10 +375,15 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
         //this is to toggle fully up and fully down on the intake
         if (currentGamepad2.start && !previousGamepad2.start && collection.getIntakeHeightRight() > 0){
+
             collection.setState(Collection.intakePowerState.on);
+
             collection.setIntakeHeight(Collection.intakeHeightState.collect);
+
             collection.updateIntakeHeight();
+
             collection.updateIntakeState();
+
         } else if (currentGamepad2.start && !previousGamepad2.start && collection.getIntakeHeightRight() < 0.5) {
             collection.setState(Collection.intakePowerState.off);
             collection.setIntakeHeight(Collection.intakeHeightState.stowed);
@@ -556,9 +559,11 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         }
 
         if (gamepad2.right_trigger > 0){
+
             delivery.setArmTargetState(Delivery.armState.collect);
 
             RightTrigger = true;
+
         }
 
         if (RightTrigger && delivery.getArmState() == Delivery.armState.collect){
@@ -675,7 +680,6 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
         drive.init(hardwareMap);
         odometry.init(hardwareMap);
-        odometryArc.init(hardwareMap);
         sensors.init(hardwareMap);
 
         sensors.initAprilTag(telemetry, false);

@@ -1,11 +1,9 @@
 package org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses;
 
-import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.UsefulMethods.getRealCoords;
-
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderMain;
 
-public class blueLeftMethods extends pathBuilderMain {
+public class GenMethods extends pathBuilderMain {
 
     public void twoPoints(Vector2D start, Vector2D end, boolean lastSegment){
         buildLineSegment(start, end);

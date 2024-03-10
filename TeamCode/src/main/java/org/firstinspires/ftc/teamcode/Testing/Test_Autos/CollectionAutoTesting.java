@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Methods.CycleMethods;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower.mecanumFollower;
-import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.blueLeftMethods;
+import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.GenMethods;
 import org.firstinspires.ftc.teamcode.hardware._.Collection;
 import org.firstinspires.ftc.teamcode.hardware._.Delivery;
 import org.firstinspires.ftc.teamcode.hardware._.Drivetrain;
@@ -57,10 +57,10 @@ public class CollectionAutoTesting extends LinearOpMode implements CycleMethods 
     Vector2D lastPoint = new Vector2D(getRealCoords(41), getRealCoords(150));
 
 
-    blueLeftMethods preloadPaths = new blueLeftMethods();
-    blueLeftMethods collect = new blueLeftMethods();
-    blueLeftMethods deliver = new blueLeftMethods();
-    blueLeftMethods deliverLast = new blueLeftMethods();
+    GenMethods preloadPaths = new GenMethods();
+    GenMethods collect = new GenMethods();
+    GenMethods deliver = new GenMethods();
+    GenMethods deliverLast = new GenMethods();
 
     /**hardware objects*/
     Odometry odometry = new Odometry(120, 150, 180);

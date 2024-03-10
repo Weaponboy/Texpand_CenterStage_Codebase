@@ -50,11 +50,9 @@ public class Sensors {
 
         backBoard = hardwareMap.get(DistanceSensor.class, "backboard");
 
-
     }
 
     public void initAprilTag() {
-
         // Create the AprilTag processor.
         aprilTag = new AprilTagProcessor.Builder()
                 .setTagFamily(AprilTagProcessor.TagFamily.TAG_36h11)

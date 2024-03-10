@@ -75,6 +75,7 @@ public class Delivery {
     public void setMainPivotOffSet(double mainPivotOffSet) {
         this.mainPivotOffSet = mainPivotOffSet;
     }
+
     boolean firtloop = true;
     double mainPivotOffSet = 0;
     double mainPivotVertOffSet = 0;
@@ -135,6 +136,7 @@ public class Delivery {
     }
 
     armState armstateTarget = armState.moving;
+
     armState armstateCurrent = armState.collect;
 
     public rightGripperState getRightgripperstate() {
@@ -164,7 +166,6 @@ public class Delivery {
                     timeToWaitSideMove = (Math.abs(RotateArm.getPosition() - ArmPositionMid) * 180) * 10;
                 }
 
-
                 mainPivotOffSet = 0;
 
                 mainPivotVertOffSet = 0;
@@ -186,6 +187,7 @@ public class Delivery {
                 RotateClaw.setPosition(rotateCollect);
 
                 break;
+
             case delivery:
 
                 mainPivotVertOffSet = 0;

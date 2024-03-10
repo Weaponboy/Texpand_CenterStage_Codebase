@@ -194,6 +194,7 @@ public class Collection {
     public double getIntakeHeightRight() {
         return IntakeHeightRight.getPosition();
     }
+
     public double getIntakeHeight() {
         return (IntakeHeightRight.getPosition() + IntakeHeightLeft.getPosition())/2;
     }
