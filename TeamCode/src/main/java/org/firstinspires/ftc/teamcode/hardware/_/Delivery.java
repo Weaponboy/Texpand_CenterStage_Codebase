@@ -42,8 +42,8 @@ public class Delivery {
 
     double timePerDegree = 5;
 
-    public double ArmPositionMid = 0.47   ;
-    double collectTopPivotPos = 0.088;
+    public double ArmPositionMid = 0.5;
+    double collectTopPivotPos = 0.188;
     double intermediateTopPivot = 0.3;
     double deliveryTopPivot = 0.7;
     double deliveryTopPivotNew = 1;
@@ -1058,6 +1058,9 @@ public class Delivery {
         secondRotate.setPwmRange(new PwmControl.PwmRange(600, 2500));
 
         RotateArm  = hardwareMap.get(Servo.class,"RotateArm");
+
+        secondRotate.setPwmRange(new PwmControl.PwmRange(900, 2200));
+
         ArmExtension = hardwareMap.get(ServoImplEx.class, "ArmExtension");
 
         ArmExtension.setPosition(0.9);

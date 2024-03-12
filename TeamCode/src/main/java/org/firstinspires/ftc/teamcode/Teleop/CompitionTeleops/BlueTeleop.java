@@ -543,8 +543,10 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
                delivery.setGripperState(Delivery.GripperState.closed);
                collection.setState(Collection.intakePowerState.off);
+
                collection.setIntakeHeight(Collection.intakeHeightState.stowed);
                collection.updateIntakeHeight();
+
                collection.updateIntakeState();
 
            }else {
@@ -625,6 +627,11 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
         }
 
+//        if (sensors.armSensor.isPressed() && delivery.getArmState() == Delivery.armState.delivery){
+//            delivery.setGripperState(Delivery.GripperState.openDeliver);
+//            delivery.setArmTargetState(Delivery.armState.collect);
+//        }
+
 //        if (gamepad1.y){
 //            collection.setSweeperState(Collection.sweeperState.push);
 //            collection.updateSweeper();
@@ -656,7 +663,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         telemetry.addData("heading", odometry.heading);
         telemetry.addData("intake current draw", collection.getIntakeCurrentUse());
         telemetry.addData("loop time", loopTime);
-        telemetry.addData("Arm Rotate", delivery.getMainPivotPosition());
+        telemetry.addData("armSensor", sensors.armSensor.isPressed());
         telemetry.update();
 
     }

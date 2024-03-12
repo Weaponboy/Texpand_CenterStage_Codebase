@@ -5,11 +5,11 @@
             <goBILDA5202SeriesMotor name="RB" port="1"/>
             <goBILDA5202SeriesMotor name="Right_Slide" port="2"/>
             <goBILDA5202SeriesMotor name="Left_Slide" port="3"/>
-            <Servo name="ArmExtension" port="0"/>
-            <Servo name="RotateArm" port="1"/>
+            <Servo name="leftmain" port="0"/>
+            <Servo name="rightmain" port="1"/>
             <Servo name="IntakeServoRight" port="2"/>
-            <Servo name="RightPivot" port="3"/>
-            <Servo name="LeftPivot" port="4"/>
+            <Servo name="secondRotate" port="3"/>
+            <Servo name="ArmExtension" port="4"/>
             <Servo name="trigger" port="5"/>
         </LynxModule>
     </LynxUsbDevice>
@@ -19,14 +19,14 @@
             <goBILDA5202SeriesMotor name="LB" port="1"/>
             <RevRoboticsUltraplanetaryHDHexMotor name="Intake" port="2"/>
             <goBILDA5202SeriesMotor name="RF" port="3"/>
-            <Servo name="secondRotate" port="0"/>
+            <Servo name="RightPivot" port="0"/>
             <Servo name="ClawRotate" port="1"/>
-            <Servo name="rightmain" port="2"/>
-            <Servo name="leftmain" port="3"/>
+            <Servo name="LeftPivot" port="2"/>
+            <Servo name="RotateArm" port="3"/>
             <Servo name="LeftClaw" port="4"/>
             <Servo name="RightClaw" port="5"/>
             <RevTouchSensor name="rightclaw" port="3"/>
-            <RevTouchSensor name="armangle" port="2"/>
+            <RevTouchSensor name="armangle" port="0"/>
             <RevTouchSensor name="leftclaw" port="1"/>
             <REV_VL53L0X_RANGE_SENSOR name="backboard" port="0" bus="1"/>
             <LynxEmbeddedIMU name="imu" port="0" bus="0"/>
