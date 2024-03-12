@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Teleop.SprintTeleops;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -16,14 +17,11 @@ public class advanced extends OpMode {
 
     DcMotor LeftDrive;
 
-    DcMotor Climb;
-    DcMotor Pivot;
+    DcMotor Slide;
+    DcMotor SlidePivot;
 
-    ServoImplEx Gripper;
-
-    Servo planelauncher;
-
-    Servo PivotServo;
+    ServoImplEx LeftGripper;
+    ServoImplEx RightGripper;
 
     Double Slow = 1.0;
 
@@ -36,144 +34,98 @@ public class advanced extends OpMode {
 
     public Gamepad previousGamepad1;
 
-    private int maxClimbheight = -6600;
+    int MaxSlide = -2050;
+    int MaxPivotSlide = -25;
 
-    float[] hsvval = new float[3];
-
-    private static final double MIN_HUE = 0; // Minimum hue value for the target color
-    private static final double MAX_HUE = 360; // Maximum hue value for the target color
-    private static final double MIN_SATURATION = 0; // Minimum saturation value for the target color
-    private static final double MAX_SATURATION = 100; // Maximum saturation value for the target color
-    private static final double MIN_VALUE = 0; // Minimum value (brightness) for the target color
-    private static final double MAX_VALUE = 100; // Maximum value (brightness) for the target color
-    boolean isTargetColorDetected = false;
 
     @Override
     public void init() {
 
-//        RightDrive = hardwareMap.get(DcMotor.class,"RightDrive");
-//        LeftDrive = hardwareMap.get(DcMotor.class,"LeftDrive");
-//        Pivot = hardwareMap.get(DcMotor.class,"Pivot");
-//        Gripper = hardwareMap.get(Servo.class,"Gripper");
-//        planelauncher = hardwareMap.get(Servo.class,"planelauncher");
-//        PivotServo = hardwareMap.get(Servo.class,"PivotServo");
-        Gripper = hardwareMap.get(ServoImplEx.class,"RotateArm");
-        Gripper.setPwmRange(new PwmControl.PwmRange(600, 2500));
-//        RightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+        RightDrive = hardwareMap.get(DcMotor.class,"RightDrive");
+        LeftDrive = hardwareMap.get(DcMotor.class,"LeftDrive");
+        SlidePivot = hardwareMap.get(DcMotor.class,"SlidePivot");
+        Slide = hardwareMap.get(DcMotor.class,"Slide");
+        RightGripper = hardwareMap.get(ServoImplEx.class,"RightGripper");
+        LeftGripper = hardwareMap.get(ServoImplEx.class,"LeftGripper");
 
-//        RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//        LeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-//        Pivot.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        Pivot.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//        Climb = hardwareMap.get(DcMotor.class,"Climb");
-//
-//        Climb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//
-//        Climb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RightGripper.setPwmRange(new PwmControl.PwmRange(600, 2500));
+        LeftGripper.setPwmRange(new PwmControl.PwmRange(600, 2500));
+
+        RightGripper.setDirection(Servo.Direction.FORWARD);
+        LeftGripper.setDirection(Servo.Direction.REVERSE);
+
+        RightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        LeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        SlidePivot.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        SlidePivot.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
+        Slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        Slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         currentGamepad1 = new Gamepad();
         previousGamepad1 = new Gamepad();
-//        PivotServo.setPosition(0.3);
-//        planelauncher.setPosition(0);
-        Gripper.setPosition(0);
+        RightGripper.setPosition(0);
+        LeftGripper.setPosition(0);
     }
 
     @Override
     public void loop() {
-        Gripper.setPosition(0);
-//        previousGamepad1.copy(currentGamepad1);
-//
-//        currentGamepad1.copy(gamepad1);
-//
-//        double vertical = -gamepad1.left_stick_y;
-//        double pivot = -gamepad1.right_stick_x*1.2*0.3;
-////        if (pivot == 0){
-////            pivot = -gamepad1.left_stick_x*1.2*0.3;
-////        }
-//
-//
-//        double denominator = Math.max(Math.abs(vertical) + Math.abs(pivot), 1);
-//
-////        if (currentGamepad1.a && !previousGamepad1.a && Gripper.getPosition() < 1) {
-////            Gripper.setPosition(0.5);
-////        } else if (currentGamepad1.a && !previousGamepad1.a && Gripper.getPosition() > 0.9) {
-////            Gripper.setPosition(1);
-////        }
-////
-////        if (gamepad1.start){
-////            Gripper.setPosition(0.4);
-////        }
-////
-////        if (gamepad1.back){
-////            Gripper.setPosition(1);
-////        }
-//
-//
-//        if (gamepad1.a && Slow == 1.0 && runtime.milliseconds() > buttondelaytime) {
-//            Slow = 0.3;
-//            runtime.reset();
-//
-//        }
-//
-//        else if (gamepad1.a && Slow == 0.3 && runtime.milliseconds() > buttondelaytime){
-//            Slow = 1.0;
-//            runtime.reset();
-//        }
+
+        previousGamepad1.copy(currentGamepad1);
+
+        currentGamepad1.copy(gamepad1);
+
+        double vertical = gamepad1.left_stick_y;
+        double pivot = -gamepad1.left_stick_x*1.2*0.2;
 
 
-//        RightDrive.setPower(0.6*((vertical - pivot)/denominator));
-//        LeftDrive.setPower(0.6*((vertical + pivot)/denominator));
+        double denominator = Math.max(Math.abs(vertical) + Math.abs(pivot), 1);
 
-//        telemetry.addData("PivotPosition", Pivot.getCurrentPosition());
-//        telemetry.update();
-//
-//        if (gamepad1.x) {
-//            Pivot.setTargetPosition(0);
-//            Pivot.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//            Pivot.setPower(0.7);
-//        }
-//
-//        if (gamepad1.b && Pivot.getCurrentPosition() < 1300) {
-//            Pivot.setTargetPosition(1300);
-//            Pivot.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//            Pivot.setPower(0.7);
-//        } else if (gamepad1.b && Pivot.getCurrentPosition() > 1300) {
-//            Pivot.setTargetPosition(1300);
-//            Pivot.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//            Pivot.setPower(-0.7);
-//        }
-//
-//        if (gamepad1.right_trigger > 0 && Pivot.getCurrentPosition() > 1300){
-//            if(Pivot.getCurrentPosition() < 1480){
-//                Pivot.setTargetPosition(Pivot.getCurrentPosition()+5);
-//            }
-//            Pivot.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//            Pivot.setPower(0.4);
-//        }
-//
-//        if (gamepad1.y) {
-//            Pivot.setTargetPosition(900);
-//            Pivot.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//            if (Pivot.getCurrentPosition()>871) {
-//                Pivot.setPower(-0.7);
-//            }
-//            if (Pivot.getCurrentPosition()<871) {
-//                Pivot.setPower(0.7);
-//            }
-//        }
-//
-//        if(gamepad1.dpad_down && Pivot.getCurrentPosition() < 1500){
-//            Pivot.setTargetPosition(Pivot.getCurrentPosition()+10);
-//            Pivot.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//            Pivot.setPower(0.4);
-//        }
-//
-//        if (gamepad1.dpad_up && Pivot.getCurrentPosition() > 900){
-//            Pivot.setTargetPosition(Pivot.getCurrentPosition()-10);
-//            Pivot.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//            Pivot.setPower(0.4);
-//        }
+        if (gamepad1.start){
+            LeftGripper.setPosition(0);
+            RightGripper.setPosition(0);
+        }
+
+        if (gamepad1.back){
+            LeftGripper.setPosition(0.3);
+            RightGripper.setPosition(0.3);
+        }
+
+
+        RightDrive.setPower(((vertical - pivot)/denominator));
+        LeftDrive.setPower(((vertical + pivot)/denominator));
+
+        telemetry.addData("Slide Position", Slide.getCurrentPosition());
+        telemetry.addData("Slide Pivot Position", SlidePivot.getCurrentPosition());
+        telemetry.addData("PivotPosition", SlidePivot.getCurrentPosition());
+        telemetry.update();
+
+        if (gamepad1.x && SlidePivot.getCurrentPosition() < -1) {
+            Slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            SlidePivot.setPower(0.08);
+        }else if (gamepad1.right_trigger > 0 && SlidePivot.getCurrentPosition() > -70) {
+            Slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            SlidePivot.setPower(-gamepad1.right_trigger);
+        }else{
+            SlidePivot.setPower(0);
+        }
+
+
+        if(gamepad1.dpad_down && Slide.getCurrentPosition() < -10){
+            Slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            Slide.setPower(0.5);
+        } else if (gamepad1.dpad_up && Slide.getCurrentPosition() > MaxSlide){
+            Slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            Slide.setPower(-0.5);
+        }else{
+            Slide.setPower(0);
+        }
 //
 //        if( Pivot.getCurrentPosition() < 800) {
 //            PivotServoposition = 0.3;
