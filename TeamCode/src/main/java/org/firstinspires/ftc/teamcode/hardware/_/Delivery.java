@@ -24,9 +24,17 @@ public class Delivery {
 
     ServoImplEx RotateClaw;
     public Servo RotateArm;
-    public Servo ArmExtension;
+    public ServoImplEx ArmExtension;
     ServoImplEx mainPivotLeft;
     ServoImplEx mainPivotRight;
+
+    public double getSecondRotatePosition() {
+        return secondRotate.getPosition();
+    }
+
+    public void setSecondRotate(double setpoint) {
+        secondRotate.setPosition(setpoint);
+    }
 
     ServoImplEx secondRotate;
 
@@ -49,11 +57,11 @@ public class Delivery {
     double deliveryTopPivotNew = 1;
     double safeTopPivot = 0.3;
 
-    double deliveryTopPivotAuto = 0.73;
+    double deliveryTopPivotAuto = 0.7;
     double deliverySecondPivotAuto = 0;
     double distancecalc;
     double avoidIntakeSecondPivot = 0.8;
-    double collectSecondPivot = 0.85;
+    double collectSecondPivot = 0.835;
     double deliverySecondPivot = -0.1;
     double lowdeliveryTopPivot = 1;
 
@@ -90,7 +98,7 @@ public class Delivery {
     boolean DeliveryMovingAuto = false;
     boolean DeliveryMoving = false;
     boolean CollectionMoving = false;
-    double ArmExtensionHome = 1;
+    double ArmExtensionHome = 0.96;
     double deliveryMainIncrement = 0.015;
     double deliveryArmIncrement = 0.02;
 
@@ -285,7 +293,6 @@ public class Delivery {
                     setMainPivot((RotateArm.getPosition() - ArmPositionMid) * armRotateToMainConstRIGHT + targetMainPivot + mainPivotVertOffSet);
                     setSecondPivot((RotateArm.getPosition() - ArmPositionMid) * armRotateToSecondPivotConstRIGHT + (deliverySecondPivot + (-slidesPos * servoPosPerTick + mainPivotOffSet) * mainToSecondConst) + (mainPivotVertOffSet * Mainpivottosecondconst));
                     ArmExtension.setPosition((RotateArm.getPosition() - ArmPositionMid) * armRotateToArmExtendConstRIGHT + (mainPivotVertOffSet*Mainpivottoextendconst) + ArmExtensionHome);
-
                 }
 
 //                odometry.update();
@@ -551,6 +558,8 @@ public class Delivery {
 
                 if (backboardClearance){
                     mainPivotOffSet = (distanceToPivot-0.1) + (( distance - mindistancemm) * mainservopospermm);
+                }else if (odometry.heading < 160){
+                    mainPivotOffSet = (distanceToPivot+0.25) + (( distance - mindistancemm) * mainservopospermm);
                 }else {
                     mainPivotOffSet = distanceToPivot + (( distance - mindistancemm) * mainservopospermm);
                 }
@@ -1063,7 +1072,11 @@ public class Delivery {
 
         ArmExtension = hardwareMap.get(ServoImplEx.class, "ArmExtension");
 
-        ArmExtension.setPosition(0.9);
+        ArmExtension.setDirection(Servo.Direction.REVERSE);
+
+        ArmExtension.setPwmRange(new PwmControl.PwmRange(600, 2400));
+
+        ArmExtension.setPosition(1);
 
         RotateArm.setPosition(ArmPositionMid);
 

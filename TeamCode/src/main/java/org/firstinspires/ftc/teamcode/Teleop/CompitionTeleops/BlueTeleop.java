@@ -101,7 +101,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
     double lastX;
     double lastY;
     int xCounter;
-    int pivotIntakePos;
+    int pivotIntakePos = -1;
 
     @Override
     public void loop() {
@@ -183,11 +183,11 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
             lastX = odometry.X;
         }
 
-        if (odometry.X < 240 && lastX > 240 && headingLock){
-            headingLock = false;
-        } else if (odometry.Y > 150 && lastY < 150 && headingLock) {
-            headingLock = false;
-        }
+//        if (odometry.X < 240 && lastX > 240 && headingLock){
+//            headingLock = false;
+//        } else if (odometry.Y > 150 && lastY < 150 && headingLock) {
+//            headingLock = false;
+//        }
 
         inBackboardArea = odometry.X > 210 && odometry.Y < 150 && odometry.X < 340;
 
@@ -344,7 +344,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         }else {
 
             vertical = -gamepad1.right_stick_y;
-            horizontal = gamepad1.right_stick_x;
+            horizontal = -gamepad1.right_stick_x;
 
             if (headingLock){
                 pivot = follower.getTurnPowerTeleop(180, odometry.heading);
@@ -355,11 +355,15 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
             double slowPivot = 0.5;
 
             if (Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery || Math.abs(vertical) > 0.5 || Math.abs(horizontal) > 0.5){
-                if (pivot > slowPivot){
-                    pivot = slowPivot;
-                } else if (pivot < -slowPivot) {
-                    pivot = -slowPivot;
-                }
+                slowPivot = 0.4;
+            }else {
+                slowPivot = 0.6;
+            }
+
+            if (pivot > slowPivot){
+                pivot = slowPivot;
+            } else if (pivot < -slowPivot) {
+                pivot = -slowPivot;
             }
 
             double denominator = Math.max(Math.abs(horizontal) + Math.abs(vertical) + Math.abs(pivot), 1);
@@ -564,6 +568,10 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
             delivery.setArmTargetState(Delivery.armState.collect);
 
+            deliverySlides.DeliverySlides(deliverySlides.getCurrentposition() + 100, 0.5);
+
+            deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
+
             RightTrigger = true;
 
         }
@@ -571,7 +579,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         if (RightTrigger && delivery.getArmState() == Delivery.armState.collect){
             RightTrigger = false;
 
-            deliverySlides.DeliverySlides(0, -0.5);
+            deliverySlides.DeliverySlides(0, -0.8);
 
             deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
         }
@@ -663,7 +671,9 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         telemetry.addData("heading", odometry.heading);
         telemetry.addData("intake current draw", collection.getIntakeCurrentUse());
         telemetry.addData("loop time", loopTime);
-        telemetry.addData("armSensor", sensors.armSensor.isPressed());
+        telemetry.addData("backboard sensor", sensors.armSensor.isPressed());
+        telemetry.addData("intake height", collection.getHeightState());
+        telemetry.addData("intake height servo", collection.getIntakeHeightRight());
         telemetry.update();
 
     }
@@ -754,4 +764,5 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
     public boolean atRest(Gamepad gamepad){
         return gamepad.right_stick_x == 0 && gamepad.right_stick_y == 0 && gamepad.left_stick_x == 0 && gamepad.left_stick_y == 0;
     }
+
 }

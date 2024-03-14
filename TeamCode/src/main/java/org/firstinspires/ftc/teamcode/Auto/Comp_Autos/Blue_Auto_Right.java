@@ -131,7 +131,6 @@ public class Blue_Auto_Right extends LinearOpMode implements CycleMethods {
     GenMethods yellow = new GenMethods();
     GenMethods collect = new GenMethods();
     GenMethods deliver = new GenMethods();
-    GenMethods deliverLast = new GenMethods();
 
     /**error from target*/
 

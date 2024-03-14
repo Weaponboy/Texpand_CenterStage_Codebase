@@ -5,7 +5,6 @@ import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.d
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.driveF;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.driveP;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.maxXVelocity;
-import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.maxYVelocity;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.rotationD;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.rotationF;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.rotationP;
@@ -22,6 +21,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -48,8 +48,8 @@ public class Odometry {
     public static double rightPodOffset = 18.949177856445;
     public double centerPodOffset = 18.7227783203125;
     public static double ticks_per_degree = 476;
-    public double wheelRadius = 1.75;
-    public double podTicks = 8192;
+    public double wheelRadius = 2.4;
+    public double podTicks = 2000;
 
     public double cm_per_tick = 2.0 * Math.PI * wheelRadius / podTicks;
 
@@ -57,8 +57,8 @@ public class Odometry {
     public int currentLeftPod = 0;
     public int currentCenterPod = 0;
 
-    public static double degreesToCmRightPod =  0.3301112222;
-    public static double degreesToCmLeftPod =  0.3267612874;
+    public static double degreesToCmRightPod =  0.3478;
+    public static double degreesToCmCenterPod =  0.2683138;
 
     public int oldRightPod = 0;
     public int oldLeftPod = 0;
@@ -144,21 +144,30 @@ public class Odometry {
 
         heading = ConvertedHeadingForPosition;
 
-        dtheta = lastHeading - heading;
+        if (lastHeading < 2 && heading > 358){
+            dtheta = (heading - 360)-lastHeading;
+        }else if (heading < 2 && lastHeading > 358){
+            dtheta = (360 - lastHeading) + heading;
+        } else {
+            dtheta = (heading - lastHeading);
+        }
 
-        oldCenterPod = currentCenterPod;
-        oldLeftPod = currentLeftPod;
+        RobotLog.d("dtheta: " + dtheta);
+
+        oldCenterPod = currentCenterPod;        
         oldRightPod = currentRightPod;
 
         currentCenterPod = -centerPod.getCurrentPosition();
-        currentLeftPod = -leftPod.getCurrentPosition();
-        currentRightPod = rightPod.getCurrentPosition();
+        currentRightPod = -rightPod.getCurrentPosition();
 
-        int dn1 = currentLeftPod - oldLeftPod;
+        int dn1 = currentCenterPod - oldCenterPod;
         int dn2 = currentRightPod - oldRightPod;
 
-        dx = (cm_per_tick * dn2) - (dtheta * degreesToCmRightPod);
-        dy = (cm_per_tick * dn1) - (dtheta * degreesToCmLeftPod);
+        RobotLog.d("dy pod " + dn1);
+        RobotLog.d("dx pod " + dn2);
+
+        dx = (cm_per_tick * dn2) - (-dtheta * degreesToCmRightPod);
+        dy = (cm_per_tick * dn1) - (-dtheta * degreesToCmCenterPod);
 
         X += dx * Math.cos(Math.toRadians(heading)) - dy * Math.sin(Math.toRadians(heading));
         Y += dx * Math.sin(Math.toRadians(heading)) + dy * Math.cos(Math.toRadians(heading));
@@ -308,12 +317,11 @@ public class Odometry {
 
 //        headingTheta = ticks_per_degree * (heading - lastHeading);
 
-
         oldCenterPod = currentCenterPod;
         oldRightPod = currentRightPod;
 
         currentCenterPod = -centerPod.getCurrentPosition();
-        currentRightPod = rightPod.getCurrentPosition();
+        currentRightPod = -rightPod.getCurrentPosition();
 
         int dn2 = currentRightPod - oldRightPod;
         int dn3 = currentCenterPod - oldCenterPod;
@@ -538,20 +546,16 @@ public class Odometry {
 
         PivotPID = new PIDFController(rotationP, 0, rotationD, rotationF);
 
-        leftPod = hardwareMap.get(DcMotorEx.class, "LF");
-        centerPod = hardwareMap.get(DcMotorEx.class, "LB");
-        rightPod = hardwareMap.get(DcMotorEx.class, "RF");
+        centerPod = hardwareMap.get(DcMotorEx.class, "LF");
+        rightPod = hardwareMap.get(DcMotorEx.class, "LB");
 
         rightPod.setDirection(DcMotorSimple.Direction.REVERSE);
-        leftPod.setDirection(DcMotorSimple.Direction.REVERSE);
         centerPod.setDirection(DcMotorSimple.Direction.REVERSE);
 
         rightPod.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leftPod.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         centerPod.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         rightPod.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        leftPod.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         centerPod.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         drive.init(hardwareMap);
@@ -815,27 +819,23 @@ public class Odometry {
     }
 
     public double getVerticalVelocity(){
-        double tickVelo = leftPod.getVelocity() + rightPod.getVelocity()/2;
-        double cmVelo = tickVelo*cm_per_tick;
-        return cmVelo;
+        double tickVelo = -rightPod.getVelocity();
+        return cm_per_tick*tickVelo;
     }
 
     public double getHorizontalVelocity(){
-        double tickVelo = centerPod.getVelocity();
-        double cmVelo = tickVelo*cm_per_tick;
-        return cmVelo;
+        double tickVelo = -centerPod.getVelocity();
+        return cm_per_tick*tickVelo;
     }
 
     public void reset(Vector2D newPos){
 
-        leftPod.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightPod.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         centerPod.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         X = newPos.getX();
         Y = newPos.getY();
 
-        leftPod.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightPod.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         centerPod.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 

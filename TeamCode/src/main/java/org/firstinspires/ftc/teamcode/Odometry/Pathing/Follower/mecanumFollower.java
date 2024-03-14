@@ -113,11 +113,11 @@ public class mecanumFollower {
         PathingPower pathingPower;
         PathingPower actualPathingPower = new PathingPower();
 
-        double kyfull = 0.0234;
-        double kxfull = 0.0154;
+        double kyfull = 0.0079;
+        double kxfull = 0.0053;
 
-        double ky = 0.0154;
-        double kx = 0.01;
+        double ky = 0.0053;
+        double kx = 0.00346;
 
         PathingVelocity pathingVelocity;
 
@@ -712,13 +712,13 @@ public class mecanumFollower {
             correctivePower = getCorrectivePowerAtEnd(robotPositionVector, targetPoint, heading);
             pathingPower = new PathingPower(0,0);
         }
-//
-//        telemetry.addData("pointX", getPointOnPath(closestPos).getX());
-//        telemetry.addData("pointY", getPointOnPath(closestPos).getY());
-//        telemetry.addData("pointY", heading);
+
+        telemetry.addData("pointX", getPointOnPath(closestPos).getX());
+        telemetry.addData("pointY", getPointOnPath(closestPos).getY());
+        telemetry.addData("pointY", heading);
 
         vertical = correctivePower.getVertical() + pathingPower.getVertical();
-        horizontal = correctivePower.getHorizontal() + pathingPower.getHorizontal();
+        horizontal = -(correctivePower.getHorizontal() + pathingPower.getHorizontal());
         pivot = getTurnPower(targetHeading, odometry.heading);
 
 
@@ -801,7 +801,7 @@ public class mecanumFollower {
         }
 
         vertical = correctivePower.getVertical() + pathingPower.getVertical();
-        horizontal = correctivePower.getHorizontal() + pathingPower.getHorizontal();
+        horizontal = -(correctivePower.getHorizontal() + pathingPower.getHorizontal());
         pivot = getTurnPower(targetHeading, odometry.heading);
 
         double denominator = Math.max(Math.abs(vertical) + Math.abs(horizontal) + Math.abs(pivot), 1);
@@ -879,8 +879,7 @@ public class mecanumFollower {
         }
 
         vertical = correctivePower.getVertical() + pathingPower.getVertical();
-        horizontal = correctivePower.getHorizontal() + pathingPower.getHorizontal();
-
+        horizontal = -(correctivePower.getHorizontal() + pathingPower.getHorizontal());
         pivot = getTurnPower(targetHeading, odometry.heading);
 
         double denominator = Math.max(Math.abs(vertical) + Math.abs(horizontal) + Math.abs(pivot), 1);

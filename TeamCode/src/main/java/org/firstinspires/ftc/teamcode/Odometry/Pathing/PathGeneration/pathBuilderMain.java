@@ -116,7 +116,9 @@ public class pathBuilderMain {
         double halfway_distance = pathLength / 2;
         double acceleration_distance;
 
-        if (acceleration_dt > halfway_distance){
+        acceleration_distance = 0.5 * maxXAcceleration * acceleration_dt * 2;
+
+        if (acceleration_distance > halfway_distance){
             acceleration_dt = Math.sqrt(halfway_distance / (0.5 * maxXAcceleration));
         }
 

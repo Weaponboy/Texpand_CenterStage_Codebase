@@ -20,8 +20,8 @@ public class Collection {
 
     HardwareMap hmap;
 
-    double collect = 0;
-    double hangStowed = 0.4;
+    double collect = 0.12;
+    double hangStowed = 0.45;
     double stowed = 0.3;
     double letClawThrough = 0.25;
     double firstPixel = 0;
@@ -155,6 +155,9 @@ public class Collection {
         IntakeHeightRight = hardwareMap.get(Servo.class, "IntakeServoRight");
 
         IntakeHeightRight.setDirection(Servo.Direction.FORWARD);
+
+        IntakeHeightRight.setPosition(0);
+
 //        IntakeHeightLeft = hardwareMap.get(Servo.class, "IntakeServoLeft");
 
 //        IntakeHeightLeft.setDirection(Servo.Direction.FORWARD);

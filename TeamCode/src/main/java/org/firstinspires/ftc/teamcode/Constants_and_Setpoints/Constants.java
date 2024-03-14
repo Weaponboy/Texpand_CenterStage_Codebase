@@ -25,8 +25,8 @@ public class Constants {
     public static double strafeD = 0.001;
     public static double strafeF = 0;
 
-    public static double rotationP = 0.03;
-    public static double rotationD = 0.001;
+    public static double rotationP = 0.02;
+    public static double rotationD = 0.0008;
     public static double rotationF = 0;
 
     /**randomization position*/
@@ -53,16 +53,16 @@ public class Constants {
     public static final double ystopDistanceAtMaxVelocity = 5;
 
     //in cm's per sec, need to get the real value of these
-    public static double maxXVelocity = 65;
-    public static double maxYVelocity = 43;
+    public static double maxXVelocity = 190;
+    public static double maxYVelocity = 130;
 
     public static final double scaleFactor = maxYVelocity/maxXVelocity;
 
     public static double velocityDecreasePerPoint = 2.5;
 
     //in cm's per sec, these need to be tuned
-    public static final double maxXAcceleration = 21;
-    public static final double maxYAcceleration =  maxXAcceleration*0.66;
+    public static final double maxXAcceleration = 100;
+    public static final double maxYAcceleration = 90;
 
     /**teleop driver constants*/
     public static double throttle = 0.6;

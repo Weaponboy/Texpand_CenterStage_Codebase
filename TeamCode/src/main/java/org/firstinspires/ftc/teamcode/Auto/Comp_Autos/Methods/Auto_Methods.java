@@ -144,6 +144,8 @@ public interface Auto_Methods {
 
         deliverySlides.DeliverySlides(0, -1);
 
+        deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
+
     }
 
     default void dropYellowPixel(boolean both) throws InterruptedException {
@@ -220,6 +222,10 @@ public interface Auto_Methods {
 
         delivery.setLeftGripperState(Delivery.leftGripperState.openDeliver);
         delivery.updateGrippers();
+
+        sleep(400);
+
+        delivery.ArmExtension.setPosition(1);
 
         sleep(400);
 
