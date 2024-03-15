@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.d
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.driveP;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.horizontal;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.pivot;
+import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.robotRadius;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.rotationD;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.rotationP;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.strafeD;
@@ -102,7 +103,7 @@ public class mecanumFollower {
         return pathingPower;
     }
 
-    public PathingPower getFullPathingPower(Vector2D robotPos, double heading){
+    public PathingPower getFullPathingPower(Vector2D robotPos, double heading, Odometry odometry){
 
         XCorrective.setPID(driveP, 0, driveD);
         YCorrective.setPID(strafeP, 0, strafeD);
@@ -119,7 +120,8 @@ public class mecanumFollower {
         double ky = 0.0053;
         double kx = 0.00346;
 
-        PathingVelocity pathingVelocity;
+        PathingVelocity targetPathingVelocity;
+        PathingVelocity adjustedPathingVelocity;
 
         int closestPos = pathfollow.getClosestPositionOnPath(robotPos);
 
@@ -146,7 +148,77 @@ public class mecanumFollower {
         double robotRelativeXCurve = YpowerCurve * Math.sin(Math.toRadians(heading)) + XpowerCurve * Math.cos(Math.toRadians(heading));
         double robotRelativeYCurve = YpowerCurve * Math.cos(Math.toRadians(heading)) - XpowerCurve * Math.sin(Math.toRadians(heading));
 
-        pathingVelocity = pathfollow.getTargetVelocity(closestPos);
+        targetPathingVelocity = pathfollow.getTargetVelocity(closestPos);
+        
+        double robotXVelocity = odometry.getVerticalVelocity();
+        double robotYVelocity = odometry.getHorizontalVelocity();
+
+        double currentXVelo = robotXVelocity * Math.cos(Math.toRadians(heading)) - robotYVelocity * Math.sin(Math.toRadians(heading));
+        double currentYVelo = robotXVelocity * Math.sin(Math.toRadians(heading)) + robotYVelocity * Math.cos(Math.toRadians(heading));
+
+        adjustedPathingVelocity = new PathingVelocity();
+
+        double adjustedX = 0;
+        double adjustedY = 0;
+
+        if (currentXVelo > 0 && targetPathingVelocity.getXVelocity() > 0){
+
+            if (currentXVelo > targetPathingVelocity.getXVelocity()){
+
+                adjustedX = targetPathingVelocity.getXVelocity() - (currentXVelo - targetPathingVelocity.getXVelocity());
+
+            } else if (currentXVelo < targetPathingVelocity.getXVelocity()) {
+
+                adjustedX = targetPathingVelocity.getXVelocity() + (targetPathingVelocity.getXVelocity() - currentXVelo);
+
+            }
+
+        } else if (currentXVelo < 0 && targetPathingVelocity.getXVelocity() < 0) {
+
+            if (currentXVelo > targetPathingVelocity.getXVelocity()){
+
+                adjustedX = targetPathingVelocity.getXVelocity() + (Math.abs(currentXVelo) - Math.abs(targetPathingVelocity.getXVelocity()));
+
+            } else if (currentXVelo < targetPathingVelocity.getXVelocity()) {
+
+                adjustedX = targetPathingVelocity.getXVelocity() - (Math.abs(targetPathingVelocity.getXVelocity()) - Math.abs(currentXVelo));
+
+            }
+
+        }
+
+        if (currentYVelo > 0 && targetPathingVelocity.getYVelocity() > 0){
+
+            if (currentYVelo > targetPathingVelocity.getYVelocity()){
+
+                adjustedY = targetPathingVelocity.getYVelocity() - (currentYVelo - targetPathingVelocity.getYVelocity());
+
+            } else if (currentYVelo < targetPathingVelocity.getYVelocity()) {
+
+                adjustedY = targetPathingVelocity.getYVelocity() + (targetPathingVelocity.getYVelocity() - currentYVelo);
+
+            }
+
+        } else if (currentYVelo < 0 && targetPathingVelocity.getYVelocity() < 0) {
+
+            if (currentYVelo > targetPathingVelocity.getYVelocity()){
+
+                adjustedY = targetPathingVelocity.getYVelocity() + (Math.abs(currentYVelo) - Math.abs(targetPathingVelocity.getYVelocity()));
+
+            } else if (currentYVelo < targetPathingVelocity.getYVelocity()) {
+
+                adjustedY = targetPathingVelocity.getYVelocity() - (Math.abs(targetPathingVelocity.getYVelocity()) - Math.abs(currentYVelo));
+
+            }
+
+        }
+
+        if (closestPos < 20) {
+            adjustedX = targetPathingVelocity.getXVelocity();
+            adjustedY = targetPathingVelocity.getYVelocity();
+        }
+
+        adjustedPathingVelocity.set(adjustedX, adjustedY);
 
         error = pathfollow.getErrorToPath(robotPos, closestPos);
 
@@ -159,8 +231,8 @@ public class mecanumFollower {
         double xPowerC = XCorrective.calculate(-robotRelativeXError);
         double yPowerC = YCorrective.calculate(-robotRelativeYError)*1.5;
 
-        double xPower = pathingVelocity.getYVelocity() * Math.sin(Math.toRadians(heading)) + pathingVelocity.getXVelocity() * Math.cos(Math.toRadians(heading));
-        double yPower = pathingVelocity.getYVelocity() * Math.cos(Math.toRadians(heading)) - pathingVelocity.getXVelocity() * Math.sin(Math.toRadians(heading));
+        double xPower = adjustedY * Math.sin(Math.toRadians(heading)) + adjustedX * Math.cos(Math.toRadians(heading));
+        double yPower = adjustedY * Math.cos(Math.toRadians(heading)) - adjustedX * Math.sin(Math.toRadians(heading));
 
         vertical = kxfull * xPower;
         horizontal = kyfull * yPower;
@@ -170,7 +242,14 @@ public class mecanumFollower {
             horizontal = ky * yPower;
         }
 
-        actualPathingPower.set(xPowerC+vertical+robotRelativeXCurve, yPowerC+horizontal+robotRelativeYCurve);
+        System.out.println("x Pos " + odometry.X);
+        System.out.println("Y Pos " + odometry.Y);
+        System.out.println("vertical power " + vertical);
+        System.out.println("horizontal power " + horizontal);
+        System.out.println("raw vertical velocity " + targetPathingVelocity.getXVelocity());
+        System.out.println("raw horizontal velocity  " + targetPathingVelocity.getYVelocity());
+
+        actualPathingPower.set(xPowerC+vertical+robotRelativeXCurve, yPowerC+vertical+robotRelativeYCurve);
 
         return actualPathingPower;
     }
@@ -707,7 +786,7 @@ public class mecanumFollower {
         }
 
         if (!gotToEnd){
-            pathingPower = getFullPathingPower(robotPositionVector, heading);
+            pathingPower = getFullPathingPower(robotPositionVector, heading, odometry);
         }else {
             correctivePower = getCorrectivePowerAtEnd(robotPositionVector, targetPoint, heading);
             pathingPower = new PathingPower(0,0);
@@ -779,22 +858,14 @@ public class mecanumFollower {
 
         int closestPos = pathfollow.getClosestPositionOnPath(robotPositionVector);
 
-        if (pathfollow.followablePath.size()-1 > 700){
-            if (closestPos >= pathfollow.followablePath.size()-500){
-                gotToEnd = true;
-            } else if (closestPos < (pathfollow.followablePath.size()-1)/2) {
-                gotToEnd = false;
-            }
-        }else {
-            if (closestPos >= pathfollow.followablePath.size()-350){
-                gotToEnd = true;
-            } else if (closestPos < (pathfollow.followablePath.size()-1)/2) {
-                gotToEnd = false;
-            }
+        if (closestPos >= pathfollow.followablePath.size()-50){
+            gotToEnd = true;
+        } else if (closestPos < (pathfollow.followablePath.size()-1)/2) {
+            gotToEnd = false;
         }
 
         if (!gotToEnd){
-            pathingPower = getFullPathingPower(robotPositionVector, heading);
+            pathingPower = getFullPathingPower(robotPositionVector, heading, odometry);
         }else {
             correctivePower = getCorrectivePowerAtEnd(robotPositionVector, targetPoint, heading);
             pathingPower = new PathingPower(0,0);
@@ -857,22 +928,14 @@ public class mecanumFollower {
 
         int closestPos = pathfollow.getClosestPositionOnPath(robotPositionVector);
 
-        if (pathfollow.followablePath.size()-1 > 700){
-            if (closestPos >= pathfollow.followablePath.size()-600){
-                gotToEnd = true;
-            } else if (closestPos < (pathfollow.followablePath.size()-1)/2) {
-                gotToEnd = false;
-            }
-        }else {
-            if (closestPos >= pathfollow.followablePath.size()-350){
-                gotToEnd = true;
-            } else if (closestPos < (pathfollow.followablePath.size()-1)/2) {
-                gotToEnd = false;
-            }
+        if (closestPos >= pathfollow.followablePath.size()-50){
+            gotToEnd = true;
+        } else if (closestPos < (pathfollow.followablePath.size()-1)/2) {
+            gotToEnd = false;
         }
 
         if (!gotToEnd){
-            pathingPower = getFullPathingPower(robotPositionVector, heading);
+            pathingPower = getFullPathingPower(robotPositionVector, heading, odometry);
         }else {
             correctivePower = getCorrectivePowerAtEnd(robotPositionVector, targetPoint, heading);
             pathingPower = new PathingPower(0,0);

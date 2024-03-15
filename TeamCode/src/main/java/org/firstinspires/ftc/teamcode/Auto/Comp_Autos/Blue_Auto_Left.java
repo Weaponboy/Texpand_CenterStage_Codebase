@@ -56,7 +56,7 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
     Vector2D CE1F = new Vector2D(getRealCoords(240), getRealCoords(150));
 
     Vector2D CS2F = CE1F;
-    Vector2D CE2F = new Vector2D(getRealCoords(65), getRealCoords(150));
+    Vector2D CE2F = new Vector2D(getRealCoords(41), getRealCoords(150));
 
     Vector2D lastPoint = new Vector2D(getRealCoords(38), getRealCoords(150));
 
@@ -398,7 +398,6 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
 
                 }
             }
-
         }
 
         if (pathing){
@@ -406,14 +405,6 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
             pathing = follower.followPathAuto(targetHeading, odometry, drive);
 
         }else if (Math.abs(CE2F.getX() - odometry.X) < collectionError && Math.abs(CE2F.getY() - odometry.Y) < collectionError){
-
-            deliverLast.twoPoints(new Vector2D(odometry.X, odometry.Y), lastPoint, true);
-
-            follower.setPath(deliverLast.followablePath, deliverLast.pathingVelocity);
-
-            pathing = true;
-
-        }else if (Math.abs(lastPoint.getX() - odometry.X) < collectionError && Math.abs(lastPoint.getY() - odometry.Y) < collectionError){
 
             if (!gotTwo){
 

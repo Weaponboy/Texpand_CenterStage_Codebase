@@ -113,13 +113,14 @@ public class pathBuilderMain {
         double acceleration_dt = (double) getMaxVelocity() / maxXAcceleration;
 
         // If we can't accelerate to max velocity in the given distance, we'll accelerate as much as possible
-        double halfway_distance = pathLength / 2;
+        double halfway_distance = pathLength / 1.2;
+
         double acceleration_distance;
 
         acceleration_distance = 0.5 * maxXAcceleration * acceleration_dt * 2;
 
         if (acceleration_distance > halfway_distance){
-            acceleration_dt = Math.sqrt(halfway_distance / (0.5 * maxXAcceleration));
+            acceleration_dt = (halfway_distance / maxXAcceleration);
         }
 
         acceleration_distance = 0.5 * maxXAcceleration * acceleration_dt * 2;
@@ -136,7 +137,11 @@ public class pathBuilderMain {
         System.out.println(decIndex);
         System.out.println(pathLength);
 
-        int range = Math.abs(decIndex);
+        int range;
+
+//        if(decIndex > halfway_distance){
+//            decIndex = (int) halfway_distance;
+//        }
 
         for (int i = 0; i < followablePath.size() - 1; i++) {
 

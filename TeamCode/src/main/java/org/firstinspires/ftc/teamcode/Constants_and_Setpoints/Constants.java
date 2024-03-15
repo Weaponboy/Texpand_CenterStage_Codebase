@@ -17,12 +17,12 @@ public class Constants {
 
     /**Drive PID's*/
 
-    public static double driveP = 0.06;
-    public static double driveD = 0.001;
+    public static double driveP = 0.045;
+    public static double driveD = 0.0008;
     public static double driveF = 0;
 
-    public static double strafeP = 0.04;
-    public static double strafeD = 0.001;
+    public static double strafeP = 0.03;
+    public static double strafeD = 0.0008;
     public static double strafeF = 0;
 
     public static double rotationP = 0.02;
@@ -61,7 +61,7 @@ public class Constants {
     public static double velocityDecreasePerPoint = 2.5;
 
     //in cm's per sec, these need to be tuned
-    public static final double maxXAcceleration = 100;
+    public static final double maxXAcceleration = 146;
     public static final double maxYAcceleration = 90;
 
     /**teleop driver constants*/
