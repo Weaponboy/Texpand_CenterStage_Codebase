@@ -635,10 +635,10 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
         }
 
-//        if (sensors.armSensor.isPressed() && delivery.getArmState() == Delivery.armState.delivery){
-//            delivery.setGripperState(Delivery.GripperState.openDeliver);
-//            delivery.setArmTargetState(Delivery.armState.collect);
-//        }
+        if (sensors.armSensor.isPressed() && delivery.getArmState() == Delivery.armState.delivery){
+            delivery.setGripperState(Delivery.GripperState.openDeliver);
+            delivery.setArmTargetState(Delivery.armState.collect);
+        }
 
 //        if (gamepad1.y){
 //            collection.setSweeperState(Collection.sweeperState.push);
@@ -669,11 +669,16 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         telemetry.addData("X", odometry.X);
         telemetry.addData("Y", odometry.Y);
         telemetry.addData("heading", odometry.heading);
+
         telemetry.addData("intake current draw", collection.getIntakeCurrentUse());
         telemetry.addData("loop time", loopTime);
         telemetry.addData("backboard sensor", sensors.armSensor.isPressed());
+
         telemetry.addData("intake height", collection.getHeightState());
         telemetry.addData("intake height servo", collection.getIntakeHeightRight());
+
+        telemetry.addData("main pivot pos",delivery.getMainPivotPosition());
+        telemetry.addData("second rotate", delivery.getSecondRotatePosition());
         telemetry.update();
 
     }

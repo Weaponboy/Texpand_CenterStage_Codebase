@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.util.RobotLog;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 import java.util.Objects;
@@ -42,11 +43,15 @@ public class Delivery {
     ElapsedTime pivotMoveTimeAuto = new ElapsedTime();
     ElapsedTime pivotMoveTimeCollection = new ElapsedTime();
 
+    ElapsedTime pivotTimer = new ElapsedTime();
+
     Sensors sensors = new Sensors();
 
     double timeToWaitDelivery;
     double timeToWaitCollection;
     double timeToWaitSideMove;
+
+    double numberOfDegreesToTarget;
 
     double timePerDegree = 5;
 
@@ -95,10 +100,12 @@ public class Delivery {
     static final double maxdistancemm = 20;
     static final double distanceToPivot = 0.1995;
 
+    boolean PivotSet = false;
+
     boolean DeliveryMovingAuto = false;
     boolean DeliveryMoving = false;
     boolean CollectionMoving = false;
-    double ArmExtensionHome = 0.96;
+    double ArmExtensionHome = 0.92;
     double deliveryMainIncrement = 0.015;
     double deliveryArmIncrement = 0.02;
 
@@ -123,6 +130,8 @@ public class Delivery {
         deliverAuto,
         collect,
         moving,
+        droppingWhites,
+        readyToDrop
     }
 
     public enum GripperState{
@@ -554,15 +563,25 @@ public class Delivery {
 
                 setGripperState(GripperState.closed);
 
-                double distance = (305 - odometry.X);
+                double distance;
+
+                if (odometry.heading > 170 && odometry.heading < 190){
+                    distance = (315 - odometry.X);
+                }else {
+                    distance = (325 - odometry.X);
+                }
 
                 if (backboardClearance){
                     mainPivotOffSet = (distanceToPivot-0.1) + (( distance - mindistancemm) * mainservopospermm);
-                }else if (odometry.heading < 160){
-                    mainPivotOffSet = (distanceToPivot+0.25) + (( distance - mindistancemm) * mainservopospermm);
                 }else {
-                    mainPivotOffSet = distanceToPivot + (( distance - mindistancemm) * mainservopospermm);
+                    mainPivotOffSet = (distanceToPivot) + (( distance - mindistancemm) * mainservopospermm);
                 }
+
+//                else if (odometry.heading < 160){
+//                    mainPivotOffSet = (distanceToPivot+0.25) + (( distance - mindistancemm) * mainservopospermm);
+//                }else {
+//                    mainPivotOffSet = distanceToPivot + (( distance - mindistancemm) * mainservopospermm);
+//                }
 
                 targetMainPivot = deliveryTopPivot - slidesPos * servoPosPerTick + mainPivotOffSet;
 
@@ -991,6 +1010,264 @@ public class Delivery {
 
     }
 
+    public void updateArm (double slidesPos, Odometry odometry, Telemetry telemetry){
+
+        switch (armstateTarget){
+
+            case collect:
+
+                mainPivotOffSet = 0;
+
+                secondRotate.setPosition(secondRotateMiddleCollect);
+
+                armstateCurrent = armState.moving;
+
+                armstateTarget = armState.moving;
+
+                RotateArm.setPosition(ArmPositionMid);
+
+                ArmExtension.setPosition(ArmExtensionHome);
+
+                timeToWaitSideMove = (Math.abs(RotateArm.getPosition() - ArmPositionMid) * 180) * 5;
+
+                pivotMoveTimeCollection.reset();
+
+                CollectionMoving = true;
+
+                timeToWaitCollection = Math.max((Math.abs(getSecondPivotPosition() - collectSecondPivot) * 180) * timePerDegree, (Math.abs(getMainPivotPosition() - collectTopPivotPos) * 180) * timePerDegree);
+
+                setSecondPivot(collectSecondPivot);
+
+                setMainPivot(collectTopPivotPos);
+
+                setClaws(clawClosed);
+
+                RotateClaw.setPosition(rotateCollect);
+
+                break;
+            case delivery:
+
+                if (RotateArm.getPosition() > 0.48 && RotateArm.getPosition() < 0.44){
+                    secondRotate.setPosition(secondRotateMiddle);
+                }
+
+                armstateCurrent = armState.moving;
+
+                armstateTarget = armState.moving;
+
+                pivotMoveTimeDelivery.reset();
+
+                DeliveryMoving = true;
+
+                setClaws(clawClosed);
+
+                setGripperState(GripperState.closed);
+
+                double distance;
+
+                if (odometry.heading > 170 && odometry.heading < 190){
+                    distance = (315 - odometry.X);
+                }else {
+                    distance = (325 - odometry.X);
+                }
+
+
+                    mainPivotOffSet = (distanceToPivot) + (( distance - mindistancemm) * mainservopospermm);
+
+
+//                else if (odometry.heading < 160){
+//                    mainPivotOffSet = (distanceToPivot+0.25) + (( distance - mindistancemm) * mainservopospermm);
+//                }else {
+//                    mainPivotOffSet = distanceToPivot + (( distance - mindistancemm) * mainservopospermm);
+//                }
+
+                targetMainPivot = deliveryTopPivot - slidesPos * servoPosPerTick + mainPivotOffSet;
+
+                targetMainPivot = Range.clip(targetMainPivot, 0,1);
+
+                timeToWaitDelivery = Math.max((Math.abs(getSecondPivotPosition() - targetMainPivot) * 180) * timePerDegree, (Math.abs(getTopPivotPosition() - (deliverySecondPivot + (-slidesPos * servoPosPerTick + mainPivotOffSet) * mainToSecondConst)) * 180) * timePerDegree);
+
+                setMainPivot(targetMainPivot);
+
+                setSecondPivot(deliverySecondPivot + (targetMainPivot - deliveryTopPivot) * mainToSecondConst);
+
+                RotateClaw.setPosition(rotateDeliver);
+
+                break;
+            case deliverAuto:
+
+                secondRotate.setPosition(secondRotateMiddle);
+
+                armstateCurrent = armState.moving;
+
+                armstateTarget = armState.moving;
+
+                pivotMoveTimeAuto.reset();
+
+                DeliveryMovingAuto = true;
+
+                timeToWaitDelivery = Math.max((Math.abs(getSecondPivotPosition()-deliverySecondPivotAuto)*180)*timePerDegree, (Math.abs(getTopPivotPosition()-0.85)*180)*timePerDegree);
+
+                setClaws(clawClosed);
+
+                setGripperState(GripperState.closed);
+
+                setSecondPivot(deliverySecondPivotAuto);
+
+                setMainPivot(0.85);
+
+                targetMainPivot = 0.85 - slidesPos * servoPosPerTick + mainPivotOffSet;
+
+                RotateClaw.setPosition(rotateDeliver);
+
+                break;
+            case moving:
+
+                if (DeliveryMoving && pivotMoveTimeDelivery.milliseconds() >= timeToWaitDelivery) {
+                    armstateCurrent = armState.delivery;
+                    DeliveryMoving = false;
+                }
+
+                if (DeliveryMovingAuto && pivotMoveTimeAuto.milliseconds() >= timeToWaitDelivery) {
+                    armstateCurrent = armState.deliverAuto;
+                    DeliveryMovingAuto = false;
+                }
+
+                if (CollectionMoving && pivotMoveTimeCollection.milliseconds() >= timeToWaitCollection) {
+                    armstateCurrent = armState.collect;
+                    CollectionMoving = false;
+                }
+
+                break;
+            case droppingWhites:
+
+                double mainPivotDelivery = 0.916;
+
+                RotateClaw.setPosition(rotateDeliver);
+
+                if(!PivotSet){
+
+                    secondRotate.setPosition(secondRotateMiddle);
+
+                    pivotTimer.reset();
+
+                    PivotSet = true;
+
+                    numberOfDegreesToTarget = (Math.abs(getMainPivotPosition()-mainPivotDelivery)*180);
+
+                }
+
+                telemetry.addData("telemetry", numberOfDegreesToTarget);
+                telemetry.update();
+
+                if (pivotTimer.milliseconds() > (numberOfDegreesToTarget) * timePerDegree) {
+
+                    setSecondRotate(0.13);
+
+                    RotateArm.setPosition(0.5117);
+
+                    armstateCurrent = armState.readyToDrop;
+
+                    armstateTarget = armState.readyToDrop;
+
+                }
+
+                setClaws(clawClosed);
+
+                setGripperState(GripperState.closed);
+
+                setSecondPivot(0.256);
+
+                setMainPivot(mainPivotDelivery);
+
+                break;
+            default:
+        }
+
+        if (Objects.requireNonNull(armstateCurrent) == armState.moving) {
+
+            if (DeliveryMoving && pivotMoveTimeDelivery.milliseconds() >= timeToWaitDelivery){
+                armstateCurrent = armState.delivery;
+                DeliveryMoving = false;
+            }
+
+            if (CollectionMoving && pivotMoveTimeCollection.milliseconds() >= timeToWaitCollection){
+                armstateCurrent = armState.collect;
+                CollectionMoving = false;
+            }
+
+            if (DeliveryMovingAuto && pivotMoveTimeAuto.milliseconds() >= timeToWaitDelivery) {
+                armstateCurrent = armState.deliverAuto;
+                DeliveryMovingAuto = false;
+            }
+
+        }
+
+        if (Objects.requireNonNull(armstateCurrent) == armState.deliverAuto){
+
+            double distanceAccount = 0;
+
+            if (odometry.X > 280 && odometry.X < 300){
+                distanceAccount = -0.4;
+            } else if (odometry.X > 300 && odometry.X < 305){
+                distanceAccount = -0.3;
+            }else {
+                distanceAccount = 0;
+            }
+
+            if (RotateArm.getPosition() > ArmPositionMid) {
+                double armExPos = (RotateArm.getPosition() - ArmPositionMid) * armRotateToArmExtendConstLEFT + (mainPivotVertOffSet*Mainpivottoextendconst) + ArmExtensionHome;
+                ArmExtension.setPosition(armExPos + distanceAccount);
+                secondRotate.setPosition((RotateArm.getPosition() - ArmPositionMid) * armRotateToSecondRotateConstLEFT + secondRotateMiddle);
+                setMainPivot((RotateArm.getPosition() - ArmPositionMid) * armRotateToMainConstLEFT + targetMainPivot + mainPivotVertOffSet);
+                setSecondPivot((RotateArm.getPosition() - ArmPositionMid) * armRotateToSecondPivotConstLEFT + (deliverySecondPivot + (-slidesPos * servoPosPerTick + mainPivotOffSet) * mainToSecondConst) + (mainPivotVertOffSet * Mainpivottosecondconst));
+
+            } else {
+                double armExPos = (RotateArm.getPosition() - ArmPositionMid) * armRotateToArmExtendConstRIGHT + (mainPivotVertOffSet*Mainpivottoextendconst) + ArmExtensionHome;
+                ArmExtension.setPosition(armExPos + distanceAccount);
+                secondRotate.setPosition((RotateArm.getPosition() - ArmPositionMid) * armRotateToSecondRotateConstRIGHT + secondRotateMiddle);
+                setMainPivot((RotateArm.getPosition() - ArmPositionMid) * armRotateToMainConstRIGHT + targetMainPivot + mainPivotVertOffSet);
+                setSecondPivot((RotateArm.getPosition() - ArmPositionMid) * armRotateToSecondPivotConstRIGHT + (deliverySecondPivot + (-slidesPos * servoPosPerTick + mainPivotOffSet) * mainToSecondConst) + (mainPivotVertOffSet * Mainpivottosecondconst));
+
+
+            }
+
+        }
+
+        if (Objects.requireNonNull(armstateCurrent) == armState.delivery){
+
+            double distanceAccount = 0;
+
+            if (odometry.X > 280 && odometry.X < 300){
+                distanceAccount = -0.32;
+            } else if (odometry.X > 300 && odometry.X < 305){
+                distanceAccount = -0.22;
+            }else {
+                distanceAccount = 0;
+            }
+
+            if (RotateArm.getPosition() > ArmPositionMid) {
+                double armExPos = (RotateArm.getPosition() - ArmPositionMid) * armRotateToArmExtendConstLEFT + (mainPivotVertOffSet*Mainpivottoextendconst) + ArmExtensionHome;
+                ArmExtension.setPosition(armExPos + distanceAccount);
+                secondRotate.setPosition((RotateArm.getPosition() - ArmPositionMid) * armRotateToSecondRotateConstLEFT + secondRotateMiddle);
+                setMainPivot((RotateArm.getPosition() - ArmPositionMid) * armRotateToMainConstLEFT + targetMainPivot + mainPivotVertOffSet);
+                setSecondPivot((RotateArm.getPosition() - ArmPositionMid) * armRotateToSecondPivotConstLEFT + (deliverySecondPivot + (-slidesPos * servoPosPerTick + mainPivotOffSet) * mainToSecondConst) + (mainPivotVertOffSet * Mainpivottosecondconst));
+
+            } else {
+                double armExPos = (RotateArm.getPosition() - ArmPositionMid) * armRotateToArmExtendConstRIGHT + (mainPivotVertOffSet*Mainpivottoextendconst) + ArmExtensionHome;
+                ArmExtension.setPosition(armExPos + distanceAccount);
+                secondRotate.setPosition((RotateArm.getPosition() - ArmPositionMid) * armRotateToSecondRotateConstRIGHT + secondRotateMiddle);
+                setMainPivot((RotateArm.getPosition() - ArmPositionMid) * armRotateToMainConstRIGHT + targetMainPivot + mainPivotVertOffSet);
+                setSecondPivot((RotateArm.getPosition() - ArmPositionMid) * armRotateToSecondPivotConstRIGHT + (deliverySecondPivot + (-slidesPos * servoPosPerTick + mainPivotOffSet) * mainToSecondConst) + (mainPivotVertOffSet * Mainpivottosecondconst));
+
+
+            }
+
+        }
+
+    }
+
+
     public void updateGrippers (){
 
         switch (rightgripperstate){
@@ -1107,7 +1384,7 @@ public class Delivery {
         return (mainPivotLeft.getPosition() + mainPivotRight.getPosition()) / 2;
     }
 
-    private void setMainPivot(double position){
+    public void setMainPivot(double position){
         mainPivotLeft.setPosition(position);
         mainPivotRight.setPosition(position);
     }
@@ -1121,7 +1398,7 @@ public class Delivery {
         RightClaw.setPosition(position);
     }
 
-    private void setSecondPivot(double position){
+    public void setSecondPivot(double position){
         secondPivotLeft.setPosition(position);
         secondPivotRight.setPosition(position);
     }
@@ -1160,7 +1437,5 @@ public class Delivery {
     public armState getArmState() {
         return armstateCurrent;
     }
-
-
 
 }

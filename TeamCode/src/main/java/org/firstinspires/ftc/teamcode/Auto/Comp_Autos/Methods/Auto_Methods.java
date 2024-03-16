@@ -99,8 +99,8 @@ public interface Auto_Methods {
                 waitDone = true;
             }
 
-            sensors.getDetections();
-            resetOdo(odometry, telemetry);
+//        sensors.getDetections();
+//        resetOdo(odometry, telemetry);
 
         }
 
@@ -113,9 +113,9 @@ public interface Auto_Methods {
 
             reachedTarget = delivery.getArmState() == Delivery.armState.delivery;
             delivery.updateArm(deliverySlides.getCurrentposition(), odometry, false);
-
-            sensors.getDetections();
-            resetOdo(odometry, telemetry);
+//
+//            sensors.getDetections();
+//            resetOdo(odometry, telemetry);
 
         }
 
@@ -137,8 +137,8 @@ public interface Auto_Methods {
             reachedTargetCollection = delivery.getArmState() == Delivery.armState.collect;
             delivery.updateArm(deliverySlides.getCurrentposition(), odometry, false);
 
-            sensors.getDetections();
-            resetOdo(odometry, telemetry);
+//            sensors.getDetections();
+//            resetOdo(odometry, telemetry);
 
         }
 

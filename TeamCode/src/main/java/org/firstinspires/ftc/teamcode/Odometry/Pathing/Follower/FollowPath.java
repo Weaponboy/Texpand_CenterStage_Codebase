@@ -149,12 +149,12 @@ public class FollowPath {
         }
 
         lastPointOnPath = index;
-
-        if (index+5 > followablePath.size()-1){
-
-        }else {
-            index += 5;
-        }
+//
+//        if (index+5 > followablePath.size()-1){
+//
+//        }else {
+//            index += 5;
+//        }
 
         return index;
     }

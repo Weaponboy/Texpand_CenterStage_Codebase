@@ -32,7 +32,7 @@ public class TestingArmPositions extends OpMode {
     ServoImplEx secondRotate;
 
     Servo RotateArm;
-    Servo ArmExtension;
+    ServoImplEx ArmExtension;
 
     ElapsedTime pivotMoveTimeDelivery = new ElapsedTime();
     ElapsedTime pivotMoveTimeAuto = new ElapsedTime();
@@ -172,22 +172,22 @@ public class TestingArmPositions extends OpMode {
 //        else if (gamepad1.dpad_down) {
 //            mainPivotOffet = mainPivotOffet - 0.001;
 //        }
+////
+//        if (gamepad1.dpad_right || gamepad1.dpad_left || gamepad1.dpad_up || gamepad1.dpad_down || gamepad1.y || gamepad1.x) {
 //
-        if (gamepad1.dpad_right || gamepad1.dpad_left || gamepad1.dpad_up || gamepad1.dpad_down || gamepad1.y || gamepad1.x) {
-
-            if (RotateArm.getPosition() > robotArmmid.armRotate) {
-                setMainPivot((RotateArm.getPosition() - robotArmmid.armRotate) * armRotateToMainConstLEFT + robotArmmid.mainPivot - mainPivotOffet + mainPivotOffset);
-                secondRotate.setPosition((RotateArm.getPosition() - robotArmmid.armRotate) * armRotateToSecondRotateConstLEFT + robotArmmid.secondRotate);
-                setSecondPivot((RotateArm.getPosition() - robotArmmid.armRotate) * armRotateToSecondPivotConstLEFT + robotArmmid.secondPivot - (mainPivotOffet * Mainpivottosecondconst));
-                ArmExtension.setPosition(((RotateArm.getPosition() - robotArmmid.armRotate) * armRotateToArmExtendConstLEFT + robotArmmid.ArmExtension + (mainPivotOffet * Mainpivottoextendconst)));
-            } else {
-                setMainPivot((RotateArm.getPosition() - robotArmmid.armRotate) * armRotateToMainConstRIGHT + robotArmmid.mainPivot - mainPivotOffet + mainPivotOffset);
-                secondRotate.setPosition((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetosecondrotateconstRIGHT + robotArmmid.secondRotate);
-                setSecondPivot((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetosecondpivotconstRIGHT + robotArmmid.secondPivot - (mainPivotOffet * Mainpivottosecondconst));
-                ArmExtension.setPosition(((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetoarmextendconstRIGHT + robotArmmid.ArmExtension + (mainPivotOffet * Mainpivottoextendconst)));
-            }
-
-        }
+//            if (RotateArm.getPosition() > robotArmmid.armRotate) {
+//                setMainPivot((RotateArm.getPosition() - robotArmmid.armRotate) * armRotateToMainConstLEFT + robotArmmid.mainPivot - mainPivotOffet + mainPivotOffset);
+//                secondRotate.setPosition((RotateArm.getPosition() - robotArmmid.armRotate) * armRotateToSecondRotateConstLEFT + robotArmmid.secondRotate);
+//                setSecondPivot((RotateArm.getPosition() - robotArmmid.armRotate) * armRotateToSecondPivotConstLEFT + robotArmmid.secondPivot - (mainPivotOffet * Mainpivottosecondconst));
+//                ArmExtension.setPosition(((RotateArm.getPosition() - robotArmmid.armRotate) * armRotateToArmExtendConstLEFT + robotArmmid.ArmExtension + (mainPivotOffet * Mainpivottoextendconst)));
+//            } else {
+//                setMainPivot((RotateArm.getPosition() - robotArmmid.armRotate) * armRotateToMainConstRIGHT + robotArmmid.mainPivot - mainPivotOffet + mainPivotOffset);
+//                secondRotate.setPosition((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetosecondrotateconstRIGHT + robotArmmid.secondRotate);
+//                setSecondPivot((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetosecondpivotconstRIGHT + robotArmmid.secondPivot - (mainPivotOffet * Mainpivottosecondconst));
+//                ArmExtension.setPosition(((RotateArm.getPosition() - robotArmmid.armRotate) * armrotatetoarmextendconstRIGHT + robotArmmid.ArmExtension + (mainPivotOffet * Mainpivottoextendconst)));
+//            }
+//
+//        }
 
 
 //        if ((!previousGamepad1.dpad_left && gamepad1.dpad_left) || (!previousGamepad1.dpad_right && gamepad1.dpad_right)) {
@@ -271,7 +271,13 @@ public class TestingArmPositions extends OpMode {
         RotateArm = hardwareMap.get(Servo.class, "RotateArm");
 
         RotateArm.setPosition(0.46);
+
         ArmExtension = hardwareMap.get(ServoImplEx.class, "ArmExtension");
+
+        ArmExtension.setDirection(Servo.Direction.REVERSE);
+
+        ArmExtension.setPwmRange(new PwmControl.PwmRange(600, 2400));
+
         ArmExtension.setPosition(ArmExtensionHome);
         setMainPivot(collectTopPivotPos);
 

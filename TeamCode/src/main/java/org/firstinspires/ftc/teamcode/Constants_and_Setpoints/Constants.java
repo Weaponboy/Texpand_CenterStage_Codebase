@@ -17,15 +17,15 @@ public class Constants {
 
     /**Drive PID's*/
 
-    public static double driveP = 0.045;
-    public static double driveD = 0.0008;
+    public static double driveP = 0.05;
+    public static double driveD = 0.001;
     public static double driveF = 0;
 
     public static double strafeP = 0.03;
-    public static double strafeD = 0.0008;
+    public static double strafeD = 0.001;
     public static double strafeF = 0;
 
-    public static double rotationP = 0.02;
+    public static double rotationP = 0.025;
     public static double rotationD = 0.0008;
     public static double rotationF = 0;
 

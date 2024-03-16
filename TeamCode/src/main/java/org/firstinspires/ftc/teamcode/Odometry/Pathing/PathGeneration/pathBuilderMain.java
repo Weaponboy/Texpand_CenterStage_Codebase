@@ -129,7 +129,15 @@ public class pathBuilderMain {
 
         double deceleration_dt = acceleration_distance;
 
-        int decIndex = (int) (deceleration_dt/0.25);
+        int decIndex;
+
+        if (pathLength > 150){
+            decIndex = (int) (deceleration_dt/0.4);
+        }else {
+            decIndex = (int) (deceleration_dt/0.5);
+        }
+
+
 
         System.out.println(acceleration_distance);
         System.out.println(acceleration_dt);

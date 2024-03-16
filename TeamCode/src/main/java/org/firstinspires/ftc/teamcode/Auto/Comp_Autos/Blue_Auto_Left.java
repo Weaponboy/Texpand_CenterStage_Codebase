@@ -36,7 +36,7 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
     Vector2D DPS1F = new Vector2D(getRealCoords(210), getRealCoords(23));
     Vector2D DPC1F = new Vector2D(getRealCoords(241), getRealCoords(42));
     Vector2D DPCT1F = new Vector2D(getRealCoords(188), getRealCoords(78));
-    Vector2D DPE1F = new Vector2D(getRealCoords(305), getRealCoords(80));
+    Vector2D DPE1F = new Vector2D(getRealCoords(305), getRealCoords(75));
 
     //second pos
     Vector2D DPS1S = new Vector2D(getRealCoords(210), getRealCoords(23));
@@ -49,19 +49,19 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
     Vector2D DPCT1T = new Vector2D(getRealCoords(164), getRealCoords(110));
     Vector2D DPE1T = new Vector2D(getRealCoords(298), getRealCoords(90));
 
-    Vector2D DS1F = new Vector2D(getRealCoords(300), getRealCoords(135));
+    Vector2D DS1F = new Vector2D(getRealCoords(312), getRealCoords(143));
 
     Vector2D CS1F = new Vector2D(getRealCoords(300), getRealCoords(90));
     Vector2D CC1F = new Vector2D(getRealCoords(292), getRealCoords(154));
     Vector2D CE1F = new Vector2D(getRealCoords(240), getRealCoords(150));
 
     Vector2D CS2F = CE1F;
-    Vector2D CE2F = new Vector2D(getRealCoords(41), getRealCoords(150));
+    Vector2D CE2F = new Vector2D(getRealCoords(46), getRealCoords(150));
 
     Vector2D lastPoint = new Vector2D(getRealCoords(38), getRealCoords(150));
 
     /**Action points*/
-    Vector2D turnIntakeOn = new Vector2D(getRealCoords(183), getRealCoords(153));
+    Vector2D turnIntakeOn = new Vector2D(getRealCoords(180), getRealCoords(150));
     Vector2D turnIntakeOff = new Vector2D(getRealCoords(102), getRealCoords(150));
     Vector2D reverseIntake = new Vector2D(getRealCoords(72), getRealCoords(150));
 
@@ -78,7 +78,7 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
     Vector2D leavePurpleHeadingT = new Vector2D(getRealCoords(91), getRealCoords(55));
 
     //delivery
-    Vector2D extendSlidesDelivery = new Vector2D(getRealCoords(180), getRealCoords(180));
+    Vector2D extendSlidesDelivery = new Vector2D(getRealCoords(160), getRealCoords(180));
 
     GenMethods preloadPaths = new GenMethods();
     GenMethods collect = new GenMethods();
@@ -130,9 +130,9 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
 
     double armPosWhitePixels = 0.46;
 
-    int slidesPosWhitePixels = 700;
+    int slidesPosWhitePixels = 1000;
 
-    int slidesPosYellowPixel = 600;
+    int slidesPosYellowPixel = 800;
 
     /**enums*/
 
@@ -163,31 +163,69 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
 
     /**collection Methods*/
     public void collectPixels(){
-        delivery.ArmExtension.setPosition(1);
+
+        boolean gotTwo;
+
+        delivery.ArmExtension.setPosition(0.96);
 
         delivery.setGripperState(Delivery.GripperState.open);
         delivery.updateGrippers();
 
-        sleep(100);
+        collection.setState(Collection.intakePowerState.on);
+        collection.updateIntakeState();
+
+        sleep(500);
 
         collection.setIntakeHeight(Collection.intakeHeightState.fifthPixel);
         collection.updateIntakeHeight();
 
-        sleep(800);
+        gotTwo = !sensors.RightClawSensor.isPressed() && !sensors.LeftClawSensor.isPressed();
 
-        collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
-        collection.updateIntakeHeight();
+        if (gotTwo){
+            delivery.setGripperState(Delivery.GripperState.closed);
+            delivery.updateGrippers();
+        }else {
+            sleep(1000);
 
-        sleep(800);
+            collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
+            collection.updateIntakeHeight();
 
-        delivery.setGripperState(Delivery.GripperState.closed);
-        delivery.updateGrippers();
+            gotTwo = !sensors.RightClawSensor.isPressed() && !sensors.LeftClawSensor.isPressed();
 
-        sleep(400);
+            if (gotTwo){
+                delivery.setGripperState(Delivery.GripperState.closed);
+                delivery.updateGrippers();
+            }else {
+                sleep(1000);
+
+                gotTwo = !sensors.RightClawSensor.isPressed() && !sensors.LeftClawSensor.isPressed();
+
+                if (gotTwo){
+                    delivery.setGripperState(Delivery.GripperState.closed);
+                    delivery.updateGrippers();
+                }else {
+                    sleep(1000);
+
+                    delivery.setGripperState(Delivery.GripperState.closed);
+                    delivery.updateGrippers();
+                }
+            }
+
+        }
+
+
+        sleep(200);
 
         collection.setState(Collection.intakePowerState.reversedHalf);
         collection.updateIntakeState();
 
+        collection.setIntakeHeight(Collection.intakeHeightState.hangStowed);
+        collection.updateIntakeHeight();
+
+        sleep(200);
+
+        collection.setState(Collection.intakePowerState.off);
+        collection.updateIntakeState();
     }
 
     public void delivery_and_collect_2() throws InterruptedException {
@@ -222,8 +260,6 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
         if (!delivering){
 
             if (Math.abs(turnIntakeOn.getX() - odometry.X) < IntakeControlError && Math.abs(turnIntakeOn.getY() - odometry.Y) < IntakeControlError){
-                collection.setState(Collection.intakePowerState.on);
-                collection.updateIntakeState();
 
                 delivery.setGripperState(Delivery.GripperState.open);
                 delivery.updateGrippers();
@@ -246,7 +282,7 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
 
         if (!gotTwo && !sensors.RightClawSensor.isPressed() && !sensors.LeftClawSensor.isPressed() && odometry.X < 180){
 
-            double lengthToEnd = follower.getSectionLength(new Vector2D(odometry.X, odometry.Y), new Vector2D(44, 264));
+            double lengthToEnd = follower.getSectionLength(new Vector2D(odometry.X, odometry.Y), new Vector2D(44, 150));
 
             if (lengthToEnd > 30){
                 timeChanger = 0;
@@ -311,7 +347,7 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
 
         if (delivering){
 
-            if (odometry.X > extendSlidesDelivery.getX() && odometry.getVerticalVelocity() > 5 && !onlyOnce && delivery.getLeftgripperstate() == Delivery.leftGripperState.closed && delivery.getRightgripperstate() == Delivery.rightGripperState.closed) {
+            if (odometry.X > extendSlidesDelivery.getX() && !onlyOnce && delivery.getLeftgripperstate() == Delivery.leftGripperState.closed && delivery.getRightgripperstate() == Delivery.rightGripperState.closed) {
 
                 onlyOnce = true;
 
@@ -321,7 +357,7 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
 
-                targetHeading = 150;
+                targetHeading = 135;
 
             } else if (odometry.X > extendSlidesDelivery.getX() && odometry.getVerticalVelocity() > 5 && !onlyOnce) {
 
@@ -340,8 +376,6 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
 
                 delivery.setArmTargetState(Delivery.armState.deliverAuto);
                 delivery.updateArm(deliverySlides.getCurrentposition());
-
-                targetHeading = 150;
 
             } else if (odometry.X > (extendSlidesDelivery.getX()+20) && odometry.getVerticalVelocity() > 5) {
 
@@ -373,7 +407,7 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (Math.abs(DS1F.getX() - odometry.X) < deliveryError && Math.abs(DS1F.getY() - odometry.Y) < deliveryError) {
+            if (Math.abs(DS1F.getX() - odometry.X) < 2 && Math.abs(DS1F.getY() - odometry.Y) < 2) {
 
                 drive.RF.setPower(0);
                 drive.RB.setPower(0);
@@ -964,7 +998,7 @@ public class Blue_Auto_Left extends LinearOpMode implements CycleMethods {
                             pathing = follower.followPathAuto(targetHeading, odometry, drive);
 
                             if (Math.abs(leavePurpleHeadingF.getX() - odometry.X) < HeadingControlError && Math.abs(leavePurpleHeadingF.getY() - odometry.Y) < HeadingControlError && !(targetHeading == 320)){
-                                targetHeading = 320;
+                                targetHeading = 290;
                             }
 
                             if (Math.abs(oneEightyHeadingF.getX() - odometry.X) < HeadingControlError+10 && Math.abs(oneEightyHeadingF.getY() - odometry.Y) < HeadingControlError+10 && deliverySlides.getCurrentposition() < 50){
