@@ -64,28 +64,11 @@ public class TestingDelivery extends LinearOpMode {
         drive.setAllPower(0);
 
         delivery.setArmTargetState(Delivery.armState.droppingWhites);
-        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, telemetry);
+        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.whiteBlue, odometry);
+
 
         while (!(delivery.getArmState() == Delivery.armState.readyToDrop)){
-            delivery.updateArm(deliverySlides.getCurrentposition(), odometry, telemetry);
-        }
-
-        boolean dropped = false;
-
-        while(!dropped){
-
-            delivery.ArmExtension.setPosition(delivery.ArmExtension.getPosition() - 0.003);
-
-
-            if (delivery.ArmExtension.getPosition() < 0.39) {
-                dropped = true;
-            }else {
-                dropped = sensors.armSensor.isPressed();
-            }
-
-            telemetry.addData("sensor", sensors.armSensor.isPressed());
-            telemetry.update();
-
+            delivery.updateArm(deliverySlides.getCurrentposition(), sensors.armSensor.isPressed(), Delivery.PixelsAuto.whiteBlue, odometry);
         }
 
         telemetry.addData("sensor", sensors.armSensor.isPressed());
@@ -100,7 +83,8 @@ public class TestingDelivery extends LinearOpMode {
         sleep(500);
 
         delivery.setArmTargetState(Delivery.armState.collect);
-        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, telemetry);
+        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.whiteBlue, odometry);
+
 
         while (opModeIsActive()){
 

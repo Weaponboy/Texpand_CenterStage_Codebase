@@ -45,243 +45,48 @@ public interface Auto_Methods {
 
     }
 
-    default void dropYellowPixel() throws InterruptedException {
+    default void dropYellowPixel(Delivery.PixelsAuto pixelPlacement, Odometry odometry) throws InterruptedException {
 
         delivery.setArmTargetState(Delivery.armState.delivery);
-        delivery.updateArm(deliverySlides.getCurrentposition());
+        delivery.updateArm(deliverySlides.getCurrentposition(), false, pixelPlacement, odometry);
 
-        boolean reachedTarget = false;
-
-        while (!reachedTarget){
-
-            reachedTarget = delivery.getArmState() == Delivery.armState.delivery;
-            delivery.updateArm(deliverySlides.getCurrentposition());
-
+        while (!(delivery.getArmState() == Delivery.armState.readyToDrop)){
+            delivery.updateArm(deliverySlides.getCurrentposition(), sensors.armSensor.isPressed(), pixelPlacement, odometry);
         }
 
-        delivery.setRightGripperState(Delivery.rightGripperState.openDeliver);
+        delivery.setGripperState(Delivery.GripperState.open);
         delivery.updateGrippers();
 
-        sleep(200);
+        sleep(500);
 
         delivery.setArmTargetState(Delivery.armState.collect);
-        delivery.updateArm(deliverySlides.getCurrentposition());
+        delivery.updateArm(deliverySlides.getCurrentposition(), false, pixelPlacement, odometry);
 
         deliverySlides.DeliverySlides(0, -1);
 
     }
 
-    default void dropYellowPixel(double armPos, Odometry odometry, Telemetry telemetry) throws InterruptedException {
-
-        sensors.portal.setProcessorEnabled(sensors.propDetectionByAmount, false);
+    default void dropYellowPixelWait(Delivery.PixelsAuto pixelPlacement, Odometry odometry) throws InterruptedException {
 
         delivery.setArmTargetState(Delivery.armState.delivery);
-        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, true);
+        delivery.updateArm(deliverySlides.getCurrentposition(), false, pixelPlacement, odometry);
 
-        boolean reachedTarget = false;
-
-        double timeToWaitSideMove = (Math.abs(delivery.RotateArm.getPosition() - delivery.ArmPositionMid) * 180) * 8;
-        waitForSideArm.reset();
-
-        boolean waitDone = false;
-
-        while (!waitDone){
-
-            if (delivery.RotateArm.getPosition() < armPos){
-                delivery.RotateArm.setPosition(delivery.RotateArm.getPosition() + 0.006);
-            } else if (delivery.RotateArm.getPosition() > armPos) {
-                delivery.RotateArm.setPosition(delivery.RotateArm.getPosition() - 0.006);
-            }
-
-            delivery.updateArm(deliverySlides.getCurrentposition(), odometry, false);
-
-            if (delivery.RotateArm.getPosition() > (armPos-0.01) && delivery.RotateArm.getPosition() < (armPos+0.01)){
-                waitDone = true;
-            }
-
-//        sensors.getDetections();
-//        resetOdo(odometry, telemetry);
-
+        while (!(delivery.getArmState() == Delivery.armState.readyToDrop)){
+            delivery.updateArm(deliverySlides.getCurrentposition(), false, pixelPlacement, odometry);
         }
 
-        delivery.setArmTargetState(Delivery.armState.delivery);
-        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, false);
-
-        reachedTarget = false;
-
-        while (!reachedTarget){
-
-            reachedTarget = delivery.getArmState() == Delivery.armState.delivery;
-            delivery.updateArm(deliverySlides.getCurrentposition(), odometry, false);
-//
-//            sensors.getDetections();
-//            resetOdo(odometry, telemetry);
-
-        }
-
-        delivery.setLeftGripperState(Delivery.leftGripperState.openDeliver);
+        delivery.setGripperState(Delivery.GripperState.open);
         delivery.updateGrippers();
 
-        sleep(400);
-
-        delivery.RotateArm.setPosition(delivery.ArmPositionMid);
-
-        delivery.ArmExtension.setPosition(1);
+        sleep(500);
 
         delivery.setArmTargetState(Delivery.armState.collect);
-
-        boolean reachedTargetCollection = false;
-
-        while (!reachedTargetCollection){
-
-            reachedTargetCollection = delivery.getArmState() == Delivery.armState.collect;
-            delivery.updateArm(deliverySlides.getCurrentposition(), odometry, false);
-
-//            sensors.getDetections();
-//            resetOdo(odometry, telemetry);
-
-        }
+        delivery.updateArm(deliverySlides.getCurrentposition(), false, pixelPlacement, odometry);
 
         deliverySlides.DeliverySlides(0, -1);
 
-        deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
-
-    }
-
-    default void dropYellowPixel(boolean both) throws InterruptedException {
-
-        delivery.setArmTargetState(Delivery.armState.delivery);
-        delivery.updateArm(deliverySlides.getCurrentposition());
-
-        boolean reachedTarget = false;
-
-        while (!reachedTarget){
-            reachedTarget = delivery.getArmState() == Delivery.armState.delivery;
-            delivery.updateArm(deliverySlides.getCurrentposition());
-        }
-
-        delivery.setGripperState(Delivery.GripperState.openDeliver);
-        delivery.updateGrippers();
-
-        sleep(200);
-
-        delivery.setArmTargetState(Delivery.armState.collect);
-        delivery.updateArm(deliverySlides.getCurrentposition());
-
-        deliverySlides.DeliverySlides(0, -1);
-
-    }
-
-    default void dropYellowPixelWait(double armPos, Odometry odometry, Telemetry telemetry) throws InterruptedException {
-
-        sensors.portal.setProcessorEnabled(sensors.propDetectionByAmount, false);
-
-        delivery.setArmTargetState(Delivery.armState.delivery);
-        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, true);
-
-        boolean reachedTarget = false;
-
-        double timeToWaitSideMove = (Math.abs(delivery.RotateArm.getPosition() - delivery.ArmPositionMid) * 180) * 8;
-        waitForSideArm.reset();
-
-        boolean waitDone = false;
-
-        while (!waitDone){
-
-            if (delivery.RotateArm.getPosition() < armPos){
-                delivery.RotateArm.setPosition(delivery.RotateArm.getPosition() + 0.006);
-            } else if (delivery.RotateArm.getPosition() > armPos) {
-                delivery.RotateArm.setPosition(delivery.RotateArm.getPosition() - 0.006);
-            }
-
-            delivery.updateArm(deliverySlides.getCurrentposition(), odometry, false);
-
-            if (delivery.RotateArm.getPosition() > (armPos-0.01) && delivery.RotateArm.getPosition() < (armPos+0.01)){
-                waitDone = true;
-            }
-
-            sensors.getDetections();
-            resetOdo(odometry, telemetry);
-
-        }
-
-        delivery.setArmTargetState(Delivery.armState.delivery);
-        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, false);
-
-        reachedTarget = false;
-
-        while (!reachedTarget){
-
-            reachedTarget = delivery.getArmState() == Delivery.armState.delivery;
-            delivery.updateArm(deliverySlides.getCurrentposition(), odometry, false);
-
-            sensors.getDetections();
-            resetOdo(odometry, telemetry);
-
-        }
-
-        delivery.setLeftGripperState(Delivery.leftGripperState.openDeliver);
-        delivery.updateGrippers();
-
-        sleep(400);
-
-        delivery.ArmExtension.setPosition(1);
-
-        sleep(400);
-
-        delivery.RotateArm.setPosition(delivery.ArmPositionMid);
-
-        delivery.ArmExtension.setPosition(1);
-
-        delivery.setArmTargetState(Delivery.armState.collect);
-
-        boolean reachedTargetCollection = false;
-
-        while (!reachedTargetCollection){
-
-            reachedTargetCollection = delivery.getArmState() == Delivery.armState.collect;
-            delivery.updateArm(deliverySlides.getCurrentposition(), odometry, false);
-
-            sensors.getDetections();
-            resetOdo(odometry, telemetry);
-
-        }
-
-        deliverySlides.DeliverySlides(0, -1);
-
-        while (deliverySlides.getCurrentposition() > 30){}
-
-    }
-
-    default void dropYellowPixelWait() throws InterruptedException {
-
-        deliverySlides.DeliverySlides(350, 1);
-
-        while (deliverySlides.getCurrentposition() < 345){}
-
-        delivery.setArmTargetState(Delivery.armState.delivery);
-        delivery.updateArm(deliverySlides.getCurrentposition());
-
-        boolean reachedTarget = false;
-
-        while (!reachedTarget){
-            reachedTarget = delivery.getArmState() == Delivery.armState.delivery;
-            delivery.updateArm(deliverySlides.getCurrentposition());
-        }
-
-        delivery.setRightGripperState(Delivery.rightGripperState.openDeliver);
-        delivery.updateGrippers();
-
-        sleep(400);
-
-        delivery.setArmTargetState(Delivery.armState.collect);
-        delivery.updateArm(deliverySlides.getCurrentposition());
-
-        sleep(400);
-
-        deliverySlides.DeliverySlides(0, -1);
-
-        while (deliverySlides.getCurrentposition() > 30){
+        while (deliverySlides.getCurrentposition() > 20){
+            delivery.updateArm(deliverySlides.getCurrentposition(), false,  pixelPlacement, odometry);
         }
 
     }

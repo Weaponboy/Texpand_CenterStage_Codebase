@@ -14,6 +14,7 @@ import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilde
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.redRightBuilder;
 import org.firstinspires.ftc.teamcode.Vision.VisionPortalProcessers.propDetectionByAmount;
 import org.firstinspires.ftc.teamcode.hardware._.Collection;
+import org.firstinspires.ftc.teamcode.hardware._.Delivery;
 import org.firstinspires.ftc.teamcode.hardware._.Drivetrain;
 import org.firstinspires.ftc.teamcode.hardware._.Odometry;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -193,7 +194,8 @@ public class Blue_Left_Pathing extends LinearOpMode implements CycleMethods{
                         break;
                     case first2:
 
-                        delivery.updateArm(deliverySlides.getCurrentposition());
+                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.whiteBlue, odometry);
+
 
                         if (!builtPath){
 
@@ -267,7 +269,8 @@ public class Blue_Left_Pathing extends LinearOpMode implements CycleMethods{
                         break;
                     case second2:
 
-                        delivery.updateArm(deliverySlides.getCurrentposition());
+                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.whiteBlue, odometry);
+
 
                         if (!builtPath){
 
@@ -392,7 +395,8 @@ public class Blue_Left_Pathing extends LinearOpMode implements CycleMethods{
                         break;
                     case first2:
 
-                        delivery.updateArm(deliverySlides.getCurrentposition());
+                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.whiteBlue, odometry);
+
 
                         if (!builtPath){
 
@@ -466,7 +470,8 @@ public class Blue_Left_Pathing extends LinearOpMode implements CycleMethods{
                         break;
                     case second2:
 
-                        delivery.updateArm(deliverySlides.getCurrentposition());
+                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.whiteBlue, odometry);
+
 
                         if (!builtPath){
 
@@ -591,7 +596,8 @@ public class Blue_Left_Pathing extends LinearOpMode implements CycleMethods{
                         break;
                     case first2:
 
-                        delivery.updateArm(deliverySlides.getCurrentposition());
+                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.whiteBlue, odometry);
+
 
                         if (!builtPath){
 
@@ -671,7 +677,8 @@ public class Blue_Left_Pathing extends LinearOpMode implements CycleMethods{
                         break;
                     case second2:
 
-                        delivery.updateArm(deliverySlides.getCurrentposition());
+                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.whiteBlue, odometry);
+
 
                         if (!builtPath){
 

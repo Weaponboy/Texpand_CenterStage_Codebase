@@ -468,8 +468,13 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
             if (Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.collect){
 
                 collection.setState(Collection.intakePowerState.on);
+
                 collection.setIntakeHeight(Collection.intakeHeightState.collect);
+
                 delivery.setGripperState(Delivery.GripperState.open);
+
+                delivery.updateGrippers();
+                collection.updateIntakeHeight();
 
             }
 
@@ -640,6 +645,15 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
             delivery.setArmTargetState(Delivery.armState.collect);
         }
 
+        if (gamepad1.left_bumper){
+            collectPixels();
+        }
+
+        if (gamepad1.right_bumper){
+            collection.setState(Collection.intakePowerState.onHalf);
+            collection.updateIntakeState();
+        }
+
 //        if (gamepad1.y){
 //            collection.setSweeperState(Collection.sweeperState.push);
 //            collection.updateSweeper();
@@ -725,7 +739,107 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
         odometry.update();
 
-    };
+    }
+
+    public void collectPixels(){
+
+        collection.setIntakeHeight(Collection.intakeHeightState.stowed);
+        collection.updateIntakeHeight();
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        boolean gotTwo;
+
+        delivery.ArmExtension.setPosition(0.96);
+
+        delivery.setGripperState(Delivery.GripperState.open);
+        delivery.updateGrippers();
+
+        collection.setState(Collection.intakePowerState.on);
+        collection.updateIntakeState();
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        collection.setIntakeHeight(Collection.intakeHeightState.fifthPixel);
+        collection.updateIntakeHeight();
+
+        gotTwo = !sensors.RightClawSensor.isPressed() && !sensors.LeftClawSensor.isPressed();
+
+        if (gotTwo){
+            delivery.setGripperState(Delivery.GripperState.closed);
+            delivery.updateGrippers();
+        }else {
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
+            collection.updateIntakeHeight();
+
+            gotTwo = !sensors.RightClawSensor.isPressed() && !sensors.LeftClawSensor.isPressed();
+
+            if (gotTwo){
+                delivery.setGripperState(Delivery.GripperState.closed);
+                delivery.updateGrippers();
+            }else {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
+                gotTwo = !sensors.RightClawSensor.isPressed() && !sensors.LeftClawSensor.isPressed();
+
+                if (gotTwo){
+                    delivery.setGripperState(Delivery.GripperState.closed);
+                    delivery.updateGrippers();
+                }else {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    delivery.setGripperState(Delivery.GripperState.closed);
+                    delivery.updateGrippers();
+                }
+            }
+
+        }
+
+
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        collection.setState(Collection.intakePowerState.reversedHalf);
+        collection.updateIntakeState();
+
+        collection.setIntakeHeight(Collection.intakeHeightState.hangStowed);
+        collection.updateIntakeHeight();
+
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        collection.setState(Collection.intakePowerState.off);
+        collection.updateIntakeState();
+    }
 
     public void resetOdo(){
 

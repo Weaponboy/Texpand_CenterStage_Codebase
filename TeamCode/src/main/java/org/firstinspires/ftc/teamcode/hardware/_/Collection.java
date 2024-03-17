@@ -20,15 +20,15 @@ public class Collection {
 
     HardwareMap hmap;
 
-    double collect = 0.12;
+    double collect = 0.1;
     double hangStowed = 0.45;
     double stowed = 0.3;
     double letClawThrough = 0.25;
-    double firstPixel = 0;
-    double secondPixel = 0.06;
-    double thirdPixel = 0.16;
+    double firstPixel = 0.1;
+    double secondPixel = 0.13;
+    double thirdPixel = 0.19;
     double forthPixel = 0.215;
-    double fifthPixel = 0.255;
+    double fifthPixel = 0.265;
 
     intakePowerState statePower = intakePowerState.off;
     intakeHeightState heightState = intakeHeightState.stowed;
@@ -75,7 +75,7 @@ public class Collection {
                 Intake.setPower(-0.6);
                 break;
             case onHalf:
-                Intake.setPower(0.8);
+                Intake.setPower(0.55);
                 break;
             default:
         }

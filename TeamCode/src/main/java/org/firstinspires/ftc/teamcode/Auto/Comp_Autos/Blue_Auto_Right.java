@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Auto.Comp_Autos;
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.propPos;
+import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Hardware_objects.odometry;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.UsefulMethods.getRealCoords;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -144,17 +145,9 @@ public class Blue_Auto_Right extends LinearOpMode implements CycleMethods {
 
     /**setPoints*/
 
-    double armPosLeft = 0.61;
+    int slidesPosWhitePixels = 1000;
 
-    double armPosMiddle = 0.55;
-
-    double armPosRight = 0.35;
-
-    double armPosWhitePixels = 0.46;
-
-    int slidesPosWhitePixels = 700;
-
-    int slidesPosYellowPixel = 350;
+    int slidesPosYellowPixel = 800;
 
     /**hardware objects*/
     Odometry odometry = new Odometry(startPosition.getX(), startPosition.getY(), 270);
@@ -239,7 +232,7 @@ public class Blue_Auto_Right extends LinearOpMode implements CycleMethods {
 
     public void delivery_and_collect_2() throws InterruptedException {
 
-        delivery.updateArm(deliverySlides.getCurrentposition());
+        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.whiteBlue, odometry);
         deliverySlides.updateSlides(gamepad1, gamepad2, delivery.getArmState());
 
         if (build == Build.notBuilt){
@@ -381,7 +374,7 @@ public class Blue_Auto_Right extends LinearOpMode implements CycleMethods {
                 delivery.updateGrippers();
 
                 delivery.setArmTargetState(Delivery.armState.deliverAuto);
-                delivery.updateArm(deliverySlides.getCurrentposition());
+                delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.whiteBlue, odometry);
 
             } else if (odometry.X > (extendSlidesDelivery.getX()+20) && odometry.getVerticalVelocity() > -5) {
 
@@ -422,13 +415,13 @@ public class Blue_Auto_Right extends LinearOpMode implements CycleMethods {
 
                 if (auto == Blue_Auto_Right.Auto.two) {
 
-                    dropWhitePixelsWait(armPosWhitePixels, odometry, telemetry);
+                    dropWhitePixelsWait(Delivery.PixelsAuto.whiteBlue);
 
                     phase = Blue_Auto_Right.Phase.finished;
 
                 } else {
 
-                    dropWhitePixels(armPosWhitePixels, odometry, telemetry);
+                    dropWhitePixels(Delivery.PixelsAuto.whiteBlue);
 
                     build = Build.notBuilt;
 
@@ -473,7 +466,7 @@ public class Blue_Auto_Right extends LinearOpMode implements CycleMethods {
 
     public void delivery_and_collect_4() throws InterruptedException{
 
-        delivery.updateArm(deliverySlides.getCurrentposition());
+        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.whiteBlue, odometry);
         deliverySlides.updateSlides(gamepad1, gamepad2, delivery.getArmState());
 
         if (build == Build.notBuilt){
@@ -615,7 +608,8 @@ public class Blue_Auto_Right extends LinearOpMode implements CycleMethods {
                 delivery.updateGrippers();
 
                 delivery.setArmTargetState(Delivery.armState.deliverAuto);
-                delivery.updateArm(deliverySlides.getCurrentposition());
+                delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.whiteBlue, odometry);
+
 
             } else if (odometry.X > (extendSlidesDelivery.getX()+20) && odometry.getVerticalVelocity() > -5) {
 
@@ -656,13 +650,13 @@ public class Blue_Auto_Right extends LinearOpMode implements CycleMethods {
 
                 if (auto == Auto.four) {
 
-                    dropWhitePixelsWait(armPosWhitePixels, odometry, telemetry);
+                    dropWhitePixelsWait(Delivery.PixelsAuto.whiteBlue);
 
                     phase = Blue_Auto_Right.Phase.finished;
 
                 } else {
 
-                    dropWhitePixels(armPosWhitePixels, odometry, telemetry);
+                    dropWhitePixels(Delivery.PixelsAuto.whiteBlue);
 
                     build = Build.notBuilt;
 
@@ -709,7 +703,8 @@ public class Blue_Auto_Right extends LinearOpMode implements CycleMethods {
 
     public void delivery_and_collect_6() throws InterruptedException{
 
-        delivery.updateArm(deliverySlides.getCurrentposition());
+        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.whiteBlue, odometry);
+
         deliverySlides.updateSlides(gamepad1, gamepad2, delivery.getArmState());
 
         if (build == Build.notBuilt){
@@ -851,7 +846,7 @@ public class Blue_Auto_Right extends LinearOpMode implements CycleMethods {
                 delivery.updateGrippers();
 
                 delivery.setArmTargetState(Delivery.armState.deliverAuto);
-                delivery.updateArm(deliverySlides.getCurrentposition());
+                delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.whiteBlue, odometry);
 
             } else if (odometry.X > (extendSlidesDelivery.getX()+20) && odometry.getVerticalVelocity() > -5) {
 
@@ -890,7 +885,7 @@ public class Blue_Auto_Right extends LinearOpMode implements CycleMethods {
                 drive.LF.setPower(0);
                 drive.LB.setPower(0);
 
-                dropWhitePixelsWait(armPosWhitePixels, odometry, telemetry);
+                dropWhitePixelsWait(Delivery.PixelsAuto.whiteBlue);
 
                 build = Build.notBuilt;
 
@@ -1069,7 +1064,7 @@ public class Blue_Auto_Right extends LinearOpMode implements CycleMethods {
                                     if (Math.abs(extendSlides.getX() - odometry.X) < IntakeControlError && Math.abs(extendSlides.getY() - odometry.Y) < IntakeControlError && deliverySlides.getCurrentposition() < 50){
 
                                         delivery.setArmTargetState(Delivery.armState.deliverAuto);
-                                        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, false);
+                                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.whiteBlue, odometry);
 
                                     }
 
@@ -1091,11 +1086,11 @@ public class Blue_Auto_Right extends LinearOpMode implements CycleMethods {
                                     drive.LB.setPower(0);
 
                                     if (auto == Auto.preload){
-                                        dropYellowPixelWait(armPosLeft, odometry, telemetry);
+                                        dropYellowPixelWait(Delivery.PixelsAuto.yellow1Blue, odometry);
                                         phase = Phase.finished;
                                     }else {
 
-                                        dropYellowPixel(armPosLeft, odometry, telemetry);
+                                        dropYellowPixel(Delivery.PixelsAuto.yellow1Blue, odometry);
 
                                         phase = Phase.first2;
 
@@ -1208,7 +1203,7 @@ public class Blue_Auto_Right extends LinearOpMode implements CycleMethods {
                                         targetHeading = 180;
 
                                         delivery.setArmTargetState(Delivery.armState.deliverAuto);
-                                        delivery.updateArm(deliverySlides.getCurrentposition());
+                                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.whiteBlue, odometry);
 
                                     }
 
@@ -1231,13 +1226,13 @@ public class Blue_Auto_Right extends LinearOpMode implements CycleMethods {
 
                                     if (auto == Auto.preload){
 
-                                        dropYellowPixelWait(armPosMiddle, odometry, telemetry);
+                                        dropYellowPixelWait(Delivery.PixelsAuto.yellow2Blue, odometry);
 
                                         phase = Phase.finished;
 
                                     }else {
 
-                                        dropYellowPixel(armPosMiddle, odometry, telemetry);
+                                        dropYellowPixel(Delivery.PixelsAuto.yellow2Blue, odometry);
 
                                         phase = Phase.first2;
 
@@ -1355,7 +1350,7 @@ public class Blue_Auto_Right extends LinearOpMode implements CycleMethods {
                                         targetHeading = 180;
 
                                         delivery.setArmTargetState(Delivery.armState.deliverAuto);
-                                        delivery.updateArm(deliverySlides.getCurrentposition());
+                                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.whiteBlue, odometry);
 
                                     }
 
@@ -1378,13 +1373,13 @@ public class Blue_Auto_Right extends LinearOpMode implements CycleMethods {
 
                                     if (auto == Auto.preload){
 
-                                        dropYellowPixelWait(armPosRight, odometry, telemetry);
+                                        dropYellowPixelWait(Delivery.PixelsAuto.yellow3Blue, odometry);
 
                                         phase = Phase.finished;
 
                                     }else {
 
-                                        dropYellowPixel(armPosRight, odometry, telemetry);
+                                        dropYellowPixel(Delivery.PixelsAuto.yellow3Blue, odometry);
 
                                         phase = Phase.first2;
 
