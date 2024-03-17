@@ -109,9 +109,7 @@ public class mecanumFollower {
         YCorrective.setPID(strafeP, 0, strafeD);
 
         Vector2D error;
-        PathingPower correctivePower = new PathingPower();
 
-        PathingPower pathingPower;
         PathingPower actualPathingPower = new PathingPower();
 
         double kyfull = 0.0079;
@@ -121,32 +119,8 @@ public class mecanumFollower {
         double kx = 0.00346;
 
         PathingVelocity targetPathingVelocity;
-        PathingVelocity adjustedPathingVelocity;
 
         int closestPos = pathfollow.getClosestPositionOnPath(robotPos);
-
-        double curveY = 0.7278975375;
-        double curveX = 0.7278975375;
-
-        int index = closestPos + 5;
-
-        if (index > pathfollow.pathCurve.size()-1){
-            index = pathfollow.pathCurve.size()-1;
-        }
-
-        double XpowerCurve;
-        double YpowerCurve;
-
-        if (index > 400){
-            XpowerCurve = pathfollow.pathCurve.get(index).getX()*curveX;
-            YpowerCurve = pathfollow.pathCurve.get(index).getY()*curveY;
-        }else {
-            XpowerCurve = 0;
-            YpowerCurve = 0;
-        }
-
-        double robotRelativeXCurve = YpowerCurve * Math.sin(Math.toRadians(heading)) + XpowerCurve * Math.cos(Math.toRadians(heading));
-        double robotRelativeYCurve = YpowerCurve * Math.cos(Math.toRadians(heading)) - XpowerCurve * Math.sin(Math.toRadians(heading));
 
         targetPathingVelocity = pathfollow.getTargetVelocity(closestPos);
         
@@ -155,8 +129,6 @@ public class mecanumFollower {
 
         double currentXVelo = robotXVelocity * Math.cos(Math.toRadians(heading)) - robotYVelocity * Math.sin(Math.toRadians(heading));
         double currentYVelo = robotXVelocity * Math.sin(Math.toRadians(heading)) + robotYVelocity * Math.cos(Math.toRadians(heading));
-
-        adjustedPathingVelocity = new PathingVelocity();
 
         double adjustedX = 0;
         double adjustedY = 0;
@@ -831,8 +803,6 @@ public class mecanumFollower {
             pathing = false;
         }
 
-        boolean closeToTarget = Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 10 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 10;
-
         PathingPower correctivePower = new PathingPower();
         PathingPower pathingPower;
 
@@ -869,8 +839,6 @@ public class mecanumFollower {
             horizontal = -(correctivePower.getHorizontal());
             pivot = getTurnPower(targetHeading, odometry.heading, 0.01);
         }
-
-
 
         double denominator = Math.max(Math.abs(vertical) + Math.abs(horizontal) + Math.abs(pivot), 1);
 

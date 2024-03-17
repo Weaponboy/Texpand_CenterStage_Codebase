@@ -172,6 +172,9 @@ public class Odometry {
         X += dx * Math.cos(Math.toRadians(heading)) - dy * Math.sin(Math.toRadians(heading));
         Y += dx * Math.sin(Math.toRadians(heading)) + dy * Math.cos(Math.toRadians(heading));
 
+        RobotLog.d("y " + Y);
+        RobotLog.d("x " + X);
+
 //        oldCenterPod = currentCenterPod;
 //        oldLeftPod = currentLeftPod;
 //        oldRightPod = currentRightPod;

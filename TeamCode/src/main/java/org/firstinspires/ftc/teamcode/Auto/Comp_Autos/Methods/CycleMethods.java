@@ -32,6 +32,8 @@ public interface CycleMethods extends Auto_Methods {
 
         deliverySlides.DeliverySlides(0, -1);
 
+        deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
+
     }
 
     default void dropWhitePixelsWait(Delivery.PixelsAuto pixelPlacement) throws InterruptedException {
