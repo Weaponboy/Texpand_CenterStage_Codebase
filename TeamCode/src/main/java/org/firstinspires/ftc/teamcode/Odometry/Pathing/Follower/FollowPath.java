@@ -132,9 +132,17 @@ public class FollowPath {
 
         int index = 0;
 
+        int startIndex = Math.max(lastPointOnPath - 20, 0);
+
+        int endIndex = Math.min(lastPointOnPath + 20, followablePath.size()-1);
+
         double minDistance = Double.MAX_VALUE;
 
-        for (Vector2D pos : followablePath) {
+        List<Vector2D> subList = followablePath.subList(startIndex, endIndex);
+
+        ArrayList<Vector2D> sectionToLook = new ArrayList<>(subList);
+
+        for (Vector2D pos : sectionToLook) {
 
             double distance = Math.sqrt(
                     Math.pow(robotPos.getX() - pos.getX(), 2) +

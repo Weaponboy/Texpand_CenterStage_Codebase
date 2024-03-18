@@ -178,6 +178,8 @@ public class pathBuilderMain {
                 double velocityYValue = (Yfactor * max_velocity) * DecSlope;
 
                 System.out.println("Vector dec " + (Math.abs(velocityYValue)+Math.abs(velocityXValue)));
+                System.out.println("X current" + currentPoint.getX());
+                System.out.println("Y current" + currentPoint.getY());
 
                 pathVelo = new PathingVelocity(velocityXValue,velocityYValue);
 
@@ -200,6 +202,8 @@ public class pathBuilderMain {
                 double velocityYValue = (Yfactor) * max_velocity;
 
                 System.out.println("Vector " + (Math.abs(velocityYValue)+Math.abs(velocityXValue)));
+                System.out.println("X current" + currentPoint.getX());
+                System.out.println("Y current" + currentPoint.getY());
 
                 pathVelo = new PathingVelocity(velocityXValue, velocityYValue);
 

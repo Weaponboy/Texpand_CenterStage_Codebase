@@ -144,9 +144,9 @@ public class Odometry {
 
         heading = ConvertedHeadingForPosition;
 
-        if (lastHeading < 2 && heading > 358){
+        if (lastHeading < 10 && heading > 350){
             dtheta = (heading - 360)-lastHeading;
-        }else if (heading < 2 && lastHeading > 358){
+        }else if (heading < 10 && lastHeading > 350){
             dtheta = (360 - lastHeading) + heading;
         } else {
             dtheta = (heading - lastHeading);

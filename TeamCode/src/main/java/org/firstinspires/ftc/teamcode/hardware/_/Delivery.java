@@ -64,10 +64,10 @@ public class Delivery {
     double safeTopPivot = 0.3;
 
     double deliveryTopPivotAuto = 0.7;
-    double deliverySecondPivotAuto = 0;
+    double deliverySecondPivotAuto = 0.2;
     double distancecalc;
     double avoidIntakeSecondPivot = 0.8;
-    double collectSecondPivot = 0.84;
+    double collectSecondPivot = 0.86;
     double deliverySecondPivot = -0.1;
     double lowdeliveryTopPivot = 1;
 
@@ -400,7 +400,7 @@ public class Delivery {
 
                     PivotSet = true;
 
-                    timeToWaitDelivery = Math.max((Math.abs(getMainPivotPosition() - getMainPivotSetPoint(pixelPlacement)) * 180) * 4, (Math.abs(getSecondPivotPosition() - getSecondPivotSetPoint(pixelPlacement)) * 180) * 4);
+                    timeToWaitDelivery = (Math.abs(getMainPivotPosition() - getMainPivotSetPoint(pixelPlacement)) * 180) * 4;
                 }
 
                 setClaws(clawClosed);
@@ -449,9 +449,9 @@ public class Delivery {
 
                 setSecondPivot(deliverySecondPivotAuto);
 
-                setMainPivot(0.85);
+                setMainPivot(0.9);
 
-                targetMainPivot = 0.85 - slidesPos * servoPosPerTick + mainPivotOffSet;
+                targetMainPivot = 0.9 - slidesPos * servoPosPerTick + mainPivotOffSet;
 
                 RotateClaw.setPosition(rotateDeliver);
 
@@ -484,7 +484,7 @@ public class Delivery {
 
                 if (startExtending){
 
-                    ArmExtension.setPosition(ArmExtension.getPosition() - 0.003);
+                    ArmExtension.setPosition(ArmExtension.getPosition() - 0.07);
 
                     if (ArmExtension.getPosition() < 0.39) {
 
@@ -828,7 +828,5 @@ public class Delivery {
         }
 
     }
-
-
 
 }

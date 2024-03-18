@@ -374,8 +374,8 @@ public class mecanumFollower {
 
     public PathingPower getCorrectivePowerAtEnd(Vector2D robotPos, Vector2D targetPos, double heading){
 
-        XCorrective.setPID(0.015, xI, 0.0001);
-        YCorrective.setPID(0.015, yI, 0.0001);
+        XCorrective.setPID(0.035, xI, 0.0001);
+        YCorrective.setPID(0.035, yI, 0.0001);
 
         Vector2D error;
         PathingPower correctivePower = new PathingPower();

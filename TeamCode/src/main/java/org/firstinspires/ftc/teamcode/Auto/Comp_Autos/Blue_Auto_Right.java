@@ -64,7 +64,6 @@ public class Blue_Auto_Right extends LinearOpMode implements CycleMethods {
     Vector2D DYE1S = new Vector2D(getRealCoords(97), getRealCoords(32));
 
     Vector2D DYS2S = DYE1S;
-    Vector2D DYC2S = new Vector2D(getRealCoords(151), getRealCoords(32));
     Vector2D DYE2S = new Vector2D(getRealCoords(210), getRealCoords(32));
 
     Vector2D DYS3S = DYE2S;
@@ -112,7 +111,7 @@ public class Blue_Auto_Right extends LinearOpMode implements CycleMethods {
     Vector2D leavePurpleHeadingF = new Vector2D(getRealCoords(90), getRealCoords(70));
 
     //second position
-    Vector2D oneEightyHeadingS = new Vector2D(getRealCoords(76), getRealCoords(94));
+    Vector2D oneEightyHeadingS = new Vector2D(getRealCoords(77), getRealCoords(91));
     Vector2D leavePurpleHeadingS = new Vector2D(getRealCoords(91), getRealCoords(78));
 
     //third position
@@ -990,6 +989,8 @@ public class Blue_Auto_Right extends LinearOpMode implements CycleMethods {
 
         waitForStart();
 
+        propPos = 2;
+
         if (propPos == 1){
 
             purple.fourPoints(DPS1F, DPC1F, DPCT1F, DPE1F, true);
@@ -1127,7 +1128,7 @@ public class Blue_Auto_Right extends LinearOpMode implements CycleMethods {
             purple.fourPoints(DPS1S, DPC1S, DPCT1S, DPE1S, true);
 
             yellow.threePoints(DYS1S, DYC1S, DYE1S);
-            yellow.threePoints(DYS2S, DYC2S, DYE2S);
+            yellow.twoPoints(DYS2S, DYE2S);
             yellow.threePoints(DYS3S, DYC3S, DYE3S, true);
 
             collection.setIntakeHeight(Collection.intakeHeightState.stowed);
@@ -1149,7 +1150,6 @@ public class Blue_Auto_Right extends LinearOpMode implements CycleMethods {
                                     pathing = true;
                                     build = Build.built;
                                     targetHeading = 270;
-                                    deliverySlides.DeliverySlides(slidesPosYellowPixel, 1);
                                     delivery.setGripperState(Delivery.GripperState.closed);
                                     delivery.updateGrippers();
                                 }
@@ -1159,7 +1159,11 @@ public class Blue_Auto_Right extends LinearOpMode implements CycleMethods {
                                     pathing = follower.followPathAuto(targetHeading, odometry, drive);
 
                                     if (Math.abs(leavePurpleHeadingS.getX() - odometry.X) < HeadingControlError && Math.abs(leavePurpleHeadingS.getY() - odometry.Y) < HeadingControlError){
-                                        targetHeading = 235;
+                                        targetHeading = 180;
+                                    }
+
+                                    if (Math.abs(oneEightyHeadingS.getX() - odometry.X) < HeadingControlError && Math.abs(oneEightyHeadingS.getX() - odometry.Y) < HeadingControlError && deliverySlides.getCurrentposition() < 50){
+                                        targetHeading = 180;
                                     }
 
                                 }else if (Math.abs(DPE1S.getX() - odometry.X) < collectionError && Math.abs(DPE1S.getY() - odometry.Y) < collectionError && !pathing){
@@ -1169,7 +1173,7 @@ public class Blue_Auto_Right extends LinearOpMode implements CycleMethods {
                                     drive.LF.setPower(0);
                                     drive.LB.setPower(0);
 
-                                    collectOnePixel();
+//                                    collectOnePixel();
 
                                     build = Build.notBuilt;
 
@@ -1184,13 +1188,13 @@ public class Blue_Auto_Right extends LinearOpMode implements CycleMethods {
 
                                 if (build == Build.notBuilt){
 
-                                    follower.setPath(purple.followablePath, purple.pathingVelocity);
+                                    follower.setPath(yellow.followablePath, yellow.pathingVelocity);
 
                                     pathing = true;
 
                                     build = Build.built;
 
-                                    targetHeading = 270;
+                                    targetHeading = 180;
 
                                 }
 
@@ -1199,23 +1203,30 @@ public class Blue_Auto_Right extends LinearOpMode implements CycleMethods {
                                     pathing = follower.followPathAuto(targetHeading, odometry, drive);
 
                                     if (Math.abs(oneEightyHeadingS.getX() - odometry.X) < HeadingControlError && Math.abs(oneEightyHeadingS.getX() - odometry.Y) < HeadingControlError && deliverySlides.getCurrentposition() < 50){
-
                                         targetHeading = 180;
-
-                                        delivery.setArmTargetState(Delivery.armState.deliverAuto);
-                                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.whiteBlue, odometry);
-
                                     }
 
-                                    if (Math.abs(turnIntakeOff.getX() - odometry.X) < IntakeControlError && Math.abs(turnIntakeOff.getY() - odometry.Y) < IntakeControlError && !gotTwo) {
+//                                    if (odometry.X > 180){
+//
+//                                        deliverySlides.DeliverySlides(slidesPosYellowPixel, 1);
+//
+//                                    }
+//
+//                                    if (deliverySlides.getCurrentposition() > 150){
+//                                        delivery.setArmTargetState(Delivery.armState.deliverAuto);
+//                                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.whiteBlue, odometry);
+//                                    }
+//
 
-                                        delivery.setGripperState(Delivery.GripperState.closed);
-                                        delivery.updateGrippers();
-
-                                        collection.setState(Collection.intakePowerState.off);
-                                        collection.updateIntakeState();
-
-                                    }
+//                                    if (Math.abs(turnIntakeOff.getX() - odometry.X) < IntakeControlError && Math.abs(turnIntakeOff.getY() - odometry.Y) < IntakeControlError && !gotTwo) {
+//
+//                                        delivery.setGripperState(Delivery.GripperState.closed);
+//                                        delivery.updateGrippers();
+//
+//                                        collection.setState(Collection.intakePowerState.off);
+//                                        collection.updateIntakeState();
+//
+//                                    }
 
                                 }else if (Math.abs(DYE3S.getX() - odometry.X) < deliveryError && Math.abs(DYE3S.getY() - odometry.Y) < deliveryError && !pathing){
 
@@ -1226,7 +1237,7 @@ public class Blue_Auto_Right extends LinearOpMode implements CycleMethods {
 
                                     if (auto == Auto.preload){
 
-                                        dropYellowPixelWait(Delivery.PixelsAuto.yellow2Blue, odometry);
+//                                        dropYellowPixelWait(Delivery.PixelsAuto.yellow2Blue, odometry);
 
                                         phase = Phase.finished;
 
@@ -1289,6 +1300,7 @@ public class Blue_Auto_Right extends LinearOpMode implements CycleMethods {
                                 odometry.update();
 
                                 if (build == Build.notBuilt){
+
                                     follower.setPath(purple.followablePath, purple.pathingVelocity);
                                     pathing = true;
                                     build = Build.built;
