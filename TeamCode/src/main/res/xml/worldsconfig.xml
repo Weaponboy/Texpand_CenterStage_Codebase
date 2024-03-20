@@ -17,7 +17,7 @@
         <LynxModule name="Control Hub" port="173">
             <goBILDA5202SeriesMotor name="LF" port="0"/>
             <goBILDA5202SeriesMotor name="Left_Slide" port="1"/>
-            <RevRoboticsUltraplanetaryHDHexMotor name="Intake" port="2"/>
+            <goBILDA5202SeriesMotor name="Intake" port="2"/>
             <goBILDA5202SeriesMotor name="LB" port="3"/>
             <Servo name="ArmExtension" port="0"/>
             <Servo name="secondRotate" port="1"/>

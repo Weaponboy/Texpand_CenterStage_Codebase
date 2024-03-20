@@ -103,6 +103,10 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
     int xCounter;
     int pivotIntakePos = -1;
 
+    boolean reversingIntake = false;
+    Collection.intakePowerState previousState = Collection.intakePowerState.off;
+    ElapsedTime reverseIntake = new ElapsedTime();
+
     @Override
     public void loop() {
 
@@ -394,34 +398,39 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
             collection.updateIntakeHeight();
             collection.updateIntakeState();
         }
+        if (currentGamepad1.left_trigger > 0 && !(previousGamepad1.left_trigger > 0)) {
+
+            collection.IntakeHeightRight.setPosition(collection.IntakeHeightRight.getPosition() - 0.005);
+        }
 
         if (currentGamepad1.right_trigger > 0 && !(previousGamepad1.right_trigger > 0)){
 
+            collection.IntakeHeightRight.setPosition(collection.IntakeHeightRight.getPosition()+0.005);
             pivotIntakePos++;
 
-            if (pivotIntakePos == 5){
-                pivotIntakePos = 0;
-            }
-
-            if(pivotIntakePos == 0){
-                collection.setIntakeHeight(Collection.intakeHeightState.fifthPixel);
-            }
-            else if(pivotIntakePos == 1){
-                collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
-            }
-            else if(pivotIntakePos == 2){
-                collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
-            }
-            else if(pivotIntakePos == 3){
-                collection.setIntakeHeight(Collection.intakeHeightState.secondPixel);
-            }
-            else if(pivotIntakePos == 4){
-                collection.setIntakeHeight(Collection.intakeHeightState.firstPixel);
-            }
-
-            collection.updateIntakeHeight();
+//            if (pivotIntakePos == 5){
+//                pivotIntakePos = 0;
+//            }
+//
+//            if(pivotIntakePos == 0){
+//                collection.setIntakeHeight(Collection.intakeHeightState.fifthPixel);
+//            }
+//            else if(pivotIntakePos == 1){
+//                collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
+//            }
+//            else if(pivotIntakePos == 2){
+//                collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
+//            }
+//            else if(pivotIntakePos == 3){
+//                collection.setIntakeHeight(Collection.intakeHeightState.secondPixel);
+//            }
+//            else if(pivotIntakePos == 4){
+//                collection.setIntakeHeight(Collection.intakeHeightState.firstPixel);
+//            }
 
         }
+
+
 
         if (currentGamepad2.y) {
             collection.setState(Collection.intakePowerState.reversed);
@@ -654,15 +663,6 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
             collection.updateIntakeState();
         }
 
-//        if (gamepad1.y){
-//            collection.setSweeperState(Collection.sweeperState.push);
-//            collection.updateSweeper();
-//            sweeper.reset();
-//        } else if (sweeper.milliseconds() > 100 && sweeper.milliseconds() < 200) {
-//            collection.setSweeperState(Collection.sweeperState.retract);
-//            collection.updateSweeper();
-//        }
-
         if (gamepad1.b){
             sensors.getDetections(telemetry);
             resetOdo();
@@ -671,7 +671,20 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         odometry.update();
 
         //update collection state
-        collection.updateIntakeHeight();
+//        collection.updateIntakeHeight();
+
+//        if (collection.getIntakeCurrentUse() > 5500 && !reversingIntake){
+//            reversingIntake = true;
+//            reverseIntake.reset();
+//            previousState = collection.getPowerState();
+//            collection.setState(Collection.intakePowerState.reversed);
+//        }
+//
+//        if (reversingIntake && reverseIntake.milliseconds() > 100){
+//            collection.setState(previousState);
+//            reversingIntake = false;
+//        }
+
         collection.updateIntakeState();
 
         //update delivery state

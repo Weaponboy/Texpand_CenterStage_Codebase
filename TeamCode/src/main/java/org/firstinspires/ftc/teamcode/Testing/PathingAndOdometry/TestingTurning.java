@@ -1,39 +1,68 @@
 package org.firstinspires.ftc.teamcode.Testing.PathingAndOdometry;
 
+import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.horizontal;
+import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.pivot;
+import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.vertical;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.VoltageUnit;
+import org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower.mecanumFollower;
+import org.firstinspires.ftc.teamcode.hardware._.Drivetrain;
 import org.firstinspires.ftc.teamcode.hardware._.Odometry;
 
+import java.util.List;
+
 @TeleOp
-@Disabled
 public class TestingTurning extends LinearOpMode {
 
     Odometry odometry = new Odometry(0, 0, 0);
 
-    FtcDashboard dashboard = FtcDashboard.getInstance();
+    Drivetrain drive = new Drivetrain();
 
-    Telemetry dashboardTelemetry = dashboard.getTelemetry();
+    mecanumFollower follower = new mecanumFollower();
 
-    TelemetryPacket packet = new TelemetryPacket();
+    LynxModule controlHUb;
+
+    boolean goodBattery;
 
     @Override
     public void runOpMode() throws InterruptedException {
         odometry.init(hardwareMap);
- 
+        drive.init(hardwareMap);
+        controlHUb = (LynxModule) hardwareMap.get(LynxModule.class, "Control Hub");
+
+        if (controlHUb.getInputVoltage(VoltageUnit.VOLTS)>13){
+            goodBattery = true;
+        }
         waitForStart();
-
-        odometry.Odo_Drive_Teleop(0, 0, 90);
-
-
 
         while (opModeIsActive()){
             odometry.update();
 
+            double pivotPower;
+
+            if (goodBattery){
+                pivotPower = follower.getTurnPower(90, odometry.heading, 0.02, 0.0008);
+            } else {
+                pivotPower = follower.getTurnPower(90, odometry.heading, 0.03, 0.001);
+            }
+
+            vertical = 0;
+            horizontal = 0;
+
+            drive.RF.setPower((-pivotPower + (vertical - horizontal)));
+            drive.RB.setPower((-pivotPower + (vertical + horizontal)));
+            drive.LF.setPower((pivotPower + (vertical + horizontal)));
+            drive.LB.setPower((pivotPower + (vertical - horizontal)));
+
+            telemetry.addData("goodBattery", goodBattery);
             telemetry.addData("x", odometry.X);
             telemetry.addData("y", odometry.Y);
             telemetry.addData("heading", odometry.heading);

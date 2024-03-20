@@ -25,10 +25,10 @@ public class Collection {
     double stowed = 0.3;
     double letClawThrough = 0.25;
     double firstPixel = 0.1;
-    double secondPixel = 0.13;
-    double thirdPixel = 0.19;
-    double forthPixel = 0.215;
-    double fifthPixel = 0.265;
+    double secondPixel = 0.185;
+    double thirdPixel = 0.225;
+    double forthPixel = 0.260;
+    double fifthPixel = 0.305;
 
     intakePowerState statePower = intakePowerState.off;
     intakeHeightState heightState = intakeHeightState.stowed;
@@ -162,7 +162,7 @@ public class Collection {
 
 //        IntakeHeightLeft.setDirection(Servo.Direction.FORWARD);
 
-        Intake.setDirection(DcMotorSimple.Direction.FORWARD);
+        Intake.setDirection(DcMotorSimple.Direction.REVERSE);
 
         Intake.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 

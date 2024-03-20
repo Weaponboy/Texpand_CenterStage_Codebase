@@ -194,7 +194,7 @@ public class Blue_Left_Pathing extends LinearOpMode implements CycleMethods{
                         break;
                     case first2:
 
-                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.whiteBlue, odometry);
+                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardRight, odometry);
 
 
                         if (!builtPath){
@@ -269,7 +269,7 @@ public class Blue_Left_Pathing extends LinearOpMode implements CycleMethods{
                         break;
                     case second2:
 
-                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.whiteBlue, odometry);
+                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardRight, odometry);
 
 
                         if (!builtPath){
@@ -395,7 +395,7 @@ public class Blue_Left_Pathing extends LinearOpMode implements CycleMethods{
                         break;
                     case first2:
 
-                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.whiteBlue, odometry);
+                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardRight, odometry);
 
 
                         if (!builtPath){
@@ -470,7 +470,7 @@ public class Blue_Left_Pathing extends LinearOpMode implements CycleMethods{
                         break;
                     case second2:
 
-                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.whiteBlue, odometry);
+                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardRight, odometry);
 
 
                         if (!builtPath){
@@ -596,7 +596,7 @@ public class Blue_Left_Pathing extends LinearOpMode implements CycleMethods{
                         break;
                     case first2:
 
-                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.whiteBlue, odometry);
+                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardRight, odometry);
 
 
                         if (!builtPath){
@@ -677,7 +677,7 @@ public class Blue_Left_Pathing extends LinearOpMode implements CycleMethods{
                         break;
                     case second2:
 
-                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.whiteBlue, odometry);
+                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardRight, odometry);
 
 
                         if (!builtPath){

@@ -7,10 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoImplEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
-import com.qualcomm.robotcore.util.RobotLog;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Constants_and_Setpoints.RobotArm;
 
 import java.util.Objects;
@@ -24,7 +21,7 @@ public class Delivery {
     ServoImplEx RightClaw;
     ServoImplEx LeftClaw;
 
-    ServoImplEx RotateClaw;
+    public ServoImplEx RotateClaw;
     public Servo RotateArm;
     public ServoImplEx ArmExtension;
     ServoImplEx mainPivotLeft;
@@ -67,7 +64,7 @@ public class Delivery {
     double deliverySecondPivotAuto = 0.2;
     double distancecalc;
     double avoidIntakeSecondPivot = 0.8;
-    double collectSecondPivot = 0.86;
+    double collectSecondPivot = 0.87;
     double deliverySecondPivot = -0.1;
     double lowdeliveryTopPivot = 1;
 
@@ -106,7 +103,7 @@ public class Delivery {
     boolean DeliveryMovingAuto = false;
     boolean DeliveryMoving = false;
     boolean CollectionMoving = false;
-    double ArmExtensionHome = 0.96;
+    public double ArmExtensionHome = 0.92;
     double deliveryMainIncrement = 0.015;
     double deliveryArmIncrement = 0.02;
 
@@ -132,7 +129,8 @@ public class Delivery {
         collect,
         moving,
         droppingWhites,
-        readyToDrop
+        readyToDrop,
+        readyForDelivering
     }
 
     public enum GripperState{
@@ -154,8 +152,8 @@ public class Delivery {
     }
 
     public enum PixelsAuto{
-        whiteBlue,
-        whiteRed,
+        backboardRight,
+        backboardLeft,
         yellow1Blue,
         yellow2Blue,
         yellow3Blue,
@@ -164,17 +162,17 @@ public class Delivery {
         yellow3Red
     }
 
-    RobotArm whiteBlue = new RobotArm(0.916,0.5117, 0.13, 0.256, rotateCollect, 1000, 0);
+    RobotArm backboardRight = new RobotArm(0.916,0.5117, 0.13, 0.256, rotateCollect, -1, -1);
 
-    RobotArm whiteRed = new RobotArm(0.916,0.5117, 0.13, 0.256, rotateCollect, 1000, 0);
+    RobotArm backboardLeft = new RobotArm(0.926,0.35, 0.85, 0.174, 0.95, -1, -1);
 
-    RobotArm yellow1Blue = new RobotArm(0.916, ArmPositionMid, 0.46, 0.316, 0.94, 800, 0);
-    RobotArm yellow2Blue = new RobotArm(0.916, ArmPositionMid, secondRotateMiddle, 0.256, rotateCollect, 800, 0);
-    RobotArm yellow3Blue = new RobotArm(0.916, ArmPositionMid, secondRotateMiddle, 0.256, rotateCollect, 800, 0);
+    RobotArm yellow1Blue = new RobotArm(0.916, ArmPositionMid, 0.46, 0.316, 0.94, -1, -1);
+    RobotArm yellow2Blue = new RobotArm(0.916, ArmPositionMid, secondRotateMiddle, 0.256, rotateCollect, -1, -1);
+    RobotArm yellow3Blue = new RobotArm(0.916, ArmPositionMid, secondRotateMiddle, 0.256, rotateCollect, -1, -1);
 
-    RobotArm yellow1Red = new RobotArm(0.916, ArmPositionMid, 0.46, 0.316, 0.94, 800, 0);
-    RobotArm yellow2Red = new RobotArm(0.916, ArmPositionMid, secondRotateMiddle, 0.256, rotateCollect, 800, 0);
-    RobotArm yellow3Red = new RobotArm(0.916, ArmPositionMid, secondRotateMiddle, 0.256, rotateCollect, 800, 0);
+    RobotArm yellow1Red = new RobotArm(0.916, ArmPositionMid, 0.46, 0.316, 0.94, -1, -1);
+    RobotArm yellow2Red = new RobotArm(0.916, ArmPositionMid, secondRotateMiddle, 0.256, rotateCollect, -1, -1);
+    RobotArm yellow3Red = new RobotArm(0.916, ArmPositionMid, secondRotateMiddle, 0.256, rotateCollect, -1, -1);
 
     armState armstateTarget = armState.moving;
 
@@ -192,6 +190,8 @@ public class Delivery {
 
     rightGripperState rightgripperstate = rightGripperState.closed;
     leftGripperState leftgripperstate = leftGripperState.closed;
+
+    boolean sideMoving;
 
     public void updateArm (double slidesPos, Odometry odometry, Gamepad gamepad2){
 
@@ -360,31 +360,104 @@ public class Delivery {
 
             case collect:
 
-                mainPivotOffSet = 0;
+                if (RotateArm.getPosition() > 0.46 && !sideMoving && !CollectionMoving){
 
-                secondRotate.setPosition(secondRotateMiddleCollect);
+                    timeToWaitSideMove = (Math.abs(RotateArm.getPosition() - ArmPositionMid) * 180) * 15;
 
-                armstateCurrent = armState.moving;
+                    secondRotate.setPosition(secondRotateMiddleCollect);
 
-                armstateTarget = armState.moving;
+                    RotateArm.setPosition(ArmPositionMid);
 
-                RotateArm.setPosition(ArmPositionMid);
+                    ArmExtension.setPosition(1);
 
-                ArmExtension.setPosition(ArmExtensionHome);
+                    setSecondPivot(collectSecondPivot);
 
-                pivotMoveTimeCollection.reset();
+                    RotateClaw.setPosition(rotateCollect);
 
-                CollectionMoving = true;
+                    pivotMoveTimeCollection.reset();
 
-                timeToWaitCollection = Math.max((Math.abs(getSecondPivotPosition() - collectSecondPivot) * 180) * timePerDegree, (Math.abs(getMainPivotPosition() - collectTopPivotPos) * 180) * timePerDegree);
+                    sideMoving = true;
 
-                setSecondPivot(collectSecondPivot);
+                } else if (RotateArm.getPosition() < 0.46 && !sideMoving && !CollectionMoving) {
 
-                setMainPivot(collectTopPivotPos);
+                    timeToWaitSideMove = (Math.abs(RotateArm.getPosition() - ArmPositionMid) * 180) * 15;
+
+                    secondRotate.setPosition(secondRotateMiddleCollect);
+
+                    RotateArm.setPosition(ArmPositionMid);
+
+                    ArmExtension.setPosition(1);
+
+                    setSecondPivot(collectSecondPivot);
+
+                    RotateClaw.setPosition(rotateCollect);
+
+                    pivotMoveTimeCollection.reset();
+
+                    sideMoving = true;
+                }else {
+
+                    if (!CollectionMoving){
+
+                        pivotMoveTimeCollection.reset();
+
+                        timeToWaitCollection = (Math.abs(getMainPivotPosition() - collectTopPivotPos) * 180) * timePerDegree+2;
+
+                        CollectionMoving = true;
+
+                        secondRotate.setPosition(secondRotateMiddleCollect);
+
+                        RotateArm.setPosition(ArmPositionMid);
+
+                        ArmExtension.setPosition(1);
+
+                        setSecondPivot(collectSecondPivot);
+
+                        setMainPivot(collectTopPivotPos);
+
+                        RotateClaw.setPosition(rotateCollect);
+
+                    }
+
+                }
+
+                if(CollectionMoving && pivotMoveTimeCollection.milliseconds() > timeToWaitCollection){
+                    armstateCurrent = armState.collect;
+                    armstateTarget = armState.moving;
+                    ArmExtension.setPosition(ArmExtensionHome);
+                    CollectionMoving = false;
+                }
+
+                if(sideMoving && pivotMoveTimeCollection.milliseconds() > timeToWaitSideMove){
+                    sideMoving = false;
+                    pivotMoveTimeCollection.reset();
+                    timeToWaitCollection = (Math.abs(getMainPivotPosition() - collectTopPivotPos) * 180) * timePerDegree;
+                    setMainPivot(collectTopPivotPos);
+                    CollectionMoving = true;
+                }
 
                 setClaws(clawClosed);
 
-                RotateClaw.setPosition(rotateCollect);
+                setGripperState(GripperState.closed);
+
+                break;
+            case readyForDelivering:
+
+                secondRotate.setPosition(secondRotateMiddle);
+
+                RotateArm.setPosition(ArmPositionMid);
+
+                setClaws(clawClosed);
+
+                setGripperState(GripperState.closed);
+
+                ArmExtension.setPosition(ArmExtensionHome);
+
+                setMainPivot(0.75);
+
+                setSecondPivot(deliverySecondPivot);
+
+                RotateClaw.setPosition(rotateDeliver);
 
                 break;
             case delivery:
@@ -393,6 +466,8 @@ public class Delivery {
                     secondRotate.setPosition(secondRotateMiddle);
                 }
 
+                double distance = 310 - odometry.X;
+
                 if (!PivotSet){
                     pivotMoveTimeDelivery.reset();
 
@@ -400,7 +475,7 @@ public class Delivery {
 
                     PivotSet = true;
 
-                    timeToWaitDelivery = (Math.abs(getMainPivotPosition() - getMainPivotSetPoint(pixelPlacement)) * 180) * 4;
+                    timeToWaitDelivery = Math.max(Math.abs(getMainPivotPosition() - getMainPivotSetPoint(pixelPlacement) * 180) * 5, Math.abs(ArmExtension.getPosition() - (1-distance*0.06))*6);
                 }
 
                 setClaws(clawClosed);
@@ -408,6 +483,7 @@ public class Delivery {
                 setGripperState(GripperState.closed);
 
                 if (pivotMoveTimeDelivery.milliseconds() > (timeToWaitDelivery) && DeliveryMoving) {
+
                     armstateCurrent = armState.readyToDrop;
 
                     armstateTarget = armState.readyToDrop;
@@ -416,11 +492,18 @@ public class Delivery {
 
                     DeliveryMoving = false;
 
+                } else if (touchingBackdrop) {
+
+                    armstateCurrent = armState.readyToDrop;
+
+                    armstateTarget = armState.readyToDrop;
+
+                    PivotSet = false;
+
+                    DeliveryMoving = false;
                 }
 
-                double distance = 310 - odometry.X;
-
-                ArmExtension.setPosition(1-distance*0.04);
+                ArmExtension.setPosition(1-distance*0.08);
 
                 setMainPivot(getMainPivotSetPoint(pixelPlacement));
 
@@ -429,38 +512,33 @@ public class Delivery {
                 RotateClaw.setPosition(getRotateClawSetPoint(pixelPlacement));
 
                 break;
+
             case deliverAuto:
 
-                secondRotate.setPosition(secondRotateMiddle);
+                secondRotate.setPosition(getSecondRotateSetPoint(pixelPlacement));
 
-                armstateCurrent = armState.moving;
+                timeToWaitDelivery = (Math.abs(getMainPivotPosition()-getMainPivotSetPoint(pixelPlacement))*180)*timePerDegree;
 
-                armstateTarget = armState.moving;
+                setMainPivot(getMainPivotSetPoint(pixelPlacement));
+
+                ArmExtension.setPosition(0.8);
+
+                setGripperState(GripperState.closed);
+
+                setSecondPivot(getSecondPivotSetPoint(pixelPlacement));
+
+                setClaws(clawClosed);
 
                 pivotMoveTimeAuto.reset();
 
                 DeliveryMovingAuto = true;
 
-                timeToWaitDelivery = Math.max((Math.abs(getSecondPivotPosition()-deliverySecondPivotAuto)*180)*timePerDegree, (Math.abs(getTopPivotPosition()-0.85)*180)*timePerDegree);
-
-                setClaws(clawClosed);
-
-                setGripperState(GripperState.closed);
-
-                setSecondPivot(deliverySecondPivotAuto);
-
-                setMainPivot(0.9);
-
-                targetMainPivot = 0.9 - slidesPos * servoPosPerTick + mainPivotOffSet;
-
-                RotateClaw.setPosition(rotateDeliver);
+                armstateTarget = armState.moving;
 
                 break;
             case droppingWhites:
 
                 if(!PivotSet){
-
-                    secondRotate.setPosition(secondRotateMiddle);
 
                     pivotTimer.reset();
 
@@ -472,8 +550,6 @@ public class Delivery {
 
                 if (pivotTimer.milliseconds() > (numberOfDegreesToTarget) * timePerDegree) {
 
-                    secondRotate.setPosition(getSecondRotateSetPoint(pixelPlacement));
-
                     RotateArm.setPosition(getArmRotateSetPoint(pixelPlacement));
 
                     RotateClaw.setPosition(getRotateClawSetPoint(pixelPlacement));
@@ -484,7 +560,7 @@ public class Delivery {
 
                 if (startExtending){
 
-                    ArmExtension.setPosition(ArmExtension.getPosition() - 0.07);
+                    ArmExtension.setPosition(ArmExtension.getPosition() - 0.04);
 
                     if (ArmExtension.getPosition() < 0.39) {
 
@@ -514,6 +590,8 @@ public class Delivery {
 
                 setMainPivot(getMainPivotSetPoint(pixelPlacement));
 
+                secondRotate.setPosition(getSecondRotateSetPoint(pixelPlacement));
+
                 break;
             default:
         }
@@ -530,9 +608,40 @@ public class Delivery {
                 CollectionMoving = false;
             }
 
-            if (DeliveryMovingAuto && pivotMoveTimeAuto.milliseconds() >= timeToWaitDelivery) {
-                armstateCurrent = armState.deliverAuto;
+            if(DeliveryMovingAuto && pivotMoveTimeAuto.milliseconds() > timeToWaitDelivery/1.5){
+                RotateArm.setPosition(getArmRotateSetPoint(pixelPlacement));
+                RotateClaw.setPosition(getRotateClawSetPoint(pixelPlacement));
+            }
+
+            if(DeliveryMovingAuto && pivotMoveTimeAuto.milliseconds() > timeToWaitDelivery){
+                ArmExtension.setPosition(0.4);
                 DeliveryMovingAuto = false;
+                armstateCurrent = armState.deliverAuto;
+            }
+
+        }
+
+        if (Objects.requireNonNull(armstateTarget) == armState.moving) {
+
+            if (DeliveryMoving && pivotMoveTimeDelivery.milliseconds() >= timeToWaitDelivery){
+                armstateCurrent = armState.delivery;
+                DeliveryMoving = false;
+            }
+
+            if (CollectionMoving && pivotMoveTimeCollection.milliseconds() >= timeToWaitCollection){
+                armstateCurrent = armState.collect;
+                CollectionMoving = false;
+            }
+
+            if(DeliveryMovingAuto && pivotMoveTimeAuto.milliseconds() > timeToWaitDelivery/1.5){
+                RotateArm.setPosition(getArmRotateSetPoint(pixelPlacement));
+                RotateClaw.setPosition(getRotateClawSetPoint(pixelPlacement));
+            }
+
+            if(DeliveryMovingAuto && pivotMoveTimeAuto.milliseconds() > timeToWaitDelivery){
+                ArmExtension.setPosition(0.4);
+                DeliveryMovingAuto = false;
+                armstateCurrent = armState.deliverAuto;
             }
 
         }
@@ -601,8 +710,8 @@ public class Delivery {
 
         mainPivotLeft.setDirection(Servo.Direction.REVERSE);
 
-        mainPivotLeft.setPwmRange(new PwmControl.PwmRange(600, 2500));
-        mainPivotRight.setPwmRange(new PwmControl.PwmRange(600, 2500));
+        mainPivotLeft.setPwmRange(new PwmControl.PwmRange(650, 2500));
+        mainPivotRight.setPwmRange(new PwmControl.PwmRange(650, 2500));
 
         RotateClaw = hardwareMap.get(ServoImplEx.class, "ClawRotate");
 
@@ -711,10 +820,10 @@ public class Delivery {
 
     public double getMainPivotSetPoint(PixelsAuto pixelTarget){
 
-        if (pixelTarget == PixelsAuto.whiteBlue){
-            return whiteBlue.getMainPivot();
-        } else if (pixelTarget == PixelsAuto.whiteRed) {
-            return whiteRed.getMainPivot();
+        if (pixelTarget == PixelsAuto.backboardRight){
+            return backboardRight.getMainPivot();
+        } else if (pixelTarget == PixelsAuto.backboardLeft) {
+            return backboardLeft.getMainPivot();
         }else if (pixelTarget == PixelsAuto.yellow1Blue) {
             return yellow1Blue.getMainPivot();
         }else if (pixelTarget == PixelsAuto.yellow2Blue) {
@@ -735,10 +844,10 @@ public class Delivery {
 
     public double getSecondPivotSetPoint(PixelsAuto pixelTarget){
 
-        if (pixelTarget == PixelsAuto.whiteBlue){
-            return whiteBlue.getSecondPivot();
-        } else if (pixelTarget == PixelsAuto.whiteRed) {
-            return whiteRed.getSecondPivot();
+        if (pixelTarget == PixelsAuto.backboardRight){
+            return backboardRight.getSecondPivot();
+        } else if (pixelTarget == PixelsAuto.backboardLeft) {
+            return backboardLeft.getSecondPivot();
         }else if (pixelTarget == PixelsAuto.yellow1Blue) {
             return yellow1Blue.getSecondPivot();
         }else if (pixelTarget == PixelsAuto.yellow2Blue) {
@@ -759,10 +868,10 @@ public class Delivery {
 
     public double getSecondRotateSetPoint(PixelsAuto pixelTarget){
 
-        if (pixelTarget == PixelsAuto.whiteBlue){
-            return whiteBlue.getSecondRotate();
-        } else if (pixelTarget == PixelsAuto.whiteRed) {
-            return whiteRed.getSecondRotate();
+        if (pixelTarget == PixelsAuto.backboardRight){
+            return backboardRight.getSecondRotate();
+        } else if (pixelTarget == PixelsAuto.backboardLeft) {
+            return backboardLeft.getSecondRotate();
         }else if (pixelTarget == PixelsAuto.yellow1Blue) {
             return yellow1Blue.getSecondRotate();
         }else if (pixelTarget == PixelsAuto.yellow2Blue) {
@@ -783,10 +892,10 @@ public class Delivery {
 
     public double getArmRotateSetPoint(PixelsAuto pixelTarget){
 
-        if (pixelTarget == PixelsAuto.whiteBlue){
-            return whiteBlue.getArmRotate();
-        } else if (pixelTarget == PixelsAuto.whiteRed) {
-            return whiteRed.getArmRotate();
+        if (pixelTarget == PixelsAuto.backboardRight){
+            return backboardRight.getArmRotate();
+        } else if (pixelTarget == PixelsAuto.backboardLeft) {
+            return backboardLeft.getArmRotate();
         }else if (pixelTarget == PixelsAuto.yellow1Blue) {
             return yellow1Blue.getArmRotate();
         }else if (pixelTarget == PixelsAuto.yellow2Blue) {
@@ -807,10 +916,10 @@ public class Delivery {
 
     public double getRotateClawSetPoint(PixelsAuto pixelTarget){
 
-        if (pixelTarget == PixelsAuto.whiteBlue){
-            return whiteBlue.getClawRotate();
-        } else if (pixelTarget == PixelsAuto.whiteRed) {
-            return whiteRed.getClawRotate();
+        if (pixelTarget == PixelsAuto.backboardRight){
+            return backboardRight.getClawRotate();
+        } else if (pixelTarget == PixelsAuto.backboardLeft) {
+            return backboardLeft.getClawRotate();
         }else if (pixelTarget == PixelsAuto.yellow1Blue) {
             return yellow1Blue.getClawRotate();
         }else if (pixelTarget == PixelsAuto.yellow2Blue) {

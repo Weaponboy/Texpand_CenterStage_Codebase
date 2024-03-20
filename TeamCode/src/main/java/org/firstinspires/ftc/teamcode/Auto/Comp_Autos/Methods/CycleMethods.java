@@ -25,7 +25,7 @@ public interface CycleMethods extends Auto_Methods {
         delivery.setGripperState(Delivery.GripperState.open);
         delivery.updateGrippers();
 
-        sleep(500);
+        sleep(200);
 
         delivery.setArmTargetState(Delivery.armState.collect);
         delivery.updateArm(deliverySlides.getCurrentposition(), false, pixelPlacement, odometry);
@@ -49,7 +49,7 @@ public interface CycleMethods extends Auto_Methods {
         delivery.setGripperState(Delivery.GripperState.open);
         delivery.updateGrippers();
 
-        sleep(500);
+        sleep(200);
 
         delivery.setArmTargetState(Delivery.armState.collect);
         delivery.updateArm(deliverySlides.getCurrentposition(), false, pixelPlacement, odometry);

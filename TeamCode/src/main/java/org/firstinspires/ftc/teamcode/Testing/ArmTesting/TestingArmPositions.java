@@ -140,8 +140,7 @@ public class TestingArmPositions extends OpMode {
         if (gamepad1.back && RotateArm.getPosition() < 0.66) {
             double setPoint = RotateArm.getPosition() + 0.001;
             RotateArm.setPosition(setPoint);
-        }
-        if (gamepad1.start && RotateArm.getPosition() > 0.3) {
+        }if (gamepad1.start && RotateArm.getPosition() > 0.3) {
             double setPoint = RotateArm.getPosition() - 0.001;
             RotateArm.setPosition(setPoint);
         }
@@ -160,10 +159,10 @@ public class TestingArmPositions extends OpMode {
             ArmExtension.setPosition(ArmExtension.getPosition() - 0.001);
         }
 
-        if (gamepad1.dpad_right && RotateArm.getPosition() < 0.66) {
-            RotateArm.setPosition(RotateArm.getPosition() + 0.005);
-        } else if (gamepad1.dpad_left && RotateArm.getPosition() > 0.3) {
-            RotateArm.setPosition(RotateArm.getPosition() - 0.005);
+        if (gamepad1.dpad_right) {
+            RotateClaw.setPosition(RotateClaw.getPosition() + 0.005);
+        } else if (gamepad1.dpad_left) {
+            RotateClaw.setPosition(RotateClaw.getPosition() - 0.005);
         }
 
 //        if (gamepad1.dpad_up) {

@@ -13,6 +13,14 @@ public class GenMethods extends pathBuilderMain {
         motionProfile();
     }
 
+    public void twoPoints(Vector2D start, Vector2D end, boolean lastSegment, double deceleration){
+        buildLineSegment(start, end);
+
+        pathBuilder(originalPath);
+
+        motionProfile(deceleration);
+    }
+
     public void twoPoints(Vector2D start, Vector2D end){
         buildLineSegment(start, end);
     }
@@ -23,6 +31,14 @@ public class GenMethods extends pathBuilderMain {
         pathBuilder(originalPath);
 
         motionProfile();
+    }
+
+    public void threePoints(Vector2D start, Vector2D control, Vector2D end, boolean lastSegment, double deceleration){
+        buildCurveSegment(start, control, end);
+
+        pathBuilder(originalPath);
+
+        motionProfile(deceleration);
     }
 
     public void threePoints(Vector2D start, Vector2D control, Vector2D end){
@@ -36,6 +52,15 @@ public class GenMethods extends pathBuilderMain {
 
         motionProfile();
     }
+
+    public void fourPoints(Vector2D start, Vector2D control1, Vector2D control2, Vector2D end, boolean lastSegment, double deceleration){
+        buildCurveSegment(start, control1, control2, end);
+
+        pathBuilder(originalPath);
+
+        motionProfile(deceleration);
+    }
+
 
     public void fourPoints(Vector2D start, Vector2D control1, Vector2D control2, Vector2D end){
         buildCurveSegment(start, control1, control2, end);

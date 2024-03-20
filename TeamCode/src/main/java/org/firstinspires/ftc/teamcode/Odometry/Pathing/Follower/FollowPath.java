@@ -31,7 +31,6 @@ public class FollowPath {
         this.followablePath = followablePath;
         this.pathingVelocity = pathingVelocity;
         this.pathCurve = calculatePerpendicularVectors(calculateFirstDerivatives(followablePath));
-
     }
 
     public Vector2D findPoint(){

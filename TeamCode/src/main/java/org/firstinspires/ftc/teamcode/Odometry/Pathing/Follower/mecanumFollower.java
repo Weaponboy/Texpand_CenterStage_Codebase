@@ -374,8 +374,8 @@ public class mecanumFollower {
 
     public PathingPower getCorrectivePowerAtEnd(Vector2D robotPos, Vector2D targetPos, double heading){
 
-        XCorrective.setPID(0.035, xI, 0.0001);
-        YCorrective.setPID(0.035, yI, 0.0001);
+        XCorrective.setPID(0.045, xI, 0.0001);
+        YCorrective.setPID(0.045, yI, 0.0001);
 
         Vector2D error;
         PathingPower correctivePower = new PathingPower();
@@ -832,12 +832,154 @@ public class mecanumFollower {
             pathingPower = getFullPathingPower(robotPositionVector, heading, odometry);
             vertical = pathingPower.getVertical();
             horizontal = -(pathingPower.getHorizontal());
-            pivot = getTurnPower(targetHeading, odometry.heading, 0.02);
+            pivot = getTurnPower(targetHeading, odometry.heading, 0.02, 0.005);
         }else {
             correctivePower = getCorrectivePowerAtEnd(robotPositionVector, targetPoint, heading);
             vertical = correctivePower.getVertical();
             horizontal = -(correctivePower.getHorizontal());
-            pivot = getTurnPower(targetHeading, odometry.heading, 0.01);
+            pivot = getTurnPower(targetHeading, odometry.heading, 0.01, 0.005);
+        }
+
+        double denominator = Math.max(Math.abs(vertical) + Math.abs(horizontal) + Math.abs(pivot), 1);
+
+        System.out.println("vertical before set" + vertical);
+
+        double left_Front = (vertical + horizontal + pivot) / denominator;
+        double left_Back = (vertical - horizontal + pivot) / denominator;
+        double right_Front = (vertical - horizontal - pivot) / denominator;
+        double right_Back = (vertical + horizontal - pivot) / denominator;
+
+        drive.RF.setPower(right_Front);
+        drive.RB.setPower(right_Back);
+        drive.LF.setPower(left_Front);
+        drive.LB.setPower(left_Back);
+
+        return pathing;
+
+    }
+
+    public boolean followPathAutoHeading(double targetHeading, Odometry odometry, Drivetrain drive, double p){
+
+        odometry.update();
+
+        Vector2D robotPositionVector = new Vector2D(odometry.X, odometry.Y);
+
+        Vector2D targetPoint = pathfollow.getPointOnFollowable(pathfollow.getLastPoint());
+
+        boolean pathing = true;
+
+        robotPositionVector.set(odometry.X, odometry.Y);
+
+        if (Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 1.4 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 1.4 && Math.abs(odometry.getVerticalVelocity()) < 3 && Math.abs(odometry.getHorizontalVelocity()) < 3 && Math.abs(targetHeading - odometry.heading) < 2){
+            pathing = false;
+        }
+
+        PathingPower correctivePower = new PathingPower();
+        PathingPower pathingPower;
+
+        if(Math.abs(odometry.getHorizontalVelocity()) < 3){
+            yI += 0.05;
+        }else {
+            yI = 0;
+        }
+
+        if(Math.abs(odometry.getVerticalVelocity()) < 3){
+            xI += 0.05;
+        }else {
+            xI = 0;
+        }
+
+        double heading = odometry.heading;
+
+        int closestPos = pathfollow.getClosestPositionOnPath(robotPositionVector);
+
+        if (closestPos >= pathfollow.followablePath.size()-50){
+            gotToEnd = true;
+        } else if (closestPos < (pathfollow.followablePath.size()-1)/2) {
+            gotToEnd = false;
+        }
+
+        if (!gotToEnd){
+            pathingPower = getFullPathingPower(robotPositionVector, heading, odometry);
+            vertical = pathingPower.getVertical();
+            horizontal = -(pathingPower.getHorizontal());
+            pivot = getTurnPower(targetHeading, odometry.heading, p, 0.002);
+        }else {
+            correctivePower = getCorrectivePowerAtEnd(robotPositionVector, targetPoint, heading);
+            vertical = correctivePower.getVertical();
+            horizontal = -(correctivePower.getHorizontal());
+            pivot = getTurnPower(targetHeading, odometry.heading, 0.008, 0.002);
+        }
+
+        double denominator = Math.max(Math.abs(vertical) + Math.abs(horizontal) + Math.abs(pivot), 1);
+
+        System.out.println("vertical before set" + vertical);
+
+        double left_Front = (vertical + horizontal + pivot) / denominator;
+        double left_Back = (vertical - horizontal + pivot) / denominator;
+        double right_Front = (vertical - horizontal - pivot) / denominator;
+        double right_Back = (vertical + horizontal - pivot) / denominator;
+
+        drive.RF.setPower(right_Front);
+        drive.RB.setPower(right_Back);
+        drive.LF.setPower(left_Front);
+        drive.LB.setPower(left_Back);
+
+        return pathing;
+
+    }
+
+    public boolean followPathAutoHeading(double targetHeading, Odometry odometry, Drivetrain drive, double p, double errorMargin){
+
+        odometry.update();
+
+        Vector2D robotPositionVector = new Vector2D(odometry.X, odometry.Y);
+
+        Vector2D targetPoint = pathfollow.getPointOnFollowable(pathfollow.getLastPoint());
+
+        boolean pathing = true;
+
+        robotPositionVector.set(odometry.X, odometry.Y);
+
+        if (Math.abs(robotPositionVector.getX() - targetPoint.getX()) < errorMargin && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < errorMargin && Math.abs(odometry.getVerticalVelocity()) < 3 && Math.abs(odometry.getHorizontalVelocity()) < 3 && Math.abs(targetHeading - odometry.heading) < 2){
+            pathing = false;
+        }
+
+        PathingPower correctivePower = new PathingPower();
+        PathingPower pathingPower;
+
+        if(Math.abs(odometry.getHorizontalVelocity()) < 3){
+            yI += 0.05;
+        }else {
+            yI = 0;
+        }
+
+        if(Math.abs(odometry.getVerticalVelocity()) < 3){
+            xI += 0.05;
+        }else {
+            xI = 0;
+        }
+
+        double heading = odometry.heading;
+
+        int closestPos = pathfollow.getClosestPositionOnPath(robotPositionVector);
+
+        if (closestPos >= pathfollow.followablePath.size()-50){
+            gotToEnd = true;
+        } else if (closestPos < (pathfollow.followablePath.size()-1)/2) {
+            gotToEnd = false;
+        }
+
+        if (!gotToEnd){
+            pathingPower = getFullPathingPower(robotPositionVector, heading, odometry);
+            vertical = pathingPower.getVertical();
+            horizontal = -(pathingPower.getHorizontal());
+            pivot = getTurnPower(targetHeading, odometry.heading, p, 0.002);
+        }else {
+            correctivePower = getCorrectivePowerAtEnd(robotPositionVector, targetPoint, heading);
+            vertical = correctivePower.getVertical();
+            horizontal = -(correctivePower.getHorizontal());
+            pivot = getTurnPower(targetHeading, odometry.heading, 0.008, 0.002);
         }
 
         double denominator = Math.max(Math.abs(vertical) + Math.abs(horizontal) + Math.abs(pivot), 1);
@@ -905,12 +1047,12 @@ public class mecanumFollower {
             pathingPower = getFullPathingPower(robotPositionVector, heading, odometry);
             vertical = pathingPower.getVertical();
             horizontal = -(pathingPower.getHorizontal());
-            pivot = getTurnPower(targetHeading, odometry.heading, 0.025);
+            pivot = getTurnPower(targetHeading, odometry.heading);
         }else {
             correctivePower = getCorrectivePowerAtEnd(robotPositionVector, targetPoint, heading);
             vertical = correctivePower.getVertical();
             horizontal = -(correctivePower.getHorizontal());
-            pivot = getTurnPower(targetHeading, odometry.heading, 0.015);
+            pivot = getTurnPower(targetHeading, odometry.heading);
         }
 
 
@@ -984,7 +1126,7 @@ public class mecanumFollower {
         return turnPower;
     }
 
-    public double getTurnPower(double targetHeading, double currentHeading, double P){
+    public double getTurnPower(double targetHeading, double currentHeading, double P, double D){
 
         double turnPower;
 
@@ -996,7 +1138,7 @@ public class mecanumFollower {
             rotdist = (rotdist - 360);
         }
 
-        headingPID = new PIDController(P, 0, rotationD);
+        headingPID = new PIDController(P, 0, D);
 
         turnPower = headingPID.calculate(-rotdist);
 
