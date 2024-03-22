@@ -54,7 +54,12 @@ public interface Auto_Methods {
             delivery.updateArm(deliverySlides.getCurrentposition(), sensors.armSensor.isPressed(), pixelPlacement, odometry);
         }
 
-        sleep(400);
+        if (!(sensors.armSensor.isPressed())){
+            delivery.ArmExtension.setPosition(delivery.getExtensionSetPoint(pixelPlacement)-0.1);
+            sleep(200);
+        }
+
+        sleep(200);
 
         delivery.setGripperState(Delivery.GripperState.open);
         delivery.updateGrippers();

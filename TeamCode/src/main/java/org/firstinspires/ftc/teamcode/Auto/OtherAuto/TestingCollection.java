@@ -142,7 +142,7 @@ public class TestingCollection extends LinearOpMode {
         collection.setState(Collection.intakePowerState.reversedHalf);
         collection.updateIntakeState();
 
-        collection.setIntakeHeight(Collection.intakeHeightState.hangStowed);
+        collection.setIntakeHeight(Collection.intakeHeightState.startingBox);
         collection.updateIntakeHeight();
 
         sleep(200);

@@ -65,5 +65,11 @@ public class GenMethods extends pathBuilderMain {
     public void fourPoints(Vector2D start, Vector2D control1, Vector2D control2, Vector2D end){
         buildCurveSegment(start, control1, control2, end);
     }
+
+    public void ClearAll(){
+        followablePath.clear();
+        originalPath.clear();
+        pathingVelocity.clear();
+    }
     
 }

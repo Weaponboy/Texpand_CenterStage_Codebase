@@ -64,8 +64,8 @@ public class propDetectionByAmount implements VisionProcessor {
     public Scalar MIN_THRESH_RED = new Scalar(110, 20, 50);
     public Scalar MAX_THRESH_RED = new Scalar(220, 255, 255);
 
-    static final Rect rightOfScreen = new Rect(new Point(320, 0), new Point(640, 240));
-    static final Rect leftOfScreen = new Rect(new Point(0, 0), new Point(320, 240));
+    static final Rect rightOfScreen = new Rect(new Point(320, 240), new Point(640, 480));
+    static final Rect leftOfScreen = new Rect(new Point(0, 240), new Point(320, 480));
 
     public double position1 = 0;
     public double position2 = 0;
@@ -148,9 +148,9 @@ public class propDetectionByAmount implements VisionProcessor {
                 break;
             case left:
                 if (RightPixels - LeftPixels > 4000){
-                    position2++;
-                }else if (LeftPixels - RightPixels > 4000){
                     position3++;
+                }else if (LeftPixels - RightPixels > 4000){
+                    position2++;
                 }else{
                     position1++;
                 }

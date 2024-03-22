@@ -108,12 +108,12 @@ public class Delivery {
     double deliveryArmIncrement = 0.02;
 
     double armRotateToMainConstLEFT = 0.0944;
-    double armRotateToSecondRotateConstLEFT = -1.54;
+    double armRotateToSecondRotateConstLEFT = -2.54;
     double armRotateToSecondPivotConstLEFT = 0.278;
     double armRotateToArmExtendConstLEFT = -2.494;
 
     double armRotateToMainConstRIGHT = -0.0944;
-    double armRotateToSecondRotateConstRIGHT = -1.52;
+    double armRotateToSecondRotateConstRIGHT = -2.52;
     double armRotateToSecondPivotConstRIGHT = -0.278;
     double armRotateToArmExtendConstRIGHT = 2.494;
     double Mainpivottoextendconst = -10.89;
@@ -162,13 +162,13 @@ public class Delivery {
         yellow3Red
     }
 
-    RobotArm backboardRight = new RobotArm(0.916,0.5117, 0.13, 0.256, rotateCollect, -1, -1);
+    RobotArm backboardRight = new RobotArm(0.926,0.65, 0.13, 0.174, 0.15, -1, -1);
 
     RobotArm backboardLeft = new RobotArm(0.926,0.35, 0.85, 0.174, 0.95, -1, -1);
 
-    RobotArm yellow1Blue = new RobotArm(0.916, ArmPositionMid, 0.46, 0.316, 0.94, -1, -1);
-    RobotArm yellow2Blue = new RobotArm(0.916, ArmPositionMid, secondRotateMiddle, 0.256, rotateCollect, -1, -1);
-    RobotArm yellow3Blue = new RobotArm(0.916, ArmPositionMid, secondRotateMiddle, 0.256, rotateCollect, -1, -1);
+    RobotArm yellow1Blue = new RobotArm(0.916, ArmPositionMid, 0.55, 0.194, 0.94, 0.85, -1);
+    RobotArm yellow2Blue = new RobotArm(0.916, ArmPositionMid, secondRotateMiddle, 0.256, rotateCollect, 0.7, -1);
+    RobotArm yellow3Blue = new RobotArm(0.916, ArmPositionMid, secondRotateMiddle, 0.256, rotateCollect, 0.65, -1);
 
     RobotArm yellow1Red = new RobotArm(0.916, ArmPositionMid, 0.46, 0.316, 0.94, -1, -1);
     RobotArm yellow2Red = new RobotArm(0.916, ArmPositionMid, secondRotateMiddle, 0.256, rotateCollect, -1, -1);
@@ -466,8 +466,6 @@ public class Delivery {
                     secondRotate.setPosition(secondRotateMiddle);
                 }
 
-                double distance = 310 - odometry.X;
-
                 if (!PivotSet){
                     pivotMoveTimeDelivery.reset();
 
@@ -475,7 +473,7 @@ public class Delivery {
 
                     PivotSet = true;
 
-                    timeToWaitDelivery = Math.max(Math.abs(getMainPivotPosition() - getMainPivotSetPoint(pixelPlacement) * 180) * 5, Math.abs(ArmExtension.getPosition() - (1-distance*0.06))*6);
+                    timeToWaitDelivery = Math.max(Math.abs(getMainPivotPosition() - getMainPivotSetPoint(pixelPlacement) * 180) * 5, Math.abs(ArmExtension.getPosition() - getExtensionSetPoint(pixelPlacement))*6);
                 }
 
                 setClaws(clawClosed);
@@ -503,7 +501,7 @@ public class Delivery {
                     DeliveryMoving = false;
                 }
 
-                ArmExtension.setPosition(1-distance*0.08);
+                ArmExtension.setPosition(getExtensionSetPoint(pixelPlacement));
 
                 setMainPivot(getMainPivotSetPoint(pixelPlacement));
 
@@ -937,5 +935,30 @@ public class Delivery {
         }
 
     }
+
+    public double getExtensionSetPoint(PixelsAuto pixelTarget){
+
+        if (pixelTarget == PixelsAuto.backboardRight){
+            return backboardRight.getArmExtension();
+        } else if (pixelTarget == PixelsAuto.backboardLeft) {
+            return backboardLeft.getArmExtension();
+        }else if (pixelTarget == PixelsAuto.yellow1Blue) {
+            return yellow1Blue.getArmExtension();
+        }else if (pixelTarget == PixelsAuto.yellow2Blue) {
+            return yellow2Blue.getArmExtension();
+        }else if (pixelTarget == PixelsAuto.yellow3Blue) {
+            return yellow3Blue.getArmExtension();
+        }else if (pixelTarget == PixelsAuto.yellow1Red) {
+            return yellow1Red.getArmExtension();
+        }else if (pixelTarget == PixelsAuto.yellow2Red) {
+            return yellow2Red.getArmExtension();
+        }else if(pixelTarget == PixelsAuto.yellow3Red) {
+            return yellow3Red.getArmExtension();
+        }else{
+            return 0;
+        }
+
+    }
+
 
 }

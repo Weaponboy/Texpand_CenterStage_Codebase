@@ -571,7 +571,7 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
         } else if (gamepad2.left_trigger > 0 && deliverySlides.getCurrentposition() > 1300){
 
-            collection.setIntakeHeight(Collection.intakeHeightState.hangStowed);
+            collection.setIntakeHeight(Collection.intakeHeightState.startingBox);
 
             deliverySlides.DeliverySlides(800, -0.8);
 

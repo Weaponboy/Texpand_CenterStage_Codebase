@@ -20,18 +20,18 @@ public class Collection {
 
     HardwareMap hmap;
 
-    double collect = 0.1;
-    double hangStowed = 0.45;
+    double collect = 0.05;
+    double startingBox = 0.7;
     double stowed = 0.3;
     double letClawThrough = 0.25;
-    double firstPixel = 0.1;
-    double secondPixel = 0.185;
-    double thirdPixel = 0.225;
-    double forthPixel = 0.260;
-    double fifthPixel = 0.305;
+    double firstPixel = 0.05;
+    double secondPixel = 0.1250;
+    double thirdPixel = 0.1550;
+    double forthPixel = 0.205;
+    double fifthPixel = 0.245;
 
     intakePowerState statePower = intakePowerState.off;
-    intakeHeightState heightState = intakeHeightState.stowed;
+    intakeHeightState heightState = intakeHeightState.startingBox;
     sweeperState sweeperstate = sweeperState.retract;
 
     public enum sweeperState{
@@ -48,7 +48,7 @@ public class Collection {
     }
 
     public enum intakeHeightState{
-        hangStowed,
+        startingBox,
         collect,
         stowed,
         letClawThrough,
@@ -99,8 +99,8 @@ public class Collection {
     public void updateIntakeHeight(){
 
         switch (heightState){
-            case hangStowed:
-                IntakeHeightRight.setPosition(hangStowed);
+            case startingBox:
+                IntakeHeightRight.setPosition(startingBox);
 //                IntakeHeightLeft.setPosition(hangStowed);
                 break;
             case stowed:
@@ -156,7 +156,7 @@ public class Collection {
 
         IntakeHeightRight.setDirection(Servo.Direction.FORWARD);
 
-        IntakeHeightRight.setPosition(0);
+        IntakeHeightRight.setPosition(startingBox);
 
 //        IntakeHeightLeft = hardwareMap.get(Servo.class, "IntakeServoLeft");
 
