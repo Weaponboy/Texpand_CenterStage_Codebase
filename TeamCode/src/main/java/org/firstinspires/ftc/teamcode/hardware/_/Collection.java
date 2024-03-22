@@ -24,11 +24,17 @@ public class Collection {
     double startingBox = 0.7;
     double stowed = 0.3;
     double letClawThrough = 0.25;
+
     double firstPixel = 0.05;
+    double firstAndHalf = 0.062;
     double secondPixel = 0.1250;
+    double secondAndHalf = 0.138;
     double thirdPixel = 0.1550;
+    double thirdAndHalf = 0.175;
     double forthPixel = 0.205;
+    double forthAndHalf = 0.222;
     double fifthPixel = 0.245;
+    double fifthAndHalf = 0.283;
 
     intakePowerState statePower = intakePowerState.off;
     intakeHeightState heightState = intakeHeightState.startingBox;
@@ -53,10 +59,15 @@ public class Collection {
         stowed,
         letClawThrough,
         firstPixel,
+        firstAndHalf,
         secondPixel,
+        secondAndHalf,
         thirdPixel,
+        thirdAndHalf,
         forthPixel,
-        fifthPixel
+        forthAndHalf,
+        fifthPixel,
+        fifthAndHalf
     }
 
     public void updateIntakeState(){
@@ -133,6 +144,26 @@ public class Collection {
                 break;
             case fifthPixel:
                 IntakeHeightRight.setPosition(fifthPixel);
+//                IntakeHeightLeft.setPosition(fifthPixel);
+                break;
+            case firstAndHalf:
+                IntakeHeightRight.setPosition(firstAndHalf);
+//                IntakeHeightLeft.setPosition(firstPixel);
+                break;
+            case secondAndHalf:
+                IntakeHeightRight.setPosition(secondAndHalf);
+//                IntakeHeightLeft.setPosition(secondPixel);
+                break;
+            case thirdAndHalf:
+                IntakeHeightRight.setPosition(thirdAndHalf);
+//                IntakeHeightLeft.setPosition(thirdPixel);
+                break;
+            case forthAndHalf:
+                IntakeHeightRight.setPosition(forthAndHalf);
+//                IntakeHeightLeft.setPosition(forthPixel);
+                break;
+            case fifthAndHalf:
+                IntakeHeightRight.setPosition(fifthAndHalf);
 //                IntakeHeightLeft.setPosition(fifthPixel);
                 break;
             default:

@@ -162,7 +162,7 @@ public class Delivery {
         yellow3Red
     }
 
-    RobotArm backboardRight = new RobotArm(0.926,0.65, 0.13, 0.174, 0.15, -1, -1);
+    RobotArm backboardRight = new RobotArm(0.926,0.62, 0.1, 0.160, 0.15, -1, -1);
 
     RobotArm backboardLeft = new RobotArm(0.926,0.35, 0.85, 0.174, 0.95, -1, -1);
 
@@ -453,7 +453,7 @@ public class Delivery {
 
                 ArmExtension.setPosition(ArmExtensionHome);
 
-                setMainPivot(0.75);
+                setMainPivot(0.82);
 
                 setSecondPivot(deliverySecondPivot);
 
