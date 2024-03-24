@@ -115,10 +115,10 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
     /**collecting paths*/
     Vector2D CS1S = new Vector2D(getRealCoords(300), getRealCoords(90));
     Vector2D CC1S = new Vector2D(getRealCoords(265), getRealCoords(39));
-    Vector2D CE1S = new Vector2D(getRealCoords(180), getRealCoords(41));
+    Vector2D CE1S = new Vector2D(getRealCoords(180), getRealCoords(38));
 
     Vector2D CS2S = CE1S;
-    Vector2D CE2S = new Vector2D(getRealCoords(119), getRealCoords(39));
+    Vector2D CE2S = new Vector2D(getRealCoords(119), getRealCoords(35));
 
     Vector2D CS3S = CE2S;
     Vector2D CC3S = new Vector2D(getRealCoords(35), getRealCoords(75));
@@ -187,7 +187,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
     //second position
     Vector2D oneEightyHeadingS = new Vector2D(getRealCoords(77), getRealCoords(91));
-    Vector2D leavePurpleHeadingS = new Vector2D(getRealCoords(86), getRealCoords(78));
+    Vector2D leavePurpleHeadingS = new Vector2D(getRealCoords(86), getRealCoords(72));
 
     //third position
     Vector2D oneEightyHeadingT = new Vector2D(getRealCoords(80), getRealCoords(70));
@@ -222,7 +222,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
     int slidesPosWhitePixels = 1000;
 
-    int slidesPosYellowPixel = 400;
+    int slidesPosYellowPixel = 300;
 
     /**hardware objects*/
     Odometry odometry = new Odometry(startPosition.getX(), startPosition.getY(), 270);
