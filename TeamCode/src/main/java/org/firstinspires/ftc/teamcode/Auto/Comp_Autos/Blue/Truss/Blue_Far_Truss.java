@@ -176,7 +176,6 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
     Vector2D CC3T = new Vector2D(getRealCoords(63), getRealCoords(35));
     Vector2D CE3T = new Vector2D(getRealCoords(48), getRealCoords(105));
 
-
     /**Action points*/
 
     //preload
@@ -195,7 +194,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
     Vector2D leavePurpleHeadingT = new Vector2D(getRealCoords(85), getRealCoords(38));
 
     //delivery
-    Vector2D extendSlidesDelivery = new Vector2D(getRealCoords(140), getRealCoords(32));
+    Vector2D extendSlidesDelivery = new Vector2D(getRealCoords(120), getRealCoords(32));
 
     //collection
     Vector2D turnIntakeOn = new Vector2D(getRealCoords(183), getRealCoords(32));
@@ -290,7 +289,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
             sleep(50);
             gotTwo = !sensors.RightClawSensor.isPressed() && !sensors.LeftClawSensor.isPressed();
 
-            if (collection.getIntakeCurrentUse() > 4500 && !reversingIntake){
+            if (collection.getIntakeCurrentUse() > 5500 && !reversingIntake){
                 reversingIntake = true;
                 reverseIntakeTimer.reset();
                 previousState = collection.getPowerState();
@@ -325,7 +324,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
             collection.IntakeHeightRight.setPosition(collection.getIntakeHeightRight() - 0.005);
 
-            if (collection.getIntakeCurrentUse() > 4500 && !reversingIntake){
+            if (collection.getIntakeCurrentUse() > 5500 && !reversingIntake){
                 reversingIntake = true;
                 reverseIntakeTimer.reset();
                 previousState = collection.getPowerState();
