@@ -259,6 +259,9 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
     boolean armOver = false;
 
+    double intakeCurrentOne = 5500;
+    double intakeNormal = 5500;
+
     boolean reversingIntake = false;
     Collection.intakePowerState previousState = Collection.intakePowerState.off;
     ElapsedTime reverseIntakeTimer = new ElapsedTime();
@@ -279,7 +282,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
         sleep(200);
 
-        collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
+        collection.setIntakeHeight(Collection.intakeHeightState.forthAndHalf);
         collection.updateIntakeHeight();
 
         counter = 0;
@@ -289,7 +292,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
             sleep(50);
             gotTwo = !sensors.RightClawSensor.isPressed() && !sensors.LeftClawSensor.isPressed();
 
-            if (collection.getIntakeCurrentUse() > 5500 && !reversingIntake){
+            if (collection.getIntakeCurrentUse() > intakeCurrentOne && !reversingIntake){
                 reversingIntake = true;
                 reverseIntakeTimer.reset();
                 previousState = collection.getPowerState();
@@ -324,7 +327,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
             collection.IntakeHeightRight.setPosition(collection.getIntakeHeightRight() - 0.005);
 
-            if (collection.getIntakeCurrentUse() > 5500 && !reversingIntake){
+            if (collection.getIntakeCurrentUse() > intakeCurrentOne && !reversingIntake){
                 reversingIntake = true;
                 reverseIntakeTimer.reset();
                 previousState = collection.getPowerState();
@@ -361,7 +364,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
     }
 
-    public void delivery_and_collect_2() throws InterruptedException {
+    public void delivery_and_collect_2() throws InterruptedException{
 
         delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
 
@@ -400,7 +403,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
                 delivery.setGripperState(Delivery.GripperState.open);
                 delivery.updateGrippers();
 
-                collection.setIntakeHeight(Collection.intakeHeightState.secondPixel);
+                collection.setIntakeHeight(Collection.intakeHeightState.secondAndHalf);
                 collection.updateIntakeHeight();
 
                 delivery.ArmExtension.setPosition(delivery.ArmExtensionHome);
@@ -408,7 +411,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
         }
 
-        if (collection.getIntakeCurrentUse() > 4500 && !reversingIntake){
+        if (collection.getIntakeCurrentUse() > intakeNormal && !reversingIntake){
             reversingIntake = true;
             reverseIntakeTimer.reset();
             previousState = collection.getPowerState();
@@ -426,9 +429,6 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
             gripperControl.reset();
 
-            delivery.setGripperState(Delivery.GripperState.closed);
-            delivery.updateGrippers();
-
             drive.RF.setPower(0);
             drive.RB.setPower(0);
             drive.LF.setPower(0);
@@ -437,6 +437,9 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
             follower.resetClosestPoint(new Vector2D(odometry.X, odometry.Y));
+
+            collection.setIntakeHeight(Collection.intakeHeightState.stowed);
+            collection.updateIntakeHeight();
 
             delivering = true;
 
@@ -448,12 +451,19 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
         if (gripperControl.milliseconds() > (timeChanger+200) && gripperControl.milliseconds() < (timeChanger+400) && gotTwo){
 
+            delivery.setGripperState(Delivery.GripperState.closed);
+            delivery.updateGrippers();
+
+        }
+
+        if (gripperControl.milliseconds() > (timeChanger+400) && gripperControl.milliseconds() < (timeChanger+600) && gotTwo){
+
             collection.setState(Collection.intakePowerState.reversed);
             collection.updateIntakeState();
 
         }
 
-        if (gripperControl.milliseconds() > (timeChanger+400) && gripperControl.milliseconds() < (timeChanger+600) && gotTwo){
+        if (gripperControl.milliseconds() > (timeChanger+600) && gripperControl.milliseconds() < (timeChanger+800) && gotTwo){
 
             collection.setState(Collection.intakePowerState.off);
             collection.updateIntakeState();
@@ -681,7 +691,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
         }
 
-        if (collection.getIntakeCurrentUse() > 5000 && !reversingIntake){
+        if (collection.getIntakeCurrentUse() > intakeNormal && !reversingIntake){
             reversingIntake = true;
             reverseIntakeTimer.reset();
             previousState = collection.getPowerState();
@@ -699,13 +709,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
             gripperControl.reset();
 
-            delivery.setGripperState(Delivery.GripperState.closed);
-            delivery.updateGrippers();
-
-            drive.RF.setPower(0);
-            drive.RB.setPower(0);
-            drive.LF.setPower(0);
-            drive.LB.setPower(0);
+            drive.setAllPower(0);
 
             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
@@ -721,12 +725,19 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
         if (gripperControl.milliseconds() > (timeChanger+200) && gripperControl.milliseconds() < (timeChanger+400) && gotTwo){
 
+            delivery.setGripperState(Delivery.GripperState.closed);
+            delivery.updateGrippers();
+
+        }
+
+        if (gripperControl.milliseconds() > (timeChanger+400) && gripperControl.milliseconds() < (timeChanger+600) && gotTwo){
+
             collection.setState(Collection.intakePowerState.reversed);
             collection.updateIntakeState();
 
         }
 
-        if (gripperControl.milliseconds() > (timeChanger+400) && gripperControl.milliseconds() < (timeChanger+600) && gotTwo){
+        if (gripperControl.milliseconds() > (timeChanger+600) && gripperControl.milliseconds() < (timeChanger+800) && gotTwo){
 
             collection.setState(Collection.intakePowerState.off);
             collection.updateIntakeState();
@@ -811,7 +822,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
             if (Math.abs(DeliveryEndpoint.getX() - odometry.X) < deliveryError && Math.abs(DeliveryEndpoint.getY() - odometry.Y) < deliveryError && !pathing) {
 
-                drive.setAllPower(-0.4);
+                drive.setAllPower(0.4);
 
                 drive.RF.setPower(0);
                 drive.RB.setPower(0);
@@ -826,7 +837,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
                 delivery.setArmTargetState(Delivery.armState.collect);
                 delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
 
-                deliverySlides.DeliverySlides(0, -1);
+                deliverySlides.DeliverySlides(0, -0.5);
 
                 pathing = true;
 
