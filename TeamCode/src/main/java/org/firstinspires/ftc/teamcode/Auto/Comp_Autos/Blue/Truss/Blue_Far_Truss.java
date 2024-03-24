@@ -955,16 +955,16 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
                 yellow.twoPoints(DYS2F, DYE2F);
                 yellow.threePoints(DYS3F, DYC3F, DYE3F, true, 1);
 
-                collect.threePoints(CS1F, CC1F, CE1F);
-                collect.twoPoints(CS2F, CE2F);
-                collect.threePoints(CS3F, CC3F, CE3F, true, 0.4);
+                collect.threePoints(CS1S, CC1S, CE1S);
+                collect.twoPoints(CS2S, CE2S);
+                collect.threePoints(CS3S, CC3S, CE3S, true, 0.4);
 
-                deliver.threePoints(DS1F, DC1F, DE1F);
-                deliver.twoPoints(DS2F, DE2F);
-                deliver.threePoints(DS3F, DC3F, DE3F, true);
+                deliver.threePoints(DS1S, DC1S, DE1S);
+                deliver.twoPoints(DS2S, DE2S);
+                deliver.threePoints(DS3S, DC3S, DE3S, true);
 
-                DeliveryEndpoint = DE3F;
-                CollectionEndpoint = CE3F;
+                DeliveryEndpoint = DE3S;
+                CollectionEndpoint = CE3S;
 
                 buildPaths.reset();
             } else if (buildPaths.seconds() > 2 && propPos == 2){
