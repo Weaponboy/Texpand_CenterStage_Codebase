@@ -194,7 +194,8 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
     Vector2D leavePurpleHeadingT = new Vector2D(getRealCoords(85), getRealCoords(38));
 
     //delivery
-    Vector2D extendSlidesDelivery = new Vector2D(getRealCoords(120), getRealCoords(32));
+    Vector2D extendSlidesDelivery = new Vector2D(getRealCoords(150), getRealCoords(32));
+    Vector2D deployArm = new Vector2D(getRealCoords(180), getRealCoords(32));
 
     //collection
     Vector2D turnIntakeOn = new Vector2D(getRealCoords(183), getRealCoords(32));
@@ -475,7 +476,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
         if (delivering){
 
-            if (odometry.X > extendSlidesDelivery.getX()) {
+            if (odometry.X > extendSlidesDelivery.getX() && odometry.getVerticalVelocity() < -10) {
 
                 onlyOnce = true;
 
@@ -487,7 +488,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (deliverySlides.getCurrentposition() > 200 && !armOver){
+            if (odometry.X > deployArm.getX() && deliverySlides.getCurrentposition() > 200 && odometry.getVerticalVelocity() < -10){
 
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
@@ -495,11 +496,56 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
                 delivery.setArmTargetState(Delivery.armState.deliverAuto);
                 delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
 
-                armOver = true;
-
             }
 
             if (sensors.armSensor.isPressed() && deliverySlides.getCurrentposition() > 200){
+
+                if (auto == Blue_Far_Truss.Auto.two) {
+                    drive.setAllPower(0.4);
+                }else{
+                    drive.setAllPower(0.2);
+                }
+
+                delivery.setGripperState(Delivery.GripperState.open);
+
+                delivery.updateGrippers();
+
+                sleep(200);
+
+                delivery.setArmTargetState(Delivery.armState.collect);
+                delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
+
+                deliverySlides.DeliverySlides(0, -0.5);
+
+                pathing = true;
+
+                gotTwo = false;
+
+                armOver = false;
+
+                if (auto == Blue_Far_Truss.Auto.two) {
+
+                    phase = Blue_Far_Truss.Phase.finished;
+
+                    drive.setAllPower(0);
+
+                    while (!(delivery.getArmState() == Delivery.armState.collect) || deliverySlides.getCurrentposition() > 20){
+                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
+                    }
+
+                } else {
+
+                    build = Build.notBuilt;
+
+                    delivering = false;
+
+                    phase = Blue_Far_Truss.Phase.second2;
+
+                }
+
+            }
+
+            if (pathing && Math.abs(odometry.getVerticalVelocity()) < 10 && !sensors.armSensor.isPressed() && odometry.X > 200 && deliverySlides.getCurrentposition() > 200){
 
                 if (auto == Blue_Far_Truss.Auto.two) {
                     drive.setAllPower(0.4);
@@ -635,8 +681,6 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
             delivering = true;
 
-            armOver = false;
-
             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
             follower.resetClosestPoint(new Vector2D(odometry.X, odometry.Y));
@@ -749,7 +793,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
         if (delivering){
 
-            if (odometry.X > extendSlidesDelivery.getX()) {
+            if (odometry.X > extendSlidesDelivery.getX() && odometry.getVerticalVelocity() < -10) {
 
                 onlyOnce = true;
 
@@ -761,7 +805,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (deliverySlides.getCurrentposition() > 200 && !armOver){
+            if (odometry.X > deployArm.getX() && deliverySlides.getCurrentposition() > 200 && odometry.getVerticalVelocity() < -10){
 
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
@@ -769,11 +813,36 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
                 delivery.setArmTargetState(Delivery.armState.deliverAuto);
                 delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
 
-                armOver = true;
-
             }
 
             if (sensors.armSensor.isPressed() && deliverySlides.getCurrentposition() > 200){
+
+                drive.setAllPower(0.4);
+
+                delivery.setGripperState(Delivery.GripperState.open);
+
+                delivery.updateGrippers();
+
+                sleep(200);
+
+                delivery.setArmTargetState(Delivery.armState.collect);
+                delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
+
+                deliverySlides.DeliverySlides(0, -0.5);
+
+                pathing = true;
+
+                phase = Blue_Far_Truss.Phase.finished;
+
+                drive.setAllPower(0);
+
+                while (!(delivery.getArmState() == Delivery.armState.collect) || deliverySlides.getCurrentposition() > 20){
+                    delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
+                }
+
+            }
+
+            if (pathing && Math.abs(odometry.getVerticalVelocity()) < 10 && !sensors.armSensor.isPressed() && odometry.X > 200 && deliverySlides.getCurrentposition() > 200){
 
                 drive.setAllPower(0.4);
 
