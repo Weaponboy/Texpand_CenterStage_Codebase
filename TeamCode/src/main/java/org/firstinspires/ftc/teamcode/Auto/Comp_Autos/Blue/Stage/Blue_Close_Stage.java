@@ -19,7 +19,7 @@ import org.firstinspires.ftc.teamcode.hardware._.Delivery_Slides;
 import org.firstinspires.ftc.teamcode.hardware._.Drivetrain;
 import org.firstinspires.ftc.teamcode.hardware._.Odometry;
 
-@Autonomous(name = "Blue_Left_Stage", group = "blue auto's")
+@Autonomous(name = "Blue_Close_Stage", group = "blue auto's")
 public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
     /** control point naming key
@@ -1343,6 +1343,9 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                         odometry.update();
 
+                        collection.setIntakeHeight(Collection.intakeHeightState.stowed);
+                        collection.updateIntakeHeight();
+
                         if (build == Build.notBuilt){
                             follower.setPath(preloadPaths.followablePath, preloadPaths.pathingVelocity);
                             pathing = true;
@@ -1413,6 +1416,9 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
             }
 
         } else if (propPos == 2) {
+
+            collection.setIntakeHeight(Collection.intakeHeightState.stowed);
+            collection.updateIntakeHeight();
 
             while (!(phase == Phase.finished) && opModeIsActive()){
 
@@ -1505,6 +1511,9 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
                     case preload:
 
                         odometry.update();
+
+                        collection.setIntakeHeight(Collection.intakeHeightState.stowed);
+                        collection.updateIntakeHeight();
 
                         if (build == Build.notBuilt){
                             follower.setPath(preloadPaths.followablePath, preloadPaths.pathingVelocity);
