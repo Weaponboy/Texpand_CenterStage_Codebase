@@ -124,14 +124,14 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
     /**delivery and collection points*/
     //segment 1 recollect
-    Vector2D DS1TC = new Vector2D(getRealCoords(46), getRealCoords(135));
+    Vector2D DS1TC = new Vector2D(getRealCoords(42), getRealCoords(135));
     Vector2D DC1TC = new Vector2D(getRealCoords(52), getRealCoords(162));
     Vector2D DCC1TC = new Vector2D(getRealCoords(41), getRealCoords(160));
     Vector2D DE1TC = new Vector2D(getRealCoords(106), getRealCoords(152));
 
     //segment 1 straight deliver
-    Vector2D DS1T = new Vector2D(getRealCoords(46), getRealCoords(135));
-    Vector2D DC1T = new Vector2D(getRealCoords(47), getRealCoords(151));
+    Vector2D DS1T = new Vector2D(getRealCoords(42), getRealCoords(135));
+    Vector2D DC1T = new Vector2D(getRealCoords(46), getRealCoords(151));
     Vector2D DE1T = new Vector2D(getRealCoords(106), getRealCoords(152));
 
     //segment 2
@@ -762,7 +762,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
             if (sensors.armSensor.isPressed() && deliverySlides.getCurrentposition() > 200){
 
-                if (auto == Auto.two) {
+                if (auto == Auto.four) {
                     drive.setAllPower(0.4);
                 }else{
                     drive.setAllPower(0.1);
@@ -811,7 +811,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
             if(pathing && Math.abs(odometry.getVerticalVelocity()) < 10 && !sensors.armSensor.isPressed() && odometry.X > 400){
 
-                if (auto == Auto.two) {
+                if (auto == Auto.four) {
                     drive.setAllPower(0.4);
                 }else{
                     drive.setAllPower(0.1);
@@ -1436,7 +1436,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                         if (pathing){
 
-                            pathing = follower.followPathAuto(targetHeading, odometry, drive, 3);
+                            pathing = follower.followPathAutoHeading(targetHeading, odometry, drive, 0.012, 3);
 
                             if (Math.abs(leavePurpleHeadingS.getX() - odometry.X) < HeadingControlError && Math.abs(leavePurpleHeadingS.getY() - odometry.Y) < 10 && targetHeading == 270){
                                 targetHeading = 310;

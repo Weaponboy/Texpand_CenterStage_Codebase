@@ -69,7 +69,7 @@ public interface Auto_Methods {
         delivery.setArmTargetState(Delivery.armState.collect);
         delivery.updateArm(deliverySlides.getCurrentposition(), false, pixelPlacement, odometry);
 
-        deliverySlides.DeliverySlides(0, -1);
+        deliverySlides.DeliverySlides(0, -0.5);
 
         deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
 
@@ -94,7 +94,7 @@ public interface Auto_Methods {
         delivery.setArmTargetState(Delivery.armState.collect);
         delivery.updateArm(deliverySlides.getCurrentposition(), false, pixelPlacement, odometry);
 
-        deliverySlides.DeliverySlides(0, -1);
+        deliverySlides.DeliverySlides(0, -0.5);
 
         while (deliverySlides.getCurrentposition() > 20){
             delivery.updateArm(deliverySlides.getCurrentposition(), false,  pixelPlacement, odometry);
