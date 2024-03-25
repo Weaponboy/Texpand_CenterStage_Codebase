@@ -64,7 +64,7 @@ public class Delivery {
     double deliverySecondPivotAuto = 0.2;
     double distancecalc;
     double avoidIntakeSecondPivot = 0.8;
-    double collectSecondPivot = 0.87;
+    double collectSecondPivot = 0.84;
     double deliverySecondPivot = -0.1;
     double lowdeliveryTopPivot = 1;
 
@@ -513,8 +513,6 @@ public class Delivery {
 
             case deliverAuto:
 
-                secondRotate.setPosition(getSecondRotateSetPoint(pixelPlacement));
-
                 timeToWaitDelivery = (Math.abs(getMainPivotPosition()-getMainPivotSetPoint(pixelPlacement))*180)*timePerDegree;
 
                 setMainPivot(getMainPivotSetPoint(pixelPlacement));
@@ -634,6 +632,7 @@ public class Delivery {
             if(DeliveryMovingAuto && pivotMoveTimeAuto.milliseconds() > (timeToWaitDelivery*0.7)){
                 RotateArm.setPosition(getArmRotateSetPoint(pixelPlacement));
                 RotateClaw.setPosition(getRotateClawSetPoint(pixelPlacement));
+                secondRotate.setPosition(getSecondRotateSetPoint(pixelPlacement));
             }
 
             if(DeliveryMovingAuto && pivotMoveTimeAuto.milliseconds() > timeToWaitDelivery){
