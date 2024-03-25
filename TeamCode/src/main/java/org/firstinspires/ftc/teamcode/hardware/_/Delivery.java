@@ -631,7 +631,7 @@ public class Delivery {
                 CollectionMoving = false;
             }
 
-            if(DeliveryMovingAuto && pivotMoveTimeAuto.milliseconds() > timeToWaitDelivery/1.5){
+            if(DeliveryMovingAuto && pivotMoveTimeAuto.milliseconds() > timeToWaitDelivery/1.2){
                 RotateArm.setPosition(getArmRotateSetPoint(pixelPlacement));
                 RotateClaw.setPosition(getRotateClawSetPoint(pixelPlacement));
             }
