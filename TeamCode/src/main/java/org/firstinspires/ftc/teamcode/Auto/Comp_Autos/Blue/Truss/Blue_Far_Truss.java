@@ -47,7 +47,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
     Vector2D DYS3F = DYE2F;
     Vector2D DYC3F = new Vector2D(getRealCoords(261), getRealCoords(31));
-    Vector2D DYE3F = new Vector2D(getRealCoords(308), getRealCoords(80));
+    Vector2D DYE3F = new Vector2D(getRealCoords(308), getRealCoords(78));
 
     /**delivery and collection points*/
 
@@ -97,28 +97,24 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
     /**delivery and collection points*/
 
     Vector2D DS1S = new Vector2D(getRealCoords(44), getRealCoords(90));
-
     Vector2D DC1S = new Vector2D(getRealCoords(53), getRealCoords(31));
     Vector2D DE1S = new Vector2D(getRealCoords(119), getRealCoords(36));
 
     Vector2D DS2S = DE1S;
-
     Vector2D DE2S = new Vector2D(getRealCoords(181), getRealCoords(33));
 
     //segment 3
     Vector2D DS3S = DE2S;
-
     Vector2D DC3S = new Vector2D(getRealCoords(220), getRealCoords(50));
-
     Vector2D DE3S = new Vector2D(getRealCoords(320), getRealCoords(65));
 
     /**collecting paths*/
     Vector2D CS1S = new Vector2D(getRealCoords(300), getRealCoords(90));
-    Vector2D CC1S = new Vector2D(getRealCoords(265), getRealCoords(39));
-    Vector2D CE1S = new Vector2D(getRealCoords(180), getRealCoords(38));
+    Vector2D CC1S = new Vector2D(getRealCoords(265), getRealCoords(38));
+    Vector2D CE1S = new Vector2D(getRealCoords(180), getRealCoords(36));
 
     Vector2D CS2S = CE1S;
-    Vector2D CE2S = new Vector2D(getRealCoords(119), getRealCoords(35));
+    Vector2D CE2S = new Vector2D(getRealCoords(119), getRealCoords(32));
 
     Vector2D CS3S = CE2S;
     Vector2D CC3S = new Vector2D(getRealCoords(35), getRealCoords(75));
@@ -128,7 +124,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
     //purple pixel
     Vector2D DPS1T = startPosition;
-    Vector2D DPE1T = new Vector2D(getRealCoords(75), getRealCoords(93));
+    Vector2D DPE1T = new Vector2D(getRealCoords(74), getRealCoords(85));
 
     Vector2D DPS2T = DPE1T;
     Vector2D DPC2T = new Vector2D(getRealCoords(70), getRealCoords(60));
@@ -144,33 +140,29 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
     Vector2D DYS3T = DYE2T;
     Vector2D DYC3T = new Vector2D(getRealCoords(261), getRealCoords(31));
-    Vector2D DYE3T = new Vector2D(getRealCoords(309), getRealCoords(108));
+    Vector2D DYE3T = new Vector2D(getRealCoords(312), getRealCoords(108));
 
     /**delivery and collection points*/
 
     Vector2D DS1T = new Vector2D(getRealCoords(46), getRealCoords(90));
-
-    Vector2D DC1T = new Vector2D(getRealCoords(55), getRealCoords(36));
-    Vector2D DE1T = new Vector2D(getRealCoords(119), getRealCoords(39));
+    Vector2D DC1T = new Vector2D(getRealCoords(55), getRealCoords(34));
+    Vector2D DE1T = new Vector2D(getRealCoords(119), getRealCoords(35));
 
     Vector2D DS2T = DE1T;
-
-    Vector2D DE2T = new Vector2D(getRealCoords(181), getRealCoords(36));
+    Vector2D DE2T = new Vector2D(getRealCoords(181), getRealCoords(33));
 
     //segment 3
     Vector2D DS3T = DE2T;
-
     Vector2D DC3T = new Vector2D(getRealCoords(220), getRealCoords(54));
-
     Vector2D DE3T = new Vector2D(getRealCoords(320), getRealCoords(66));
 
     /**collecting paths*/
     Vector2D CS1T = new Vector2D(getRealCoords(300), getRealCoords(95));
     Vector2D CC1T = new Vector2D(getRealCoords(265), getRealCoords(41));
-    Vector2D CE1T = new Vector2D(getRealCoords(180), getRealCoords(43));
+    Vector2D CE1T = new Vector2D(getRealCoords(180), getRealCoords(38));
 
     Vector2D CS2T = CE1T;
-    Vector2D CE2T = new Vector2D(getRealCoords(119), getRealCoords(39));
+    Vector2D CE2T = new Vector2D(getRealCoords(119), getRealCoords(34));
 
     Vector2D CS3T = CE2T;
     Vector2D CC3T = new Vector2D(getRealCoords(63), getRealCoords(35));
