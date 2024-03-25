@@ -488,13 +488,15 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (odometry.X > deployArm.getX() && deliverySlides.getCurrentposition() > 200 && odometry.getVerticalVelocity() < -10){
+            if (odometry.X > deployArm.getX() && deliverySlides.getCurrentposition() > 200 && odometry.getVerticalVelocity() < -10 && !armOver){
 
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
 
                 delivery.setArmTargetState(Delivery.armState.deliverAuto);
                 delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
+
+                armOver = true;
 
             }
 
@@ -805,13 +807,15 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (odometry.X > deployArm.getX() && deliverySlides.getCurrentposition() > 200 && odometry.getVerticalVelocity() < -10){
+            if (odometry.X > deployArm.getX() && deliverySlides.getCurrentposition() > 200 && odometry.getVerticalVelocity() < -10 && !armOver){
 
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
 
                 delivery.setArmTargetState(Delivery.armState.deliverAuto);
                 delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
+
+                armOver = true;
 
             }
 
