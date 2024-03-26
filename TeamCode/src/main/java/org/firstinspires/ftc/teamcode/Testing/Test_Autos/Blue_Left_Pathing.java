@@ -13,10 +13,10 @@ import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilde
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.blueRightBuilder;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.redRightBuilder;
 import org.firstinspires.ftc.teamcode.Vision.VisionPortalProcessers.propDetectionByAmount;
-import org.firstinspires.ftc.teamcode.hardware._.Collection;
-import org.firstinspires.ftc.teamcode.hardware._.Delivery;
-import org.firstinspires.ftc.teamcode.hardware._.Drivetrain;
-import org.firstinspires.ftc.teamcode.hardware._.Odometry;
+import org.firstinspires.ftc.teamcode.hardware.Collection;
+import org.firstinspires.ftc.teamcode.hardware.Delivery;
+import org.firstinspires.ftc.teamcode.hardware.Drivetrain;
+import org.firstinspires.ftc.teamcode.hardware.Odometry;
 import org.firstinspires.ftc.vision.VisionPortal;
 
 @Autonomous(name = "Blue_Left_Pathing", group = "Pathing")

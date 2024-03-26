@@ -10,10 +10,10 @@ import org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Methods.CycleMethods;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower.mecanumFollower;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.GenMethods;
-import org.firstinspires.ftc.teamcode.hardware._.Collection;
-import org.firstinspires.ftc.teamcode.hardware._.Delivery;
-import org.firstinspires.ftc.teamcode.hardware._.Drivetrain;
-import org.firstinspires.ftc.teamcode.hardware._.Odometry;
+import org.firstinspires.ftc.teamcode.hardware.Collection;
+import org.firstinspires.ftc.teamcode.hardware.Delivery;
+import org.firstinspires.ftc.teamcode.hardware.Drivetrain;
+import org.firstinspires.ftc.teamcode.hardware.Odometry;
 
 @Autonomous(name = "Collection Testing", group = "Newest auto's")
 public class CollectionAutoTesting extends LinearOpMode implements CycleMethods {

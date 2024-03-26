@@ -22,7 +22,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
-import org.firstinspires.ftc.teamcode.hardware._.Odometry;
+import org.firstinspires.ftc.teamcode.hardware.Odometry;
 
 @Disabled
 @Config

@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower.mecanumFollower;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.blueRightBuilder;
-import org.firstinspires.ftc.teamcode.hardware._.Odometry;
+import org.firstinspires.ftc.teamcode.hardware.Odometry;
 
 @TeleOp
 @Disabled

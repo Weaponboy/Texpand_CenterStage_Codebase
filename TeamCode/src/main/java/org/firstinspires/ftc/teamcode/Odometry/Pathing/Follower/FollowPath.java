@@ -1,9 +1,5 @@
 package org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower;
 
-import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.maxYAcceleration;
-import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.velocityDecreasePerPoint;
-import static org.firstinspires.ftc.teamcode.hardware._.Odometry.getMaxVelocity;
-
 import com.acmerobotics.dashboard.FtcDashboard;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;

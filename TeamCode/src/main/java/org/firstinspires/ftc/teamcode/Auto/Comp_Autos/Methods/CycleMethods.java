@@ -3,13 +3,8 @@ package org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Methods;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Hardware_objects.odometry;
 import static java.lang.Thread.sleep;
 
-import com.qualcomm.robotcore.util.Range;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.hardware._.Collection;
-import org.firstinspires.ftc.teamcode.hardware._.Delivery;
-import org.firstinspires.ftc.teamcode.hardware._.Delivery_Slides;
-import org.firstinspires.ftc.teamcode.hardware._.Odometry;
+import org.firstinspires.ftc.teamcode.hardware.Delivery;
+import org.firstinspires.ftc.teamcode.hardware.Delivery_Slides;
 
 public interface CycleMethods extends Auto_Methods {
 

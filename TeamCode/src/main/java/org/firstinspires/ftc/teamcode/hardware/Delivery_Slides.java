@@ -1,7 +1,4 @@
-package org.firstinspires.ftc.teamcode.hardware._;
-
-import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.maxXAcceleration;
-import static org.firstinspires.ftc.teamcode.hardware._.Odometry.getMaxVelocity;
+package org.firstinspires.ftc.teamcode.hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -10,11 +7,8 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
-import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
-import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathingUtility.PathingVelocity;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class  Delivery_Slides {
 

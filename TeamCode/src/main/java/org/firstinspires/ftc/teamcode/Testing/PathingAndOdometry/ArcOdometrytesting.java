@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.Testing.PathingAndOdometry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.hardware._.Odometry;
+import org.firstinspires.ftc.teamcode.hardware.Odometry;
 
 @TeleOp
 public class ArcOdometrytesting extends LinearOpMode {

@@ -9,15 +9,11 @@ import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
-import org.firstinspires.ftc.teamcode.hardware._.Collection;
-import org.firstinspires.ftc.teamcode.hardware._.Delivery;
-import org.firstinspires.ftc.teamcode.hardware._.Delivery_Slides;
-import org.firstinspires.ftc.teamcode.hardware._.Odometry;
-import org.firstinspires.ftc.teamcode.hardware._.Sensors;
-import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
-import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
-
-import java.util.List;
+import org.firstinspires.ftc.teamcode.hardware.Collection;
+import org.firstinspires.ftc.teamcode.hardware.Delivery;
+import org.firstinspires.ftc.teamcode.hardware.Delivery_Slides;
+import org.firstinspires.ftc.teamcode.hardware.Odometry;
+import org.firstinspires.ftc.teamcode.hardware.Sensors;
 
 public interface Auto_Methods {
 

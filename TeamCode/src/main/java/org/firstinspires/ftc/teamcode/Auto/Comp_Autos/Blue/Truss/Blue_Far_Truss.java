@@ -11,11 +11,11 @@ import org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Methods.CycleMethods;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower.mecanumFollower;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.GenMethods;
-import org.firstinspires.ftc.teamcode.hardware._.Collection;
-import org.firstinspires.ftc.teamcode.hardware._.Delivery;
-import org.firstinspires.ftc.teamcode.hardware._.Delivery_Slides;
-import org.firstinspires.ftc.teamcode.hardware._.Drivetrain;
-import org.firstinspires.ftc.teamcode.hardware._.Odometry;
+import org.firstinspires.ftc.teamcode.hardware.Collection;
+import org.firstinspires.ftc.teamcode.hardware.Delivery;
+import org.firstinspires.ftc.teamcode.hardware.Delivery_Slides;
+import org.firstinspires.ftc.teamcode.hardware.Drivetrain;
+import org.firstinspires.ftc.teamcode.hardware.Odometry;
 
 @Autonomous(name = "Blue_Far_Truss", group = "blue auto's")
 public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
@@ -838,7 +838,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (pathing && Math.abs(odometry.getVerticalVelocity()) < 10 && !sensors.armSensor.isPressed() && odometry.X > 200 && deliverySlides.getCurrentposition() > 200){
+            if (Math.abs(odometry.getVerticalVelocity()) < 10 && !sensors.armSensor.isPressed() && odometry.X > 180 && deliverySlides.getCurrentposition() > 200){
 
                 drive.setAllPower(0.4);
 

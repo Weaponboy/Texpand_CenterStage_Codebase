@@ -13,8 +13,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoImplEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.hardware._.Delivery_Slides;
-import org.firstinspires.ftc.teamcode.hardware._.Sensors;
+import org.firstinspires.ftc.teamcode.hardware.Delivery_Slides;
+import org.firstinspires.ftc.teamcode.hardware.Sensors;
 
 @TeleOp
 public class TestingArmPositions extends OpMode {

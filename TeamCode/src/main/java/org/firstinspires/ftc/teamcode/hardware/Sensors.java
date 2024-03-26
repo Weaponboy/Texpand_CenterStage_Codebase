@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.hardware._;
+package org.firstinspires.ftc.teamcode.hardware;
 
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;

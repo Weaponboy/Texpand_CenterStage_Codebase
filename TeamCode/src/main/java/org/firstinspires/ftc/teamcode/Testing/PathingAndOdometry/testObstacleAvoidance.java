@@ -13,8 +13,8 @@ import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.KDTreeExample
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.ObstacleMap;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.buildRobotBoundary;
-import org.firstinspires.ftc.teamcode.hardware._.Drivetrain;
-import org.firstinspires.ftc.teamcode.hardware._.Odometry;
+import org.firstinspires.ftc.teamcode.hardware.Drivetrain;
+import org.firstinspires.ftc.teamcode.hardware.Odometry;
 
 import java.util.List;
 

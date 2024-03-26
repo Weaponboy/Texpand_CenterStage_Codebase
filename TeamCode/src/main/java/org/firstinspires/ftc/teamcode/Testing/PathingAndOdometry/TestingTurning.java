@@ -1,23 +1,16 @@
 package org.firstinspires.ftc.teamcode.Testing.PathingAndOdometry;
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.horizontal;
-import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.pivot;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.vertical;
 
-import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.hardware.lynx.LynxModule;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.VoltageUnit;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower.mecanumFollower;
-import org.firstinspires.ftc.teamcode.hardware._.Drivetrain;
-import org.firstinspires.ftc.teamcode.hardware._.Odometry;
-
-import java.util.List;
+import org.firstinspires.ftc.teamcode.hardware.Drivetrain;
+import org.firstinspires.ftc.teamcode.hardware.Odometry;
 
 @TeleOp
 public class TestingTurning extends LinearOpMode {

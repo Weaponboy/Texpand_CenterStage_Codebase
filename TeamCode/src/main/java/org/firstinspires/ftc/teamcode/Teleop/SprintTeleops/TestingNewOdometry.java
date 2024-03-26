@@ -4,16 +4,12 @@ import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.h
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.pivot;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.vertical;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.hardware._.Collection;
-import org.firstinspires.ftc.teamcode.hardware._.Delivery;
-import org.firstinspires.ftc.teamcode.hardware._.Drivetrain;
-import org.firstinspires.ftc.teamcode.hardware._.Odometry;
-
-import java.util.Objects;
+import org.firstinspires.ftc.teamcode.hardware.Collection;
+import org.firstinspires.ftc.teamcode.hardware.Drivetrain;
+import org.firstinspires.ftc.teamcode.hardware.Odometry;
 
 @TeleOp
 public class TestingNewOdometry extends OpMode {

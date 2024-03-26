@@ -4,7 +4,6 @@ import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.d
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.driveP;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.horizontal;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.pivot;
-import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.robotRadius;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.rotationD;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.rotationP;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.strafeD;
@@ -15,25 +14,18 @@ import static java.lang.Thread.sleep;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.arcrobotics.ftclib.controller.PIDController;
-import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathingUtility.PathingPower;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathingUtility.PathingVelocity;
-import org.firstinspires.ftc.teamcode.hardware._.Collection;
-import org.firstinspires.ftc.teamcode.hardware._.Delivery;
-import org.firstinspires.ftc.teamcode.hardware._.Delivery_Slides;
-import org.firstinspires.ftc.teamcode.hardware._.Drivetrain;
-import org.firstinspires.ftc.teamcode.hardware._.Odometry;
+import org.firstinspires.ftc.teamcode.hardware.Drivetrain;
+import org.firstinspires.ftc.teamcode.hardware.Odometry;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Config
 public class mecanumFollower {
