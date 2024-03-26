@@ -654,7 +654,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
                 delivery.setGripperState(Delivery.GripperState.open);
                 delivery.updateGrippers();
 
-                collection.setIntakeHeight(Collection.intakeHeightState.secondAndHalf);
+                collection.setIntakeHeight(Collection.intakeHeightState.firstPixel);
                 collection.updateIntakeHeight();
 
                 collection.setState(Collection.intakePowerState.on);
