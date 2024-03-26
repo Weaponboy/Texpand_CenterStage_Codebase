@@ -20,12 +20,12 @@ public class Collection {
 
     HardwareMap hmap;
 
-    double collect = 0.05;
+    double collect = 0;
     double startingBox = 0.7;
     double stowed = 0.3;
     double letClawThrough = 0.25;
 
-    double firstPixel = 0.05;
+    double firstPixel = 0;
     double firstAndHalf = 0.062;
     double secondPixel = 0.1250;
     double secondAndHalf = 0.138;
