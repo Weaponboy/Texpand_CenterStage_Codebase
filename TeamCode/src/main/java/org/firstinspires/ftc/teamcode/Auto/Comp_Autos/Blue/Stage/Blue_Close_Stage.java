@@ -472,7 +472,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
             }
 
-            if(pathing && Math.abs(odometry.getVerticalVelocity()) < 10 && !sensors.armSensor.isPressed()){
+            if(pathing && Math.abs(odometry.getVerticalVelocity()) < 10 && !sensors.armSensor.isPressed() && deliverySlides.getCurrentposition() > 200){
 
                 if (auto == Auto.two) {
                     drive.setAllPower(0.4);
@@ -808,7 +808,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
             }
 
-            if(pathing && Math.abs(odometry.getVerticalVelocity()) < 10 && !sensors.armSensor.isPressed()){
+            if(pathing && Math.abs(odometry.getVerticalVelocity()) < 10 && !sensors.armSensor.isPressed() && deliverySlides.getCurrentposition() > 200){
 
                 if (auto == Auto.two) {
                     drive.setAllPower(0.4);
@@ -1132,7 +1132,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
             }
 
-            if(pathing && Math.abs(odometry.getVerticalVelocity()) < 10 && !sensors.armSensor.isPressed()){
+            if(pathing && Math.abs(odometry.getVerticalVelocity()) < 10 && !sensors.armSensor.isPressed() && deliverySlides.getCurrentposition() > 200){
 
                 if (auto == Auto.two) {
                     drive.setAllPower(0.4);
