@@ -280,6 +280,8 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
     ElapsedTime reverseIntakeTimer = new ElapsedTime();
 
+    Vector2D secondStack = new Vector2D(getRealCoords(41), getRealCoords(125));
+
     public void delivery_and_collect_2() throws InterruptedException {
 
         odometry.update();
@@ -1254,7 +1256,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                 collectSecondStack.threePoints(CS1F, CC1F, CE1F);
                 collectSecondStack.twoPoints(CS2F, CE2F);
-                collectSecondStack.threePoints(CS3F, CC3F, new Vector2D(CE3F.getX(), (CE3F.getY()-10)), true, 0.5);
+                collectSecondStack.threePoints(CS3F, CC3F, secondStack, true, 0.5);
 
                 deliver.threePoints(DS1F, DC1F, DE1F);
                 deliver.twoPoints(DS2F, DE2F);
@@ -1281,7 +1283,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                 collectSecondStack.threePoints(CS1S, CC1S, CE1S);
                 collectSecondStack.twoPoints(CS2S, CE2S);
-                collectSecondStack.threePoints(CS3S, CC3S, new Vector2D(CE3S.getX(), (CE3S.getY()-10)), true, 0.5);
+                collectSecondStack.threePoints(CS3S, CC3S, secondStack, true, 0.5);
 
                 deliver.threePoints(DS1S, DC1S, DE1S);
                 deliver.twoPoints(DS2S, DE2S);
