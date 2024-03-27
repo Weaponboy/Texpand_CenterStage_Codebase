@@ -280,7 +280,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
     ElapsedTime reverseIntakeTimer = new ElapsedTime();
 
-    Vector2D secondStack = new Vector2D(getRealCoords(41), getRealCoords(125));
+    Vector2D secondStack = new Vector2D(getRealCoords(41), getRealCoords(115));
 
     public void delivery_and_collect_2() throws InterruptedException {
 
@@ -1193,7 +1193,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
             }
 
 
-        }else if (Math.abs(CollectionEndpoint.getX() - odometry.X) < collectionError && Math.abs(CollectionEndpoint.getY() - odometry.Y) < collectionError - 2){
+        }else if (Math.abs(secondStack.getX() - odometry.X) < collectionError && Math.abs(secondStack.getY() - odometry.Y) < collectionError - 2){
 
             drive.setAllPower(0);
 
