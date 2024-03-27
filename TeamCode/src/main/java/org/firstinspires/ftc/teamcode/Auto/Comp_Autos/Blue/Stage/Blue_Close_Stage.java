@@ -69,6 +69,10 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
     Vector2D CC3F = new Vector2D(getRealCoords(42), getRealCoords(175));
     Vector2D CE3F = new Vector2D(getRealCoords(42), getRealCoords(135));
 
+    Vector2D CS3FS = CE2F;
+    Vector2D CC3FS = new Vector2D(getRealCoords(50), getRealCoords(170));
+    Vector2D CE3FS = new Vector2D(getRealCoords(40), getRealCoords(115));
+
     /**
      * second pos
      * */
@@ -969,7 +973,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
                 delivery.setGripperState(Delivery.GripperState.open);
                 delivery.updateGrippers();
 
-                collection.setIntakeHeight(Collection.intakeHeightState.forthAndHalf);
+                collection.setIntakeHeight(Collection.intakeHeightState.secondAndHalf);
                 collection.updateIntakeHeight();
 
                 collection.setState(Collection.intakePowerState.on);
@@ -1202,7 +1206,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
             drive.setAllPower(0);
 
-            collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
+            collection.setIntakeHeight(Collection.intakeHeightState.firstPixel);
             collection.updateIntakeHeight();
 
             pathing = true;
@@ -1261,7 +1265,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                 collectSecondStack.threePoints(CS1F, CC1F, CE1F);
                 collectSecondStack.twoPoints(CS2F, CE2F);
-                collectSecondStack.threePoints(CS3F, CC3F, secondStack, true, 0.5);
+                collectSecondStack.threePoints(CS3FS, CC3FS, CE3FS, true, 0.5);
 
                 deliver.threePoints(DS1F, DC1F, DE1F);
                 deliver.twoPoints(DS2F, DE2F);
