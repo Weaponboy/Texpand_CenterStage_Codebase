@@ -55,7 +55,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
     //segment 3
     Vector2D DS3F = DE2F;
     Vector2D DC3F = new Vector2D(getRealCoords(245), getRealCoords(157));
-    Vector2D DE3F = new Vector2D(getRealCoords(315), getRealCoords(110));
+    Vector2D DE3F = new Vector2D(getRealCoords(315), getRealCoords(120));
 
     /**collecting paths*/
     Vector2D CS1F = new Vector2D(getRealCoords(300), getRealCoords(90));
