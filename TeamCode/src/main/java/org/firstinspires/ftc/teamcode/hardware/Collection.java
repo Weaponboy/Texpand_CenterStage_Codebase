@@ -31,10 +31,10 @@ public class Collection {
     double secondAndHalf = 0.138;
     double thirdPixel = 0.1550;
     double thirdAndHalf = 0.175;
-    double forthPixel = 0.205;
+    double forthPixel = 0.4444;
     double forthAndHalf = 0.222;
     double fifthPixel = 0.245;
-    double fifthAndHalf = 0.283;
+    double fifthAndHalf = 0.3777;
 
     intakePowerState statePower = intakePowerState.off;
     intakeHeightState heightState = intakeHeightState.startingBox;
@@ -187,7 +187,7 @@ public class Collection {
 
         IntakeHeightRight.setDirection(Servo.Direction.FORWARD);
 
-        IntakeHeightRight.setPosition(startingBox);
+        IntakeHeightRight.setPosition(0);
 
 //        IntakeHeightLeft = hardwareMap.get(Servo.class, "IntakeServoLeft");
 
