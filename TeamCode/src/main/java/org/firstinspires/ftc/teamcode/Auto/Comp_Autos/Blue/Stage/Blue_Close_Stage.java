@@ -244,6 +244,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
         collect.clearAll();
         deliver.clearAll();
         deliverRecollect.clearAll();
+        collectSecondStack.clearAll();
     }
 
     /**enums*/

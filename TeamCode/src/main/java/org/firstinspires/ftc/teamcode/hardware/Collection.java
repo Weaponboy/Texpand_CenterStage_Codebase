@@ -22,7 +22,7 @@ public class Collection {
 
     double collect = 0;
     double startingBox = 0.7;
-    double stowed = 0.3;
+    double stowed = 0.25;
     double letClawThrough = 0.25;
 
     double firstPixel = 0;
