@@ -81,7 +81,6 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
     Vector2D DPCT1S = new Vector2D(getRealCoords(170), getRealCoords(62));
     Vector2D DPE1S = new Vector2D(getRealCoords(310), getRealCoords(95));
 
-
     /**delivery and collection points*/
 
     Vector2D DS1SC = new Vector2D(getRealCoords(40), getRealCoords(135));
@@ -101,7 +100,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
     //segment 3
     Vector2D DS3S = DE2S;
     Vector2D DC3S = new Vector2D(getRealCoords(245), getRealCoords(157));
-    Vector2D DE3S = new Vector2D(getRealCoords(315), getRealCoords(110));
+    Vector2D DE3S = new Vector2D(getRealCoords(315), getRealCoords(115));
 
     /**collecting paths*/
     Vector2D CS1S = new Vector2D(getRealCoords(300), getRealCoords(90));
@@ -126,7 +125,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
     Vector2D DPS1T = new Vector2D(getRealCoords(210), getRealCoords(23));
     Vector2D DPC1T = new Vector2D(getRealCoords(220), getRealCoords(79));
     Vector2D DPCT1T = new Vector2D(getRealCoords(160), getRealCoords(110));
-    Vector2D DPE1T = new Vector2D(getRealCoords(310), getRealCoords(110));
+    Vector2D DPE1T = new Vector2D(getRealCoords(310), getRealCoords(115));
 
     /**delivery and collection points*/
     //segment 1 recollect
