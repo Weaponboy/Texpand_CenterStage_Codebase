@@ -111,6 +111,10 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
     Vector2D CC3S = new Vector2D(getRealCoords(41), getRealCoords(175));
     Vector2D CE3S = new Vector2D(getRealCoords(41), getRealCoords(135));
 
+    Vector2D CS3SS = CE2S;
+    Vector2D CC3SS = new Vector2D(getRealCoords(52), getRealCoords(170));
+    Vector2D CE3SS = new Vector2D(getRealCoords(41), getRealCoords(115));
+
     /**
      * Third position
      * */
@@ -1284,7 +1288,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                 collectSecondStack.threePoints(CS1S, CC1S, CE1S);
                 collectSecondStack.twoPoints(CS2S, CE2S);
-                collectSecondStack.threePoints(CS3S, CC3S, secondStack, true, 0.5);
+                collectSecondStack.threePoints(CS3SS, CC3SS, CE3SS, true, 0.5);
 
                 deliver.threePoints(DS1S, DC1S, DE1S);
                 deliver.twoPoints(DS2S, DE2S);
