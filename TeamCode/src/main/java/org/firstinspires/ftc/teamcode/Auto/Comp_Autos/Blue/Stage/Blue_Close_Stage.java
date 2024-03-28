@@ -111,12 +111,12 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
     Vector2D CE2S = new Vector2D(getRealCoords(91), getRealCoords(153));
 
     Vector2D CS3S = CE2S;
-    Vector2D CC3S = new Vector2D(getRealCoords(41), getRealCoords(175));
-    Vector2D CE3S = new Vector2D(getRealCoords(41), getRealCoords(135));
+    Vector2D CC3S = new Vector2D(getRealCoords(40), getRealCoords(175));
+    Vector2D CE3S = new Vector2D(getRealCoords(40), getRealCoords(135));
 
     Vector2D CS3SS = CE2S;
-    Vector2D CC3SS = new Vector2D(getRealCoords(52), getRealCoords(170));
-    Vector2D CE3SS = new Vector2D(getRealCoords(41), getRealCoords(115));
+    Vector2D CC3SS = new Vector2D(getRealCoords(49), getRealCoords(170));
+    Vector2D CE3SS = new Vector2D(getRealCoords(39), getRealCoords(115));
 
     /**
      * Third position
@@ -972,7 +972,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
                 delivery.setGripperState(Delivery.GripperState.open);
                 delivery.updateGrippers();
 
-                collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
+                collection.setIntakeHeight(Collection.intakeHeightState.secondPixel);
                 collection.updateIntakeHeight();
 
                 collection.setState(Collection.intakePowerState.on);
