@@ -145,8 +145,9 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
     //segment 3
     Vector2D DS3T = DE2T;
-    Vector2D DC3T = new Vector2D(getRealCoords(245), getRealCoords(150));
-    Vector2D DE3T = new Vector2D(getRealCoords(315), getRealCoords(115));
+    Vector2D DC3T = new Vector2D(getRealCoords(266), getRealCoords(152));
+    Vector2D DCC3T = new Vector2D(getRealCoords(241), getRealCoords(129));
+    Vector2D DE3T = new Vector2D(getRealCoords(335), getRealCoords(124));
 
     /**collecting paths*/
     Vector2D CS1T = new Vector2D(getRealCoords(300), getRealCoords(90));
@@ -1299,11 +1300,11 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                 deliver.threePoints(DS1T, DC1T, DE1T);
                 deliver.twoPoints(DS2T, DE2T);
-                deliver.threePoints(DS3T, DC3T, DE3T, true, 0.6);
+                deliver.fourPoints(DS3T, DC3T, DCC3T, DE3T, true, 0.8);
 
                 deliverRecollect.fourPoints(DS1TC, DC1TC, DCC1TC, DE1TC);
                 deliverRecollect.twoPoints(DS2T, DE2T);
-                deliverRecollect.threePoints(DS3T, DC3T, DE3T, true, 0.6);
+                deliverRecollect.fourPoints(DS3T, DC3T, DCC3T, DE3T, true, 0.8);
 
                 DeliveryEndpoint = DE3T;
                 CollectionEndpoint = CE3T;
@@ -1489,9 +1490,49 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                         }
 
+                        if (deliverySlides.getCurrentposition() > 200 && sensors.armSensor.isPressed()){
+
+                            drive.setAllPower(0);
+
+                            sleep(200);
+
+                            delivery.setGripperState(Delivery.GripperState.open);
+                            delivery.updateGrippers();
+
+                            sleep(200);
+
+                            if (auto == Auto.preload){
+
+                                delivery.setArmTargetState(Delivery.armState.collect);
+                                delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.yellow2Blue, odometry);
+
+                                deliverySlides.DeliverySlides(0, -0.5);
+
+                                while (deliverySlides.getCurrentposition() > 20){
+                                    delivery.updateArm(deliverySlides.getCurrentposition(), false,  Delivery.PixelsAuto.yellow2Blue, odometry);
+                                }
+
+                                phase = Phase.finished;
+
+                            }else {
+
+                                delivery.setArmTargetState(Delivery.armState.collect);
+                                delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.yellow2Blue, odometry);
+
+                                deliverySlides.DeliverySlides(0, -0.5);
+
+                                deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
+
+                                phase = Phase.first2;
+
+                                build = Build.notBuilt;
+
+                            }
+                        }
+
                         if (pathing){
 
-                            pathing = follower.followPathAutoHeading(targetHeading, odometry, drive, 0.01, 2);
+                            pathing = follower.followPathAutoHeading(targetHeading, odometry, drive, 0.013, 2);
 
                             if (Math.abs(leavePurpleHeadingS.getX() - odometry.X) < HeadingControlError && Math.abs(leavePurpleHeadingS.getY() - odometry.Y) < 10 && targetHeading == 270){
 
