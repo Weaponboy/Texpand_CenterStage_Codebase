@@ -20,13 +20,13 @@ import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower.mecanumFollower;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.pathBuilderSubClasses.teleopPathBuilder;
 import org.firstinspires.ftc.teamcode.Teleop.TeleopPathing;
-import org.firstinspires.ftc.teamcode.hardware._.Collection;
-import org.firstinspires.ftc.teamcode.hardware._.Delivery;
-import org.firstinspires.ftc.teamcode.hardware._.Delivery_Slides;
-import org.firstinspires.ftc.teamcode.hardware._.Drivetrain;
-import org.firstinspires.ftc.teamcode.hardware._.Odometry;
-import org.firstinspires.ftc.teamcode.hardware._.Sensors;
-import org.firstinspires.ftc.teamcode.hardware._.planeLauncher;
+import org.firstinspires.ftc.teamcode.hardware.Collection;
+import org.firstinspires.ftc.teamcode.hardware.Delivery;
+import org.firstinspires.ftc.teamcode.hardware.Delivery_Slides;
+import org.firstinspires.ftc.teamcode.hardware.Drivetrain;
+import org.firstinspires.ftc.teamcode.hardware.Odometry;
+import org.firstinspires.ftc.teamcode.hardware.Sensors;
+import org.firstinspires.ftc.teamcode.hardware.planeLauncher;
 
 import java.util.List;
 import java.util.Objects;
@@ -357,12 +357,12 @@ public class RedTeleop extends OpMode implements TeleopPathing {
         /**intake code*/
 
         //this is to toggle fully up and fully down on the intake
-        if (currentGamepad2.left_bumper && !previousGamepad2.left_bumper && collection.getIntakeHeight() > 0){
+        if (currentGamepad2.left_bumper && !previousGamepad2.left_bumper && collection.getIntakeHeightRight() > 0){
             collection.setState(Collection.intakePowerState.on);
             collection.setIntakeHeight(Collection.intakeHeightState.collect);
             collection.updateIntakeHeight();
             collection.updateIntakeState();
-        } else if (currentGamepad2.left_bumper && !previousGamepad2.left_bumper && collection.getIntakeHeight() < 0.5) {
+        } else if (currentGamepad2.left_bumper && !previousGamepad2.left_bumper && collection.getIntakeHeightRight() < 0.5) {
             collection.setState(Collection.intakePowerState.off);
             collection.setIntakeHeight(Collection.intakeHeightState.stowed);
             collection.updateIntakeHeight();
@@ -552,14 +552,14 @@ public class RedTeleop extends OpMode implements TeleopPathing {
             }
         }
 
-        if (gamepad1.y){
-            collection.setSweeperState(Collection.sweeperState.push);
-            collection.updateSweeper();
-            sweeper.reset();
-        } else if (sweeper.milliseconds() > 100 && sweeper.milliseconds() < 200) {
-            collection.setSweeperState(Collection.sweeperState.retract);
-            collection.updateSweeper();
-        }
+//        if (gamepad1.y){
+//            collection.setSweeperState(Collection.sweeperState.push);
+//            collection.updateSweeper();
+//            sweeper.reset();
+//        } else if (sweeper.milliseconds() > 100 && sweeper.milliseconds() < 200) {
+//            collection.setSweeperState(Collection.sweeperState.retract);
+//            collection.updateSweeper();
+//        }
 
         if (gamepad2.left_trigger > 0){
 
@@ -571,25 +571,25 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
         } else if (gamepad2.left_trigger > 0 && deliverySlides.getCurrentposition() > 1300){
 
-            collection.setIntakeHeight(Collection.intakeHeightState.hangStowed);
+            collection.setIntakeHeight(Collection.intakeHeightState.startingBox);
 
             deliverySlides.DeliverySlides(800, -0.8);
 
             deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
         }
 
-        if (currentGamepad2.a && !previousGamepad2.a && planelauncher.getTriggerPosition() < 0.1){
+        if (currentGamepad2.right_stick_button && !previousGamepad2.right_stick_button && planelauncher.getTriggerPosition() < 0.1){
             planelauncher.setTrigger(0.6);
-        }else if (currentGamepad2.a && !previousGamepad2.a && planelauncher.getTriggerPosition() > 0.45){
+        }else if (currentGamepad2.right_stick_button && !previousGamepad2.right_stick_button && planelauncher.getTriggerPosition() > 0.45){
             planelauncher.setTrigger(0);
         }
 
         if (gamepad2.left_stick_y < -0.9 && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery){
             delivery.setRotateClaw(0.5);
         }else if (gamepad2.left_stick_x > 0.9 && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery){
-            delivery.setRotateClaw(0);
+            delivery.setRotateClaw(0.3);
         } else if (gamepad2.left_stick_x < -0.9 && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery) {
-            delivery.setRotateClaw(1);
+            delivery.setRotateClaw(0.7);
         }
 
 
@@ -607,7 +607,7 @@ public class RedTeleop extends OpMode implements TeleopPathing {
         collection.updateIntakeState();
 
         //update delivery state
-        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad1, telemetry, gamepad2);
+        delivery.updateArm(deliverySlides.getCurrentposition(), odometry, gamepad2);
         delivery.updateGrippers();
 
         RobotLog.d("loop time: " + loopTime);

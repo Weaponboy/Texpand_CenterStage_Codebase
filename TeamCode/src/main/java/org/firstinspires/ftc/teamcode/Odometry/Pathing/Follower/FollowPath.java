@@ -1,9 +1,5 @@
 package org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower;
 
-import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.maxYAcceleration;
-import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.velocityDecreasePerPoint;
-import static org.firstinspires.ftc.teamcode.hardware._.Odometry.getMaxVelocity;
-
 import com.acmerobotics.dashboard.FtcDashboard;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -19,6 +15,8 @@ public class FollowPath {
 
     ArrayList<PathingVelocity> pathingVelocity = new ArrayList<>();
 
+    ArrayList<Vector2D> pathCurve = new ArrayList<>();
+
     FtcDashboard dashboard = FtcDashboard.getInstance();
 
     Telemetry dashboardTelemetry = dashboard.getTelemetry();
@@ -28,126 +26,61 @@ public class FollowPath {
     public FollowPath(ArrayList<Vector2D> followablePath, ArrayList<PathingVelocity> pathingVelocity){
         this.followablePath = followablePath;
         this.pathingVelocity = pathingVelocity;
-    }
-
-    public double findAngle(PathingVelocity targetVelocity){
-
-        double magnitude = Math.sqrt(targetVelocity.getXVelocity() * targetVelocity.getXVelocity() + targetVelocity.getYVelocity() * targetVelocity.getYVelocity());
-
-        double radians = Math.atan2(targetVelocity.getYVelocity(), targetVelocity.getXVelocity());
-
-        double degrees = Math.toDegrees(radians);
-
-        if (degrees < 0) {
-            degrees += 360;
-        }
-
-        return degrees;
-    }
-
-    public double acceleration_distance(){
-
-        PathingVelocity pathVelo;
-
-        double deltaTime;
-
-        double decelerationNumber = 0;
-
-        double pathLength = calculateTotalDistance();
-
-        double acceleration_dt = (getMaxVelocity() * getMaxVelocity()) / (maxYAcceleration * 2);
-
-        // If we can't accelerate to max velocity in the given distance, we'll accelerate as much as possible
-        double halfway_distance = pathLength / 2;
-
-        if (acceleration_dt > halfway_distance){
-            acceleration_dt = halfway_distance;
-        }
-
-        double new_max_velocity = ((acceleration_dt*0.25)*2.5);
-
-        double deceleration_dt = acceleration_dt;
-
-        double decIndex = deceleration_dt/2.5;
-
-        double velocitySlope = new_max_velocity/getMaxVelocity();
-
-
-        for (int i = 0; i < followablePath.size() - 1; i++) {
-
-            if (i + decIndex >= followablePath.size()){
-
-                velocitySlope -= velocityDecreasePerPoint;
-
-                decelerationNumber = decelerationNumber/deceleration_dt;
-
-                Vector2D currentPoint = followablePath.get(i);
-                Vector2D nextPoint = followablePath.get(i + 1);
-
-                double deltaX = nextPoint.getX() - currentPoint.getX();
-                double deltaY = nextPoint.getY() - currentPoint.getY();
-
-                deltaTime = Math.hypot(deltaY, deltaX) / getMaxVelocity();
-
-                double velocityXValue = (deltaX / deltaTime) * decelerationNumber;
-                double velocityYValue = (deltaY / deltaTime) * decelerationNumber;
-
-                pathVelo = new PathingVelocity(velocityXValue, velocityYValue);
-
-                pathingVelocity.add(pathVelo);
-
-            }else {
-                Vector2D currentPoint = followablePath.get(i);
-                Vector2D nextPoint = followablePath.get(i + 1);
-
-                decelerationNumber = velocitySlope;
-
-                double deltaX = nextPoint.getX() - currentPoint.getX();
-                double deltaY = nextPoint.getY() - currentPoint.getY();
-
-                deltaTime = Math.hypot(deltaY, deltaX) / getMaxVelocity();
-
-                double velocityXValue = (deltaX / deltaTime) * decelerationNumber;
-                double velocityYValue = (deltaY / deltaTime) * decelerationNumber;
-
-                pathVelo = new PathingVelocity(velocityXValue, velocityYValue);
-
-                pathingVelocity.add(pathVelo);
-            }
-
-        }
-
-        return new_max_velocity;
-
-    }
-
-    public void firstDerivative(){
-
-        PathingVelocity pathVelo;
-
-        double deltaTime;
-
-        for (int i = 0; i < followablePath.size() - 1; i++) {
-            Vector2D currentPoint = followablePath.get(i);
-            Vector2D nextPoint = followablePath.get(i + 1);
-
-            double deltaX = nextPoint.getX() - currentPoint.getX();
-            double deltaY = nextPoint.getY() - currentPoint.getY();
-
-            deltaTime = Math.hypot(deltaY, deltaX) / getMaxVelocity();
-
-            double velocityXValue = deltaX / deltaTime;
-            double velocityYValue = deltaY / deltaTime;
-
-            pathVelo = new PathingVelocity(velocityXValue, velocityYValue);
-
-            pathingVelocity.add(pathVelo);
-        }
+        this.pathCurve = calculatePerpendicularVectors(calculateFirstDerivatives(followablePath));
     }
 
     public Vector2D findPoint(){
         Vector2D point = new Vector2D();
         return point;
+    }
+
+    private static ArrayList<Vector2D> calculateFirstDerivatives(ArrayList<Vector2D> points) {
+
+        int numPoints = points.size()-1;
+        ArrayList<Vector2D> derivatives = new ArrayList<>();
+
+        for (int i = 0; i < numPoints - 1; i++) {
+            // Calculate the difference between consecutive points
+            double deltaX = points.get(i+1).getX() - points.get(i).getX();
+            double deltaY = points.get(i+1).getY() - points.get(i).getY();
+
+            // Approximate the derivative using finite differences
+            double derivativeX = deltaX;
+            double derivativeY = deltaY;
+
+            derivatives.add(new Vector2D(derivativeX, derivativeY));
+        }
+
+        derivatives.add(derivatives.get(derivatives.size()-1));
+
+        return derivatives;
+    }
+
+    private static ArrayList<Vector2D> calculatePerpendicularVectors(ArrayList<Vector2D> derivatives) {
+        int numPoints = derivatives.size();
+        ArrayList<Vector2D> perpendicularVectors = new ArrayList<>();
+
+        for (int i = 0; i < numPoints; i++) {
+            // Calculate the magnitude of the derivative vector
+            double magnitude = derivatives.get(i).getNorm();
+
+            // Ensure that the magnitude is not too small to avoid division by near-zero values
+            if (magnitude > 0.1) {
+                // Normalize the derivative vector
+                Vector2D normalizedDerivative = new Vector2D(derivatives.get(i).getX() / magnitude, derivatives.get(i).getY() / magnitude);
+
+                // Swap x and y components and negate one of them to get perpendicular vectors
+                double perpendicularY = -normalizedDerivative.getY();
+                double perpendicularX = normalizedDerivative.getX();
+
+                perpendicularVectors.add(new Vector2D(perpendicularX, perpendicularY));
+            } else {
+                // If the magnitude is too small, set the perpendicular vector to zero
+                perpendicularVectors.add(new Vector2D(0, 0));
+            }
+        }
+
+        return perpendicularVectors;
     }
 
     public double calculateTotalDistance() {
@@ -321,7 +254,6 @@ public class FollowPath {
         return error;
     }
 
-
     public PathingVelocity getTargetVelocity(int index){
 
         PathingVelocity targetVelocity = new PathingVelocity();
@@ -352,6 +284,5 @@ public class FollowPath {
 
         return one;
     }
-
 
 }

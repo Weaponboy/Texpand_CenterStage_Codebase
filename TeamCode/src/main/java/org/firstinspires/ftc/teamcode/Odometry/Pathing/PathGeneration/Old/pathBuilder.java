@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration.Old;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Auto_Control_Points.controlPoints.ePThirdSeg;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.maxYAcceleration;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.velocityDecreasePerPoint;
-import static org.firstinspires.ftc.teamcode.hardware._.Odometry.getMaxVelocity;
+import static org.firstinspires.ftc.teamcode.hardware.Odometry.getMaxVelocity;
 
 import org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Auto_Control_Points.controlPoints;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
@@ -85,7 +85,7 @@ public class pathBuilder {
 
         switch (dropPurplePath) {
             case redLeft:
-                blueRightLongCurve();
+                LineTest();
                 break;
             case redRight:
                 redRightToBackBoard();
@@ -108,7 +108,7 @@ public class pathBuilder {
 
         switch (collectPath) {
             case redLeft:
-                blueRightLongCurve();
+                LineTest();
                 break;
             case redRight:
                 redRightToCollection();
@@ -132,7 +132,7 @@ public class pathBuilder {
 
         switch (path) {
             case blueRight:
-                blueRightLongCurve();
+                LineTest();
                 break;
             case redRight:
                 System.out.println("not ready yet");
@@ -141,7 +141,7 @@ public class pathBuilder {
                 dropPurpleBlueRight();
                 break;
             case testCurveReverse:
-                testCurveReverse();
+                CurveTest();
                 break;
             default:
                 break;
@@ -247,8 +247,9 @@ public class pathBuilder {
         buildCurveSegment(controlPoints.sPTest, controlPoints.cPTest, controlPoints.ePTest);
     }
 
-    private void testCurveReverse(){
-        buildLineSegment(controlPoints.sTest, controlPoints.eTest);
+    private void CurveTest(){
+        buildCurveSegment(new Vector2D(0,0), new Vector2D(0,60),  new Vector2D(60,60));
+        buildCurveSegment(new Vector2D(60,60), new Vector2D(60,60),  new Vector2D(1200,0));
     }
 
     private Vector2D pathBuilder(ArrayList<Vector2D> originalPath){
@@ -518,9 +519,8 @@ public class pathBuilder {
      * Drop yellow pixel path options
      **/
 
-    private void blueRightLongCurve(){
-        buildCurveSegment(controlPoints.sPSecondSeg, controlPoints.cPSecondSeg, controlPoints.ePSecondSeg);
-        buildCurveSegment(controlPoints.sPThirdSeg, controlPoints.cPThirdSeg, ePThirdSeg);
+    private void LineTest(){
+        buildLineSegment(new Vector2D(0,0), new Vector2D(80,0));
     }
 
     private void blueLeftLongCurve(){

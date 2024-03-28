@@ -41,6 +41,10 @@ public class Vector2D {
 		return y;
 	}
 
+	public double getNorm() {
+		return Math.sqrt(x * x + y * y);
+	}
+
 	/**
 	 * mutates state
 	 *
