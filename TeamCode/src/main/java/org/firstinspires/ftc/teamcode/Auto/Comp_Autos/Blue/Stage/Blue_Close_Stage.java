@@ -178,7 +178,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
     Vector2D leavePurpleHeadingT = new Vector2D(getRealCoords(210), getRealCoords(50));
 
     //delivery
-    Vector2D extendSlidesDelivery = new Vector2D(getRealCoords(120), getRealCoords(180));
+    Vector2D extendSlidesDelivery = new Vector2D(getRealCoords(180), getRealCoords(180));
 
     Vector2D DeliveryEndpoint;
     Vector2D CollectionEndpoint;
