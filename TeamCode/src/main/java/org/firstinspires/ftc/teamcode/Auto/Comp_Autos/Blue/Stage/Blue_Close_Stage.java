@@ -179,6 +179,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
     //delivery
     Vector2D extendSlidesDelivery = new Vector2D(getRealCoords(180), getRealCoords(180));
+    Vector2D armOverPosition = new Vector2D(getRealCoords(190), getRealCoords(180));
 
     Vector2D DeliveryEndpoint;
     Vector2D CollectionEndpoint;
@@ -421,7 +422,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (deliverySlides.getCurrentposition() > 150 && !armOver){
+            if (deliverySlides.getCurrentposition() > 150 && !armOver && odometry.X > armOverPosition.getX()){
 
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
@@ -476,7 +477,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
             }
 
-            if(pathing && Math.abs(odometry.getVerticalVelocity()) < 10 && !sensors.armSensor.isPressed() && deliverySlides.getCurrentposition() > 200){
+            if(pathing && Math.abs(odometry.getVerticalVelocity()) < 10 && !sensors.armSensor.isPressed() && deliverySlides.getCurrentposition() > 200 && odometry.X > 200){
 
                 delivery.setGripperState(Delivery.GripperState.open);
 
@@ -743,7 +744,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (deliverySlides.getCurrentposition() > 150 && !armOver){
+            if (deliverySlides.getCurrentposition() > 150 && !armOver && odometry.X > armOverPosition.getX()){
 
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
@@ -798,7 +799,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
             }
 
-            if(pathing && Math.abs(odometry.getVerticalVelocity()) < 10 && !sensors.armSensor.isPressed() && deliverySlides.getCurrentposition() > 200){
+            if(pathing && Math.abs(odometry.getVerticalVelocity()) < 10 && !sensors.armSensor.isPressed() && deliverySlides.getCurrentposition() > 200&& odometry.X > 200){
 
                 delivery.setGripperState(Delivery.GripperState.open);
 
@@ -1065,7 +1066,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (deliverySlides.getCurrentposition() > 150 && !armOver){
+            if (deliverySlides.getCurrentposition() > 150 && !armOver && odometry.X > armOverPosition.getX()){
 
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
@@ -1108,7 +1109,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
             }
 
-            if(pathing && Math.abs(odometry.getVerticalVelocity()) < 10 && !sensors.armSensor.isPressed() && deliverySlides.getCurrentposition() > 200){
+            if(pathing && Math.abs(odometry.getVerticalVelocity()) < 10 && !sensors.armSensor.isPressed() && deliverySlides.getCurrentposition() > 200 && odometry.X > 200){
 
                 delivery.setGripperState(Delivery.GripperState.open);
 
