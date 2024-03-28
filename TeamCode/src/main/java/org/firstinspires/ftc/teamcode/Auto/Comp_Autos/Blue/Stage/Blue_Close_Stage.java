@@ -360,46 +360,46 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (collection.getIntakeCurrentUse() > 5500 && !reversingIntake){
-                reversingIntake = true;
-                reverseIntakeTimer.reset();
-                previousState = collection.getPowerState();
-                collection.setState(Collection.intakePowerState.reversed);
-                collection.updateIntakeState();
-            }
+        }
 
-            if (reversingIntake && reverseIntakeTimer.milliseconds() > 100){
-                collection.setState(previousState);
-                collection.updateIntakeState();
-                reversingIntake = false;
-            }
+        if (collection.getIntakeCurrentUse() > 5500 && !reversingIntake){
+            reversingIntake = true;
+            reverseIntakeTimer.reset();
+            previousState = collection.getPowerState();
+            collection.setState(Collection.intakePowerState.reversed);
+            collection.updateIntakeState();
+        }
 
-            if (gripperControl.milliseconds() > (timeChanger+700) && gripperControl.milliseconds() < (timeChanger+800) && gotTwo){
+        if (reversingIntake && reverseIntakeTimer.milliseconds() > 100){
+            collection.setState(previousState);
+            collection.updateIntakeState();
+            reversingIntake = false;
+        }
 
-                delivery.setGripperState(Delivery.GripperState.closed);
-                delivery.updateGrippers();
+        if (gripperControl.milliseconds() > (timeChanger+700) && gripperControl.milliseconds() < (timeChanger+800) && gotTwo){
 
-            }
+            delivery.setGripperState(Delivery.GripperState.closed);
+            delivery.updateGrippers();
 
-            if (gripperControl.milliseconds() > (timeChanger+800) && gripperControl.milliseconds() < (timeChanger+1000) && gotTwo){
+        }
 
-                delivery.setGripperState(Delivery.GripperState.closed);
-                delivery.updateGrippers();
+        if (gripperControl.milliseconds() > (timeChanger+800) && gripperControl.milliseconds() < (timeChanger+1000) && gotTwo){
 
-                collection.setState(Collection.intakePowerState.reversed);
-                collection.updateIntakeState();
+            delivery.setGripperState(Delivery.GripperState.closed);
+            delivery.updateGrippers();
 
-            }
+            collection.setState(Collection.intakePowerState.reversed);
+            collection.updateIntakeState();
 
-            if (gripperControl.milliseconds() > (timeChanger+1000) && gripperControl.milliseconds() < (timeChanger+1200) && gotTwo){
+        }
 
-                collection.setState(Collection.intakePowerState.off);
-                collection.updateIntakeState();
+        if (gripperControl.milliseconds() > (timeChanger+1000) && gripperControl.milliseconds() < (timeChanger+1200) && gotTwo){
 
-                delivery.setGripperState(Delivery.GripperState.closed);
-                delivery.updateGrippers();
+            collection.setState(Collection.intakePowerState.off);
+            collection.updateIntakeState();
 
-            }
+            delivery.setGripperState(Delivery.GripperState.closed);
+            delivery.updateGrippers();
 
         }
 
@@ -675,46 +675,46 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (collection.getIntakeCurrentUse() > 5500 && !reversingIntake){
-                reversingIntake = true;
-                reverseIntakeTimer.reset();
-                previousState = collection.getPowerState();
-                collection.setState(Collection.intakePowerState.reversed);
-                collection.updateIntakeState();
-            }
+        }
 
-            if (reversingIntake && reverseIntakeTimer.milliseconds() > 100){
-                collection.setState(previousState);
-                collection.updateIntakeState();
-                reversingIntake = false;
-            }
+        if (collection.getIntakeCurrentUse() > 5500 && !reversingIntake){
+            reversingIntake = true;
+            reverseIntakeTimer.reset();
+            previousState = collection.getPowerState();
+            collection.setState(Collection.intakePowerState.reversed);
+            collection.updateIntakeState();
+        }
 
-            if (gripperControl.milliseconds() > (timeChanger+700) && gripperControl.milliseconds() < (timeChanger+800) && gotTwo){
+        if (reversingIntake && reverseIntakeTimer.milliseconds() > 100){
+            collection.setState(previousState);
+            collection.updateIntakeState();
+            reversingIntake = false;
+        }
 
-                delivery.setGripperState(Delivery.GripperState.closed);
-                delivery.updateGrippers();
+        if (gripperControl.milliseconds() > (timeChanger+700) && gripperControl.milliseconds() < (timeChanger+800) && gotTwo){
 
-            }
+            delivery.setGripperState(Delivery.GripperState.closed);
+            delivery.updateGrippers();
 
-            if (gripperControl.milliseconds() > (timeChanger+800) && gripperControl.milliseconds() < (timeChanger+1000) && gotTwo){
+        }
 
-                delivery.setGripperState(Delivery.GripperState.closed);
-                delivery.updateGrippers();
+        if (gripperControl.milliseconds() > (timeChanger+800) && gripperControl.milliseconds() < (timeChanger+1000) && gotTwo){
 
-                collection.setState(Collection.intakePowerState.reversed);
-                collection.updateIntakeState();
+            delivery.setGripperState(Delivery.GripperState.closed);
+            delivery.updateGrippers();
 
-            }
+            collection.setState(Collection.intakePowerState.reversed);
+            collection.updateIntakeState();
 
-            if (gripperControl.milliseconds() > (timeChanger+1000) && gripperControl.milliseconds() < (timeChanger+1200) && gotTwo){
+        }
 
-                collection.setState(Collection.intakePowerState.off);
-                collection.updateIntakeState();
+        if (gripperControl.milliseconds() > (timeChanger+1000) && gripperControl.milliseconds() < (timeChanger+1200) && gotTwo){
 
-                delivery.setGripperState(Delivery.GripperState.closed);
-                delivery.updateGrippers();
+            collection.setState(Collection.intakePowerState.off);
+            collection.updateIntakeState();
 
-            }
+            delivery.setGripperState(Delivery.GripperState.closed);
+            delivery.updateGrippers();
 
         }
 
@@ -990,46 +990,46 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (collection.getIntakeCurrentUse() > 5500 && !reversingIntake){
-                reversingIntake = true;
-                reverseIntakeTimer.reset();
-                previousState = collection.getPowerState();
-                collection.setState(Collection.intakePowerState.reversed);
-                collection.updateIntakeState();
-            }
+        }
 
-            if (reversingIntake && reverseIntakeTimer.milliseconds() > 100){
-                collection.setState(previousState);
-                collection.updateIntakeState();
-                reversingIntake = false;
-            }
+        if (collection.getIntakeCurrentUse() > 5500 && !reversingIntake){
+            reversingIntake = true;
+            reverseIntakeTimer.reset();
+            previousState = collection.getPowerState();
+            collection.setState(Collection.intakePowerState.reversed);
+            collection.updateIntakeState();
+        }
 
-            if (gripperControl.milliseconds() > (timeChanger+700) && gripperControl.milliseconds() < (timeChanger+800) && gotTwo){
+        if (reversingIntake && reverseIntakeTimer.milliseconds() > 100){
+            collection.setState(previousState);
+            collection.updateIntakeState();
+            reversingIntake = false;
+        }
 
-                delivery.setGripperState(Delivery.GripperState.closed);
-                delivery.updateGrippers();
+        if (gripperControl.milliseconds() > (timeChanger+700) && gripperControl.milliseconds() < (timeChanger+800) && gotTwo){
 
-            }
+            delivery.setGripperState(Delivery.GripperState.closed);
+            delivery.updateGrippers();
 
-            if (gripperControl.milliseconds() > (timeChanger+800) && gripperControl.milliseconds() < (timeChanger+1000) && gotTwo){
+        }
 
-                delivery.setGripperState(Delivery.GripperState.closed);
-                delivery.updateGrippers();
+        if (gripperControl.milliseconds() > (timeChanger+800) && gripperControl.milliseconds() < (timeChanger+1000) && gotTwo){
 
-                collection.setState(Collection.intakePowerState.reversed);
-                collection.updateIntakeState();
+            delivery.setGripperState(Delivery.GripperState.closed);
+            delivery.updateGrippers();
 
-            }
+            collection.setState(Collection.intakePowerState.reversed);
+            collection.updateIntakeState();
 
-            if (gripperControl.milliseconds() > (timeChanger+1000) && gripperControl.milliseconds() < (timeChanger+1200) && gotTwo){
+        }
 
-                collection.setState(Collection.intakePowerState.off);
-                collection.updateIntakeState();
+        if (gripperControl.milliseconds() > (timeChanger+1000) && gripperControl.milliseconds() < (timeChanger+1200) && gotTwo){
 
-                delivery.setGripperState(Delivery.GripperState.closed);
-                delivery.updateGrippers();
+            collection.setState(Collection.intakePowerState.off);
+            collection.updateIntakeState();
 
-            }
+            delivery.setGripperState(Delivery.GripperState.closed);
+            delivery.updateGrippers();
 
         }
 
