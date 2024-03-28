@@ -187,7 +187,7 @@ public class Collection {
 
         IntakeHeightRight.setDirection(Servo.Direction.FORWARD);
 
-        IntakeHeightRight.setPosition(0);
+        IntakeHeightRight.setPosition(startingBox);
 
 //        IntakeHeightLeft = hardwareMap.get(Servo.class, "IntakeServoLeft");
 
