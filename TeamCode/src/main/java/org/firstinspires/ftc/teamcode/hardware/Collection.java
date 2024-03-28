@@ -20,21 +20,21 @@ public class Collection {
 
     HardwareMap hmap;
 
-    double collect = 0;
-    double startingBox = 0.7;
+    double collect = 0.294;
+    double startingBox = 0.95;
     double stowed = 0.25;
     double letClawThrough = 0.25;
 
-    double firstPixel = 0;
-    double firstAndHalf = 0.062;
-    double secondPixel = 0.1250;
-    double secondAndHalf = 0.138;
-    double thirdPixel = 0.1550;
-    double thirdAndHalf = 0.175;
+    double firstPixel = 0.294;
+    double firstAndHalf = 0.325;
+    double secondPixel = 0.344;
+    double secondAndHalf = 0.365;
+    double thirdPixel = 0.384;
+    double thirdAndHalf = 0.416;
     double forthPixel = 0.4444;
-    double forthAndHalf = 0.222;
-    double fifthPixel = 0.245;
-    double fifthAndHalf = 0.3777;
+    double forthAndHalf = 0.456;
+    double fifthPixel = 0.479;
+    double fifthAndHalf = 0.512;
 
     intakePowerState statePower = intakePowerState.off;
     intakeHeightState heightState = intakeHeightState.startingBox;
