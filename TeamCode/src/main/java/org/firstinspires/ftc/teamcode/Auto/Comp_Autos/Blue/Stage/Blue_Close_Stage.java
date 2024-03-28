@@ -1495,18 +1495,16 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
                             if (Math.abs(leavePurpleHeadingS.getX() - odometry.X) < HeadingControlError && Math.abs(leavePurpleHeadingS.getY() - odometry.Y) < 10 && targetHeading == 270){
                                 targetHeading = 330;
 
-                                collection.setIntakeHeight(Collection.intakeHeightState.stowed);
-                                collection.updateIntakeHeight();
+                                deliverySlides.DeliverySlides(slidesPosYellowPixel, 1);
+
+                                delivery.setGripperState(Delivery.GripperState.closed);
+                                delivery.updateGrippers();
+
                             }
 
                             if (Math.abs(oneEightyHeadingS.getX() - odometry.X) < HeadingControlError && Math.abs(oneEightyHeadingS.getY() - odometry.Y) < HeadingControlError && deliverySlides.getCurrentposition() < 50){
 
                                 targetHeading = 180;
-
-                                deliverySlides.DeliverySlides(slidesPosYellowPixel, 1);
-
-                                delivery.setGripperState(Delivery.GripperState.closed);
-                                delivery.updateGrippers();
 
                             }
 
