@@ -1483,7 +1483,6 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                         if (build == Build.notBuilt){
                             follower.setPath(preloadPaths.followablePath, preloadPaths.pathingVelocity);
-                            delivery.setMainPivot(0.4);
                             pathing = true;
                             build = Build.built;
                             targetHeading = 270;
@@ -1492,7 +1491,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                         if (pathing){
 
-                            pathing = follower.followPathAutoHeading(targetHeading, odometry, drive, 0.012, 2);
+                            pathing = follower.followPathAutoHeading(targetHeading, odometry, drive, 0.01, 2);
 
                             if (Math.abs(leavePurpleHeadingS.getX() - odometry.X) < HeadingControlError && Math.abs(leavePurpleHeadingS.getY() - odometry.Y) < 10 && targetHeading == 270){
 
