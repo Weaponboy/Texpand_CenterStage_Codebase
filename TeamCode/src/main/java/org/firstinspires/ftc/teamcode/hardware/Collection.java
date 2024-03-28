@@ -187,10 +187,10 @@ public class Collection {
 
         IntakeHeightRight.setDirection(Servo.Direction.FORWARD);
 
-        IntakeHeightRight.setPosition(startingBox);
-
+//        IntakeHeightRight.setPosition(startingBox);
+//
 //        IntakeHeightLeft = hardwareMap.get(Servo.class, "IntakeServoLeft");
-
+//
 //        IntakeHeightLeft.setDirection(Servo.Direction.FORWARD);
 
         Intake.setDirection(DcMotorSimple.Direction.REVERSE);
