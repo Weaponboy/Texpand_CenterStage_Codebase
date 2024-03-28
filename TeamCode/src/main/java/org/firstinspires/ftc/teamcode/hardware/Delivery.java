@@ -517,7 +517,7 @@ public class Delivery {
 
                 setMainPivot(getMainPivotSetPoint(pixelPlacement));
 
-                ArmExtension.setPosition(0.8);
+//                ArmExtension.setPosition(0.8);
 
                 setGripperState(GripperState.closed);
 
@@ -633,10 +633,10 @@ public class Delivery {
                 RotateArm.setPosition(getArmRotateSetPoint(pixelPlacement));
                 RotateClaw.setPosition(getRotateClawSetPoint(pixelPlacement));
                 secondRotate.setPosition(getSecondRotateSetPoint(pixelPlacement));
+                ArmExtension.setPosition(0.4);
             }
 
             if(DeliveryMovingAuto && pivotMoveTimeAuto.milliseconds() > timeToWaitDelivery){
-                ArmExtension.setPosition(0.4);
                 DeliveryMovingAuto = false;
                 armstateCurrent = armState.deliverAuto;
             }
