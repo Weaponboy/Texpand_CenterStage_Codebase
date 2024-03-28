@@ -64,7 +64,7 @@ public class Delivery {
     double deliverySecondPivotAuto = 0.2;
     double distancecalc;
     double avoidIntakeSecondPivot = 0.8;
-    double collectSecondPivot = 0.82;
+    double collectSecondPivot = 0.8;
     double deliverySecondPivot = -0.1;
     double lowdeliveryTopPivot = 1;
 

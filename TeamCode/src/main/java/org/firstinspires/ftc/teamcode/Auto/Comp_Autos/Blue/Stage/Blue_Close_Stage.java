@@ -973,10 +973,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                 gripperControl.reset();
 
-                drive.RF.setPower(0);
-                drive.RB.setPower(0);
-                drive.LF.setPower(0);
-                drive.LB.setPower(0);
+                drive.setAllPower(0);
 
                 follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
