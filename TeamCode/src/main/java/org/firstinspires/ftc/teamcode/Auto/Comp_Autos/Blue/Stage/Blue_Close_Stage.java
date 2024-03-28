@@ -170,7 +170,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
     Vector2D leavePurpleHeadingF = new Vector2D(getRealCoords(220), getRealCoords(65));
 
     //second position
-    Vector2D oneEightyHeadingS = new Vector2D(getRealCoords(241), getRealCoords(92));
+    Vector2D oneEightyHeadingS = new Vector2D(getRealCoords(241), getRealCoords(86));
     Vector2D leavePurpleHeadingS = new Vector2D(getRealCoords(218), getRealCoords(78));
 
     //third position
@@ -1483,9 +1483,11 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                         if (build == Build.notBuilt){
                             follower.setPath(preloadPaths.followablePath, preloadPaths.pathingVelocity);
+                            delivery.setMainPivot(0.4);
                             pathing = true;
                             build = Build.built;
                             targetHeading = 270;
+
                         }
 
                         if (pathing){
@@ -1496,8 +1498,6 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                                 targetHeading = 330;
 
-                                deliverySlides.DeliverySlides(slidesPosYellowPixel, 1);
-
                                 delivery.setGripperState(Delivery.GripperState.closed);
                                 delivery.updateGrippers();
 
@@ -1506,6 +1506,8 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
                             if (Math.abs(oneEightyHeadingS.getX() - odometry.X) < HeadingControlError && Math.abs(oneEightyHeadingS.getY() - odometry.Y) < HeadingControlError && deliverySlides.getCurrentposition() < 50){
 
                                 targetHeading = 180;
+
+                                deliverySlides.DeliverySlides(slidesPosYellowPixel, 1);
 
                             }
 
