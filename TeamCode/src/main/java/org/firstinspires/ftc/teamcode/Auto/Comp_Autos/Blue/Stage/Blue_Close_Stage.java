@@ -100,7 +100,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
     //segment 3
     Vector2D DS3S = DE2S;
     Vector2D DC3S = new Vector2D(getRealCoords(245), getRealCoords(157));
-    Vector2D DE3S = new Vector2D(getRealCoords(315), getRealCoords(115));
+    Vector2D DE3S = new Vector2D(getRealCoords(315), getRealCoords(120));
 
     /**collecting paths*/
     Vector2D CS1S = new Vector2D(getRealCoords(300), getRealCoords(90));
@@ -1513,10 +1513,10 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                         if (pathing){
 
-                            pathing = follower.followPathAutoHeading(targetHeading, odometry, drive, 0.012, 3);
+                            pathing = follower.followPathAutoHeading(targetHeading, odometry, drive, 0.01, 2);
 
                             if (Math.abs(leavePurpleHeadingS.getX() - odometry.X) < HeadingControlError && Math.abs(leavePurpleHeadingS.getY() - odometry.Y) < 10 && targetHeading == 270){
-                                targetHeading = 310;
+                                targetHeading = 330;
 
                                 collection.setIntakeHeight(Collection.intakeHeightState.stowed);
                                 collection.updateIntakeHeight();
