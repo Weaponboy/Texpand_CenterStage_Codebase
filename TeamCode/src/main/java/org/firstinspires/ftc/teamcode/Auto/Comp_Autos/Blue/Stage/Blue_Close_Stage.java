@@ -1245,11 +1245,11 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                 deliver.threePoints(DS1F, DC1F, DE1F);
                 deliver.twoPoints(DS2F, DE2F);
-                deliver.threePoints(DS3F, DC3F, DE3F, true, 0.7);
+                deliver.threePoints(DS3F, DC3F, DE3F, true, 0.6);
 
                 deliverRecollect.fourPoints(DS1FC, DC1FC, DCC1FC, DE1FC);
                 deliverRecollect.twoPoints(DS2F, DE2F);
-                deliverRecollect.threePoints(DS3F, DC3F, DE3F, true, 0.7);
+                deliverRecollect.threePoints(DS3F, DC3F, DE3F, true, 0.6);
 
                 DeliveryEndpoint = DE3F;
                 CollectionEndpoint = CE3F;
@@ -1272,11 +1272,11 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                 deliver.threePoints(DS1S, DC1S, DE1S);
                 deliver.twoPoints(DS2S, DE2S);
-                deliver.threePoints(DS3S, DC3S, DE3S, true, 0.7);
+                deliver.threePoints(DS3S, DC3S, DE3S, true, 0.6);
 
                 deliverRecollect.fourPoints(DS1SC, DC1SC, DCC1SC, DE1SC);
                 deliverRecollect.twoPoints(DS2S, DE2S);
-                deliverRecollect.threePoints(DS3S, DC3S, DE3S, true, 0.7);
+                deliverRecollect.threePoints(DS3S, DC3S, DE3S, true, 0.6);
 
                 DeliveryEndpoint = DE3S;
                 CollectionEndpoint = CE3S;
@@ -1299,11 +1299,11 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                 deliver.threePoints(DS1T, DC1T, DE1T);
                 deliver.twoPoints(DS2T, DE2T);
-                deliver.threePoints(DS3T, DC3T, DE3T, true, 0.7);
+                deliver.threePoints(DS3T, DC3T, DE3T, true, 0.6);
 
                 deliverRecollect.fourPoints(DS1TC, DC1TC, DCC1TC, DE1TC);
                 deliverRecollect.twoPoints(DS2T, DE2T);
-                deliverRecollect.threePoints(DS3T, DC3T, DE3T, true, 0.7);
+                deliverRecollect.threePoints(DS3T, DC3T, DE3T, true, 0.6);
 
                 DeliveryEndpoint = DE3T;
                 CollectionEndpoint = CE3T;
