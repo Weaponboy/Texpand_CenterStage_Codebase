@@ -170,7 +170,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
     Vector2D leavePurpleHeadingF = new Vector2D(getRealCoords(220), getRealCoords(65));
 
     //second position
-    Vector2D oneEightyHeadingS = new Vector2D(getRealCoords(241), getRealCoords(86));
+    Vector2D oneEightyHeadingS = new Vector2D(getRealCoords(241), getRealCoords(92));
     Vector2D leavePurpleHeadingS = new Vector2D(getRealCoords(218), getRealCoords(78));
 
     //third position
@@ -1493,6 +1493,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
                             pathing = follower.followPathAutoHeading(targetHeading, odometry, drive, 0.01, 2);
 
                             if (Math.abs(leavePurpleHeadingS.getX() - odometry.X) < HeadingControlError && Math.abs(leavePurpleHeadingS.getY() - odometry.Y) < 10 && targetHeading == 270){
+
                                 targetHeading = 330;
 
                                 deliverySlides.DeliverySlides(slidesPosYellowPixel, 1);

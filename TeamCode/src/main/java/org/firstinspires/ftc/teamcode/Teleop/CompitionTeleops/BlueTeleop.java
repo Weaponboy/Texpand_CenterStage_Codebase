@@ -356,7 +356,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
                 pivot = gamepad1.left_stick_x;
             }
 
-            double slowPivot = 0.5;
+            double slowPivot;
 
             if (Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery || Math.abs(vertical) > 0.5 || Math.abs(horizontal) > 0.5){
                 slowPivot = 0.4;
@@ -380,7 +380,6 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         }
 
         /**intake code*/
-
         //this is to toggle fully up and fully down on the intake
         if (currentGamepad2.start && !previousGamepad2.start && collection.getIntakeHeightRight() > 0){
 
@@ -393,19 +392,27 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
             collection.updateIntakeState();
 
         } else if (currentGamepad2.start && !previousGamepad2.start && collection.getIntakeHeightRight() < 0.5) {
+
             collection.setState(Collection.intakePowerState.off);
+
             collection.setIntakeHeight(Collection.intakeHeightState.stowed);
+
             collection.updateIntakeHeight();
+
             collection.updateIntakeState();
+
         }
+
         if (currentGamepad1.left_trigger > 0 && !(previousGamepad1.left_trigger > 0)) {
 
             collection.IntakeHeightRight.setPosition(collection.IntakeHeightRight.getPosition() - 0.005);
+
         }
 
         if (currentGamepad1.right_trigger > 0 && !(previousGamepad1.right_trigger > 0)){
 
             collection.IntakeHeightRight.setPosition(collection.IntakeHeightRight.getPosition()+0.005);
+
             pivotIntakePos++;
 
 //            if (pivotIntakePos == 5){
@@ -430,8 +437,6 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
         }
 
-
-
         if (currentGamepad2.y) {
             collection.setState(Collection.intakePowerState.reversed);
         } else if (previousGamepad2.y) {
@@ -446,12 +451,9 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         }
 
         /**Slide code*/
-
         deliverySlides.updateSlides(gamepad1, gamepad2, delivery.getArmState());
 
         /**Arm code*/
-
-
         //Move to delivery position
         if ((gamepad1.dpad_up || gamepad2.dpad_up) && deliverySlides.getCurrentposition() > 200){
             delivery.setArmTargetState(Delivery.armState.delivery);
@@ -466,10 +468,13 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         }
 
         if (gamepad1.back) {
+
             if (Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery){
                 delivery.setGripperState(Delivery.GripperState.openDeliver);
             }
+
             delivery.setGripperState(Delivery.GripperState.open);
+
         }
 
         if (gamepad2.b) {
@@ -496,25 +501,30 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
             delivery.setGripperState(Delivery.GripperState.closed);
         }
 
-
         switch (delivery.getLeftgripperstate()){
 
             case closed:
+
                 if (currentGamepad2.right_bumper && !previousGamepad2.right_bumper && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.collect) {
                     delivery.setLeftGripperState(Delivery.leftGripperState.open);
                 } else if (currentGamepad2.right_bumper && !previousGamepad2.right_bumper && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery) {
                     delivery.setLeftGripperState(Delivery.leftGripperState.openDeliver);
                 }
+
                 break;
             case open:
+
                 if (currentGamepad2.right_bumper && !previousGamepad2.right_bumper) {
                     delivery.setLeftGripperState(Delivery.leftGripperState.closed);
                 }
+
                 break;
             case openDeliver:
+
                 if (currentGamepad2.right_bumper && !previousGamepad2.right_bumper) {
                     delivery.setLeftGripperState(Delivery.leftGripperState.closed);
                 }
+
                 break;
             default:
 
@@ -523,11 +533,13 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         switch (delivery.getRightgripperstate()){
 
             case closed:
+
                 if (currentGamepad2.left_bumper && !previousGamepad2.left_bumper && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.collect) {
                     delivery.setRightGripperState(Delivery.rightGripperState.open);
                 } else if (currentGamepad2.left_bumper && !previousGamepad2.left_bumper && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery) {
                     delivery.setRightGripperState(Delivery.rightGripperState.openDeliver);
                 }
+
                 break;
             case open:
 
@@ -537,10 +549,13 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
                 break;
             case openDeliver:
+
                 if (currentGamepad2.left_bumper && !previousGamepad2.left_bumper) {
                     delivery.setRightGripperState(Delivery.rightGripperState.closed);
                 }
+
                 break;
+
             default:
 
         }
@@ -670,9 +685,9 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
         odometry.update();
 
-        //update collection state
+//       update collection state
 //        collection.updateIntakeHeight();
-
+//
 //        if (collection.getIntakeCurrentUse() > 5500 && !reversingIntake){
 //            reversingIntake = true;
 //            reverseIntake.reset();
