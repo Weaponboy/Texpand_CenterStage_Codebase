@@ -99,9 +99,9 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
     //segment 3
     Vector2D DS3S = DE2S;
-    Vector2D DC3S = new Vector2D(getRealCoords(234), getRealCoords(118));
-    Vector2D DCC3S = new Vector2D(getRealCoords(257), getRealCoords(155));
-    Vector2D DE3S = new Vector2D(getRealCoords(335), getRealCoords(122));
+    Vector2D DC3S = new Vector2D(getRealCoords(234), getRealCoords(122));
+    Vector2D DCC3S = new Vector2D(getRealCoords(257), getRealCoords(158));
+    Vector2D DE3S = new Vector2D(getRealCoords(335), getRealCoords(126));
 
     /**collecting paths*/
     Vector2D CS1S = new Vector2D(getRealCoords(300), getRealCoords(90));
@@ -116,7 +116,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
     Vector2D CE3S = new Vector2D(getRealCoords(40), getRealCoords(135));
 
     Vector2D CS3SS = CE2S;
-    Vector2D CC3SS = new Vector2D(getRealCoords(49), getRealCoords(170));
+    Vector2D CC3SS = new Vector2D(getRealCoords(54), getRealCoords(170));
     Vector2D CE3SS = new Vector2D(getRealCoords(39), getRealCoords(115));
 
     /**
@@ -431,6 +431,8 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
             if (sensors.armSensor.isPressed() && deliverySlides.getCurrentposition() > 200){
 
+                drive.setAllPower(0.3);
+
                 delivery.setGripperState(Delivery.GripperState.open);
 
                 delivery.updateGrippers();
@@ -473,6 +475,8 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
             }
 
             if(pathing && Math.abs(odometry.getVerticalVelocity()) < 10 && !sensors.armSensor.isPressed() && deliverySlides.getCurrentposition() > 200 && odometry.X > 200){
+
+                drive.setAllPower(0.3);
 
                 delivery.setGripperState(Delivery.GripperState.open);
 
@@ -745,6 +749,8 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
             if (sensors.armSensor.isPressed() && deliverySlides.getCurrentposition() > 200){
 
+                drive.setAllPower(0.3);
+
                 delivery.setGripperState(Delivery.GripperState.open);
 
                 delivery.updateGrippers();
@@ -787,6 +793,8 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
             }
 
             if(pathing && Math.abs(odometry.getVerticalVelocity()) < 10 && !sensors.armSensor.isPressed() && deliverySlides.getCurrentposition() > 200&& odometry.X > 200){
+
+                drive.setAllPower(0.3);
 
                 delivery.setGripperState(Delivery.GripperState.open);
 
@@ -1054,6 +1062,8 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
             if (sensors.armSensor.isPressed() && deliverySlides.getCurrentposition() > 200){
 
+                drive.setAllPower(0.3);
+
                 delivery.setGripperState(Delivery.GripperState.open);
 
                 delivery.updateGrippers();
@@ -1084,6 +1094,8 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
             }
 
             if(pathing && Math.abs(odometry.getVerticalVelocity()) < 10 && !sensors.armSensor.isPressed() && deliverySlides.getCurrentposition() > 200 && odometry.X > 200){
+
+                drive.setAllPower(0.3);
 
                 delivery.setGripperState(Delivery.GripperState.open);
 
@@ -1271,11 +1283,11 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                 deliver.threePoints(DS1S, DC1S, DE1S);
                 deliver.twoPoints(DS2S, DE2S);
-                deliver.fourPoints(DS3S, DC3S, DCC3S, DE3S, true, 0.4);
+                deliver.fourPoints(DS3S, DC3S, DCC3S, DE3S, true, 0.3);
 
                 deliverRecollect.fourPoints(DS1SC, DC1SC, DCC1SC, DE1SC);
                 deliverRecollect.twoPoints(DS2S, DE2S);
-                deliverRecollect.fourPoints(DS3S, DC3S, DCC3S, DE3S, true, 0.4);
+                deliverRecollect.fourPoints(DS3S, DC3S, DCC3S, DE3S, true, 0.3);
 
                 DeliveryEndpoint = DE3S;
                 CollectionEndpoint = CE3S;
@@ -1537,7 +1549,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                         if (pathing){
 
-                            pathing = follower.followPathAutoHeading(targetHeading, odometry, drive, 0.013, 2);
+                            pathing = follower.followPathAutoHeading(targetHeading, odometry, drive, 0.01, 2);
 
                             if (Math.abs(leavePurpleHeadingS.getX() - odometry.X) < HeadingControlError && Math.abs(leavePurpleHeadingS.getY() - odometry.Y) < 10 && targetHeading == 270){
 
