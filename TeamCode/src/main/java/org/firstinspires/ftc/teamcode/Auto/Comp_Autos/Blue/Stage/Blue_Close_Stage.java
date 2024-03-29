@@ -112,11 +112,11 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
     Vector2D CE2S = new Vector2D(getRealCoords(91), getRealCoords(153));
 
     Vector2D CS3S = CE2S;
-    Vector2D CC3S = new Vector2D(getRealCoords(40), getRealCoords(175));
+    Vector2D CC3S = new Vector2D(getRealCoords(42), getRealCoords(175));
     Vector2D CE3S = new Vector2D(getRealCoords(40), getRealCoords(135));
 
     Vector2D CS3SS = CE2S;
-    Vector2D CC3SS = new Vector2D(getRealCoords(54), getRealCoords(170));
+    Vector2D CC3SS = new Vector2D(getRealCoords(70), getRealCoords(160));
     Vector2D CE3SS = new Vector2D(getRealCoords(39), getRealCoords(115));
 
     /**
@@ -1275,19 +1275,19 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                 collect.threePoints(CS1S, CC1S, CE1S);
                 collect.twoPoints(CS2S, CE2S);
-                collect.threePoints(CS3S, CC3S, CE3S, true, 0.5);
+                collect.threePoints(CS3S, CC3S, CE3S, true, 0.45);
 
                 collectSecondStack.threePoints(CS1S, CC1S, CE1S);
                 collectSecondStack.twoPoints(CS2S, CE2S);
-                collectSecondStack.threePoints(CS3SS, CC3SS, CE3SS, true, 0.5);
+                collectSecondStack.threePoints(CS3SS, CC3SS, CE3SS, true, 0.45);
 
                 deliver.threePoints(DS1S, DC1S, DE1S);
                 deliver.twoPoints(DS2S, DE2S);
-                deliver.fourPoints(DS3S, DC3S, DCC3S, DE3S, true, 0.3);
+                deliver.fourPoints(DS3S, DC3S, DCC3S, DE3S, true, 0.6);
 
                 deliverRecollect.fourPoints(DS1SC, DC1SC, DCC1SC, DE1SC);
                 deliverRecollect.twoPoints(DS2S, DE2S);
-                deliverRecollect.fourPoints(DS3S, DC3S, DCC3S, DE3S, true, 0.3);
+                deliverRecollect.fourPoints(DS3S, DC3S, DCC3S, DE3S, true, 0.6);
 
                 DeliveryEndpoint = DE3S;
                 CollectionEndpoint = CE3S;
@@ -1549,7 +1549,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                         if (pathing){
 
-                            pathing = follower.followPathAutoHeading(targetHeading, odometry, drive, 0.01, 2);
+                            pathing = follower.followPathAutoHeading(targetHeading, odometry, drive, 0.009, 2);
 
                             if (Math.abs(leavePurpleHeadingS.getX() - odometry.X) < HeadingControlError && Math.abs(leavePurpleHeadingS.getY() - odometry.Y) < 10 && targetHeading == 270){
 
