@@ -26,7 +26,7 @@ public class Collection {
     double letClawThrough = 0.25;
 
     double firstPixel = 0.234;
-    double firstAndHalf = 0.325;
+    double firstAndHalf = 0.265;
     double secondPixel = 0.344;
     double secondAndHalf = 0.365;
     double thirdPixel = 0.384;
