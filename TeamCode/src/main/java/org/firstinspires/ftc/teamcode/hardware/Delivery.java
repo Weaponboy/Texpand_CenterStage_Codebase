@@ -607,10 +607,10 @@ public class Delivery {
             if(DeliveryMovingAuto && pivotMoveTimeAuto.milliseconds() > timeToWaitDelivery/1.2){
                 RotateArm.setPosition(getArmRotateSetPoint(pixelPlacement));
                 RotateClaw.setPosition(getRotateClawSetPoint(pixelPlacement));
+                ArmExtension.setPosition(0.35);
             }
 
             if(DeliveryMovingAuto && pivotMoveTimeAuto.milliseconds() > timeToWaitDelivery){
-                ArmExtension.setPosition(0.4);
                 DeliveryMovingAuto = false;
                 armstateCurrent = armState.deliverAuto;
             }
