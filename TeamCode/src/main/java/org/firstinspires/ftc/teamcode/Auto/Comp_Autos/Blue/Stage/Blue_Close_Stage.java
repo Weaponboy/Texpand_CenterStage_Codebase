@@ -99,9 +99,9 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
     //segment 3
     Vector2D DS3S = DE2S;
-    Vector2D DC3S = new Vector2D(getRealCoords(266), getRealCoords(152));
-    Vector2D DCC3S = new Vector2D(getRealCoords(241), getRealCoords(129));
-    Vector2D DE3S = new Vector2D(getRealCoords(335), getRealCoords(124));
+    Vector2D DC3S = new Vector2D(getRealCoords(234), getRealCoords(118));
+    Vector2D DCC3S = new Vector2D(getRealCoords(257), getRealCoords(155));
+    Vector2D DE3S = new Vector2D(getRealCoords(335), getRealCoords(122));
 
     /**collecting paths*/
     Vector2D CS1S = new Vector2D(getRealCoords(300), getRealCoords(90));
@@ -291,13 +291,13 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
     ElapsedTime reverseIntakeTimer = new ElapsedTime();
 
+    ElapsedTime extendSlidesPreload = new ElapsedTime();
+
     Vector2D secondStack = new Vector2D(getRealCoords(41), getRealCoords(115));
 
     public void delivery_and_collect_2() throws InterruptedException {
 
         odometry.update();
-
-//        deliverySlides.updateSlides(gamepad1, gamepad2, delivery.getArmState());
         delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardRight, odometry);
 
         if (build == Blue_Close_Stage.Build.notBuilt){
@@ -362,30 +362,31 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
             }
 
+            if (collection.getIntakeCurrentUse() > 5500 && !reversingIntake){
+                reversingIntake = true;
+                reverseIntakeTimer.reset();
+                previousState = collection.getPowerState();
+                collection.setState(Collection.intakePowerState.reversed);
+                collection.updateIntakeState();
+            }
+
+            if (reversingIntake && reverseIntakeTimer.milliseconds() > 100){
+                collection.setState(previousState);
+                collection.updateIntakeState();
+                reversingIntake = false;
+            }
+
+
         }
 
-        if (collection.getIntakeCurrentUse() > 5500 && !reversingIntake){
-            reversingIntake = true;
-            reverseIntakeTimer.reset();
-            previousState = collection.getPowerState();
-            collection.setState(Collection.intakePowerState.reversed);
-            collection.updateIntakeState();
-        }
-
-        if (reversingIntake && reverseIntakeTimer.milliseconds() > 100){
-            collection.setState(previousState);
-            collection.updateIntakeState();
-            reversingIntake = false;
-        }
-
-        if (gripperControl.milliseconds() > (timeChanger+700) && gripperControl.milliseconds() < (timeChanger+800) && gotTwo){
+        if (gripperControl.milliseconds() > 700 && gripperControl.milliseconds() < 800 && gotTwo){
 
             delivery.setGripperState(Delivery.GripperState.closed);
             delivery.updateGrippers();
 
         }
 
-        if (gripperControl.milliseconds() > (timeChanger+800) && gripperControl.milliseconds() < (timeChanger+1000) && gotTwo){
+        if (gripperControl.milliseconds() > 800 && gripperControl.milliseconds() < 1000 && gotTwo){
 
             delivery.setGripperState(Delivery.GripperState.closed);
             delivery.updateGrippers();
@@ -395,7 +396,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
         }
 
-        if (gripperControl.milliseconds() > (timeChanger+1000) && gripperControl.milliseconds() < (timeChanger+1200) && gotTwo){
+        if (gripperControl.milliseconds() > 1000 && gripperControl.milliseconds() < 1200 && gotTwo){
 
             collection.setState(Collection.intakePowerState.off);
             collection.updateIntakeState();
@@ -404,7 +405,6 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
             delivery.updateGrippers();
 
         }
-
         if (delivering){
 
             if (odometry.X > extendSlidesDelivery.getX()) {
@@ -513,7 +513,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (Math.abs(turnIntakeOff.getX() - odometry.X) < IntakeControlError && Math.abs(turnIntakeOff.getY() - odometry.Y) < IntakeControlError) {
+            if (Math.abs(turnIntakeOff.getX() - odometry.X) < IntakeControlError && Math.abs(turnIntakeOff.getY() - odometry.Y) < (IntakeControlError+20)) {
 
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
@@ -523,7 +523,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (Math.abs(reverseIntake.getX() - odometry.X) < IntakeControlError && Math.abs(reverseIntake.getY() - odometry.Y) < IntakeControlError){
+            if (Math.abs(reverseIntake.getX() - odometry.X) < IntakeControlError && Math.abs(reverseIntake.getY() - odometry.Y) < (IntakeControlError+20)){
 
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
@@ -677,30 +677,30 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
             }
 
+            if (collection.getIntakeCurrentUse() > 5500 && !reversingIntake){
+                reversingIntake = true;
+                reverseIntakeTimer.reset();
+                previousState = collection.getPowerState();
+                collection.setState(Collection.intakePowerState.reversed);
+                collection.updateIntakeState();
+            }
+
+            if (reversingIntake && reverseIntakeTimer.milliseconds() > 100){
+                collection.setState(previousState);
+                collection.updateIntakeState();
+                reversingIntake = false;
+            }
+
         }
 
-        if (collection.getIntakeCurrentUse() > 5500 && !reversingIntake){
-            reversingIntake = true;
-            reverseIntakeTimer.reset();
-            previousState = collection.getPowerState();
-            collection.setState(Collection.intakePowerState.reversed);
-            collection.updateIntakeState();
-        }
-
-        if (reversingIntake && reverseIntakeTimer.milliseconds() > 100){
-            collection.setState(previousState);
-            collection.updateIntakeState();
-            reversingIntake = false;
-        }
-
-        if (gripperControl.milliseconds() > (timeChanger+700) && gripperControl.milliseconds() < (timeChanger+800) && gotTwo){
+        if (gripperControl.milliseconds() > 700 && gripperControl.milliseconds() < 800 && gotTwo){
 
             delivery.setGripperState(Delivery.GripperState.closed);
             delivery.updateGrippers();
 
         }
 
-        if (gripperControl.milliseconds() > (timeChanger+800) && gripperControl.milliseconds() < (timeChanger+1000) && gotTwo){
+        if (gripperControl.milliseconds() > 800 && gripperControl.milliseconds() < 1000 && gotTwo){
 
             delivery.setGripperState(Delivery.GripperState.closed);
             delivery.updateGrippers();
@@ -710,7 +710,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
         }
 
-        if (gripperControl.milliseconds() > (timeChanger+1000) && gripperControl.milliseconds() < (timeChanger+1200) && gotTwo){
+        if (gripperControl.milliseconds() > 1000 && gripperControl.milliseconds() < 1200 && gotTwo){
 
             collection.setState(Collection.intakePowerState.off);
             collection.updateIntakeState();
@@ -719,7 +719,6 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
             delivery.updateGrippers();
 
         }
-
         if (delivering){
 
             if (odometry.X > extendSlidesDelivery.getX()) {
@@ -828,7 +827,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (Math.abs(turnIntakeOff.getX() - odometry.X) < IntakeControlError && Math.abs(turnIntakeOff.getY() - odometry.Y) < IntakeControlError) {
+            if (Math.abs(turnIntakeOff.getX() - odometry.X) < IntakeControlError && Math.abs(turnIntakeOff.getY() - odometry.Y) < (IntakeControlError+20)) {
 
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
@@ -838,7 +837,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (Math.abs(reverseIntake.getX() - odometry.X) < IntakeControlError && Math.abs(reverseIntake.getY() - odometry.Y) < IntakeControlError){
+            if (Math.abs(reverseIntake.getX() - odometry.X) < IntakeControlError && Math.abs(reverseIntake.getY() - odometry.Y) < (IntakeControlError+20)){
 
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
@@ -847,7 +846,6 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
                 collection.updateIntakeState();
 
             }
-
             if (Math.abs(DeliveryEndpoint.getX() - odometry.X) < 4 && Math.abs(DeliveryEndpoint.getY() - odometry.Y) < 4 && !pathing) {
 
                 drive.RF.setPower(0);
@@ -926,8 +924,6 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
     public void delivery_and_collect_6() throws InterruptedException{
 
         odometry.update();
-
-//        deliverySlides.updateSlides(gamepad1, gamepad2, delivery.getArmState());
         delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardRight, odometry);
 
         if (build == Blue_Close_Stage.Build.notBuilt){
@@ -989,30 +985,30 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
             }
 
+            if (collection.getIntakeCurrentUse() > 5500 && !reversingIntake){
+                reversingIntake = true;
+                reverseIntakeTimer.reset();
+                previousState = collection.getPowerState();
+                collection.setState(Collection.intakePowerState.reversed);
+                collection.updateIntakeState();
+            }
+
+            if (reversingIntake && reverseIntakeTimer.milliseconds() > 100){
+                collection.setState(previousState);
+                collection.updateIntakeState();
+                reversingIntake = false;
+            }
+
         }
 
-        if (collection.getIntakeCurrentUse() > 5500 && !reversingIntake){
-            reversingIntake = true;
-            reverseIntakeTimer.reset();
-            previousState = collection.getPowerState();
-            collection.setState(Collection.intakePowerState.reversed);
-            collection.updateIntakeState();
-        }
-
-        if (reversingIntake && reverseIntakeTimer.milliseconds() > 100){
-            collection.setState(previousState);
-            collection.updateIntakeState();
-            reversingIntake = false;
-        }
-
-        if (gripperControl.milliseconds() > (timeChanger+700) && gripperControl.milliseconds() < (timeChanger+800) && gotTwo){
+        if (gripperControl.milliseconds() > 700 && gripperControl.milliseconds() < 800 && gotTwo){
 
             delivery.setGripperState(Delivery.GripperState.closed);
             delivery.updateGrippers();
 
         }
 
-        if (gripperControl.milliseconds() > (timeChanger+800) && gripperControl.milliseconds() < (timeChanger+1000) && gotTwo){
+        if (gripperControl.milliseconds() > 800 && gripperControl.milliseconds() < 1000 && gotTwo){
 
             delivery.setGripperState(Delivery.GripperState.closed);
             delivery.updateGrippers();
@@ -1022,7 +1018,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
         }
 
-        if (gripperControl.milliseconds() > (timeChanger+1000) && gripperControl.milliseconds() < (timeChanger+1200) && gotTwo){
+        if (gripperControl.milliseconds() > 1000 && gripperControl.milliseconds() < 1200 && gotTwo){
 
             collection.setState(Collection.intakePowerState.off);
             collection.updateIntakeState();
@@ -1116,7 +1112,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (Math.abs(turnIntakeOff.getX() - odometry.X) < IntakeControlError && Math.abs(turnIntakeOff.getY() - odometry.Y) < IntakeControlError) {
+            if (Math.abs(turnIntakeOff.getX() - odometry.X) < IntakeControlError && Math.abs(turnIntakeOff.getY() - odometry.Y) < (IntakeControlError+20)) {
 
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
@@ -1126,7 +1122,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (Math.abs(reverseIntake.getX() - odometry.X) < IntakeControlError && Math.abs(reverseIntake.getY() - odometry.Y) < IntakeControlError){
+            if (Math.abs(reverseIntake.getX() - odometry.X) < IntakeControlError && Math.abs(reverseIntake.getY() - odometry.Y) < (IntakeControlError+20)){
 
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
@@ -1255,6 +1251,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                 DeliveryEndpoint = DE3F;
                 CollectionEndpoint = CE3F;
+                secondStack = CE3FS;
 
                 buildPaths.reset();
 
@@ -1262,7 +1259,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                 clearAll();
 
-                preloadPaths.fourPoints(DPS1S, DPC1S, DPCT1S, DPE1S, true);
+                preloadPaths.fourPoints(DPS1S, DPC1S, DPCT1S, DPE1S, true, 0.4);
 
                 collect.threePoints(CS1S, CC1S, CE1S);
                 collect.twoPoints(CS2S, CE2S);
@@ -1282,6 +1279,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                 DeliveryEndpoint = DE3S;
                 CollectionEndpoint = CE3S;
+                secondStack = CE3FS;
 
                 buildPaths.reset();
 
@@ -1475,6 +1473,8 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
             collection.setIntakeHeight(Collection.intakeHeightState.stowed);
             collection.updateIntakeHeight();
 
+            extendSlidesPreload.reset();
+
             while (!(phase == Phase.finished) && opModeIsActive()){
 
                 switch (phase){
@@ -1531,6 +1531,10 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
                             }
                         }
 
+                        if (extendSlidesPreload.milliseconds() > 400 && deliverySlides.getCurrentposition() < 50){
+                            deliverySlides.DeliverySlides(slidesPosYellowPixel, 1);
+                        }
+
                         if (pathing){
 
                             pathing = follower.followPathAutoHeading(targetHeading, odometry, drive, 0.013, 2);
@@ -1548,48 +1552,6 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                                 targetHeading = 180;
 
-                                deliverySlides.DeliverySlides(slidesPosYellowPixel, 1);
-
-                            }
-
-                            if (deliverySlides.getCurrentposition() > 200 && sensors.armSensor.isPressed()){
-
-                                drive.setAllPower(0);
-
-                                sleep(200);
-
-                                delivery.setGripperState(Delivery.GripperState.open);
-                                delivery.updateGrippers();
-
-                                sleep(200);
-
-                                if (auto == Auto.preload){
-
-                                    delivery.setArmTargetState(Delivery.armState.collect);
-                                    delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.yellow2Blue, odometry);
-
-                                    deliverySlides.DeliverySlides(0, -0.5);
-
-                                    while (deliverySlides.getCurrentposition() > 20){
-                                        delivery.updateArm(deliverySlides.getCurrentposition(), false,  Delivery.PixelsAuto.yellow2Blue, odometry);
-                                    }
-
-                                    phase = Phase.finished;
-
-                                }else {
-
-                                    delivery.setArmTargetState(Delivery.armState.collect);
-                                    delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.yellow2Blue, odometry);
-
-                                    deliverySlides.DeliverySlides(0, -0.5);
-
-                                    deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
-
-                                    phase = Phase.first2;
-
-                                    build = Build.notBuilt;
-
-                                }
                             }
 
                             if (deliverySlides.getCurrentposition() > 150 && deliverySlides.getCurrentposition() < 300){
@@ -1616,7 +1578,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
                             }else {
                                 delivery.ArmExtension.setPosition(0.8);
 
-                                sleep(400);
+                                sleep(200);
 
                                 delivery.setGripperState(Delivery.GripperState.open);
                                 delivery.updateGrippers();
