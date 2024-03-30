@@ -64,7 +64,7 @@ public class Delivery {
     double deliverySecondPivotAuto = 0.2;
     double distancecalc;
     double avoidIntakeSecondPivot = 0.8;
-    double collectSecondPivot = 0.8;
+    double collectSecondPivot = 0.82;
     double deliverySecondPivot = -0.1;
     double lowdeliveryTopPivot = 1;
 
@@ -103,7 +103,7 @@ public class Delivery {
     boolean DeliveryMovingAuto = false;
     boolean DeliveryMoving = false;
     boolean CollectionMoving = false;
-    public double ArmExtensionHome = 0.92;
+    public double ArmExtensionHome = 0.94;
     double deliveryMainIncrement = 0.015;
     double deliveryArmIncrement = 0.02;
 
