@@ -79,7 +79,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
     Vector2D DPS1S = new Vector2D(getRealCoords(210), getRealCoords(23));
     Vector2D DPC1S = new Vector2D(getRealCoords(220), getRealCoords(71));
     Vector2D DPCT1S = new Vector2D(getRealCoords(170), getRealCoords(62));
-    Vector2D DPE1S = new Vector2D(getRealCoords(308), getRealCoords(93));
+    Vector2D DPE1S = new Vector2D(getRealCoords(308), getRealCoords(91));
 
     /**delivery and collection points*/
 
@@ -116,7 +116,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
     Vector2D CE3S = new Vector2D(getRealCoords(40), getRealCoords(135));
 
     Vector2D CS3SS = CE2S;
-    Vector2D CC3SS = new Vector2D(getRealCoords(42), getRealCoords(149));
+    Vector2D CC3SS = new Vector2D(getRealCoords(32), getRealCoords(139));
     Vector2D CE3SS = new Vector2D(getRealCoords(39), getRealCoords(110));
 
     /**
@@ -331,7 +331,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
                 delivery.setGripperState(Delivery.GripperState.open);
                 delivery.updateGrippers();
 
-                collection.setIntakeHeight(Collection.intakeHeightState.secondPixel);
+                collection.setIntakeHeight(Collection.intakeHeightState.secondAndHalf);
                 collection.updateIntakeHeight();
 
                 collection.setState(Collection.intakePowerState.on);
@@ -379,14 +379,14 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
         }
 
-        if (gripperControl.milliseconds() > 700 && gripperControl.milliseconds() < 800 && gotTwo){
+        if (gripperControl.milliseconds() > 400 && gripperControl.milliseconds() < 500 && gotTwo){
 
             delivery.setGripperState(Delivery.GripperState.closed);
             delivery.updateGrippers();
 
         }
 
-        if (gripperControl.milliseconds() > 800 && gripperControl.milliseconds() < 1000 && gotTwo){
+        if (gripperControl.milliseconds() > 500 && gripperControl.milliseconds() < 700 && gotTwo){
 
             delivery.setGripperState(Delivery.GripperState.closed);
             delivery.updateGrippers();
@@ -396,7 +396,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
         }
 
-        if (gripperControl.milliseconds() > 1000 && gripperControl.milliseconds() < 1200 && gotTwo){
+        if (gripperControl.milliseconds() > 700 && gripperControl.milliseconds() < 900 && gotTwo){
 
             collection.setState(Collection.intakePowerState.off);
             collection.updateIntakeState();
@@ -692,15 +692,14 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
             }
 
         }
-
-        if (gripperControl.milliseconds() > 700 && gripperControl.milliseconds() < 800 && gotTwo){
+        if (gripperControl.milliseconds() > 400 && gripperControl.milliseconds() < 500 && gotTwo){
 
             delivery.setGripperState(Delivery.GripperState.closed);
             delivery.updateGrippers();
 
         }
 
-        if (gripperControl.milliseconds() > 800 && gripperControl.milliseconds() < 1000 && gotTwo){
+        if (gripperControl.milliseconds() > 500 && gripperControl.milliseconds() < 700 && gotTwo){
 
             delivery.setGripperState(Delivery.GripperState.closed);
             delivery.updateGrippers();
@@ -710,7 +709,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
         }
 
-        if (gripperControl.milliseconds() > 1000 && gripperControl.milliseconds() < 1200 && gotTwo){
+        if (gripperControl.milliseconds() > 700 && gripperControl.milliseconds() < 900 && gotTwo){
 
             collection.setState(Collection.intakePowerState.off);
             collection.updateIntakeState();
@@ -1001,14 +1000,14 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
         }
 
-        if (gripperControl.milliseconds() > 700 && gripperControl.milliseconds() < 800 && gotTwo){
+        if (gripperControl.milliseconds() > 400 && gripperControl.milliseconds() < 500 && gotTwo){
 
             delivery.setGripperState(Delivery.GripperState.closed);
             delivery.updateGrippers();
 
         }
 
-        if (gripperControl.milliseconds() > 800 && gripperControl.milliseconds() < 1000 && gotTwo){
+        if (gripperControl.milliseconds() > 500 && gripperControl.milliseconds() < 700 && gotTwo){
 
             delivery.setGripperState(Delivery.GripperState.closed);
             delivery.updateGrippers();
@@ -1018,7 +1017,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
         }
 
-        if (gripperControl.milliseconds() > 1000 && gripperControl.milliseconds() < 1200 && gotTwo){
+        if (gripperControl.milliseconds() > 700 && gripperControl.milliseconds() < 900 && gotTwo){
 
             collection.setState(Collection.intakePowerState.off);
             collection.updateIntakeState();

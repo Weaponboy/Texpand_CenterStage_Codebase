@@ -167,7 +167,7 @@ public class Delivery {
     RobotArm backboardLeft = new RobotArm(0.926,0.35, 0.85, 0.174, 0.95, -1, -1);
 
     RobotArm yellow1Blue = new RobotArm(0.956, ArmPositionMid, 0.55, 0.194, 0.94, ArmExtensionHome, -1);
-    RobotArm yellow2Blue = new RobotArm(0.75, ArmPositionMid, secondRotateMiddle, 0.086, rotateCollect, ArmExtensionHome, -1);
+    RobotArm yellow2Blue = new RobotArm(0.8, ArmPositionMid, secondRotateMiddle, 0.086, rotateCollect, ArmExtensionHome, -1);
     RobotArm yellow3Blue = new RobotArm(0.956, ArmPositionMid, secondRotateMiddle, 0.216, rotateCollect, ArmExtensionHome, -1);
 
     RobotArm yellow1Red = new RobotArm(0.916, ArmPositionMid, 0.46, 0.316, 0.94, -1, -1);
