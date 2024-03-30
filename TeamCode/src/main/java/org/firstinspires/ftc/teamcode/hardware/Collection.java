@@ -27,7 +27,7 @@ public class Collection {
 
     double firstPixel = 0.234;
     double firstAndHalf = 0.265;
-    double secondPixel = 0.344;
+    double secondPixel = 0.304;
     double secondAndHalf = 0.365;
     double thirdPixel = 0.384;
     double thirdAndHalf = 0.416;
