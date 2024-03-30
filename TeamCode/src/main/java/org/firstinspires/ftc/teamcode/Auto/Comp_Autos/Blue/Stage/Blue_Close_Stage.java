@@ -173,7 +173,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
     //second position
     Vector2D oneEightyHeadingS = new Vector2D(getRealCoords(241), getRealCoords(86));
-    Vector2D leavePurpleHeadingS = new Vector2D(getRealCoords(218), getRealCoords(70));
+    Vector2D leavePurpleHeadingS = new Vector2D(getRealCoords(213), getRealCoords(65));
 
     //third position
     Vector2D oneEightyHeadingT = new Vector2D(getRealCoords(227), getRealCoords(105));
