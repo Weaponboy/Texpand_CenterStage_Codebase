@@ -592,7 +592,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
             drive.setAllPower(0.5);
 
-            collection.setIntakeHeight(Collection.intakeHeightState.firstAndHalf);
+            collection.setIntakeHeight(Collection.intakeHeightState.secondPixel);
             collection.updateIntakeHeight();
 
             pathing = true;
