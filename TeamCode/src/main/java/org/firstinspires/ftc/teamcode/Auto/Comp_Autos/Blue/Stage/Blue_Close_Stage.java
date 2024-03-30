@@ -1259,7 +1259,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                 clearAll();
 
-                preloadPaths.fourPoints(DPS1S, DPC1S, DPCT1S, DPE1S, true, 0.4);
+                preloadPaths.fourPoints(DPS1S, DPC1S, DPCT1S, DPE1S, true, 0.35);
 
                 collect.threePoints(CS1S, CC1S, CE1S);
                 collect.twoPoints(CS2S, CE2S);
