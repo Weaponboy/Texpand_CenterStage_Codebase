@@ -112,12 +112,12 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
     Vector2D CE2S = new Vector2D(getRealCoords(91), getRealCoords(153));
 
     Vector2D CS3S = CE2S;
-    Vector2D CC3S = new Vector2D(getRealCoords(43), getRealCoords(175));
-    Vector2D CE3S = new Vector2D(getRealCoords(40), getRealCoords(135));
+//    Vector2D CC3S = new Vector2D(getRealCoords(43), getRealCoords(175));
+    Vector2D CE3S = new Vector2D(getRealCoords(40), getRealCoords(150));
 
     Vector2D CS3SS = CE2S;
-    Vector2D CC3SS = new Vector2D(getRealCoords(32), getRealCoords(139));
-    Vector2D CE3SS = new Vector2D(getRealCoords(39), getRealCoords(110));
+    Vector2D CC3SS = new Vector2D(getRealCoords(78), getRealCoords(155));
+    Vector2D CE3SS = new Vector2D(getRealCoords(40), getRealCoords(118));
 
     /**
      * Third position
@@ -595,6 +595,8 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
             collection.setIntakeHeight(Collection.intakeHeightState.secondPixel);
             collection.updateIntakeHeight();
 
+            sleep(400);
+
             pathing = true;
 
             armOver = false;
@@ -907,6 +909,8 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
             collection.setIntakeHeight(Collection.intakeHeightState.firstPixel);
             collection.updateIntakeHeight();
 
+            sleep(400);
+
             pathing = true;
 
             armOver = false;
@@ -1182,6 +1186,8 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
             collection.setIntakeHeight(Collection.intakeHeightState.firstPixel);
             collection.updateIntakeHeight();
 
+            sleep(400);
+
             pathing = true;
 
             armOver = false;
@@ -1262,11 +1268,11 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                 collect.threePoints(CS1S, CC1S, CE1S);
                 collect.twoPoints(CS2S, CE2S);
-                collect.threePoints(CS3S, CC3S, CE3S, true, 0.52);
+                collect.twoPoints(CS3S, CE3S, true, 0.4);
 
                 collectSecondStack.threePoints(CS1S, CC1S, CE1S);
                 collectSecondStack.twoPoints(CS2S, CE2S);
-                collectSecondStack.threePoints(CS3SS, CC3SS, CE3SS, true, 0.5);
+                collectSecondStack.threePoints(CS3SS, CC3SS, CE3SS, true, 0.4);
 
                 deliver.threePoints(DS1S, DC1S, DE1S);
                 deliver.twoPoints(DS2S, DE2S);
