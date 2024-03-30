@@ -1491,46 +1491,6 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                         }
 
-                        if (deliverySlides.getCurrentposition() > 200 && sensors.armSensor.isPressed()){
-
-                            drive.setAllPower(0);
-
-                            sleep(200);
-
-                            delivery.setGripperState(Delivery.GripperState.open);
-                            delivery.updateGrippers();
-
-                            sleep(200);
-
-                            if (auto == Auto.preload){
-
-                                delivery.setArmTargetState(Delivery.armState.collect);
-                                delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.yellow2Blue, odometry);
-
-                                deliverySlides.DeliverySlides(0, -0.5);
-
-                                while (deliverySlides.getCurrentposition() > 20){
-                                    delivery.updateArm(deliverySlides.getCurrentposition(), false,  Delivery.PixelsAuto.yellow2Blue, odometry);
-                                }
-
-                                phase = Phase.finished;
-
-                            }else {
-
-                                delivery.setArmTargetState(Delivery.armState.collect);
-                                delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.yellow2Blue, odometry);
-
-                                deliverySlides.DeliverySlides(0, -0.5);
-
-                                deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
-
-                                phase = Phase.first2;
-
-                                build = Build.notBuilt;
-
-                            }
-                        }
-
                         if (extendSlidesPreload.milliseconds() > 400 && deliverySlides.getCurrentposition() < 50){
                             deliverySlides.DeliverySlides(slidesPosYellowPixel, 1);
                         }
@@ -1576,9 +1536,14 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
                                 sleep(200);
 
                             }else {
-                                delivery.ArmExtension.setPosition(0.8);
 
-                                sleep(200);
+                                while (delivery.getMainPivotPosition() < 0.95 && !(sensors.armSensor.isPressed())){
+                                    delivery.setMainPivot(delivery.getMainPivotPosition() + 0.005);
+
+                                    sleep(10);
+                                }
+
+                                sleep(50);
 
                                 delivery.setGripperState(Delivery.GripperState.open);
                                 delivery.updateGrippers();
