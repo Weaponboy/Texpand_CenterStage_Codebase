@@ -1067,6 +1067,81 @@ public class mecanumFollower {
 
     }
 
+    public boolean followPathAuto(double targetHeading, Odometry odometry, Drivetrain drive, double errorMargin, int correctionDistance){
+
+        odometry.update();
+
+        Vector2D robotPositionVector = new Vector2D(odometry.X, odometry.Y);
+
+        Vector2D targetPoint = pathfollow.getPointOnFollowable(pathfollow.getLastPoint());
+
+        boolean pathing = true;
+
+        robotPositionVector.set(odometry.X, odometry.Y);
+
+        if (Math.abs(robotPositionVector.getX() - targetPoint.getX()) < errorMargin && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < errorMargin && Math.abs(odometry.getVerticalVelocity()) < 3 && Math.abs(odometry.getHorizontalVelocity()) < 3 && Math.abs(targetHeading - odometry.heading) < 2){
+            pathing = false;
+        }
+
+        boolean closeToTarget = Math.abs(robotPositionVector.getX() - targetPoint.getX()) < 10 && Math.abs(robotPositionVector.getY() - targetPoint.getY()) < 10;
+
+        PathingPower correctivePower = new PathingPower();
+        PathingPower pathingPower;
+
+        if(Math.abs(odometry.getHorizontalVelocity()) < 3){
+            yI += 0.05;
+        }else {
+            yI = 0;
+        }
+
+        if(Math.abs(odometry.getVerticalVelocity()) < 3){
+            xI += 0.05;
+        }else {
+            xI = 0;
+        }
+
+        double heading = odometry.heading;
+
+        int closestPos = pathfollow.getClosestPositionOnPath(robotPositionVector);
+
+        if (closestPos >= pathfollow.followablePath.size()-correctionDistance){
+            gotToEnd = true;
+        } else if (closestPos < (pathfollow.followablePath.size()-1)/2) {
+            gotToEnd = false;
+        }
+
+        if (!gotToEnd){
+            pathingPower = getFullPathingPower(robotPositionVector, heading, odometry);
+            vertical = pathingPower.getVertical();
+            horizontal = -(pathingPower.getHorizontal());
+            pivot = getTurnPower(targetHeading, odometry.heading);
+        }else {
+            correctivePower = getCorrectivePowerAtEnd(robotPositionVector, targetPoint, heading);
+            vertical = correctivePower.getVertical();
+            horizontal = -(correctivePower.getHorizontal());
+            pivot = getTurnPower(targetHeading, odometry.heading);
+        }
+
+
+
+        double denominator = Math.max(Math.abs(vertical) + Math.abs(horizontal) + Math.abs(pivot), 1);
+
+        System.out.println("vertical before set" + vertical);
+
+        double left_Front = (vertical + horizontal + pivot) / denominator;
+        double left_Back = (vertical - horizontal + pivot) / denominator;
+        double right_Front = (vertical - horizontal - pivot) / denominator;
+        double right_Back = (vertical + horizontal - pivot) / denominator;
+
+        drive.RF.setPower(right_Front);
+        drive.RB.setPower(right_Back);
+        drive.LF.setPower(left_Front);
+        drive.LB.setPower(left_Back);
+
+        return pathing;
+
+    }
+
     public Vector2D getLastPoint(){
         return pathfollow.getPointOnFollowable(pathfollow.getLastPoint());
     }

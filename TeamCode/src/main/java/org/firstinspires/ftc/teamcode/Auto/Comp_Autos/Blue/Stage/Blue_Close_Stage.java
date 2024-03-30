@@ -584,7 +584,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
             if (delivering){
                 pathing = follower.followPathAuto(targetHeading, odometry, drive);
             }else {
-                pathing = follower.followPathAuto(targetHeading, odometry, drive, 3);
+                pathing = follower.followPathAuto(targetHeading, odometry, drive, 3, 75);
             }
 
 
@@ -896,7 +896,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
             if (delivering){
                 pathing = follower.followPathAuto(targetHeading, odometry, drive);
             }else {
-                pathing = follower.followPathAuto(targetHeading, odometry, drive, 3);
+                pathing = follower.followPathAuto(targetHeading, odometry, drive, 3, 75);
             }
 
 
@@ -1171,7 +1171,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
             if (delivering){
                 pathing = follower.followPathAuto(targetHeading, odometry, drive);
             }else {
-                pathing = follower.followPathAuto(targetHeading, odometry, drive, 3);
+                pathing = follower.followPathAuto(targetHeading, odometry, drive, 3, 75);
             }
 
 
