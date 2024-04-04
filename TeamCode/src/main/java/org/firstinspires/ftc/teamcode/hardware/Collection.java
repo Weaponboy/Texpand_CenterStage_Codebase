@@ -20,21 +20,22 @@ public class Collection {
 
     HardwareMap hmap;
 
-    double collect = 0.234;
+    double collect = 0.19;
     double startingBox = 0.95;
+    double stowedMiddle = 0.55;
     double stowed = 0.25;
     double letClawThrough = 0.25;
 
-    double firstPixel = 0.234;
-    double firstAndHalf = 0.265;
-    double secondPixel = 0.304;
-    double secondAndHalf = 0.365;
-    double thirdPixel = 0.384;
-    double thirdAndHalf = 0.416;
-    double forthPixel = 0.4444;
-    double forthAndHalf = 0.456;
-    double fifthPixel = 0.479;
-    double fifthAndHalf = 0.512;
+    double firstPixel = 0.19;
+    double firstAndHalf = 0.215;
+    double secondPixel = 0.230;
+    double secondAndHalf = 0.260;
+    double thirdPixel = 0.29;
+    double thirdAndHalf = 0.302;
+    double forthPixel = 0.315;
+    double forthAndHalf = 0.335;
+    double fifthPixel = 0.365;
+    double fifthAndHalf = 0.395;
 
     intakePowerState statePower = intakePowerState.off;
     intakeHeightState heightState = intakeHeightState.startingBox;
@@ -57,6 +58,7 @@ public class Collection {
         startingBox,
         collect,
         stowed,
+        stowedMiddle,
         letClawThrough,
         firstPixel,
         firstAndHalf,
@@ -116,6 +118,10 @@ public class Collection {
                 break;
             case stowed:
                 IntakeHeightRight.setPosition(stowed);
+//                IntakeHeightLeft.setPosition(stowed);
+                break;
+            case stowedMiddle:
+                IntakeHeightRight.setPosition(stowedMiddle);
 //                IntakeHeightLeft.setPosition(stowed);
                 break;
             case collect:

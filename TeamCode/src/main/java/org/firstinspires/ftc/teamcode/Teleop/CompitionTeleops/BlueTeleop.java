@@ -403,37 +403,37 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
         }
 
-        if (currentGamepad1.left_trigger > 0 && !(previousGamepad1.left_trigger > 0)) {
-
-            collection.IntakeHeightRight.setPosition(collection.IntakeHeightRight.getPosition() - 0.005);
-
-        }
+//        if (currentGamepad1.left_trigger > 0 && !(previousGamepad1.left_trigger > 0)) {
+//
+////            collection.IntakeHeightRight.setPosition(collection.IntakeHeightRight.getPosition() - 0.005);
+//
+//        }
 
         if (currentGamepad1.right_trigger > 0 && !(previousGamepad1.right_trigger > 0)){
 
-            collection.IntakeHeightRight.setPosition(collection.IntakeHeightRight.getPosition()+0.005);
+//            collection.IntakeHeightRight.setPosition(collection.IntakeHeightRight.getPosition()+0.005);
 
             pivotIntakePos++;
 
-//            if (pivotIntakePos == 5){
-//                pivotIntakePos = 0;
-//            }
-//
-//            if(pivotIntakePos == 0){
-//                collection.setIntakeHeight(Collection.intakeHeightState.fifthPixel);
-//            }
-//            else if(pivotIntakePos == 1){
-//                collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
-//            }
-//            else if(pivotIntakePos == 2){
-//                collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
-//            }
-//            else if(pivotIntakePos == 3){
-//                collection.setIntakeHeight(Collection.intakeHeightState.secondPixel);
-//            }
-//            else if(pivotIntakePos == 4){
-//                collection.setIntakeHeight(Collection.intakeHeightState.firstPixel);
-//            }
+            if (pivotIntakePos == 5){
+                pivotIntakePos = 0;
+            }
+
+            if(pivotIntakePos == 0){
+                collection.setIntakeHeight(Collection.intakeHeightState.fifthPixel);
+            }
+            else if(pivotIntakePos == 1){
+                collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
+            }
+            else if(pivotIntakePos == 2){
+                collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
+            }
+            else if(pivotIntakePos == 3){
+                collection.setIntakeHeight(Collection.intakeHeightState.secondPixel);
+            }
+            else if(pivotIntakePos == 4){
+                collection.setIntakeHeight(Collection.intakeHeightState.firstPixel);
+            }
 
         }
 
@@ -465,6 +465,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
         if (gamepad1.start) {
             delivery.setGripperState(Delivery.GripperState.closed);
+            collection.setState(Collection.intakePowerState.off);
         }
 
         if (gamepad1.back) {
@@ -477,7 +478,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
         }
 
-        if (gamepad2.b) {
+        if (gamepad2.b || gamepad1.b) {
 
             if (Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.collect){
 
@@ -597,7 +598,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
             delivery.setArmTargetState(Delivery.armState.collect);
 
-            deliverySlides.DeliverySlides(deliverySlides.getCurrentposition() + 100, 0.5);
+            deliverySlides.DeliverySlides(deliverySlides.getCurrentposition() + 50, 0.8);
 
             deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
 
@@ -606,36 +607,49 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         }
 
         if (RightTrigger && delivery.getArmState() == Delivery.armState.collect){
+
             RightTrigger = false;
 
-            deliverySlides.DeliverySlides(0, -0.8);
+            deliverySlides.runToPosition(0);
 
             deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
+
         }
 
-        if (gamepad2.left_trigger > 0){
+        if (gamepad2.left_trigger > 0 && deliverySlides.getCurrentposition() < 1800){
 
             delivery.setArmTargetState(Delivery.armState.collect);
 
-            deliverySlides.DeliverySlides(1450, 0.7);
+            deliverySlides.runToPosition(2050);
 
             deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
 
-        } else if (gamepad2.left_trigger > 0 && deliverySlides.getCurrentposition() > 1300){
+        } else if (gamepad2.left_trigger > 0 && deliverySlides.getCurrentposition() > 1800) {
 
-            collection.setIntakeHeight(Collection.intakeHeightState.startingBox);
+            delivery.setArmTargetState(Delivery.armState.collect);
 
-            deliverySlides.DeliverySlides(800, -0.8);
+            deliverySlides.runToPosition(600);
 
             deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
-
         }
 
-        if (currentGamepad2.right_stick_button && !previousGamepad2.right_stick_button && planelauncher.getTriggerPosition() < 0.1){
-            planelauncher.setTrigger(0.6);
-        }else if (currentGamepad2.right_stick_button && !previousGamepad2.right_stick_button && planelauncher.getTriggerPosition() > 0.45){
-            planelauncher.setTrigger(0);
+        //else if (gamepad2.left_trigger > 0 && deliverySlides.getCurrentposition() > 1300){
+//
+//            collection.setIntakeHeight(Collection.intakeHeightState.startingBox);
+//
+//            deliverySlides.DeliverySlides(800, -1);
+//
+//            deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
+//
+//        }
+
+        if (currentGamepad2.right_stick_button && !previousGamepad2.right_stick_button) {
+            planelauncher.setTrigger(0.2);
         }
+
+//        }else if (currentGamepad2.right_stick_button && !previousGamepad2.right_stick_button && planelauncher.getTriggerPosition() > 0.45){
+//            planelauncher.setTrigger(0);
+//        }
 
         if (gamepad2.left_stick_y < -0.9 && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.delivery){
             delivery.setRotateClaw(0.55);
@@ -664,10 +678,10 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
         }
 
-        if (sensors.armSensor.isPressed() && delivery.getArmState() == Delivery.armState.delivery){
-            delivery.setGripperState(Delivery.GripperState.openDeliver);
-            delivery.setArmTargetState(Delivery.armState.collect);
-        }
+//        if (sensors.armSensor.isPressed() && delivery.getArmState() == Delivery.armState.delivery){
+//            delivery.setGripperState(Delivery.GripperState.openDeliver);
+//            delivery.setArmTargetState(Delivery.armState.collect);
+//        }
 
         if (gamepad1.left_bumper){
             collectPixels();
@@ -678,10 +692,10 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
             collection.updateIntakeState();
         }
 
-        if (gamepad1.b){
-            sensors.getDetections(telemetry);
-            resetOdo();
-        }
+//        if (gamepad1.b){
+//            sensors.getDetections(telemetry);
+//            resetOdo();
+//        }
 
         odometry.update();
 
@@ -721,6 +735,9 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
         telemetry.addData("main pivot pos",delivery.getMainPivotPosition());
         telemetry.addData("second rotate", delivery.getSecondRotatePosition());
+        telemetry.addData("slides position", deliverySlides.getCurrentposition());
+        telemetry.addData("right slides position", deliverySlides.Right_Slide.getCurrentPosition());
+        telemetry.addData("left slides position", deliverySlides.Left_Slide.getCurrentPosition());
         telemetry.update();
 
     }

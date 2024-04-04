@@ -64,7 +64,7 @@ public class Delivery {
     double deliverySecondPivotAuto = 0.2;
     double distancecalc;
     double avoidIntakeSecondPivot = 0.8;
-    double collectSecondPivot = 0.82;
+    double collectSecondPivot = 0.84;
     double deliverySecondPivot = -0.1;
     double lowdeliveryTopPivot = 1;
 
@@ -103,7 +103,7 @@ public class Delivery {
     boolean DeliveryMovingAuto = false;
     boolean DeliveryMoving = false;
     boolean CollectionMoving = false;
-    public double ArmExtensionHome = 0.94;
+    public double ArmExtensionHome = 0.92;
     double deliveryMainIncrement = 0.015;
     double deliveryArmIncrement = 0.02;
 
@@ -162,17 +162,17 @@ public class Delivery {
         yellow3Red
     }
 
-    RobotArm backboardRight = new RobotArm(0.926,0.62, 0.1, 0.160, 0.15, -1, -1);
+    RobotArm backboardRight = new RobotArm(0.926,0.66, 0.1, 0.1760, 0.15, -1, -1);
 
-    RobotArm backboardLeft = new RobotArm(0.926,0.35, 0.85, 0.174, 0.95, -1, -1);
+    RobotArm backboardLeft = new RobotArm(0.926,0.35, 0.85, 0.164, 0.95, -1, -1);
 
-    RobotArm yellow1Blue = new RobotArm(0.956, ArmPositionMid, 0.55, 0.194, 0.94, ArmExtensionHome, -1);
-    RobotArm yellow2Blue = new RobotArm(0.8, ArmPositionMid, secondRotateMiddle, 0.086, rotateCollect, ArmExtensionHome, -1);
-    RobotArm yellow3Blue = new RobotArm(0.956, ArmPositionMid, secondRotateMiddle, 0.216, rotateCollect, ArmExtensionHome, -1);
+    RobotArm yellow1Blue = new RobotArm(0.8, ArmPositionMid, 0.55, 0.106, 0.94, ArmExtensionHome, -1);
+    RobotArm yellow2Blue = new RobotArm(0.8, ArmPositionMid, secondRotateMiddle, 0.096, rotateCollect, ArmExtensionHome, -1);
+    RobotArm yellow3Blue = new RobotArm(0.75, ArmPositionMid, secondRotateMiddle, 0.106, rotateCollect, ArmExtensionHome, -1);
 
-    RobotArm yellow1Red = new RobotArm(0.916, ArmPositionMid, 0.46, 0.316, 0.94, -1, -1);
-    RobotArm yellow2Red = new RobotArm(0.916, ArmPositionMid, secondRotateMiddle, 0.256, rotateCollect, -1, -1);
-    RobotArm yellow3Red = new RobotArm(0.916, ArmPositionMid, secondRotateMiddle, 0.256, rotateCollect, -1, -1);
+    RobotArm yellow1Red = new RobotArm(0.75, ArmPositionMid, 0.46, 0.106, 0.94, -1, -1);
+    RobotArm yellow2Red = new RobotArm(0.8, ArmPositionMid, secondRotateMiddle, 0.096, rotateCollect, -1, -1);
+    RobotArm yellow3Red = new RobotArm(0.8, ArmPositionMid, secondRotateMiddle, 0.106, rotateCollect, -1, -1);
 
     armState armstateTarget = armState.moving;
 
@@ -629,11 +629,14 @@ public class Delivery {
                 CollectionMoving = false;
             }
 
-            if(DeliveryMovingAuto && pivotMoveTimeAuto.milliseconds() > (timeToWaitDelivery*0.7)){
+            if(DeliveryMovingAuto && pivotMoveTimeAuto.milliseconds() > (timeToWaitDelivery*0.5)){
+                ArmExtension.setPosition(0.36);
+            }
+
+            if(DeliveryMovingAuto && pivotMoveTimeAuto.milliseconds() > (timeToWaitDelivery*0.75)){
                 RotateArm.setPosition(getArmRotateSetPoint(pixelPlacement));
                 RotateClaw.setPosition(getRotateClawSetPoint(pixelPlacement));
                 secondRotate.setPosition(getSecondRotateSetPoint(pixelPlacement));
-                ArmExtension.setPosition(0.4);
             }
 
             if(DeliveryMovingAuto && pivotMoveTimeAuto.milliseconds() > timeToWaitDelivery){

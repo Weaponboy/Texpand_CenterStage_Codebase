@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.ServoImplEx;
 
 public class planeLauncher {
 
@@ -15,15 +17,17 @@ public class planeLauncher {
         Trigger.setPosition(trigger);
     }
 
-    Servo Trigger;
+    ServoImplEx Trigger;
 
     public void init(HardwareMap hmap){
 
         hardwareMap = hmap;
 
-        Trigger = hardwareMap.get(Servo.class, "trigger");
+        Trigger = hardwareMap.get(ServoImplEx.class, "trigger");
 
-        Trigger.setPosition(0.65);
+        Trigger.setPwmRange(new PwmControl.PwmRange(600, 2400));
+
+//        Trigger.setPosition(1);
 
     }
 

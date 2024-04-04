@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.p
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.UsefulMethods.getRealCoords;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -17,7 +18,8 @@ import org.firstinspires.ftc.teamcode.hardware.Delivery_Slides;
 import org.firstinspires.ftc.teamcode.hardware.Drivetrain;
 import org.firstinspires.ftc.teamcode.hardware.Odometry;
 
-@Autonomous(name = "Red_Close_Stage", group = "red auto's")
+@Autonomous(name = "Red_Close_Stage fake", group = "red auto's")
+@Disabled
 public class Red_Close_Stage extends LinearOpMode implements CycleMethods {
 
     /** control point naming key

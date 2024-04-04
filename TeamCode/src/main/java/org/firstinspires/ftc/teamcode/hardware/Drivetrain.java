@@ -47,5 +47,20 @@ public class Drivetrain {
         LB.setPower(power);
     }
 
+    public void strafeLeft(){
+        RF.setPower(0.5);
+        RB.setPower(-0.5);
+        LF.setPower(-0.5);
+        LB.setPower(0.5);
+    }
+
+    public void strafeRight(){
+        RF.setPower(-0.5);
+        RB.setPower(0.5);
+        LF.setPower(0.5);
+        LB.setPower(-0.5);
+    }
+
+
 
 }

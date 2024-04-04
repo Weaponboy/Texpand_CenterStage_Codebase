@@ -14,8 +14,8 @@ public class  Delivery_Slides {
 
     HardwareMap hardwareMap;
 
-    DcMotorEx Left_Slide;
-    DcMotorEx Right_Slide;
+    public DcMotorEx Left_Slide;
+    public DcMotorEx Right_Slide;
 
     ArrayList<Double> slidesProfile = new ArrayList<>();
 
@@ -49,19 +49,19 @@ public class  Delivery_Slides {
 
         Delivery.GripperState targetGripperState = null;
 
-        SlideSafetyHeight = Left_Slide.getCurrentPosition() > 2200;
+        SlideSafetyHeight = Left_Slide.getCurrentPosition() > 3000;
         SlideSafetyBottom = Left_Slide.getCurrentPosition() < 15;
 
         switch (slideState){
 
             case manual:
 
-                if (gamepad2.right_stick_y < -0.7 && !SlideSafetyHeight || gamepad1.x && !SlideSafetyHeight) {
-                    SlideSafetyHeight = Left_Slide.getCurrentPosition() > 2200;
-                    SlidesBothPower(0.5);
-                } else if (gamepad2.right_stick_y > 0.7 && !SlideSafetyBottom || gamepad1.a && !SlideSafetyBottom) {
+                if (gamepad2.right_stick_y < -0.7 && !SlideSafetyHeight) {
+                    SlideSafetyHeight = Left_Slide.getCurrentPosition() > 3000;
+                    SlidesBothPower(0.4);
+                } else if (gamepad2.right_stick_y > 0.7 && !SlideSafetyBottom) {
                     SlideSafetyBottom = Left_Slide.getCurrentPosition() < 15;
-                    SlidesBothPower(-0.5);
+                    SlidesBothPower(-0.4);
                 }else {
                     if (getCurrentposition() < 30){
                         SlidesBothPower(0);
@@ -75,12 +75,26 @@ public class  Delivery_Slides {
 
                 targetGripperState = Delivery.GripperState.closed;
 
-                if (Math.abs(Left_Slide.getVelocity()) < 2 && Math.abs(getCurrentposition()- Left_Slide.getTargetPosition()) < 50){
+                if (Left_Slide.getTargetPosition() == 0){
 
-                    slideState = SlideState.targetReached;
-                    Left_Slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                    Right_Slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                    if (Math.abs(getVelocity()) < 3 && Math.abs(Left_Slide.getCurrentPosition()- Left_Slide.getTargetPosition()) < 50){
 
+                        slideState = SlideState.targetReached;
+
+                        Left_Slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                        Right_Slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+                    }
+
+                }else {
+                    if (Math.abs(getVelocity()) < 3 && Math.abs(Left_Slide.getCurrentPosition()- Left_Slide.getTargetPosition()) < 50){
+
+                        slideState = SlideState.targetReached;
+
+                        Left_Slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                        Right_Slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+                    }
                 }
 
                 break;
@@ -285,8 +299,31 @@ public class  Delivery_Slides {
 
     }
 
+    public void runToPosition(int setpoint){
+
+        Right_Slide.setTargetPosition(setpoint);
+        Left_Slide.setTargetPosition(setpoint);
+
+        Right_Slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Left_Slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        if(setpoint > getCurrentposition()){
+            Right_Slide.setPower(1);
+            Left_Slide.setPower(1);
+        }else {
+            Right_Slide.setPower(-1);
+            Left_Slide.setPower(-1);
+        }
+
+
+    }
+
     public double getCurrentDraw(){
         return (Left_Slide.getCurrent(CurrentUnit.MILLIAMPS) + Right_Slide.getCurrent(CurrentUnit.MILLIAMPS))/2;
+    }
+
+    public double getVelocity(){
+        return (Left_Slide.getVelocity() + Right_Slide.getVelocity())/2;
     }
 
     public void SlidesBothPower(double power){
@@ -303,7 +340,7 @@ public class  Delivery_Slides {
     }
 
     public int getCurrentposition(){
-        return Right_Slide.getCurrentPosition() + Left_Slide.getCurrentPosition()/2;
+        return (Right_Slide.getCurrentPosition() + Left_Slide.getCurrentPosition())/2;
     }
 
     public SlideState getSlideState() {

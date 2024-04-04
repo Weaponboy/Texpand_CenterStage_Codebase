@@ -9,8 +9,8 @@
             <Servo name="rightmain" port="1"/>
             <Servo name="LeftClaw" port="2"/>
             <Servo name="RotateArm" port="3"/>
-            <Servo name="trigger" port="5"/>
             <Servo name="IntakeServoRight" port="4"/>
+            <Servo name="trigger" port="5"/>
         </LynxModule>
     </LynxUsbDevice>
     <LynxUsbDevice name="Control Hub Portal" serialNumber="(embedded)" parentModuleAddress="173">
