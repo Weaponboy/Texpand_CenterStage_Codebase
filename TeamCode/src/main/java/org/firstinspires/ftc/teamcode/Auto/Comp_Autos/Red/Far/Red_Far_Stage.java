@@ -581,7 +581,9 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
                     while (!collectionDone && counter < 6){
 
                         counter++;
+
                         collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
+
                         sleep(50);
 
                         if (collection.getIntakeCurrentUse() > intakeNormal && !reversingIntake){
@@ -1197,6 +1199,8 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
         }
 
         waitForStart();
+
+        autoTimer.reset();
 
         if (propPos == 1){
 

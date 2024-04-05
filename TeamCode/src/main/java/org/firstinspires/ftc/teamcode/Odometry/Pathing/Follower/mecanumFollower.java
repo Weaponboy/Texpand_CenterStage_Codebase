@@ -210,8 +210,10 @@ public class mecanumFollower {
             }
 
             if (reverse.milliseconds() < 200) {
+
                 vertical2 = -vertical;
                 horizontal2 = -horizontal;
+
             } else if (reverse.milliseconds() > 200 && reverse.milliseconds() < 300) {
                 vertical = 0;
                 horizontal = 0;
