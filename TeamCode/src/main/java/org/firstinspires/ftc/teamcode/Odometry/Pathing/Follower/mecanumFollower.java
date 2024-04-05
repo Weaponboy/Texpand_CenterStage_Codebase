@@ -206,17 +206,23 @@ public class mecanumFollower {
         if (closestPos > 100) {
 
             if (Math.abs(xPower - odometry.getVerticalVelocity()) > 100 && Math.abs(yPower - odometry.getHorizontalVelocity()) > 80 && reverse.milliseconds() > 300) {
+
+                System.out.println("vertical " + Math.abs(xPower - odometry.getVerticalVelocity()));
+                System.out.println("horizontal " + Math.abs(yPower - odometry.getHorizontalVelocity()));
+
                 reverse.reset();
             }
 
             if (reverse.milliseconds() < 200) {
-
-                vertical2 = -vertical;
-                horizontal2 = -horizontal;
+//
+//                vertical2 = -vertical;
+//                horizontal2 = -horizontal;
 
             } else if (reverse.milliseconds() > 200 && reverse.milliseconds() < 300) {
-                vertical = 0;
-                horizontal = 0;
+
+//                vertical = 0;
+//                horizontal = 0;
+
             }
 
         }

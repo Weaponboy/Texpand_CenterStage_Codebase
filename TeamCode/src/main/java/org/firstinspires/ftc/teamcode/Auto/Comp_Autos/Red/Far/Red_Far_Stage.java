@@ -108,7 +108,7 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
 
     //first position
     Vector2D oneEightyHeadingT = new Vector2D(getRealCoords(90), getRealCoords(290));
-    Vector2D leavePurpleHeadingT = new Vector2D(getRealCoords(90), getRealCoords(315));
+    Vector2D leavePurpleHeadingT = new Vector2D(getRealCoords(90), getRealCoords(330));
 
     //second position
     Vector2D oneEightyHeadingS = new Vector2D(getRealCoords(77), getRealCoords(269));
