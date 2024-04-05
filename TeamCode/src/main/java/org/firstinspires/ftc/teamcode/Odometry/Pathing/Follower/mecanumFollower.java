@@ -47,6 +47,7 @@ public class mecanumFollower {
 
     ElapsedTime elapsedTime = new ElapsedTime();
 
+    ElapsedTime reverse = new ElapsedTime();
     ElapsedTime getCorrective = new ElapsedTime();
     double time = 0;
 
@@ -197,6 +198,18 @@ public class mecanumFollower {
         if(horizontal > 1){
             vertical = kx * xPower;
             horizontal = ky * yPower;
+        }
+
+        if(odometry.getVerticalVelocity() < 10 && odometry.getHorizontalVelocity() < 10 && reverse.milliseconds() > 300){
+            reverse.reset();
+        }
+
+        if (reverse.milliseconds() < 200){
+            vertical = -vertical;
+            horizontal = -horizontal;
+        } else if (reverse.milliseconds() > 200 && reverse.milliseconds() < 300) {
+            vertical = 0;
+            horizontal = 0;
         }
 
         System.out.println("vertical before return" + vertical);

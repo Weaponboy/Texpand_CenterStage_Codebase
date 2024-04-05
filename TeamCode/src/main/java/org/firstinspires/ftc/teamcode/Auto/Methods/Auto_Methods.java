@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Methods;
+package org.firstinspires.ftc.teamcode.Auto.Methods;
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.UsefulMethods.getRealCoords;
 import static java.lang.Thread.sleep;
