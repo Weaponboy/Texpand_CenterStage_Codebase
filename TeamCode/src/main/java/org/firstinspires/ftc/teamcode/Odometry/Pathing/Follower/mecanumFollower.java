@@ -200,8 +200,8 @@ public class mecanumFollower {
             horizontal = ky * yPower;
         }
 
-        double vertical2 = 0;
-        double horizontal2 = 0;
+        double vertical2 = vertical;
+        double horizontal2 = horizontal;
 
         if (closestPos > 100) {
 
@@ -218,15 +218,6 @@ public class mecanumFollower {
             }
 
         }
-
-        System.out.println("vertical before return" + vertical);
-
-//        System.out.println("x Pos " + odometry.X);
-//        System.out.println("Y Pos " + odometry.Y);
-//        System.out.println("vertical power " + vertical);
-//        System.out.println("horizontal power " + horizontal);
-//        System.out.println("raw vertical velocity " + targetPathingVelocity.getXVelocity());
-//        System.out.println("raw horizontal velocity  " + targetPathingVelocity.getYVelocity());
 
         actualPathingPower.set(xPowerC + vertical2, yPowerC + horizontal2);
 
