@@ -96,7 +96,7 @@ public class mecanumFollower {
         return pathingPower;
     }
 
-    public PathingPower getFullPathingPower(Vector2D robotPos, double heading, Odometry odometry){
+    public PathingPower getFullPathingPower(Vector2D robotPos, double heading, Odometry odometry) {
 
         XCorrective.setPID(driveP, 0, driveD);
         YCorrective.setPID(strafeP, 0, strafeD);
@@ -116,7 +116,7 @@ public class mecanumFollower {
         int closestPos = pathfollow.getClosestPositionOnPath(robotPos);
 
         targetPathingVelocity = pathfollow.getTargetVelocity(closestPos);
-        
+
         double robotXVelocity = odometry.getVerticalVelocity();
         double robotYVelocity = odometry.getHorizontalVelocity();
 
@@ -126,9 +126,9 @@ public class mecanumFollower {
         double adjustedX = 0;
         double adjustedY = 0;
 
-        if (targetPathingVelocity.getXVelocity() > 0){
+        if (targetPathingVelocity.getXVelocity() > 0) {
 
-            if (currentXVelo > targetPathingVelocity.getXVelocity()){
+            if (currentXVelo > targetPathingVelocity.getXVelocity()) {
 
                 adjustedX = targetPathingVelocity.getXVelocity() - (currentXVelo - targetPathingVelocity.getXVelocity());
 
@@ -140,7 +140,7 @@ public class mecanumFollower {
 
         } else if (targetPathingVelocity.getXVelocity() < 0) {
 
-            if (currentXVelo > targetPathingVelocity.getXVelocity()){
+            if (currentXVelo > targetPathingVelocity.getXVelocity()) {
 
                 adjustedX = targetPathingVelocity.getXVelocity() + (Math.abs(currentXVelo) - Math.abs(targetPathingVelocity.getXVelocity()));
 
@@ -152,9 +152,9 @@ public class mecanumFollower {
 
         }
 
-        if (targetPathingVelocity.getYVelocity() > 0){
+        if (targetPathingVelocity.getYVelocity() > 0) {
 
-            if (currentYVelo > targetPathingVelocity.getYVelocity()){
+            if (currentYVelo > targetPathingVelocity.getYVelocity()) {
 
                 adjustedY = targetPathingVelocity.getYVelocity() - (currentYVelo - targetPathingVelocity.getYVelocity());
 
@@ -166,7 +166,7 @@ public class mecanumFollower {
 
         } else if (targetPathingVelocity.getYVelocity() < 0) {
 
-            if (currentYVelo > targetPathingVelocity.getYVelocity()){
+            if (currentYVelo > targetPathingVelocity.getYVelocity()) {
 
                 adjustedY = targetPathingVelocity.getYVelocity() + (Math.abs(currentYVelo) - Math.abs(targetPathingVelocity.getYVelocity()));
 
@@ -187,7 +187,7 @@ public class mecanumFollower {
         double robotRelativeYError = yDist * Math.cos(Math.toRadians(heading)) - xDist * Math.sin(Math.toRadians(heading));
 
         double xPowerC = XCorrective.calculate(-robotRelativeXError);
-        double yPowerC = YCorrective.calculate(-robotRelativeYError)*1.5;
+        double yPowerC = YCorrective.calculate(-robotRelativeYError) * 1.5;
 
         double xPower = adjustedY * Math.sin(Math.toRadians(heading)) + adjustedX * Math.cos(Math.toRadians(heading));
         double yPower = adjustedY * Math.cos(Math.toRadians(heading)) - adjustedX * Math.sin(Math.toRadians(heading));
@@ -195,23 +195,28 @@ public class mecanumFollower {
         vertical = kxfull * xPower;
         horizontal = kyfull * yPower;
 
-        if(horizontal > 1){
+        if (horizontal > 1) {
             vertical = kx * xPower;
             horizontal = ky * yPower;
         }
 
-        if (closestPos > 100){
-            if(Math.abs(xPower - odometry.getVerticalVelocity()) > 100 && Math.abs(yPower - odometry.getHorizontalVelocity()) > 80 && reverse.milliseconds() > 300){
+        double vertical2 = 0;
+        double horizontal2 = 0;
+
+        if (closestPos > 100) {
+
+            if (Math.abs(xPower - odometry.getVerticalVelocity()) > 100 && Math.abs(yPower - odometry.getHorizontalVelocity()) > 80 && reverse.milliseconds() > 300) {
                 reverse.reset();
             }
 
-            if (reverse.milliseconds() < 200){
-                vertical = -vertical;
-                horizontal = -horizontal;
+            if (reverse.milliseconds() < 200) {
+                vertical2 = -vertical;
+                horizontal2 = -horizontal;
             } else if (reverse.milliseconds() > 200 && reverse.milliseconds() < 300) {
                 vertical = 0;
                 horizontal = 0;
             }
+
         }
 
         System.out.println("vertical before return" + vertical);
@@ -223,7 +228,7 @@ public class mecanumFollower {
 //        System.out.println("raw vertical velocity " + targetPathingVelocity.getXVelocity());
 //        System.out.println("raw horizontal velocity  " + targetPathingVelocity.getYVelocity());
 
-        actualPathingPower.set(xPowerC+vertical, yPowerC+horizontal);
+        actualPathingPower.set(xPowerC + vertical2, yPowerC + horizontal2);
 
         return actualPathingPower;
     }
