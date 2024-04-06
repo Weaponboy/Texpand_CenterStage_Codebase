@@ -48,7 +48,7 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
 
     Vector2D DYS3F = DYE2F;
     Vector2D DYC3F = new Vector2D(getRealCoords(265), getRealCoords(206));
-    Vector2D DYE3F = new Vector2D(getRealCoords(310), getRealCoords(250));
+    Vector2D DYE3F = new Vector2D(getRealCoords(310), getRealCoords(254));
 
     /**Middle Prop position*/
     //purple pixel
