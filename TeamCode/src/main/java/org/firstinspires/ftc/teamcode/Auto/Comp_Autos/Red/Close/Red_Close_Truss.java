@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Red.Close;
 
+import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.Heading;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.propPos;
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.UsefulMethods.getRealCoords;
 
@@ -94,7 +95,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
     //first position
     Vector2D oneEightyHeadingF = new Vector2D(getRealCoords(245), getRealCoords(300));
-    Vector2D leavePurpleHeadingF = new Vector2D(getRealCoords(220), getRealCoords(320));
+    Vector2D leavePurpleHeadingF = new Vector2D(getRealCoords(220), getRealCoords(270));
 
     //second position
     Vector2D oneEightyHeadingS = new Vector2D(getRealCoords(241), getRealCoords(274));
@@ -440,7 +441,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
             if (delivering){
                 pathing = follower.followPathAuto(targetHeading, odometry, drive, 2, 20);
             }else {
-                pathing = follower.followPathAuto(targetHeading, odometry, drive, 1.5, 50);
+                pathing = follower.followPathAuto(targetHeading, odometry, drive, 1.5, 100);
             }
 
         }else if (Math.abs(CollectionEndpoint.getX() - odometry.X) < collectionError && Math.abs(CollectionEndpoint.getY() - odometry.Y) < collectionError - 2){
@@ -827,7 +828,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
             if (delivering){
                 pathing = follower.followPathAuto(targetHeading, odometry, drive, 2, 20);
             }else {
-                pathing = follower.followPathAuto(targetHeading, odometry, drive, 1.5, 50);
+                pathing = follower.followPathAuto(targetHeading, odometry, drive, 1.5, 100);
             }
 
 
@@ -1182,11 +1183,12 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
             if (delivering){
                 pathing = follower.followPathAuto(targetHeading, odometry, drive, 2, 20);
             }else {
-                pathing = follower.followPathAuto(targetHeading, odometry, drive, 1.5, 50);
+                pathing = follower.followPathAuto(targetHeading, odometry, drive, 1.5, 100);
             }
 
 
         }else if (Math.abs(secondStack.getX() - odometry.X) < collectionError && Math.abs(secondStack.getY() - odometry.Y) < collectionError - 2){
+
             delivery.setGripperState(Delivery.GripperState.open);
             delivery.updateGrippers();
 
@@ -1308,11 +1310,11 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
                 collect.threePoints(CS1F, CC1F, CE1F);
                 collect.twoPoints(CS2F, CE2F);
-                collect.threePoints(CS3F, CC3F, CE3F, true, 0.45);
+                collect.threePoints(CS3F, CC3F, CE3F, true, 0.5);
 
                 collectSecondStack.threePoints(CS1F, CC1F, CE1F);
                 collectSecondStack.twoPoints(CS2F, CE2F);
-                collectSecondStack.threePoints(CS3FS, CC3FS, CE3FS, true, 0.4);
+                collectSecondStack.threePoints(CS3FS, CC3FS, CE3FS, true, 0.55);
 
                 deliver.threePoints(DS1F, DC1F, DE1F);
                 deliver.twoPoints(DS2F, DE2F);
@@ -1332,11 +1334,11 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
                 collect.threePoints(CS1F, CC1F, CE1F);
                 collect.twoPoints(CS2F, CE2F);
-                collect.threePoints(CS3F, CC3F, CE3F, true, 0.45);
+                collect.threePoints(CS3F, CC3F, CE3F, true, 0.5);
 
                 collectSecondStack.threePoints(CS1F, CC1F, CE1F);
                 collectSecondStack.twoPoints(CS2F, CE2F);
-                collectSecondStack.threePoints(CS3FS, CC3FS, CE3FS, true, 0.4);
+                collectSecondStack.threePoints(CS3FS, CC3FS, CE3FS, true, 0.55);
 
                 deliver.threePoints(DS1F, DC1F, DE1F);
                 deliver.twoPoints(DS2F, DE2F);
@@ -1356,11 +1358,11 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
                 collect.threePoints(CS1F, CC1F, CE1F);
                 collect.twoPoints(CS2F, CE2F);
-                collect.threePoints(CS3F, CC3F, CE3F, true, 0.45);
+                collect.threePoints(CS3F, CC3F, CE3F, true, 0.5);
 
                 collectSecondStack.threePoints(CS1F, CC1F, CE1F);
                 collectSecondStack.twoPoints(CS2F, CE2F);
-                collectSecondStack.threePoints(CS3FS, CC3FS, CE3FS, true, 0.4);
+                collectSecondStack.threePoints(CS3FS, CC3FS, CE3FS, true, 0.55);
 
                 deliver.threePoints(DS1F, DC1F, DE1F);
                 deliver.twoPoints(DS2F, DE2F);
@@ -1409,7 +1411,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
                             pathing = follower.followPathAutoHeading(targetHeading, odometry, drive, p, 2);
 
-                            if (Math.abs(leavePurpleHeadingF.getX() - odometry.X) < 30 && Math.abs(leavePurpleHeadingF.getY() - odometry.Y) < HeadingControlError && targetHeading == 90){
+                            if (Math.abs(leavePurpleHeadingF.getX() - odometry.X) < HeadingControlError && Math.abs(leavePurpleHeadingF.getY() - odometry.Y) < 50 && targetHeading == 90){
 
                                 targetHeading = 5;
 
