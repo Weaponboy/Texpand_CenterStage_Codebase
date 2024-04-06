@@ -67,7 +67,7 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
     //purple pixel
     Vector2D DPS1T = startPosition;
     Vector2D DPC1T = new Vector2D(getRealCoords(85), getRealCoords(193));
-    Vector2D DPE1T = new Vector2D(getRealCoords(37), getRealCoords(208));
+    Vector2D DPE1T = new Vector2D(getRealCoords(36), getRealCoords(208));
 
     Vector2D DYS2T = DPE1T;
     Vector2D DYE2T = new Vector2D(getRealCoords(240), getRealCoords(206));
@@ -102,7 +102,7 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
     Vector2D CE2T = new Vector2D(getRealCoords(91), getRealCoords(207));
 
     Vector2D CS3T = CE2T;
-    Vector2D CE3T = new Vector2D(getRealCoords(36), getRealCoords(210));
+    Vector2D CE3T = new Vector2D(getRealCoords(35.5), getRealCoords(210));
 
     /**Action points*/
 

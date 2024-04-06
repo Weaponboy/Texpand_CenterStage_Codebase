@@ -49,7 +49,7 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
 
     Vector2D DYS3F = DYE2F;
     Vector2D DYC3F = new Vector2D(getRealCoords(261), getRealCoords(329));
-    Vector2D DYE3F = new Vector2D(getRealCoords(312), getRealCoords(248));
+    Vector2D DYE3F = new Vector2D(getRealCoords(312), getRealCoords(254));
 
     /**Middle Prop position*/
     //purple pixel
