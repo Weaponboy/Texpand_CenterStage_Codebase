@@ -251,6 +251,8 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
             drive.strafeLeft();
 
             sleep(200);
+
+            drive.setAllPower(0);
         }
 
         while (counter < 40){
