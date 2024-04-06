@@ -285,21 +285,6 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
 
         }
 
-        delivery.setGripperState(Delivery.GripperState.closed);
-        delivery.updateGrippers();
-
-        sleep(200);
-
-        delivery.ArmExtension.setPosition(1);
-
-        collection.setState(Collection.intakePowerState.reversed);
-        collection.updateIntakeState();
-
-        sleep(200);
-
-        collection.setState(Collection.intakePowerState.off);
-        collection.updateIntakeState();
-
     }
 
     public void delivery_and_collect_2() throws InterruptedException {
@@ -651,15 +636,8 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
             follower.resetClosestPoint(new Vector2D(odometry.X, odometry.Y));
-
-            sleep(100);
-
-            delivery.setGripperState(Delivery.GripperState.open);
-            delivery.updateGrippers();
-
         }
 
-        System.out.println("current draw intake" + collection.getIntakeCurrentUse());
     }
 
     public void delivery_and_collect_4() throws InterruptedException{
@@ -985,11 +963,6 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
 
             follower.resetClosestPoint(new Vector2D(odometry.X, odometry.Y));
 
-            sleep(100);
-
-            delivery.setGripperState(Delivery.GripperState.open);
-            delivery.updateGrippers();
-
         }
     }
 
@@ -1232,6 +1205,33 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
 
                                     }
 
+                                    if (Math.abs(turnIntakeOff.getX() - odometry.X) < IntakeControlError && Math.abs(turnIntakeOff.getY() - odometry.Y) < (IntakeControlError+20)) {
+
+                                        delivery.setGripperState(Delivery.GripperState.closed);
+                                        delivery.updateGrippers();
+
+                                        collection.setState(Collection.intakePowerState.off);
+                                        collection.updateIntakeState();
+
+                                    }
+
+                                    if (Math.abs(reverseIntake.getX() - odometry.X) < IntakeControlError && Math.abs(reverseIntake.getY() - odometry.Y) < (IntakeControlError+20)){
+
+                                        delivery.setGripperState(Delivery.GripperState.closed);
+                                        delivery.updateGrippers();
+
+                                        collection.setState(Collection.intakePowerState.reversed);
+                                        collection.updateIntakeState();
+
+                                    }
+
+                                    if (Math.abs(closeGrippers.getX() - odometry.X) < IntakeControlError && Math.abs(closeGrippers.getY() - odometry.Y) < (IntakeControlError+20)){
+
+                                        delivery.setGripperState(Delivery.GripperState.closed);
+                                        delivery.updateGrippers();
+
+                                    }
+
                                 }else if (Math.abs(DYE3F.getX() - odometry.X) < deliveryError && Math.abs(DYE3F.getY() - odometry.Y) < deliveryError && !pathing){
 
 
@@ -1408,6 +1408,33 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
 
                                     }
 
+                                    if (Math.abs(turnIntakeOff.getX() - odometry.X) < IntakeControlError && Math.abs(turnIntakeOff.getY() - odometry.Y) < (IntakeControlError+20)) {
+
+                                        delivery.setGripperState(Delivery.GripperState.closed);
+                                        delivery.updateGrippers();
+
+                                        collection.setState(Collection.intakePowerState.off);
+                                        collection.updateIntakeState();
+
+                                    }
+
+                                    if (Math.abs(reverseIntake.getX() - odometry.X) < IntakeControlError && Math.abs(reverseIntake.getY() - odometry.Y) < (IntakeControlError+20)){
+
+                                        delivery.setGripperState(Delivery.GripperState.closed);
+                                        delivery.updateGrippers();
+
+                                        collection.setState(Collection.intakePowerState.reversed);
+                                        collection.updateIntakeState();
+
+                                    }
+
+                                    if (Math.abs(closeGrippers.getX() - odometry.X) < IntakeControlError && Math.abs(closeGrippers.getY() - odometry.Y) < (IntakeControlError+20)){
+
+                                        delivery.setGripperState(Delivery.GripperState.closed);
+                                        delivery.updateGrippers();
+
+                                    }
+
                                 }else if (Math.abs(DYE3S.getX() - odometry.X) < deliveryError && Math.abs(DYE3S.getY() - odometry.Y) < deliveryError && !pathing){
 
 
@@ -1571,6 +1598,33 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
 
                                         delivery.setArmTargetState(Delivery.armState.readyForDelivering);
                                         delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.yellow2Blue, odometry);
+
+                                    }
+
+                                    if (Math.abs(turnIntakeOff.getX() - odometry.X) < IntakeControlError && Math.abs(turnIntakeOff.getY() - odometry.Y) < (IntakeControlError+20)) {
+
+                                        delivery.setGripperState(Delivery.GripperState.closed);
+                                        delivery.updateGrippers();
+
+                                        collection.setState(Collection.intakePowerState.off);
+                                        collection.updateIntakeState();
+
+                                    }
+
+                                    if (Math.abs(reverseIntake.getX() - odometry.X) < IntakeControlError && Math.abs(reverseIntake.getY() - odometry.Y) < (IntakeControlError+20)){
+
+                                        delivery.setGripperState(Delivery.GripperState.closed);
+                                        delivery.updateGrippers();
+
+                                        collection.setState(Collection.intakePowerState.reversed);
+                                        collection.updateIntakeState();
+
+                                    }
+
+                                    if (Math.abs(closeGrippers.getX() - odometry.X) < IntakeControlError && Math.abs(closeGrippers.getY() - odometry.Y) < (IntakeControlError+20)){
+
+                                        delivery.setGripperState(Delivery.GripperState.closed);
+                                        delivery.updateGrippers();
 
                                     }
 
