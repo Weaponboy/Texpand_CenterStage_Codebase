@@ -4,7 +4,6 @@ import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.p
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.UsefulMethods.getRealCoords;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -19,7 +18,6 @@ import org.firstinspires.ftc.teamcode.hardware.Drivetrain;
 import org.firstinspires.ftc.teamcode.hardware.Odometry;
 
 @Autonomous(name = "Blue_Far_Stage", group = "blue auto's")
-@Disabled
 public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
 
     /** control point naming key
@@ -33,101 +31,39 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
     Vector2D startPosition = new Vector2D(getRealCoords(90), getRealCoords(23));
 
     /**Left Prop position*/
-
     //purple pixel
     Vector2D DPS1F = startPosition;
-    Vector2D DPC1F = new Vector2D(getRealCoords(104), getRealCoords(167));
-    Vector2D DPE1F = new Vector2D(getRealCoords(44), getRealCoords(150));
+    Vector2D DPC1F = new Vector2D(getRealCoords(85), getRealCoords(167));
+    Vector2D DPE1F = new Vector2D(getRealCoords(36), getRealCoords(208));
 
     Vector2D DYS2F = DPE1F;
     Vector2D DYE2F = new Vector2D(getRealCoords(240), getRealCoords(154));
 
     Vector2D DYS3F = DYE2F;
-    Vector2D DYC3F = new Vector2D(getRealCoords(280), getRealCoords(154));
-    Vector2D DYE3F = new Vector2D(getRealCoords(305), getRealCoords(84));
-
-    /**delivery and collection points*/
-
-    Vector2D DS1F = new Vector2D(getRealCoords(44), getRealCoords(90));
-
-    Vector2D DC1F = new Vector2D(getRealCoords(53), getRealCoords(31));
-    Vector2D DE1F = new Vector2D(getRealCoords(119), getRealCoords(36));
-
-    Vector2D DS2F = DE1F;
-
-    Vector2D DE2F = new Vector2D(getRealCoords(181), getRealCoords(33));
-
-    //segment 3
-    Vector2D DS3F = DE2F;
-
-    Vector2D DC3F = new Vector2D(getRealCoords(220), getRealCoords(55));
-
-    Vector2D DE3F = new Vector2D(getRealCoords(320), getRealCoords(70));
-
-    /**collecting paths*/
-    Vector2D CS1F = new Vector2D(getRealCoords(300), getRealCoords(90));
-    Vector2D CC1F = new Vector2D(getRealCoords(265), getRealCoords(36));
-    Vector2D CE1F = new Vector2D(getRealCoords(180), getRealCoords(38));
-
-    Vector2D CS2F = CE1F;
-    Vector2D CE2F = new Vector2D(getRealCoords(119), getRealCoords(36));
-
-    Vector2D CS3F = CE2F;
-    Vector2D CC3F = new Vector2D(getRealCoords(63), getRealCoords(35));
-    Vector2D CE3F = new Vector2D(getRealCoords(44), getRealCoords(105));
+    Vector2D DYC3F = new Vector2D(getRealCoords(260), getRealCoords(154));
+    Vector2D DYE3F = new Vector2D(getRealCoords(310), getRealCoords(84));
 
     /**Middle Prop position*/
     //purple pixel
     Vector2D DPS1S = startPosition;
-    Vector2D DPC1S = new Vector2D(getRealCoords(74), getRealCoords(166));
+    Vector2D DPC1S = new Vector2D(getRealCoords(70), getRealCoords(166));
     Vector2D DPE1S = new Vector2D(getRealCoords(44), getRealCoords(152));
 
     Vector2D DYS2S = DPE1S;
     Vector2D DYE2S = new Vector2D(getRealCoords(240), getRealCoords(154));
 
     Vector2D DYS3S = DYE2S;
-    Vector2D DYC3S = new Vector2D(getRealCoords(295), getRealCoords(158));
-    Vector2D DYE3S = new Vector2D(getRealCoords(305), getRealCoords(89));
-
-    /**delivery and collection points*/
-
-    Vector2D DS1S = new Vector2D(getRealCoords(44), getRealCoords(90));
-
-    Vector2D DC1S = new Vector2D(getRealCoords(53), getRealCoords(31));
-    Vector2D DE1S = new Vector2D(getRealCoords(119), getRealCoords(36));
-
-    Vector2D DS2S = DE1S;
-
-    Vector2D DE2S = new Vector2D(getRealCoords(181), getRealCoords(33));
-
-    //segment 3
-    Vector2D DS3S = DE2S;
-
-    Vector2D DC3S = new Vector2D(getRealCoords(220), getRealCoords(50));
-
-    Vector2D DE3S = new Vector2D(getRealCoords(320), getRealCoords(65));
-
-    /**collecting paths*/
-    Vector2D CS1S = new Vector2D(getRealCoords(300), getRealCoords(90));
-    Vector2D CC1S = new Vector2D(getRealCoords(265), getRealCoords(39));
-    Vector2D CE1S = new Vector2D(getRealCoords(180), getRealCoords(41));
-
-    Vector2D CS2S = CE1S;
-    Vector2D CE2S = new Vector2D(getRealCoords(119), getRealCoords(39));
-
-    Vector2D CS3S = CE2S;
-    Vector2D CC3S = new Vector2D(getRealCoords(35), getRealCoords(75));
-    Vector2D CE3S = new Vector2D(getRealCoords(44), getRealCoords(105));
+    Vector2D DYC3S = new Vector2D(getRealCoords(275), getRealCoords(158));
+    Vector2D DYE3S = new Vector2D(getRealCoords(310), getRealCoords(97));
 
     /**Right Prop position*/
-
     //purple pixel
     Vector2D DPS1T = startPosition;
     Vector2D DPE1T = new Vector2D(getRealCoords(74), getRealCoords(74));
 
     Vector2D DPS2T = DPE1T;
-    Vector2D DPC2T = new Vector2D(getRealCoords(102), getRealCoords(65));
-    Vector2D DPE2T = new Vector2D(getRealCoords(90), getRealCoords(150));
+    Vector2D DPC2T = new Vector2D(getRealCoords(98), getRealCoords(65));
+    Vector2D DPE2T = new Vector2D(getRealCoords(89), getRealCoords(150));
 
     Vector2D DYS1T = DPE1T;
     Vector2D DYE1T = new Vector2D(getRealCoords(44), getRealCoords(152));
@@ -136,17 +72,12 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
     Vector2D DYE2T = new Vector2D(getRealCoords(240), getRealCoords(154));
 
     Vector2D DYS3T = DYE2T;
-    Vector2D DYC3T = new Vector2D(getRealCoords(285), getRealCoords(154));
-    Vector2D DYE3T = new Vector2D(getRealCoords(305), getRealCoords(108));
+    Vector2D DYC3T = new Vector2D(getRealCoords(265), getRealCoords(154));
+    Vector2D DYE3T = new Vector2D(getRealCoords(310), getRealCoords(106));
 
     /**delivery and collection points*/
-    //segment 1 recollect
-    Vector2D DS1TC = new Vector2D(getRealCoords(46), getRealCoords(135));
-    Vector2D DC1TC = new Vector2D(getRealCoords(52), getRealCoords(162));
-    Vector2D DCC1TC = new Vector2D(getRealCoords(41), getRealCoords(160));
-    Vector2D DE1TC = new Vector2D(getRealCoords(106), getRealCoords(152));
 
-    //segment 1 straight deliver
+    //segment 1 deliver straight
     Vector2D DS1T = new Vector2D(getRealCoords(46), getRealCoords(135));
     Vector2D DC1T = new Vector2D(getRealCoords(47), getRealCoords(151));
     Vector2D DE1T = new Vector2D(getRealCoords(106), getRealCoords(152));
@@ -157,45 +88,42 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
 
     //segment 3
     Vector2D DS3T = DE2T;
-    Vector2D DC3T = new Vector2D(getRealCoords(255), getRealCoords(157));
-    Vector2D DE3T = new Vector2D(getRealCoords(315), getRealCoords(120));
+    Vector2D DC3T = new Vector2D(getRealCoords(220), getRealCoords(137));
+    Vector2D DE3T = new Vector2D(getRealCoords(320), getRealCoords(120));
 
     /**collecting paths*/
+
     Vector2D CS1T = new Vector2D(getRealCoords(300), getRealCoords(90));
-    Vector2D CC1T = new Vector2D(getRealCoords(312), getRealCoords(156));
-    Vector2D CE1T = new Vector2D(getRealCoords(220), getRealCoords(154));
+    Vector2D CC1T = new Vector2D(getRealCoords(312), getRealCoords(162));
+    Vector2D CE1T = new Vector2D(getRealCoords(220), getRealCoords(156));
 
     Vector2D CS2T = CE1T;
     Vector2D CE2T = new Vector2D(getRealCoords(91), getRealCoords(153));
 
     Vector2D CS3T = CE2T;
-    Vector2D CC3T = new Vector2D(getRealCoords(44), getRealCoords(175));
-    Vector2D CE3T = new Vector2D(getRealCoords(47), getRealCoords(135));
-
+    Vector2D CE3T = new Vector2D(getRealCoords(35.5), getRealCoords(150));
 
     /**Action points*/
-    //preload
-    Vector2D extendSlides = new Vector2D(getRealCoords(224), getRealCoords(32));
 
     //first position
-    Vector2D oneEightyHeadingF = new Vector2D(getRealCoords(90), getRealCoords(70));
-    Vector2D leavePurpleHeadingF = new Vector2D(getRealCoords(90), getRealCoords(45));
+    Vector2D leavePurpleHeadingF = new Vector2D(getRealCoords(90), getRealCoords(40));
 
     //second position
     Vector2D oneEightyHeadingS = new Vector2D(getRealCoords(77), getRealCoords(91));
-    Vector2D leavePurpleHeadingS = new Vector2D(getRealCoords(82), getRealCoords(65));
+    Vector2D leavePurpleHeadingS = new Vector2D(getRealCoords(82), getRealCoords(70));
 
     //third position
-    Vector2D oneEightyHeadingT = new Vector2D(getRealCoords(80), getRealCoords(70));
     Vector2D leavePurpleHeadingT = new Vector2D(getRealCoords(85), getRealCoords(38));
 
     //delivery
-    Vector2D extendSlidesDelivery = new Vector2D(getRealCoords(120), getRealCoords(180));
+    Vector2D extendSlidesDelivery = new Vector2D(getRealCoords(150), getRealCoords(180));
+    Vector2D armOverPosition = new Vector2D(getRealCoords(180), getRealCoords(180));
 
     //collection
     Vector2D turnIntakeOn = new Vector2D(getRealCoords(180), getRealCoords(150));
     Vector2D turnIntakeOff = new Vector2D(getRealCoords(125), getRealCoords(150));
     Vector2D reverseIntake = new Vector2D(getRealCoords(72), getRealCoords(150));
+    Vector2D closeGrippers = new Vector2D(getRealCoords(60), getRealCoords(150));
 
     /**path objects*/
     GenMethods purple = new GenMethods();
@@ -251,6 +179,8 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
 
     boolean onlyOnce = true;
 
+    boolean sensorTouched = false;
+
     /**doubles*/
     double targetHeading = 0;
 
@@ -258,9 +188,14 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
 
     boolean armOver = false;
 
+    double intakeCurrentOne = 5500; 
+
+    double intakeNormal = 5500;
+
     boolean reversingIntake = false;
     Collection.intakePowerState previousState = Collection.intakePowerState.off;
     ElapsedTime reverseIntakeTimer = new ElapsedTime();
+    ElapsedTime autoTimer = new ElapsedTime();
 
     Vector2D DeliveryEndpoint;
     Vector2D CollectionEndpoint;
@@ -278,17 +213,18 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
 
         sleep(200);
 
-        collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
+        collection.setIntakeHeight(Collection.intakeHeightState.fifthPixel);
         collection.updateIntakeHeight();
 
         counter = 0;
 
         while (counter < 20){
+
             counter++;
             sleep(50);
             gotTwo = !sensors.RightClawSensor.isPressed() && !sensors.LeftClawSensor.isPressed();
 
-            if (collection.getIntakeCurrentUse() > 6000 && !reversingIntake){
+            if (collection.getIntakeCurrentUse() > intakeCurrentOne && !reversingIntake){
                 reversingIntake = true;
                 reverseIntakeTimer.reset();
                 previousState = collection.getPowerState();
@@ -305,20 +241,21 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
             if (gotTwo){
                 counter = 45;
             }
+
         }
 
-//        if (counter < 40){
-//            collection.setState(Collection.intakePowerState.reversed);
-//            collection.updateIntakeState();
-//
-//            sleep(100);
-//
-//            collection.setState(Collection.intakePowerState.on);
-//            collection.updateIntakeState();
-//        }
+        if(!gotTwo){
+            drive.strafeLeft();
+
+            sleep(200);
+
+            drive.setAllPower(0);
+        }
 
         while (counter < 40){
+
             counter++;
+
             sleep(50);
 
             collection.IntakeHeightRight.setPosition(collection.getIntakeHeightRight() - 0.005);
@@ -338,41 +275,25 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
             }
 
             gotTwo = !sensors.RightClawSensor.isPressed() && !sensors.LeftClawSensor.isPressed();
+
             if (gotTwo){
                 counter = 45;
             }
+
         }
-
-
-        delivery.setGripperState(Delivery.GripperState.closed);
-        delivery.updateGrippers();
-
-        sleep(200);
-
-        delivery.ArmExtension.setPosition(1);
-
-        collection.setState(Collection.intakePowerState.reversed);
-        collection.updateIntakeState();
-
-        sleep(200);
-
-        collection.setState(Collection.intakePowerState.off);
-        collection.updateIntakeState();
 
     }
 
     public void delivery_and_collect_2() throws InterruptedException {
 
-        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardRight, odometry);
-
-        if (build == Build.notBuilt) {
-            follower.setPath(collect.followablePath, collect.pathingVelocity);
-            follower.resetClosestPoint(new Vector2D(odometry.X, odometry.Y));
-        }
-
-        deliverySlides.updateSlides(gamepad1, gamepad2, delivery.getArmState());
+        odometry.update();
+        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
 
         if (build == Build.notBuilt){
+
+            follower.setPath(collect.followablePath, collect.pathingVelocity);
+
+            follower.resetClosestPoint(new Vector2D(odometry.X, odometry.Y));
 
             pathing = true;
 
@@ -387,6 +308,7 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
             delivery.updateGrippers();
 
             collection.setIntakeHeight(Collection.intakeHeightState.stowed);
+
             collection.updateIntakeHeight();
 
         }
@@ -394,94 +316,46 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
         if (!delivering){
 
             if (Math.abs(turnIntakeOn.getX() - odometry.X) < IntakeControlError && Math.abs(turnIntakeOn.getY() - odometry.Y) < IntakeControlError){
-                collection.setState(Collection.intakePowerState.on);
-                collection.updateIntakeState();
 
                 delivery.setGripperState(Delivery.GripperState.open);
                 delivery.updateGrippers();
 
-                collection.setIntakeHeight(Collection.intakeHeightState.secondPixel);
+                collection.setIntakeHeight(Collection.intakeHeightState.fifthAndHalf);
                 collection.updateIntakeHeight();
 
+                collection.setState(Collection.intakePowerState.on);
+                collection.updateIntakeState();
+
                 delivery.ArmExtension.setPosition(delivery.ArmExtensionHome);
+
             }
 
-        }
+            if (!gotTwo && !sensors.RightClawSensor.isPressed() && !sensors.LeftClawSensor.isPressed() && odometry.X < 180){
 
-        if (collection.getIntakeCurrentUse() > 5500 && !reversingIntake){
-            reversingIntake = true;
-            reverseIntakeTimer.reset();
-            previousState = collection.getPowerState();
-            collection.setState(Collection.intakePowerState.reversed);
-            collection.updateIntakeState();
-        }
+                gripperControl.reset();
 
-        if (reversingIntake && reverseIntakeTimer.milliseconds() > 100){
-            collection.setState(previousState);
-            collection.updateIntakeState();
-            reversingIntake = false;
-        }
+                drive.RF.setPower(0);
+                drive.RB.setPower(0);
+                drive.LF.setPower(0);
+                drive.LB.setPower(0);
 
-        if (!gotTwo && !sensors.RightClawSensor.isPressed()){
+                follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
-            delivery.setRightGripperState(Delivery.rightGripperState.closed);
-            delivery.updateGrippers();
+                follower.resetClosestPoint(new Vector2D(odometry.X, odometry.Y));
 
-        }
+                delivering = true;
 
-        if (!gotTwo && !sensors.LeftClawSensor.isPressed()){
+                armOver = false;
 
-            delivery.setLeftGripperState(Delivery.leftGripperState.closed);
-            delivery.updateGrippers();
+                gotTwo = true;
 
-        }
-
-        if (!gotTwo && !sensors.RightClawSensor.isPressed() && !sensors.LeftClawSensor.isPressed() && odometry.X < 180){
-
-            gripperControl.reset();
-
-            delivery.setGripperState(Delivery.GripperState.closed);
-            delivery.updateGrippers();
-
-            drive.RF.setPower(0);
-            drive.RB.setPower(0);
-            drive.LF.setPower(0);
-            drive.LB.setPower(0);
-
-            follower.setPath(deliver.followablePath, deliver.pathingVelocity);
-
-            follower.resetClosestPoint(new Vector2D(odometry.X, odometry.Y));
-
-            delivering = true;
-
-            onlyOnce = false;
-
-            gotTwo = true;
-
-        }
-
-        if (gripperControl.milliseconds() > (timeChanger+200) && gripperControl.milliseconds() < (timeChanger+400) && gotTwo){
-
-            collection.setState(Collection.intakePowerState.reversed);
-            collection.updateIntakeState();
-
-        }
-
-        if (gripperControl.milliseconds() > (timeChanger+400) && gripperControl.milliseconds() < (timeChanger+600) && gotTwo){
-
-            collection.setState(Collection.intakePowerState.off);
-            collection.updateIntakeState();
-
-            delivery.setGripperState(Delivery.GripperState.closed);
-            delivery.updateGrippers();
+            }
 
         }
 
         if (delivering){
 
             if (odometry.X > extendSlidesDelivery.getX()) {
-
-                onlyOnce = true;
 
                 deliverySlides.DeliverySlides(slidesPosWhitePixels, 1);
                 deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
@@ -491,13 +365,13 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (deliverySlides.getCurrentposition() > 200 && !armOver){
+            if (deliverySlides.getCurrentposition() > 150 && !armOver && odometry.X > armOverPosition.getX()){
 
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
 
                 delivery.setArmTargetState(Delivery.armState.deliverAuto);
-                delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardRight, odometry);
+                delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
 
                 armOver = true;
 
@@ -505,11 +379,7 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
 
             if (sensors.armSensor.isPressed() && deliverySlides.getCurrentposition() > 200){
 
-                if (auto == Blue_Far_Stage.Auto.two) {
-                    drive.setAllPower(0.4);
-                }else{
-                    drive.setAllPower(0.2);
-                }
+                drive.setAllPower(0.4);
 
                 delivery.setGripperState(Delivery.GripperState.open);
 
@@ -520,37 +390,87 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
                 delivery.setArmTargetState(Delivery.armState.collect);
                 delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
 
-                deliverySlides.DeliverySlides(0, -0.5);
-
                 pathing = true;
 
                 gotTwo = false;
 
                 armOver = false;
 
-                if (auto == Blue_Far_Stage.Auto.two) {
+                sensorTouched = true;
 
-                    phase = Blue_Far_Stage.Phase.finished;
+                if (auto == Auto.two) {
+
+                    phase = Phase.finished;
 
                     drive.setAllPower(0);
 
+                    deliverySlides.DeliverySlides(0, -0.2);
+
                     while (!(delivery.getArmState() == Delivery.armState.collect) || deliverySlides.getCurrentposition() > 20){
-                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardRight, odometry);
+                        delivery.setArmTargetState(Delivery.armState.collect);
+                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
                     }
 
                 } else {
+
+                    deliverySlides.DeliverySlides(0, -0.5);
 
                     build = Build.notBuilt;
 
                     delivering = false;
 
-                    phase = Blue_Far_Stage.Phase.second2;
+                    phase = Phase.second2;
 
                 }
 
             }
 
-            if (Math.abs(turnIntakeOff.getX() - odometry.X) < IntakeControlError+5) {
+//            if(pathing && Math.abs(odometry.getVerticalVelocity()) < 10 && !sensors.armSensor.isPressed() && deliverySlides.getCurrentposition() > 200 && odometry.X > 200){
+//
+//                drive.setAllPower(0.4);
+//
+//                delivery.setGripperState(Delivery.GripperState.open);
+//
+//                delivery.updateGrippers();
+//
+//                sleep(200);
+//
+//                delivery.setArmTargetState(Delivery.armState.collect);
+//                delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
+//
+//                pathing = true;
+//
+//                gotTwo = false;
+//
+//                armOver = false;
+//
+//                if (auto == Auto.two) {
+//
+//                    phase = Phase.finished;
+//
+//                    drive.setAllPower(0);
+//
+//                    deliverySlides.DeliverySlides(0, -0.2);
+//
+//                    while (!(delivery.getArmState() == Delivery.armState.collect) || deliverySlides.getCurrentposition() > 20){
+//                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
+//                    }
+//
+//                } else {
+//
+//                    deliverySlides.DeliverySlides(0, -0.5);
+//
+//                    build = Build.notBuilt;
+//
+//                    delivering = false;
+//
+//                    phase = Phase.second2;
+//
+//                }
+//
+//            }
+
+            if (Math.abs(turnIntakeOff.getX() - odometry.X) < IntakeControlError && Math.abs(turnIntakeOff.getY() - odometry.Y) < (IntakeControlError+20)) {
 
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
@@ -560,19 +480,24 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (Math.abs(reverseIntake.getX() - odometry.X) < IntakeControlError+5){
+            if (Math.abs(reverseIntake.getX() - odometry.X) < IntakeControlError && Math.abs(reverseIntake.getY() - odometry.Y) < (IntakeControlError+20)){
 
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
 
-                collection.setState(Collection.intakePowerState.reversedHalf);
+                collection.setState(Collection.intakePowerState.reversed);
                 collection.updateIntakeState();
 
             }
 
-            if (Math.abs(DeliveryEndpoint.getX() - odometry.X) < deliveryError && Math.abs(DeliveryEndpoint.getY() - odometry.Y) < deliveryError && !pathing) {
+            if (Math.abs(closeGrippers.getX() - odometry.X) < IntakeControlError && Math.abs(closeGrippers.getY() - odometry.Y) < (IntakeControlError+20)){
 
-                drive.setAllPower(0.4);
+                delivery.setGripperState(Delivery.GripperState.closed);
+                delivery.updateGrippers();
+
+            }
+
+            if (Math.abs(DeliveryEndpoint.getX() - odometry.X) < 4 && Math.abs(DeliveryEndpoint.getY() - odometry.Y) < 4 && !pathing) {
 
                 drive.RF.setPower(0);
                 drive.RB.setPower(0);
@@ -585,9 +510,7 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
                 sleep(200);
 
                 delivery.setArmTargetState(Delivery.armState.collect);
-                delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardRight, odometry);
-
-                deliverySlides.DeliverySlides(0, -1);
+                delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
 
                 pathing = true;
 
@@ -595,23 +518,27 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
 
                 armOver = false;
 
-                if (auto == Blue_Far_Stage.Auto.two) {
+                if (auto == Auto.two) {
 
-                    phase = Blue_Far_Stage.Phase.finished;
+                    phase = Phase.finished;
+
+                    deliverySlides.DeliverySlides(0, -0.2);
 
                     drive.setAllPower(0);
 
                     while (!(delivery.getArmState() == Delivery.armState.collect) || deliverySlides.getCurrentposition() > 20){
-                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardRight, odometry);
+                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
                     }
 
                 } else {
+
+                    deliverySlides.DeliverySlides(0, -0.5);
 
                     build = Build.notBuilt;
 
                     delivering = false;
 
-                    phase = Blue_Far_Stage.Phase.second2;
+                    phase = Phase.second2;
 
                 }
             }
@@ -620,46 +547,106 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
 
         if (pathing){
 
-            if(delivering){
-                pathing = follower.followPathAuto(targetHeading, odometry, drive);
+            if (delivering){
+                pathing = follower.followPathAuto(targetHeading, odometry, drive, 2, 20);
             }else {
-                pathing = follower.followPathAuto(targetHeading, odometry, drive, 5);
+                pathing = follower.followPathAuto(targetHeading, odometry, drive, 1.5, 25);
             }
 
-        }else if (Math.abs(CollectionEndpoint.getX() - odometry.X) < collectionError && Math.abs(CollectionEndpoint.getY() - odometry.Y) < collectionError && !pathing){
+        }else if (Math.abs(CollectionEndpoint.getX() - odometry.X) < collectionError && Math.abs(CollectionEndpoint.getY() - odometry.Y) < collectionError - 2){
+
+            delivery.setGripperState(Delivery.GripperState.open);
+            delivery.updateGrippers();
+
+            collection.setIntakeHeight(Collection.intakeHeightState.fifthPixel);
+            collection.updateIntakeHeight();
 
             drive.setAllPower(0);
 
-            collection.setIntakeHeight(Collection.intakeHeightState.firstPixel);
-            collection.updateIntakeHeight();
+            collection.setState(Collection.intakePowerState.on);
+            collection.updateIntakeState();
+
+            boolean collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
+
+            int counter = 0;
+
+            while (autoTimer.milliseconds() < 26000 && !collectionDone){
+
+                counter++;
+                collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
+
+                if (counter <= 6){
+
+                    sleep(50);
+
+                } else if (counter > 6 && counter <= 12) {
+
+                    collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
+                    collection.updateIntakeHeight();
+
+                    sleep(50);
+
+                } else if (counter == 13){
+
+                    drive.strafeLeft();
+                    sleep(200);
+                    drive.setAllPower(0);
+
+                } else if (counter == 14){
+
+                    drive.strafeRight();
+                    sleep(200);
+                    drive.setAllPower(0);
+
+                } else if (counter > 14 && counter <= 20) {
+
+                    sleep(50);
+
+                } else if (counter > 20) {
+
+                    collectionDone = true;
+
+                }
+
+                if (collection.getIntakeCurrentUse() > intakeNormal && !reversingIntake){
+                    reversingIntake = true;
+                    reverseIntakeTimer.reset();
+                    previousState = collection.getPowerState();
+                    collection.setState(Collection.intakePowerState.reversed);
+                    collection.updateIntakeState();
+                }
+
+                if (reversingIntake && reverseIntakeTimer.milliseconds() > 100){
+                    collection.setState(previousState);
+                    collection.updateIntakeState();
+                    reversingIntake = false;
+                }
+
+            }
 
             pathing = true;
 
-            onlyOnce = false;
+            armOver = false;
 
             delivering = true;
-
-            armOver = false;
 
             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
             follower.resetClosestPoint(new Vector2D(odometry.X, odometry.Y));
-
         }
+
     }
 
     public void delivery_and_collect_4() throws InterruptedException{
 
+        odometry.update();
         delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
 
-        if (build == Build.notBuilt) {
-            follower.setPath(collect.followablePath, collect.pathingVelocity);
-            follower.resetClosestPoint(new Vector2D(odometry.X, odometry.Y));
-        }
-
-        deliverySlides.updateSlides(gamepad1, gamepad2, delivery.getArmState());
-
         if (build == Build.notBuilt){
+
+            follower.setPath(collect.followablePath, collect.pathingVelocity);
+
+            follower.resetClosestPoint(new Vector2D(odometry.X, odometry.Y));
 
             pathing = true;
 
@@ -674,6 +661,7 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
             delivery.updateGrippers();
 
             collection.setIntakeHeight(Collection.intakeHeightState.stowed);
+
             collection.updateIntakeHeight();
 
         }
@@ -681,21 +669,44 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
         if (!delivering){
 
             if (Math.abs(turnIntakeOn.getX() - odometry.X) < IntakeControlError && Math.abs(turnIntakeOn.getY() - odometry.Y) < IntakeControlError){
-                collection.setState(Collection.intakePowerState.on);
-                collection.updateIntakeState();
 
                 delivery.setGripperState(Delivery.GripperState.open);
                 delivery.updateGrippers();
 
-                collection.setIntakeHeight(Collection.intakeHeightState.firstPixel);
+                collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
                 collection.updateIntakeHeight();
 
+                collection.setState(Collection.intakePowerState.on);
+                collection.updateIntakeState();
+
                 delivery.ArmExtension.setPosition(delivery.ArmExtensionHome);
+
+            }
+
+            if (!gotTwo && !sensors.RightClawSensor.isPressed() && !sensors.LeftClawSensor.isPressed() && odometry.X < 180){
+
+                gripperControl.reset();
+
+                drive.RF.setPower(0);
+                drive.RB.setPower(0);
+                drive.LF.setPower(0);
+                drive.LB.setPower(0);
+
+                follower.setPath(deliver.followablePath, deliver.pathingVelocity);
+
+                follower.resetClosestPoint(new Vector2D(odometry.X, odometry.Y));
+
+                delivering = true;
+
+                armOver = false;
+
+                gotTwo = true;
+
             }
 
         }
 
-        if (collection.getIntakeCurrentUse() > 5000 && !reversingIntake){
+        if (collection.getIntakeCurrentUse() > intakeNormal && !reversingIntake){
             reversingIntake = true;
             reverseIntakeTimer.reset();
             previousState = collection.getPowerState();
@@ -709,52 +720,9 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
             reversingIntake = false;
         }
 
-        if (!gotTwo && !sensors.RightClawSensor.isPressed() && !sensors.LeftClawSensor.isPressed() && odometry.X < 180){
-
-            gripperControl.reset();
-
-            delivery.setGripperState(Delivery.GripperState.closed);
-            delivery.updateGrippers();
-
-            drive.RF.setPower(0);
-            drive.RB.setPower(0);
-            drive.LF.setPower(0);
-            drive.LB.setPower(0);
-
-            follower.setPath(deliver.followablePath, deliver.pathingVelocity);
-
-            follower.resetClosestPoint(new Vector2D(odometry.X, odometry.Y));
-
-            delivering = true;
-
-            onlyOnce = false;
-
-            gotTwo = true;
-
-        }
-
-        if (gripperControl.milliseconds() > (timeChanger+200) && gripperControl.milliseconds() < (timeChanger+400) && gotTwo){
-
-            collection.setState(Collection.intakePowerState.reversed);
-            collection.updateIntakeState();
-
-        }
-
-        if (gripperControl.milliseconds() > (timeChanger+400) && gripperControl.milliseconds() < (timeChanger+600) && gotTwo){
-
-            collection.setState(Collection.intakePowerState.off);
-            collection.updateIntakeState();
-
-            delivery.setGripperState(Delivery.GripperState.closed);
-            delivery.updateGrippers();
-
-        }
-
         if (delivering){
 
             if (odometry.X > extendSlidesDelivery.getX()) {
-
-                onlyOnce = true;
 
                 deliverySlides.DeliverySlides(slidesPosWhitePixels, 1);
                 deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
@@ -764,7 +732,7 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (deliverySlides.getCurrentposition() > 200 && !armOver){
+            if (deliverySlides.getCurrentposition() > 150 && !armOver && odometry.X > armOverPosition.getX()){
 
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
@@ -793,7 +761,44 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
 
                 pathing = true;
 
-                phase = Blue_Far_Stage.Phase.finished;
+                gotTwo = false;
+
+                armOver = false;
+
+                sensorTouched = true;
+
+                phase = Phase.finished;
+
+                drive.setAllPower(0);
+
+                while (!(delivery.getArmState() == Delivery.armState.collect) || deliverySlides.getCurrentposition() > 20){
+                    delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
+                }
+
+
+            }
+
+            if(pathing && Math.abs(odometry.getVerticalVelocity()) < 5 && !sensors.armSensor.isPressed() && deliverySlides.getCurrentposition() > 200 && odometry.X > 200){
+
+                drive.setAllPower(0.4);
+                delivery.setGripperState(Delivery.GripperState.open);
+
+                delivery.updateGrippers();
+
+                sleep(200);
+
+                delivery.setArmTargetState(Delivery.armState.collect);
+                delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
+
+                deliverySlides.DeliverySlides(0, -0.5);
+
+                pathing = true;
+
+                gotTwo = false;
+
+                armOver = false;
+
+                phase = Phase.finished;
 
                 drive.setAllPower(0);
 
@@ -803,7 +808,7 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (Math.abs(turnIntakeOff.getX() - odometry.X) < IntakeControlError && Math.abs(turnIntakeOff.getY() - odometry.Y) < IntakeControlError) {
+            if (Math.abs(turnIntakeOff.getX() - odometry.X) < IntakeControlError && Math.abs(turnIntakeOff.getY() - odometry.Y) < (IntakeControlError+20)) {
 
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
@@ -813,19 +818,24 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (Math.abs(reverseIntake.getX() - odometry.X) < IntakeControlError && Math.abs(reverseIntake.getY() - odometry.Y) < IntakeControlError){
+            if (Math.abs(reverseIntake.getX() - odometry.X) < IntakeControlError && Math.abs(reverseIntake.getY() - odometry.Y) < (IntakeControlError+20)){
 
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
 
-                collection.setState(Collection.intakePowerState.reversedHalf);
+                collection.setState(Collection.intakePowerState.reversed);
                 collection.updateIntakeState();
 
             }
 
-            if (Math.abs(DeliveryEndpoint.getX() - odometry.X) < deliveryError && Math.abs(DeliveryEndpoint.getY() - odometry.Y) < deliveryError && !pathing) {
+            if (Math.abs(closeGrippers.getX() - odometry.X) < IntakeControlError && Math.abs(closeGrippers.getY() - odometry.Y) < (IntakeControlError+20)){
 
-                drive.setAllPower(-0.4);
+                delivery.setGripperState(Delivery.GripperState.closed);
+                delivery.updateGrippers();
+
+            }
+
+            if (Math.abs(DeliveryEndpoint.getX() - odometry.X) < 4 && Math.abs(DeliveryEndpoint.getY() - odometry.Y) < 4 && !pathing) {
 
                 drive.RF.setPower(0);
                 drive.RB.setPower(0);
@@ -844,7 +854,11 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
 
                 pathing = true;
 
-                phase = Blue_Far_Stage.Phase.finished;
+                gotTwo = false;
+
+                armOver = false;
+
+                phase = Phase.finished;
 
                 drive.setAllPower(0);
 
@@ -858,22 +872,89 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
 
         if (pathing){
 
-            pathing = follower.followPathAuto(targetHeading, odometry, drive);
+            if (delivering){
+                pathing = follower.followPathAuto(targetHeading, odometry, drive, 2, 20);
+            }else {
+                pathing = follower.followPathAuto(targetHeading, odometry, drive, 1.5, 25);
+            }
 
-        }else if (Math.abs(CollectionEndpoint.getX() - odometry.X) < collectionError && Math.abs(CollectionEndpoint.getY() - odometry.Y) < collectionError && !pathing){
 
-            drive.setAllPower(0);
+        }else if (Math.abs(CollectionEndpoint.getX() - odometry.X) < collectionError && Math.abs(CollectionEndpoint.getY() - odometry.Y) < collectionError - 2){
+
+            delivery.setGripperState(Delivery.GripperState.open);
+            delivery.updateGrippers();
 
             collection.setIntakeHeight(Collection.intakeHeightState.firstPixel);
             collection.updateIntakeHeight();
 
+            drive.setAllPower(0);
+
+            collection.setState(Collection.intakePowerState.on);
+            collection.updateIntakeState();
+
+            boolean collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
+
+            int counter = 0;
+
+            while (autoTimer.milliseconds() < 25000 && !collectionDone){
+
+                counter++;
+                collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
+
+                if (counter <= 6){
+
+                    sleep(50);
+
+                } else if (counter > 6 && counter <= 12) {
+
+                    collection.setIntakeHeight(Collection.intakeHeightState.firstPixel);
+                    collection.updateIntakeHeight();
+
+                    sleep(50);
+
+                } else if (counter == 13){
+
+                    drive.strafeLeft();
+                    sleep(200);
+                    drive.setAllPower(0);
+
+                } else if (counter == 14){
+
+                    drive.strafeRight();
+                    sleep(200);
+                    drive.setAllPower(0);
+
+                } else if (counter > 14 && counter <= 20) {
+
+                    sleep(50);
+
+                } else if (counter > 20) {
+
+                    collectionDone = true;
+
+                }
+
+                if (collection.getIntakeCurrentUse() > intakeNormal && !reversingIntake){
+                    reversingIntake = true;
+                    reverseIntakeTimer.reset();
+                    previousState = collection.getPowerState();
+                    collection.setState(Collection.intakePowerState.reversed);
+                    collection.updateIntakeState();
+                }
+
+                if (reversingIntake && reverseIntakeTimer.milliseconds() > 100){
+                    collection.setState(previousState);
+                    collection.updateIntakeState();
+                    reversingIntake = false;
+                }
+
+            }
+
             pathing = true;
 
-            onlyOnce = false;
+            armOver = false;
 
             delivering = true;
-
-            armOver = false;
 
             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
@@ -887,7 +968,6 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
         preload,
         first2,
         second2,
-        third2,
         finished
     }
 
@@ -959,20 +1039,17 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
 
                 collect.threePoints(CS1T, CC1T, CE1T);
                 collect.twoPoints(CS2T, CE2T);
-                collect.threePoints(CS3T, CC3T, CE3T, true, 0.5);
+                collect.twoPoints(CS3T, CE3T, true, 0.55);
 
                 deliver.threePoints(DS1T, DC1T, DE1T);
                 deliver.twoPoints(DS2T, DE2T);
-                deliver.threePoints(DS3T, DC3T, DE3T, true, 0.8);
-
-                deliverRecollect.fourPoints(DS1TC, DC1TC, DCC1TC, DE1TC);
-                deliverRecollect.twoPoints(DS2T, DE2T);
-                deliverRecollect.threePoints(DS3T, DC3T, DE3T, true);
+                deliver.threePoints(DS3T, DC3T, DE3T, true);
 
                 DeliveryEndpoint = DE3T;
                 CollectionEndpoint = CE3T;
 
                 buildPaths.reset();
+
             } else if (buildPaths.seconds() > 2 && propPos == 2){
 
                 clearAll();
@@ -984,15 +1061,11 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
 
                 collect.threePoints(CS1T, CC1T, CE1T);
                 collect.twoPoints(CS2T, CE2T);
-                collect.threePoints(CS3T, CC3T, CE3T, true, 0.5);
+                collect.twoPoints(CS3T, CE3T, true, 0.55);
 
                 deliver.threePoints(DS1T, DC1T, DE1T);
                 deliver.twoPoints(DS2T, DE2T);
-                deliver.threePoints(DS3T, DC3T, DE3T, true, 0.8);
-
-                deliverRecollect.fourPoints(DS1TC, DC1TC, DCC1TC, DE1TC);
-                deliverRecollect.twoPoints(DS2T, DE2T);
-                deliverRecollect.threePoints(DS3T, DC3T, DE3T, true);
+                deliver.threePoints(DS3T, DC3T, DE3T, true);
 
                 DeliveryEndpoint = DE3T;
                 CollectionEndpoint = CE3T;
@@ -1009,20 +1082,16 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
 
                 whitePixelSeg2.twoPoints(DYS1T, DYE1T, true, 1);
 
-                yellow.twoPoints(DYS2T, DYE2T);
-                yellow.threePoints(DYS3T, DYC3T, DYE3T, true, 0.9);
+                yellow.twoPoints(DYS2F, DYE2F);
+                yellow.threePoints(DYS3F, DYC3F, DYE3F, true, 0.9);
 
                 collect.threePoints(CS1T, CC1T, CE1T);
                 collect.twoPoints(CS2T, CE2T);
-                collect.threePoints(CS3T, CC3T, CE3T, true, 0.5);
+                collect.twoPoints(CS3T, CE3T, true, 0.55);
 
                 deliver.threePoints(DS1T, DC1T, DE1T);
                 deliver.twoPoints(DS2T, DE2T);
-                deliver.threePoints(DS3T, DC3T, DE3T, true, 0.8);
-
-                deliverRecollect.fourPoints(DS1TC, DC1TC, DCC1TC, DE1TC);
-                deliverRecollect.twoPoints(DS2T, DE2T);
-                deliverRecollect.threePoints(DS3T, DC3T, DE3T, true);
+                deliver.threePoints(DS3T, DC3T, DE3T, true);
 
                 DeliveryEndpoint = DE3T;
                 CollectionEndpoint = CE3T;
@@ -1034,7 +1103,12 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
 
         waitForStart();
 
+        autoTimer.reset();
+
         if (propPos == 1){
+
+            collection.setIntakeHeight(Collection.intakeHeightState.stowedMiddle);
+            collection.updateIntakeHeight();
 
             while (!(phase == Blue_Far_Stage.Phase.finished)){
 
@@ -1042,6 +1116,7 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
                     case preload:
 
                         switch (preload){
+
                             case purple:
 
                                 odometry.update();
@@ -1053,16 +1128,18 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
                                     targetHeading = 270;
                                     delivery.setGripperState(Delivery.GripperState.closed);
                                     delivery.updateGrippers();
+
                                 }
 
                                 if (pathing){
 
                                     pathing = follower.followPathAuto(targetHeading, odometry, drive);
 
-                                    if (Math.abs(leavePurpleHeadingF.getX() - odometry.X) < HeadingControlError && Math.abs(leavePurpleHeadingF.getY() - odometry.Y) < HeadingControlError && deliverySlides.getCurrentposition() < 50){
+                                    if (Math.abs(leavePurpleHeadingF.getX() - odometry.X) < 30 && Math.abs(leavePurpleHeadingF.getY() - odometry.Y) < HeadingControlError && deliverySlides.getCurrentposition() < 50){
+
                                         targetHeading = 180;
 
-                                        collection.setIntakeHeight(Collection.intakeHeightState.stowed);
+                                        collection.setIntakeHeight(Collection.intakeHeightState.stowedMiddle);
                                         collection.updateIntakeHeight();
                                     }
 
@@ -1082,7 +1159,6 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
                                 }
 
                                 break;
-
                             case yellow:
 
                                 odometry.update();
@@ -1109,32 +1185,96 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
 
                                     if (deliverySlides.getCurrentposition() > 150){
 
-                                        delivery.setArmTargetState(Delivery.armState.readyForDelivering);
-                                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.yellow2Blue, odometry);
+                                        delivery.setArmTargetState(Delivery.armState.delivery);
+                                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.yellow1Blue, odometry);
+
+                                    }
+
+                                    if (Math.abs(turnIntakeOff.getX() - odometry.X) < IntakeControlError && Math.abs(turnIntakeOff.getY() - odometry.Y) < (IntakeControlError+20)) {
+
+                                        delivery.setGripperState(Delivery.GripperState.closed);
+                                        delivery.updateGrippers();
+
+                                        collection.setState(Collection.intakePowerState.off);
+                                        collection.updateIntakeState();
+
+                                    }
+
+                                    if (Math.abs(reverseIntake.getX() - odometry.X) < IntakeControlError && Math.abs(reverseIntake.getY() - odometry.Y) < (IntakeControlError+20)){
+
+                                        delivery.setGripperState(Delivery.GripperState.closed);
+                                        delivery.updateGrippers();
+
+                                        collection.setState(Collection.intakePowerState.reversed);
+                                        collection.updateIntakeState();
+
+                                    }
+
+                                    if (Math.abs(closeGrippers.getX() - odometry.X) < IntakeControlError && Math.abs(closeGrippers.getY() - odometry.Y) < (IntakeControlError+20)){
+
+                                        delivery.setGripperState(Delivery.GripperState.closed);
+                                        delivery.updateGrippers();
 
                                     }
 
                                 }else if (Math.abs(DYE3F.getX() - odometry.X) < deliveryError && Math.abs(DYE3F.getY() - odometry.Y) < deliveryError && !pathing){
 
-                                    drive.RF.setPower(0);
-                                    drive.RB.setPower(0);
-                                    drive.LF.setPower(0);
-                                    drive.LB.setPower(0);
+
+                                    drive.setAllPower(0);
+
+                                    if (sensors.armSensor.isPressed()){
+
+                                        sleep(200);
+
+                                        delivery.setGripperState(Delivery.GripperState.open);
+                                        delivery.updateGrippers();
+
+                                        sleep(200);
+
+                                    }else {
+
+                                        while (delivery.getMainPivotPosition() < 0.95 && !(sensors.armSensor.isPressed())){
+                                            delivery.setMainPivot(delivery.getMainPivotPosition() + 0.008);
+
+                                            sleep(10);
+                                        }
+
+                                        sleep(50);
+
+                                        delivery.setGripperState(Delivery.GripperState.open);
+                                        delivery.updateGrippers();
+
+                                        sleep(200);
+                                    }
 
                                     if (auto == Auto.preload){
 
-                                        dropYellowPixelWait(Delivery.PixelsAuto.yellow1Blue, odometry);
+                                        delivery.setArmTargetState(Delivery.armState.collect);
+                                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.yellow1Blue, odometry);
+
+                                        deliverySlides.DeliverySlides(0, -0.5);
+
+                                        while (deliverySlides.getCurrentposition() > 20){
+                                            delivery.updateArm(deliverySlides.getCurrentposition(), false,  Delivery.PixelsAuto.yellow1Blue, odometry);
+                                        }
+
                                         phase = Phase.finished;
 
                                     }else {
 
-                                        dropYellowPixel(Delivery.PixelsAuto.yellow1Blue, odometry);
+                                        delivery.setArmTargetState(Delivery.armState.collect);
+                                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.yellow1Blue, odometry);
+
+                                        deliverySlides.DeliverySlides(0, -0.5);
+
+                                        deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
 
                                         phase = Phase.first2;
 
                                         build = Build.notBuilt;
 
                                     }
+
 
                                 }
                                 break;
@@ -1152,6 +1292,9 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
             }
 
         } else if (propPos == 2) {
+
+            collection.setIntakeHeight(Collection.intakeHeightState.stowedMiddle);
+            collection.updateIntakeHeight();
 
             // while loop to keep auto running while tasks are not complete
             while (!(phase == Blue_Far_Stage.Phase.finished)){
@@ -1180,7 +1323,7 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
                                     build = Build.built;
 
                                     //make sure target heading aligns to start heading
-                                    targetHeading = 270;
+                                    targetHeading = 90;
 
                                     //make sure yellow pixel is secure
                                     delivery.setGripperState(Delivery.GripperState.closed);
@@ -1194,10 +1337,8 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
                                     pathing = follower.followPathAuto(targetHeading, odometry, drive);
 
                                     //turn to leave purple pixel on spike mark
-                                    if (Math.abs(leavePurpleHeadingS.getX() - odometry.X) < HeadingControlError && Math.abs(leavePurpleHeadingS.getY() - odometry.Y) < HeadingControlError && targetHeading == 270){
+                                    if (Math.abs(leavePurpleHeadingS.getX() - odometry.X) < HeadingControlError && Math.abs(leavePurpleHeadingS.getY() - odometry.Y) < HeadingControlError && targetHeading == 90){
                                         targetHeading = 180;
-                                        collection.setIntakeHeight(Collection.intakeHeightState.stowed);
-                                        collection.updateIntakeHeight();
                                     }
 
                                 }else if (Math.abs(DPE1S.getX() - odometry.X) < collectionError && Math.abs(DPE1S.getY() - odometry.Y) < collectionError && !pathing){
@@ -1247,33 +1388,96 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
 
                                     if (deliverySlides.getCurrentposition() > 150){
 
-                                        delivery.setArmTargetState(Delivery.armState.readyForDelivering);
+                                        delivery.setArmTargetState(Delivery.armState.delivery);
                                         delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.yellow2Blue, odometry);
+
+                                    }
+
+                                    if (Math.abs(turnIntakeOff.getX() - odometry.X) < IntakeControlError && Math.abs(turnIntakeOff.getY() - odometry.Y) < (IntakeControlError+20)) {
+
+                                        delivery.setGripperState(Delivery.GripperState.closed);
+                                        delivery.updateGrippers();
+
+                                        collection.setState(Collection.intakePowerState.off);
+                                        collection.updateIntakeState();
+
+                                    }
+
+                                    if (Math.abs(reverseIntake.getX() - odometry.X) < IntakeControlError && Math.abs(reverseIntake.getY() - odometry.Y) < (IntakeControlError+20)){
+
+                                        delivery.setGripperState(Delivery.GripperState.closed);
+                                        delivery.updateGrippers();
+
+                                        collection.setState(Collection.intakePowerState.reversed);
+                                        collection.updateIntakeState();
+
+                                    }
+
+                                    if (Math.abs(closeGrippers.getX() - odometry.X) < IntakeControlError && Math.abs(closeGrippers.getY() - odometry.Y) < (IntakeControlError+20)){
+
+                                        delivery.setGripperState(Delivery.GripperState.closed);
+                                        delivery.updateGrippers();
 
                                     }
 
                                 }else if (Math.abs(DYE3S.getX() - odometry.X) < deliveryError && Math.abs(DYE3S.getY() - odometry.Y) < deliveryError && !pathing){
 
-                                    drive.RF.setPower(0);
-                                    drive.RB.setPower(0);
-                                    drive.LF.setPower(0);
-                                    drive.LB.setPower(0);
+
+                                    drive.setAllPower(0);
+
+                                    if (sensors.armSensor.isPressed()){
+
+                                        sleep(200);
+
+                                        delivery.setGripperState(Delivery.GripperState.open);
+                                        delivery.updateGrippers();
+
+                                        sleep(200);
+
+                                    }else {
+
+                                        while (delivery.getMainPivotPosition() < 0.95 && !(sensors.armSensor.isPressed())){
+                                            delivery.setMainPivot(delivery.getMainPivotPosition() + 0.008);
+
+                                            sleep(10);
+                                        }
+
+                                        sleep(50);
+
+                                        delivery.setGripperState(Delivery.GripperState.open);
+                                        delivery.updateGrippers();
+
+                                        sleep(200);
+                                    }
 
                                     if (auto == Auto.preload){
 
-                                        dropYellowPixelWait(Delivery.PixelsAuto.yellow2Blue, odometry);
+                                        delivery.setArmTargetState(Delivery.armState.collect);
+                                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.yellow2Blue, odometry);
+
+                                        deliverySlides.DeliverySlides(0, -0.5);
+
+                                        while (deliverySlides.getCurrentposition() > 20){
+                                            delivery.updateArm(deliverySlides.getCurrentposition(), false,  Delivery.PixelsAuto.yellow2Blue, odometry);
+                                        }
 
                                         phase = Phase.finished;
 
                                     }else {
 
-                                        dropYellowPixel(Delivery.PixelsAuto.yellow2Blue, odometry);
+                                        delivery.setArmTargetState(Delivery.armState.collect);
+                                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.yellow2Blue, odometry);
+
+                                        deliverySlides.DeliverySlides(0, -0.5);
+
+                                        deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
 
                                         phase = Phase.first2;
 
                                         build = Build.notBuilt;
 
                                     }
+
 
                                 }
 
@@ -1295,6 +1499,11 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
 
         }else if (propPos == 3) {
 
+            collection.setIntakeHeight(Collection.intakeHeightState.stowedMiddle);
+            collection.updateIntakeHeight();
+
+            double p = 0.015;
+
             while (!(phase == Blue_Far_Stage.Phase.finished)){
 
                 switch (phase){
@@ -1312,21 +1521,14 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
                                     targetHeading = 270;
                                     delivery.setGripperState(Delivery.GripperState.closed);
                                     delivery.updateGrippers();
-
                                 }
 
                                 if (pathing){
 
-                                    pathing = follower.followPathAutoHeading(targetHeading, odometry, drive, 0.015, 3);
+                                    pathing = follower.followPathAutoHeading(targetHeading, odometry, drive, p, 4);
 
                                     if (Math.abs(leavePurpleHeadingT.getX() - odometry.X) < HeadingControlError && Math.abs(leavePurpleHeadingT.getY() - odometry.Y) < HeadingControlError && targetHeading == 270){
                                         targetHeading = 300;
-                                    }
-
-                                    if (Math.abs(oneEightyHeadingT.getX() - odometry.X) < HeadingControlError && Math.abs(oneEightyHeadingT.getY() - odometry.Y) < HeadingControlError && targetHeading == 305){
-                                        targetHeading = 180;
-                                        collection.setIntakeHeight(Collection.intakeHeightState.stowed);
-                                        collection.updateIntakeHeight();
                                     }
 
                                 } else if (Math.abs(DPE1T.getX() - odometry.X) < collectionError && Math.abs(DPE1T.getY() - odometry.Y) < collectionError && !pathing){
@@ -1345,6 +1547,8 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
 
                                     targetHeading = 180;
 
+                                    p = 0.025;
+
                                 }  else if (Math.abs(DYE1T.getX() - odometry.X) < collectionError && Math.abs(DYE1T.getY() - odometry.Y) < collectionError && !pathing){
 
                                     drive.RF.setPower(0);
@@ -1359,6 +1563,7 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
                                     preload = Preload.yellow;
 
                                 }
+
 
                                 break;
                             case yellow:
@@ -1379,7 +1584,7 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
 
                                 if (pathing){
 
-                                    pathing = follower.followPathAuto(targetHeading, odometry, drive, 2);
+                                    pathing = follower.followPathAuto(targetHeading, odometry, drive);
 
                                     if (Math.abs(extendSlidesDelivery.getX() - odometry.X) < HeadingControlError && deliverySlides.getCurrentposition() < 50){
 
@@ -1393,26 +1598,87 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
                                     if (deliverySlides.getCurrentposition() > 150){
 
                                         delivery.setArmTargetState(Delivery.armState.readyForDelivering);
-                                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.yellow2Blue, odometry);
+                                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.yellow3Blue, odometry);
+
+                                    }
+
+                                    if (Math.abs(turnIntakeOff.getX() - odometry.X) < IntakeControlError && Math.abs(turnIntakeOff.getY() - odometry.Y) < (IntakeControlError+20)) {
+
+                                        delivery.setGripperState(Delivery.GripperState.closed);
+                                        delivery.updateGrippers();
+
+                                        collection.setState(Collection.intakePowerState.off);
+                                        collection.updateIntakeState();
+
+                                    }
+
+                                    if (Math.abs(reverseIntake.getX() - odometry.X) < IntakeControlError && Math.abs(reverseIntake.getY() - odometry.Y) < (IntakeControlError+20)){
+
+                                        delivery.setGripperState(Delivery.GripperState.closed);
+                                        delivery.updateGrippers();
+
+                                        collection.setState(Collection.intakePowerState.reversed);
+                                        collection.updateIntakeState();
+
+                                    }
+
+                                    if (Math.abs(closeGrippers.getX() - odometry.X) < IntakeControlError && Math.abs(closeGrippers.getY() - odometry.Y) < (IntakeControlError+20)){
+
+                                        delivery.setGripperState(Delivery.GripperState.closed);
+                                        delivery.updateGrippers();
 
                                     }
 
                                 }else if (Math.abs(DYE3T.getX() - odometry.X) < deliveryError && Math.abs(DYE3T.getY() - odometry.Y) < deliveryError && !pathing){
 
-                                    drive.RF.setPower(0);
-                                    drive.RB.setPower(0);
-                                    drive.LF.setPower(0);
-                                    drive.LB.setPower(0);
+                                    drive.setAllPower(0);
+
+                                    if (sensors.armSensor.isPressed()){
+
+                                        sleep(200);
+
+                                        delivery.setGripperState(Delivery.GripperState.open);
+                                        delivery.updateGrippers();
+
+                                        sleep(200);
+
+                                    }else {
+
+                                        while (delivery.getMainPivotPosition() < 0.95 && !(sensors.armSensor.isPressed())){
+                                            delivery.setMainPivot(delivery.getMainPivotPosition() + 0.008);
+
+                                            sleep(10);
+                                        }
+
+                                        sleep(50);
+
+                                        delivery.setGripperState(Delivery.GripperState.open);
+                                        delivery.updateGrippers();
+
+                                        sleep(200);
+                                    }
 
                                     if (auto == Auto.preload){
 
-                                        dropYellowPixelWait(Delivery.PixelsAuto.yellow3Blue, odometry);
+                                        delivery.setArmTargetState(Delivery.armState.collect);
+                                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.yellow3Blue, odometry);
+
+                                        deliverySlides.DeliverySlides(0, -0.5);
+
+                                        while (deliverySlides.getCurrentposition() > 20){
+                                            delivery.updateArm(deliverySlides.getCurrentposition(), false,  Delivery.PixelsAuto.yellow3Blue, odometry);
+                                        }
 
                                         phase = Phase.finished;
 
                                     }else {
 
-                                        dropYellowPixel(Delivery.PixelsAuto.yellow3Blue, odometry);
+                                        delivery.setArmTargetState(Delivery.armState.collect);
+                                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.yellow3Blue, odometry);
+
+                                        deliverySlides.DeliverySlides(0, -0.5);
+
+                                        deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
 
                                         phase = Phase.first2;
 
