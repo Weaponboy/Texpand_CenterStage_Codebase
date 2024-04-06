@@ -441,7 +441,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
             if (delivering){
                 pathing = follower.followPathAuto(targetHeading, odometry, drive, 2, 20);
             }else {
-                pathing = follower.followPathAuto(targetHeading, odometry, drive, 1.5, 100);
+                pathing = follower.followPathAuto(targetHeading, odometry, drive, 1.5, 50);
             }
 
         }else if (Math.abs(CollectionEndpoint.getX() - odometry.X) < collectionError && Math.abs(CollectionEndpoint.getY() - odometry.Y) < collectionError - 2){
@@ -828,7 +828,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
             if (delivering){
                 pathing = follower.followPathAuto(targetHeading, odometry, drive, 2, 20);
             }else {
-                pathing = follower.followPathAuto(targetHeading, odometry, drive, 1.5, 100);
+                pathing = follower.followPathAuto(targetHeading, odometry, drive, 1.5, 50);
             }
 
 
@@ -1183,7 +1183,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
             if (delivering){
                 pathing = follower.followPathAuto(targetHeading, odometry, drive, 2, 20);
             }else {
-                pathing = follower.followPathAuto(targetHeading, odometry, drive, 1.5, 100);
+                pathing = follower.followPathAuto(targetHeading, odometry, drive, 1.5, 50);
             }
 
 
@@ -1668,7 +1668,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
                             pathing = follower.followPathAutoHeading(targetHeading, odometry, drive, 0.009);
 
-                            if (Math.abs(leavePurpleHeadingT.getX() - odometry.X) < HeadingControlError && Math.abs(leavePurpleHeadingT.getY() - odometry.Y) < HeadingControlError && targetHeading == 90){
+                            if (Math.abs(leavePurpleHeadingT.getX() - odometry.X) < 30 && Math.abs(leavePurpleHeadingT.getY() - odometry.Y) < HeadingControlError && targetHeading == 90){
                                 targetHeading = 50;
                             }
 
