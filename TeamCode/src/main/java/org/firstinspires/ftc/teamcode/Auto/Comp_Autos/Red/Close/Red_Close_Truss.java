@@ -60,11 +60,11 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
     Vector2D CS3F = CE2F;
     Vector2D CC3F = new Vector2D(getRealCoords(78), getRealCoords(320));
-    Vector2D CE3F = new Vector2D(getRealCoords(33), getRealCoords(270));
+    Vector2D CE3F = new Vector2D(getRealCoords(33), getRealCoords(274));
 
     Vector2D CS3FS = CE2F;
     Vector2D CC3FS = new Vector2D(getRealCoords(78), getRealCoords(320));
-    Vector2D CE3FS = new Vector2D(getRealCoords(35), getRealCoords(240));
+    Vector2D CE3FS = new Vector2D(getRealCoords(33), getRealCoords(244));
 
     /**
      * second pos
@@ -72,7 +72,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
     Vector2D DPS1S = new Vector2D(getRealCoords(210), getRealCoords(337));
     Vector2D DPC1S = new Vector2D(getRealCoords(220), getRealCoords(289));
     Vector2D DPCT1S = new Vector2D(getRealCoords(170), getRealCoords(298));
-    Vector2D DPE1S = new Vector2D(getRealCoords(308), getRealCoords(264));
+    Vector2D DPE1S = new Vector2D(getRealCoords(308), getRealCoords(268));
 
     /**
      * Third position
@@ -95,7 +95,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
     //first position
     Vector2D oneEightyHeadingF = new Vector2D(getRealCoords(245), getRealCoords(300));
-    Vector2D leavePurpleHeadingF = new Vector2D(getRealCoords(220), getRealCoords(270));
+    Vector2D leavePurpleHeadingF = new Vector2D(getRealCoords(220), getRealCoords(280));
 
     //second position
     Vector2D oneEightyHeadingS = new Vector2D(getRealCoords(241), getRealCoords(274));
@@ -1311,11 +1311,11 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
                 collect.threePoints(CS1F, CC1F, CE1F);
                 collect.twoPoints(CS2F, CE2F);
-                collect.threePoints(CS3F, CC3F, CE3F, true, 0.6);
+                collect.threePoints(CS3F, CC3F, CE3F, true, 0.7);
 
                 collectSecondStack.threePoints(CS1F, CC1F, CE1F);
                 collectSecondStack.twoPoints(CS2F, CE2F);
-                collectSecondStack.threePoints(CS3FS, CC3FS, CE3FS, true, 0.65);
+                collectSecondStack.threePoints(CS3FS, CC3FS, CE3FS, true, 0.7);
 
                 deliver.threePoints(DS1F, DC1F, DE1F);
                 deliver.twoPoints(DS2F, DE2F);
@@ -1335,11 +1335,11 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
                 collect.threePoints(CS1F, CC1F, CE1F);
                 collect.twoPoints(CS2F, CE2F);
-                collect.threePoints(CS3F, CC3F, CE3F, true, 0.6);
+                collect.threePoints(CS3F, CC3F, CE3F, true, 0.7);
 
                 collectSecondStack.threePoints(CS1F, CC1F, CE1F);
                 collectSecondStack.twoPoints(CS2F, CE2F);
-                collectSecondStack.threePoints(CS3FS, CC3FS, CE3FS, true, 0.65);
+                collectSecondStack.threePoints(CS3FS, CC3FS, CE3FS, true, 0.7);
 
                 deliver.threePoints(DS1F, DC1F, DE1F);
                 deliver.twoPoints(DS2F, DE2F);
@@ -1359,11 +1359,11 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
                 collect.threePoints(CS1F, CC1F, CE1F);
                 collect.twoPoints(CS2F, CE2F);
-                collect.threePoints(CS3F, CC3F, CE3F, true, 0.6);
+                collect.threePoints(CS3F, CC3F, CE3F, true, 0.7);
 
                 collectSecondStack.threePoints(CS1F, CC1F, CE1F);
                 collectSecondStack.twoPoints(CS2F, CE2F);
-                collectSecondStack.threePoints(CS3FS, CC3FS, CE3FS, true, 0.65);
+                collectSecondStack.threePoints(CS3FS, CC3FS, CE3FS, true, 0.7);
 
                 deliver.threePoints(DS1F, DC1F, DE1F);
                 deliver.twoPoints(DS2F, DE2F);
@@ -1421,7 +1421,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
                             }
 
-                            if (Math.abs(oneEightyHeadingF.getX() - odometry.X) < HeadingControlError && Math.abs(oneEightyHeadingF.getY() - odometry.Y) < 40){
+                            if (Math.abs(oneEightyHeadingF.getX() - odometry.X) < HeadingControlError){
 
                                 p = 0.01;
 
