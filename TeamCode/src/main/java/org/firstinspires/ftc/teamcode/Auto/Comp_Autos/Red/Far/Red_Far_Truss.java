@@ -165,7 +165,7 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
     //collection
     Vector2D turnIntakeOn = new Vector2D(getRealCoords(183), getRealCoords(328));
     Vector2D turnIntakeOff = new Vector2D(getRealCoords(100), getRealCoords(328));
-    Vector2D reverseIntake = new Vector2D(getRealCoords(72), getRealCoords(327));
+    Vector2D reverseIntake = new Vector2D(getRealCoords(38), getRealCoords(300));
 
     /**path objects*/
     GenMethods purple = new GenMethods();
@@ -569,12 +569,12 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (Math.abs(reverseIntake.getX() - odometry.X) < IntakeControlError && Math.abs(reverseIntake.getY() - odometry.Y) < IntakeControlError){
+            if (Math.abs(reverseIntake.getX() - odometry.X) < 20 && Math.abs(reverseIntake.getY() - odometry.Y) < IntakeControlError){
 
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
 
-                collection.setState(Collection.intakePowerState.reversedHalf);
+                collection.setState(Collection.intakePowerState.reversed);
                 collection.updateIntakeState();
 
             }
@@ -643,6 +643,7 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
             collection.updateIntakeHeight();
 
             if (sensors.RightClawSensor.isPressed() || sensors.LeftClawSensor.isPressed()){
+
                 drive.strafeLeft();
 
                 sleep(300);
@@ -652,8 +653,8 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
                 sleep(300);
 
                 drive.setAllPower(0);
-            }
 
+            }
 
             pathing = true;
 
@@ -861,12 +862,12 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (Math.abs(reverseIntake.getX() - odometry.X) < IntakeControlError && Math.abs(reverseIntake.getY() - odometry.Y) < IntakeControlError){
+            if (Math.abs(reverseIntake.getX() - odometry.X) < 20 && Math.abs(reverseIntake.getY() - odometry.Y) < IntakeControlError){
 
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
 
-                collection.setState(Collection.intakePowerState.reversedHalf);
+                collection.setState(Collection.intakePowerState.reversed);
                 collection.updateIntakeState();
 
             }

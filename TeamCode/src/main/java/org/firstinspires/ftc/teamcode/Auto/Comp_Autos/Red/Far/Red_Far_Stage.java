@@ -557,74 +557,7 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
 
         }else if (Math.abs(CollectionEndpoint.getX() - odometry.X) < collectionError && Math.abs(CollectionEndpoint.getY() - odometry.Y) < collectionError - 2){
 
-            delivery.setGripperState(Delivery.GripperState.open);
-            delivery.updateGrippers();
-
-            collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
-            collection.updateIntakeHeight();
-
-            drive.setAllPower(0);
-
-            collection.setState(Collection.intakePowerState.on);
-            collection.updateIntakeState();
-
-            boolean collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
-
-            int counter = 0;
-
-            while (autoTimer.milliseconds() < 26000 && !collectionDone){
-
-                counter++;
-                collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
-
-                if (counter <= 6){
-
-                    sleep(50);
-
-                } else if (counter > 6 && counter <= 12) {
-
-                    collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
-                    collection.updateIntakeHeight();
-
-                    sleep(50);
-
-                } else if (counter == 13){
-
-                    drive.strafeLeft();
-                    sleep(200);
-                    drive.setAllPower(0);
-
-                } else if (counter == 14){
-
-                    drive.strafeRight();
-                    sleep(200);
-                    drive.setAllPower(0);
-
-                } else if (counter > 14 && counter <= 20) {
-
-                    sleep(50);
-
-                } else if (counter > 20) {
-
-                    collectionDone = true;
-
-                }
-
-                if (collection.getIntakeCurrentUse() > intakeNormal && !reversingIntake){
-                    reversingIntake = true;
-                    reverseIntakeTimer.reset();
-                    previousState = collection.getPowerState();
-                    collection.setState(Collection.intakePowerState.reversed);
-                    collection.updateIntakeState();
-                }
-
-                if (reversingIntake && reverseIntakeTimer.milliseconds() > 100){
-                    collection.setState(previousState);
-                    collection.updateIntakeState();
-                    reversingIntake = false;
-                }
-
-            }
+            collectStraight(autoTimer, drive, Collection.intakeHeightState.fifthPixel, Collection.intakeHeightState.forthPixel);
 
             pathing = true;
 
@@ -883,74 +816,7 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
 
         }else if (Math.abs(CollectionEndpoint.getX() - odometry.X) < collectionError && Math.abs(CollectionEndpoint.getY() - odometry.Y) < collectionError - 2){
 
-            delivery.setGripperState(Delivery.GripperState.open);
-            delivery.updateGrippers();
-
-            collection.setIntakeHeight(Collection.intakeHeightState.firstPixel);
-            collection.updateIntakeHeight();
-
-            drive.setAllPower(0);
-
-            collection.setState(Collection.intakePowerState.on);
-            collection.updateIntakeState();
-
-            boolean collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
-
-            int counter = 0;
-
-            while (autoTimer.milliseconds() < 25000 && !collectionDone){
-
-                counter++;
-                collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
-
-                if (counter <= 6){
-
-                    sleep(50);
-
-                } else if (counter > 6 && counter <= 12) {
-
-                    collection.setIntakeHeight(Collection.intakeHeightState.firstPixel);
-                    collection.updateIntakeHeight();
-
-                    sleep(50);
-
-                } else if (counter == 13){
-
-                    drive.strafeLeft();
-                    sleep(200);
-                    drive.setAllPower(0);
-
-                } else if (counter == 14){
-
-                    drive.strafeRight();
-                    sleep(200);
-                    drive.setAllPower(0);
-
-                } else if (counter > 14 && counter <= 20) {
-
-                    sleep(50);
-
-                } else if (counter > 20) {
-
-                    collectionDone = true;
-
-                }
-
-                if (collection.getIntakeCurrentUse() > intakeNormal && !reversingIntake){
-                    reversingIntake = true;
-                    reverseIntakeTimer.reset();
-                    previousState = collection.getPowerState();
-                    collection.setState(Collection.intakePowerState.reversed);
-                    collection.updateIntakeState();
-                }
-
-                if (reversingIntake && reverseIntakeTimer.milliseconds() > 100){
-                    collection.setState(previousState);
-                    collection.updateIntakeState();
-                    reversingIntake = false;
-                }
-
-            }
+            collectStraight(autoTimer, drive, Collection.intakeHeightState.secondAndHalf, Collection.intakeHeightState.firstPixel);
 
             pathing = true;
 
