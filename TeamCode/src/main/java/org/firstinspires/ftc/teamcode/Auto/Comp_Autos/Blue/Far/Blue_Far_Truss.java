@@ -191,8 +191,8 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
     //collection
     Vector2D turnIntakeOn = new Vector2D(getRealCoords(183), getRealCoords(32));
-    Vector2D turnIntakeOff = new Vector2D(getRealCoords(125), getRealCoords(32));
-    Vector2D reverseIntake = new Vector2D(getRealCoords(72), getRealCoords(33));
+    Vector2D turnIntakeOff = new Vector2D(getRealCoords(100), getRealCoords(32));
+    Vector2D reverseIntake = new Vector2D(getRealCoords(49), getRealCoords(60));
 
     /**path objects*/
     GenMethods purple = new GenMethods();
@@ -601,7 +601,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
 
-                collection.setState(Collection.intakePowerState.reversedHalf);
+                collection.setState(Collection.intakePowerState.reversed);
                 collection.updateIntakeState();
 
             }
@@ -668,6 +668,18 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
             collection.setIntakeHeight(Collection.intakeHeightState.firstPixel);
             collection.updateIntakeHeight();
+
+            if (sensors.RightClawSensor.isPressed() || sensors.LeftClawSensor.isPressed()){
+                drive.strafeLeft();
+
+                sleep(300);
+
+                drive.strafeRight();
+
+                sleep(300);
+
+                drive.setAllPower(0);
+            }
 
             pathing = true;
 
@@ -880,7 +892,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
 
-                collection.setState(Collection.intakePowerState.reversedHalf);
+                collection.setState(Collection.intakePowerState.reversed);
                 collection.updateIntakeState();
 
             }
@@ -928,6 +940,18 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
             collection.setIntakeHeight(Collection.intakeHeightState.firstPixel);
             collection.updateIntakeHeight();
+
+            if (sensors.RightClawSensor.isPressed() || sensors.LeftClawSensor.isPressed()){
+                drive.strafeLeft();
+
+                sleep(300);
+
+                drive.strafeRight();
+
+                sleep(300);
+
+                drive.setAllPower(0);
+            }
 
             pathing = true;
 

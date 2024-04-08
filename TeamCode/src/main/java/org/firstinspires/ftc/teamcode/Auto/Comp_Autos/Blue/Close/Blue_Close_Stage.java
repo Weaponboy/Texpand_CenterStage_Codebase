@@ -165,8 +165,8 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
     /**Action points*/
     Vector2D turnIntakeOn = new Vector2D(getRealCoords(180), getRealCoords(155));
-    Vector2D turnIntakeOff = new Vector2D(getRealCoords(125), getRealCoords(154));
-    Vector2D reverseIntake = new Vector2D(getRealCoords(85), getRealCoords(154));
+    Vector2D turnIntakeOff = new Vector2D(getRealCoords(100), getRealCoords(154));
+    Vector2D reverseIntake = new Vector2D(getRealCoords(45), getRealCoords(154));
 
     //first position
     Vector2D oneEightyHeadingF = new Vector2D(getRealCoords(245), getRealCoords(80));
@@ -562,78 +562,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
         }else if (Math.abs(CollectionEndpoint.getX() - odometry.X) < collectionError && Math.abs(CollectionEndpoint.getY() - odometry.Y) < collectionError - 2){
 
-            drive.setAllPower(0);
-
-            collection.setState(Collection.intakePowerState.on);
-            collection.updateIntakeState();
-
-            int counter = 0;
-            boolean collectionDone = false;
-
-            while (!collectionDone){
-
-                counter++;
-
-                if (counter > 10){
-                    collectionDone = true;
-                }else {
-                    collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
-                }
-
-                sleep(50);
-            }
-
-            collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
-            collection.updateIntakeHeight();
-
-            delivery.setGripperState(Delivery.GripperState.open);
-            delivery.updateGrippers();
-
-            collectionDone = false;
-
-            counter = 0;
-
-            while (!collectionDone){
-
-                counter++;
-
-                if (counter > 10){
-                    collectionDone = true;
-                }else {
-                    collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
-                }
-
-                sleep(50);
-            }
-
-            if (!(!sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed())){
-
-                drive.strafeRight();
-
-                sleep(100);
-
-                drive.setAllPower(0);
-
-                collection.setState(Collection.intakePowerState.on);
-                collection.updateIntakeState();
-
-                collectionDone = false;
-            }
-
-            counter = 0;
-
-            while (!collectionDone){
-
-                counter++;
-
-                if (counter > 10){
-                    collectionDone = true;
-                }else {
-                    collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
-                }
-
-                sleep(50);
-            }
+            collectStraight(autoTimer, drive, Collection.intakeHeightState.fifthPixel, Collection.intakeHeightState.forthPixel);
 
             pathing = true;
 
@@ -949,78 +878,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
         }else if (Math.abs(CollectionEndpoint.getX() - odometry.X) < collectionError && Math.abs(CollectionEndpoint.getY() - odometry.Y) < collectionError - 2){
 
-            drive.setAllPower(0);
-
-            collection.setState(Collection.intakePowerState.on);
-            collection.updateIntakeState();
-
-            int counter = 0;
-            boolean collectionDone = false;
-
-            while (!collectionDone){
-
-                counter++;
-
-                if (counter > 10){
-                    collectionDone = true;
-                }else {
-                    collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
-                }
-
-                sleep(50);
-            }
-
-            collection.setIntakeHeight(Collection.intakeHeightState.secondPixel);
-            collection.updateIntakeHeight();
-
-            delivery.setGripperState(Delivery.GripperState.open);
-            delivery.updateGrippers();
-
-            collectionDone = false;
-
-            counter = 0;
-
-            while (!collectionDone){
-
-                counter++;
-
-                if (counter > 10){
-                    collectionDone = true;
-                }else {
-                    collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
-                }
-
-                sleep(50);
-            }
-
-            if (!(!sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed())){
-
-                drive.strafeRight();
-
-                sleep(100);
-
-                drive.setAllPower(0);
-
-                collection.setState(Collection.intakePowerState.on);
-                collection.updateIntakeState();
-
-                collectionDone = false;
-            }
-
-            counter = 0;
-
-            while (!collectionDone){
-
-                counter++;
-
-                if (counter > 10){
-                    collectionDone = true;
-                }else {
-                    collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
-                }
-
-                sleep(50);
-            }
+            collectStraight(autoTimer, drive, Collection.intakeHeightState.secondAndHalf, Collection.intakeHeightState.firstPixel);
 
             pathing = true;
 
@@ -1302,78 +1160,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
         }else if (Math.abs(secondStack.getX() - odometry.X) < collectionError && Math.abs(secondStack.getY() - odometry.Y) < collectionError - 2){
 
-            drive.setAllPower(0);
-
-            collection.setState(Collection.intakePowerState.on);
-            collection.updateIntakeState();
-
-            int counter = 0;
-            boolean collectionDone = false;
-
-            while (!collectionDone){
-
-                counter++;
-
-                if (counter > 10){
-                    collectionDone = true;
-                }else {
-                    collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
-                }
-
-                sleep(50);
-            }
-
-            collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
-            collection.updateIntakeHeight();
-
-            delivery.setGripperState(Delivery.GripperState.open);
-            delivery.updateGrippers();
-
-            collectionDone = false;
-
-            counter = 0;
-
-            while (!collectionDone){
-
-                counter++;
-
-                if (counter > 10){
-                    collectionDone = true;
-                }else {
-                    collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
-                }
-
-                sleep(50);
-            }
-
-            if (!(!sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed())){
-
-                drive.strafeRight();
-
-                sleep(100);
-
-                drive.setAllPower(0);
-
-                collection.setState(Collection.intakePowerState.on);
-                collection.updateIntakeState();
-
-                collectionDone = false;
-            }
-
-            counter = 0;
-
-            while (!collectionDone){
-
-                counter++;
-
-                if (counter > 10){
-                    collectionDone = true;
-                }else {
-                    collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
-                }
-
-                sleep(50);
-            }
+            collectStraight(autoTimer, drive, Collection.intakeHeightState.fifthPixel, Collection.intakeHeightState.forthPixel);
 
             pathing = true;
 
