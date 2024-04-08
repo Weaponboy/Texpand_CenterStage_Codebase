@@ -124,7 +124,7 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
     //collection
     Vector2D turnIntakeOn = new Vector2D(getRealCoords(180), getRealCoords(210));
     Vector2D turnIntakeOff = new Vector2D(getRealCoords(100), getRealCoords(210));
-    Vector2D reverseIntake = new Vector2D(getRealCoords(72), getRealCoords(210));
+    Vector2D reverseIntake = new Vector2D(getRealCoords(45), getRealCoords(210));
     Vector2D closeGrippers = new Vector2D(getRealCoords(60), getRealCoords(210));
 
     /**path objects*/
