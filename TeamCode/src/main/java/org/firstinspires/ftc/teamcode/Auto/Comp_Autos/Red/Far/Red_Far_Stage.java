@@ -123,7 +123,7 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
 
     //collection
     Vector2D turnIntakeOn = new Vector2D(getRealCoords(180), getRealCoords(210));
-    Vector2D turnIntakeOff = new Vector2D(getRealCoords(125), getRealCoords(210));
+    Vector2D turnIntakeOff = new Vector2D(getRealCoords(100), getRealCoords(210));
     Vector2D reverseIntake = new Vector2D(getRealCoords(72), getRealCoords(210));
     Vector2D closeGrippers = new Vector2D(getRealCoords(60), getRealCoords(210));
 
@@ -560,7 +560,7 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
             delivery.setGripperState(Delivery.GripperState.open);
             delivery.updateGrippers();
 
-            collection.setIntakeHeight(Collection.intakeHeightState.fifthPixel);
+            collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
             collection.updateIntakeHeight();
 
             drive.setAllPower(0);
@@ -583,7 +583,7 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
 
                 } else if (counter > 6 && counter <= 12) {
 
-                    collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
+                    collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
                     collection.updateIntakeHeight();
 
                     sleep(50);
@@ -675,7 +675,7 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
                 delivery.setGripperState(Delivery.GripperState.open);
                 delivery.updateGrippers();
 
-                collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
+                collection.setIntakeHeight(Collection.intakeHeightState.secondPixel);
                 collection.updateIntakeHeight();
 
                 collection.setState(Collection.intakePowerState.on);

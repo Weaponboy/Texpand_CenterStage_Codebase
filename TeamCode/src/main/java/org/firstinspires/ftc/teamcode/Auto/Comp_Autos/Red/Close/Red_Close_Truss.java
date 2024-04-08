@@ -35,7 +35,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
     Vector2D DPS1F = new Vector2D(getRealCoords(210), getRealCoords(337));
     Vector2D DPC1F = new Vector2D(getRealCoords(225), getRealCoords(285));
     Vector2D DPCT1F = new Vector2D(getRealCoords(165), getRealCoords(255));
-    Vector2D DPE1F = new Vector2D(getRealCoords(308), getRealCoords(245));
+    Vector2D DPE1F = new Vector2D(getRealCoords(308), getRealCoords(249));
 
     /**delivery and collection points*/
     Vector2D DS1F = new Vector2D(getRealCoords(44), getRealCoords(270));
@@ -48,7 +48,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
     //segment 3
     Vector2D DS3F = DE2F;
     Vector2D DC3F = new Vector2D(getRealCoords(220), getRealCoords(307));
-    Vector2D DE3F = new Vector2D(getRealCoords(320), getRealCoords(293));
+    Vector2D DE3F = new Vector2D(getRealCoords(320), getRealCoords(298));
 
     /**collecting paths*/
     Vector2D CS1F = new Vector2D(getRealCoords(300), getRealCoords(270));
@@ -60,11 +60,11 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
     Vector2D CS3F = CE2F;
     Vector2D CC3F = new Vector2D(getRealCoords(78), getRealCoords(320));
-    Vector2D CE3F = new Vector2D(getRealCoords(33), getRealCoords(274));
+    Vector2D CE3F = new Vector2D(getRealCoords(33), getRealCoords(269));
 
     Vector2D CS3FS = CE2F;
     Vector2D CC3FS = new Vector2D(getRealCoords(78), getRealCoords(320));
-    Vector2D CE3FS = new Vector2D(getRealCoords(33), getRealCoords(244));
+    Vector2D CE3FS = new Vector2D(getRealCoords(33), getRealCoords(239));
 
     /**
      * second pos
@@ -89,8 +89,8 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
     //collection
     Vector2D turnIntakeOn = new Vector2D(getRealCoords(183), getRealCoords(328));
-    Vector2D turnIntakeOff = new Vector2D(getRealCoords(125), getRealCoords(328));
-    Vector2D reverseIntake = new Vector2D(getRealCoords(72), getRealCoords(328));
+    Vector2D turnIntakeOff = new Vector2D(getRealCoords(100), getRealCoords(328));
+    Vector2D reverseIntake = new Vector2D(getRealCoords(45), getRealCoords(328));
     Vector2D closeGrippers = new Vector2D(getRealCoords(60), getRealCoords(310));
 
     //first position
@@ -103,7 +103,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
     //third position
     Vector2D oneEightyHeadingT = new Vector2D(getRealCoords(227), getRealCoords(255));
-    Vector2D leavePurpleHeadingT = new Vector2D(getRealCoords(210), getRealCoords(300));
+    Vector2D leavePurpleHeadingT = new Vector2D(getRealCoords(210), getRealCoords(310));
 
     Vector2D DeliveryEndpoint;
     Vector2D CollectionEndpoint;
@@ -468,14 +468,14 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
                 if (counter <= 6){
 
-                    sleep(50);
+                    sleep(40);
 
                 } else if (counter > 6 && counter <= 12) {
 
                     collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
                     collection.updateIntakeHeight();
 
-                    sleep(50);
+                    sleep(40);
 
                 } else if (counter == 13){
 
@@ -491,7 +491,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
                 } else if (counter > 14 && counter <= 20) {
 
-                    sleep(50);
+                    sleep(40);
 
                 } else if (counter > 20) {
 
@@ -524,6 +524,11 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
             follower.resetClosestPoint(new Vector2D(odometry.X, odometry.Y));
+
+            delivery.setGripperState(Delivery.GripperState.closed);
+            delivery.updateGrippers();
+
+            sleep(200);
 
         }
 
@@ -856,14 +861,14 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
                 if (counter <= 6){
 
-                    sleep(50);
+                    sleep(40);
 
                 } else if (counter > 6 && counter <= 12) {
 
                     collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
                     collection.updateIntakeHeight();
 
-                    sleep(50);
+                    sleep(40);
 
                 } else if (counter == 13){
 
@@ -879,7 +884,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
                 } else if (counter > 14 && counter <= 20) {
 
-                    sleep(50);
+                    sleep(40);
 
                 } else if (counter > 20) {
 
@@ -912,6 +917,11 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
             follower.resetClosestPoint(new Vector2D(odometry.X, odometry.Y));
+
+            delivery.setGripperState(Delivery.GripperState.closed);
+            delivery.updateGrippers();
+
+            sleep(200);
         }
     }
 
@@ -1212,14 +1222,14 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
                 if (counter <= 6){
 
-                    sleep(50);
+                    sleep(40);
 
                 } else if (counter > 6 && counter <= 12) {
 
                     collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
                     collection.updateIntakeHeight();
 
-                    sleep(50);
+                    sleep(40);
 
                 } else if (counter == 13){
 
@@ -1235,7 +1245,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
                 } else if (counter > 14 && counter <= 20) {
 
-                    sleep(50);
+                    sleep(40);
 
                 } else if (counter > 20) {
 
@@ -1268,6 +1278,11 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
             follower.resetClosestPoint(new Vector2D(odometry.X, odometry.Y));
+
+            delivery.setGripperState(Delivery.GripperState.closed);
+            delivery.updateGrippers();
+
+            sleep(200);
 
         }
     }
@@ -1379,6 +1394,8 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
         }
 
         waitForStart();
+
+        autoTimer.reset();
 
         if (propPos == 1){
 

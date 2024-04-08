@@ -164,7 +164,7 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
 
     //collection
     Vector2D turnIntakeOn = new Vector2D(getRealCoords(183), getRealCoords(328));
-    Vector2D turnIntakeOff = new Vector2D(getRealCoords(125), getRealCoords(328));
+    Vector2D turnIntakeOff = new Vector2D(getRealCoords(100), getRealCoords(328));
     Vector2D reverseIntake = new Vector2D(getRealCoords(72), getRealCoords(327));
 
     /**path objects*/
@@ -1089,6 +1089,8 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
         }
 
         waitForStart();
+
+        autoTimer.reset();
 
         if (propPos == 1){
 

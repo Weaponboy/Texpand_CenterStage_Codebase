@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.hardware.Drivetrain;
 import org.firstinspires.ftc.teamcode.hardware.Odometry;
 
 @Autonomous(name = "Red_Close_Stage", group = "red auto's")
-public class Red_Close_Stage extends LinearOpMode implements CycleMethods {
+public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
 
     /** control point naming key
      * don't need start position because i have sub classes for each one
@@ -34,7 +34,7 @@ public class Red_Close_Stage extends LinearOpMode implements CycleMethods {
     Vector2D DPS1F = new Vector2D(getRealCoords(210), getRealCoords(337));
     Vector2D DPC1F = new Vector2D(getRealCoords(225), getRealCoords(285));
     Vector2D DPCT1F = new Vector2D(getRealCoords(165), getRealCoords(255));
-    Vector2D DPE1F = new Vector2D(getRealCoords(306), getRealCoords(259));
+    Vector2D DPE1F = new Vector2D(getRealCoords(304), getRealCoords(255));
 
     /**
      * second pos
@@ -75,11 +75,11 @@ public class Red_Close_Stage extends LinearOpMode implements CycleMethods {
     Vector2D CE2S = new Vector2D(getRealCoords(91), getRealCoords(207));
 
     Vector2D CS3S = CE2S;
-    Vector2D CE3S = new Vector2D(getRealCoords(35), getRealCoords(205));
+    Vector2D CE3S = new Vector2D(getRealCoords(34), getRealCoords(208));
 
     Vector2D CS3SS = CE2S;
     Vector2D CC3SS = new Vector2D(getRealCoords(72), getRealCoords(207));
-    Vector2D CE3SS = new Vector2D(getRealCoords(35), getRealCoords(235));
+    Vector2D CE3SS = new Vector2D(getRealCoords(34), getRealCoords(239));
 
     /**
      * Third position
@@ -94,8 +94,8 @@ public class Red_Close_Stage extends LinearOpMode implements CycleMethods {
      * Action points*
      */
     Vector2D turnIntakeOn = new Vector2D(getRealCoords(180), getRealCoords(205));
-    Vector2D turnIntakeOff = new Vector2D(getRealCoords(125), getRealCoords(206));
-    Vector2D reverseIntake = new Vector2D(getRealCoords(85), getRealCoords(204));
+    Vector2D turnIntakeOff = new Vector2D(getRealCoords(100), getRealCoords(206));
+    Vector2D reverseIntake = new Vector2D(getRealCoords(45), getRealCoords(204));
 
     //first position
     Vector2D oneEightyHeadingF = new Vector2D(getRealCoords(227), getRealCoords(255));
@@ -152,6 +152,8 @@ public class Red_Close_Stage extends LinearOpMode implements CycleMethods {
 
     /**doubles*/
     double targetHeading = 0;
+
+    double intakeNormal = 5500;
 
     double timeChanger;
 
@@ -263,7 +265,7 @@ public class Red_Close_Stage extends LinearOpMode implements CycleMethods {
                 delivery.setGripperState(Delivery.GripperState.open);
                 delivery.updateGrippers();
 
-                collection.setIntakeHeight(Collection.intakeHeightState.fifthPixel);
+                collection.setIntakeHeight(Collection.intakeHeightState.fifthAndHalf);
                 collection.updateIntakeHeight();
 
                 collection.setState(Collection.intakePowerState.on);
@@ -491,77 +493,74 @@ public class Red_Close_Stage extends LinearOpMode implements CycleMethods {
 
         }else if (Math.abs(CollectionEndpoint.getX() - odometry.X) < collectionError && Math.abs(CollectionEndpoint.getY() - odometry.Y) < collectionError - 2){
 
+
+            delivery.setGripperState(Delivery.GripperState.open);
+            delivery.updateGrippers();
+
+            collection.setIntakeHeight(Collection.intakeHeightState.fifthPixel);
+            collection.updateIntakeHeight();
+
             drive.setAllPower(0);
 
             collection.setState(Collection.intakePowerState.on);
             collection.updateIntakeState();
 
+            boolean collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
+
             int counter = 0;
-            boolean collectionDone = false;
 
             while (!collectionDone){
 
                 counter++;
+                collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
 
-                if (counter > 5){
+                if (counter <= 6){
+
+                    sleep(40);
+
+                } else if (counter > 6 && counter <= 12) {
+
+                    collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
+                    collection.updateIntakeHeight();
+
+                    sleep(40);
+
+                } else if (counter == 13){
+
+                    drive.strafeLeft();
+                    sleep(200);
+                    drive.setAllPower(0);
+
+                } else if (counter == 14){
+
+                    drive.strafeRight();
+                    sleep(200);
+                    drive.setAllPower(0);
+
+                } else if (counter > 14 && counter <= 20) {
+
+                    sleep(40);
+
+                } else if (counter > 20) {
+
                     collectionDone = true;
-                }else {
-                    collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
+
                 }
 
-                sleep(50);
-            }
-
-            collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
-            collection.updateIntakeHeight();
-
-            delivery.setGripperState(Delivery.GripperState.open);
-            delivery.updateGrippers();
-
-            collectionDone = false;
-
-            counter = 0;
-
-            while (!collectionDone){
-
-                counter++;
-
-                if (counter > 10){
-                    collectionDone = true;
-                }else {
-                    collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
+                if (collection.getIntakeCurrentUse() > intakeNormal && !reversingIntake){
+                    reversingIntake = true;
+                    reverseIntakeTimer.reset();
+                    previousState = collection.getPowerState();
+                    collection.setState(Collection.intakePowerState.reversed);
+                    collection.updateIntakeState();
                 }
 
-                sleep(50);
-            }
-
-            if (!(!sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed())){
-
-                drive.strafeRight();
-
-                sleep(200);
-
-                drive.setAllPower(0);
-
-                collection.setState(Collection.intakePowerState.on);
-                collection.updateIntakeState();
-
-                collectionDone = false;
-            }
-
-            counter = 0;
-
-            while (!collectionDone){
-
-                counter++;
-
-                if (counter > 10){
-                    collectionDone = true;
-                }else {
-                    collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
+                if (reversingIntake && reverseIntakeTimer.milliseconds() > 100){
+                    collection.setState(previousState);
+                    collection.updateIntakeState();
+                    reversingIntake = false;
                 }
 
-                sleep(50);
             }
 
             pathing = true;
@@ -573,6 +572,11 @@ public class Red_Close_Stage extends LinearOpMode implements CycleMethods {
             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
             follower.resetClosestPoint(new Vector2D(odometry.X, odometry.Y));
+
+            delivery.setGripperState(Delivery.GripperState.closed);
+            delivery.updateGrippers();
+
+            sleep(200);
 
         }
 
@@ -617,7 +621,7 @@ public class Red_Close_Stage extends LinearOpMode implements CycleMethods {
                 delivery.setGripperState(Delivery.GripperState.open);
                 delivery.updateGrippers();
 
-                collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
+                collection.setIntakeHeight(Collection.intakeHeightState.thirdAndHalf);
                 collection.updateIntakeHeight();
 
                 collection.setState(Collection.intakePowerState.on);
@@ -878,77 +882,73 @@ public class Red_Close_Stage extends LinearOpMode implements CycleMethods {
 
         }else if (Math.abs(CollectionEndpoint.getX() - odometry.X) < collectionError && Math.abs(CollectionEndpoint.getY() - odometry.Y) < collectionError - 2){
 
+            delivery.setGripperState(Delivery.GripperState.open);
+            delivery.updateGrippers();
+
+            collection.setIntakeHeight(Collection.intakeHeightState.secondAndHalf);
+            collection.updateIntakeHeight();
+
             drive.setAllPower(0);
 
             collection.setState(Collection.intakePowerState.on);
             collection.updateIntakeState();
 
+            boolean collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
+
             int counter = 0;
-            boolean collectionDone = false;
 
             while (!collectionDone){
 
                 counter++;
+                collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
 
-                if (counter > 5){
+                if (counter <= 6){
+
+                    sleep(40);
+
+                } else if (counter > 6 && counter <= 12) {
+
+                    collection.setIntakeHeight(Collection.intakeHeightState.firstPixel);
+                    collection.updateIntakeHeight();
+
+                    sleep(40);
+
+                } else if (counter == 13){
+
+                    drive.strafeLeft();
+                    sleep(200);
+                    drive.setAllPower(0);
+
+                } else if (counter == 14){
+
+                    drive.strafeRight();
+                    sleep(200);
+                    drive.setAllPower(0);
+
+                } else if (counter > 14 && counter <= 20) {
+
+                    sleep(40);
+
+                } else if (counter > 20) {
+
                     collectionDone = true;
-                }else {
-                    collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
+
                 }
 
-                sleep(50);
-            }
-
-            collection.setIntakeHeight(Collection.intakeHeightState.firstPixel);
-            collection.updateIntakeHeight();
-
-            delivery.setGripperState(Delivery.GripperState.open);
-            delivery.updateGrippers();
-
-            collectionDone = false;
-
-            counter = 0;
-
-            while (!collectionDone){
-
-                counter++;
-
-                if (counter > 10){
-                    collectionDone = true;
-                }else {
-                    collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
+                if (collection.getIntakeCurrentUse() > intakeNormal && !reversingIntake){
+                    reversingIntake = true;
+                    reverseIntakeTimer.reset();
+                    previousState = collection.getPowerState();
+                    collection.setState(Collection.intakePowerState.reversed);
+                    collection.updateIntakeState();
                 }
 
-                sleep(50);
-            }
-
-            if (!(!sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed())){
-
-                drive.strafeRight();
-
-                sleep(200);
-
-                drive.setAllPower(0);
-
-                collection.setState(Collection.intakePowerState.on);
-                collection.updateIntakeState();
-
-                collectionDone = false;
-            }
-
-            counter = 0;
-
-            while (!collectionDone){
-
-                counter++;
-
-                if (counter > 10){
-                    collectionDone = true;
-                }else {
-                    collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
+                if (reversingIntake && reverseIntakeTimer.milliseconds() > 100){
+                    collection.setState(previousState);
+                    collection.updateIntakeState();
+                    reversingIntake = false;
                 }
 
-                sleep(50);
             }
 
             pathing = true;
@@ -960,6 +960,12 @@ public class Red_Close_Stage extends LinearOpMode implements CycleMethods {
             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
             follower.resetClosestPoint(new Vector2D(odometry.X, odometry.Y));
+
+            delivery.setGripperState(Delivery.GripperState.closed);
+            delivery.updateGrippers();
+
+            sleep(200);
+
         }
     }
 
@@ -999,7 +1005,7 @@ public class Red_Close_Stage extends LinearOpMode implements CycleMethods {
                 delivery.setGripperState(Delivery.GripperState.open);
                 delivery.updateGrippers();
 
-                collection.setIntakeHeight(Collection.intakeHeightState.fifthPixel);
+                collection.setIntakeHeight(Collection.intakeHeightState.fifthAndHalf);
                 collection.updateIntakeHeight();
 
                 collection.setState(Collection.intakePowerState.on);
@@ -1231,80 +1237,73 @@ public class Red_Close_Stage extends LinearOpMode implements CycleMethods {
 
         }else if (Math.abs(secondStack.getX() - odometry.X) < collectionError && Math.abs(secondStack.getY() - odometry.Y) < collectionError - 2){
 
+            delivery.setGripperState(Delivery.GripperState.open);
+            delivery.updateGrippers();
+
+            collection.setIntakeHeight(Collection.intakeHeightState.fifthPixel);
+            collection.updateIntakeHeight();
+
             drive.setAllPower(0);
 
             collection.setState(Collection.intakePowerState.on);
             collection.updateIntakeState();
 
+            boolean collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
+
             int counter = 0;
-            boolean collectionDone = false;
 
             while (!collectionDone){
 
                 counter++;
+                collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
 
-                if (counter > 5){
+                if (counter <= 6){
+
+                    sleep(40);
+
+                } else if (counter > 6 && counter <= 12) {
+
+                    collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
+                    collection.updateIntakeHeight();
+
+                    sleep(40);
+
+                } else if (counter == 13){
+
+                    drive.strafeLeft();
+                    sleep(200);
+                    drive.setAllPower(0);
+
+                } else if (counter == 14){
+
+                    drive.strafeRight();
+                    sleep(200);
+                    drive.setAllPower(0);
+
+                } else if (counter > 14 && counter <= 20) {
+
+                    sleep(40);
+
+                } else if (counter > 20) {
+
                     collectionDone = true;
-                }else {
-                    collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
+
                 }
 
-                sleep(50);
-            }
-
-            collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
-            collection.updateIntakeHeight();
-
-            delivery.setGripperState(Delivery.GripperState.open);
-            delivery.updateGrippers();
-
-            collectionDone = false;
-
-            counter = 0;
-
-            while (!collectionDone){
-
-                counter++;
-
-                if (counter > 10){
-                    collectionDone = true;
-                }else {
-                    collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
+                if (collection.getIntakeCurrentUse() > intakeNormal && !reversingIntake){
+                    reversingIntake = true;
+                    reverseIntakeTimer.reset();
+                    previousState = collection.getPowerState();
+                    collection.setState(Collection.intakePowerState.reversed);
+                    collection.updateIntakeState();
                 }
 
-                sleep(50);
-            }
-
-            if (!(!sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed())){
-
-                collection.setState(Collection.intakePowerState.reversed);
-                collection.updateIntakeState();
-
-                drive.strafeRight();
-
-                sleep(300);
-
-                drive.setAllPower(0);
-
-                collection.setState(Collection.intakePowerState.on);
-                collection.updateIntakeState();
-
-                collectionDone = false;
-            }
-
-            counter = 0;
-
-            while (!collectionDone){
-
-                counter++;
-
-                if (counter > 10){
-                    collectionDone = true;
-                }else {
-                    collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
+                if (reversingIntake && reverseIntakeTimer.milliseconds() > 100){
+                    collection.setState(previousState);
+                    collection.updateIntakeState();
+                    reversingIntake = false;
                 }
 
-                sleep(50);
             }
 
             pathing = true;
@@ -1317,6 +1316,10 @@ public class Red_Close_Stage extends LinearOpMode implements CycleMethods {
 
             follower.resetClosestPoint(new Vector2D(odometry.X, odometry.Y));
 
+            delivery.setGripperState(Delivery.GripperState.closed);
+            delivery.updateGrippers();
+
+            sleep(200);
         }
     }
 
@@ -1363,7 +1366,7 @@ public class Red_Close_Stage extends LinearOpMode implements CycleMethods {
 
                 collectSecondStack.threePoints(CS1S, CC1S, CE1S);
                 collectSecondStack.twoPoints(CS2S, CE2S);
-                collectSecondStack.threePoints(CS3SS, CC3SS, CE3SS, true, 0.55);
+                collectSecondStack.threePoints(CS3SS, CC3SS, CE3SS, true, 0.6);
 
                 deliver.threePoints(DS1S, DC1S, DE1S);
                 deliver.twoPoints(DS2S, DE2S);
@@ -1387,7 +1390,7 @@ public class Red_Close_Stage extends LinearOpMode implements CycleMethods {
 
                 collectSecondStack.threePoints(CS1S, CC1S, CE1S);
                 collectSecondStack.twoPoints(CS2S, CE2S);
-                collectSecondStack.threePoints(CS3SS, CC3SS, CE3SS, true, 0.55);
+                collectSecondStack.threePoints(CS3SS, CC3SS, CE3SS, true, 0.6);
 
                 deliver.threePoints(DS1S, DC1S, DE1S);
                 deliver.twoPoints(DS2S, DE2S);
@@ -1411,7 +1414,7 @@ public class Red_Close_Stage extends LinearOpMode implements CycleMethods {
 
                 collectSecondStack.threePoints(CS1S, CC1S, CE1S);
                 collectSecondStack.twoPoints(CS2S, CE2S);
-                collectSecondStack.threePoints(CS3SS, CC3SS, CE3SS, true, 0.55);
+                collectSecondStack.threePoints(CS3SS, CC3SS, CE3SS, true, 0.6);
 
                 deliver.threePoints(DS1S, DC1S, DE1S);
                 deliver.twoPoints(DS2S, DE2S);
@@ -1719,7 +1722,7 @@ public class Red_Close_Stage extends LinearOpMode implements CycleMethods {
 
                             pathing = follower.followPathAutoHeading(targetHeading, odometry, drive, 0.009);
 
-                            if (Math.abs(leavePurpleHeadingT.getX() - odometry.X) < HeadingControlError && Math.abs(leavePurpleHeadingT.getY() - odometry.Y) < 40 && targetHeading == 90){
+                            if (Math.abs(leavePurpleHeadingT.getX() - odometry.X) < 30 && Math.abs(leavePurpleHeadingT.getY() - odometry.Y) < HeadingControlError && targetHeading == 90){
                                 targetHeading = 50;
                             }
 
