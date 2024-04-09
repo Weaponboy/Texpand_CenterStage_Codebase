@@ -34,7 +34,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
     Vector2D DPS1F = new Vector2D(getRealCoords(210), getRealCoords(337));
     Vector2D DPC1F = new Vector2D(getRealCoords(225), getRealCoords(285));
     Vector2D DPCT1F = new Vector2D(getRealCoords(165), getRealCoords(255));
-    Vector2D DPE1F = new Vector2D(getRealCoords(306), getRealCoords(252));
+    Vector2D DPE1F = new Vector2D(getRealCoords(308), getRealCoords(260));
 
     /**delivery and collection points*/
     Vector2D DS1F = new Vector2D(getRealCoords(44), getRealCoords(270));
@@ -47,23 +47,23 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
     //segment 3
     Vector2D DS3F = DE2F;
     Vector2D DC3F = new Vector2D(getRealCoords(220), getRealCoords(307));
-    Vector2D DE3F = new Vector2D(getRealCoords(320), getRealCoords(298));
+    Vector2D DE3F = new Vector2D(getRealCoords(320), getRealCoords(315));
 
     /**collecting paths*/
     Vector2D CS1F = new Vector2D(getRealCoords(300), getRealCoords(270));
     Vector2D CC1F = new Vector2D(getRealCoords(265), getRealCoords(327));
-    Vector2D CE1F = new Vector2D(getRealCoords(180), getRealCoords(322));
+    Vector2D CE1F = new Vector2D(getRealCoords(180), getRealCoords(331));
 
     Vector2D CS2F = CE1F;
-    Vector2D CE2F = new Vector2D(getRealCoords(119), getRealCoords(327));
+    Vector2D CE2F = new Vector2D(getRealCoords(119), getRealCoords(330));
 
     Vector2D CS3F = CE2F;
     Vector2D CC3F = new Vector2D(getRealCoords(78), getRealCoords(320));
-    Vector2D CE3F = new Vector2D(getRealCoords(33), getRealCoords(269));
+    Vector2D CE3F = new Vector2D(getRealCoords(37), getRealCoords(264));
 
     Vector2D CS3FS = CE2F;
     Vector2D CC3FS = new Vector2D(getRealCoords(78), getRealCoords(320));
-    Vector2D CE3FS = new Vector2D(getRealCoords(33), getRealCoords(239));
+    Vector2D CE3FS = new Vector2D(getRealCoords(38), getRealCoords(235));
 
     /**
      * second pos
@@ -84,19 +84,19 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
     //segment 3
     Vector2D DS3S = DE2S;
     Vector2D DC3S = new Vector2D(getRealCoords(220), getRealCoords(307));
-    Vector2D DE3S = new Vector2D(getRealCoords(320), getRealCoords(298));
+    Vector2D DE3S = new Vector2D(getRealCoords(320), getRealCoords(295));
 
     /**collecting paths*/
     Vector2D CS1S = new Vector2D(getRealCoords(300), getRealCoords(270));
     Vector2D CC1S = new Vector2D(getRealCoords(265), getRealCoords(327));
-    Vector2D CE1S = new Vector2D(getRealCoords(180), getRealCoords(322));
+    Vector2D CE1S = new Vector2D(getRealCoords(180), getRealCoords(328));
 
     Vector2D CS2S = CE1S;
     Vector2D CE2S = new Vector2D(getRealCoords(119), getRealCoords(327));
 
     Vector2D CS3S = CE2S;
-    Vector2D CC3S = new Vector2D(getRealCoords(78), getRealCoords(320));
-    Vector2D CE3S = new Vector2D(getRealCoords(37), getRealCoords(269));
+    Vector2D CC3S = new Vector2D(getRealCoords(78), getRealCoords(322));
+    Vector2D CE3S = new Vector2D(getRealCoords(36), getRealCoords(269));
 
     Vector2D CS3SS = CE2S;
     Vector2D CC3SS = new Vector2D(getRealCoords(78), getRealCoords(320));
@@ -109,6 +109,35 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
     Vector2D DPC1T = new Vector2D(getRealCoords(241), getRealCoords(318));
     Vector2D DPCT1T = new Vector2D(getRealCoords(188), getRealCoords(282));
     Vector2D DPE1T = new Vector2D(getRealCoords(308), getRealCoords(284));
+
+    /**delivery and collection points*/
+    Vector2D DS1T = new Vector2D(getRealCoords(44), getRealCoords(270));
+    Vector2D DC1T = new Vector2D(getRealCoords(53), getRealCoords(329));
+    Vector2D DE1T = new Vector2D(getRealCoords(119), getRealCoords(321));
+
+    Vector2D DS2T = DE1T;
+    Vector2D DE2T = new Vector2D(getRealCoords(181), getRealCoords(322));
+
+    //segment 3
+    Vector2D DS3T = DE2T;
+    Vector2D DC3T = new Vector2D(getRealCoords(220), getRealCoords(307));
+    Vector2D DE3T = new Vector2D(getRealCoords(320), getRealCoords(290));
+
+    /**collecting paths*/
+    Vector2D CS1T = new Vector2D(getRealCoords(300), getRealCoords(270));
+    Vector2D CC1T = new Vector2D(getRealCoords(265), getRealCoords(327));
+    Vector2D CE1T = new Vector2D(getRealCoords(180), getRealCoords(330));
+
+    Vector2D CS2T = CE1T;
+    Vector2D CE2T = new Vector2D(getRealCoords(119), getRealCoords(328));
+
+    Vector2D CS3T = CE2T;
+    Vector2D CC3T = new Vector2D(getRealCoords(78), getRealCoords(322));
+    Vector2D CE3T = new Vector2D(getRealCoords(36), getRealCoords(274));
+
+    Vector2D CS3TS = CE2T;
+    Vector2D CC3TS = new Vector2D(getRealCoords(78), getRealCoords(320));
+    Vector2D CE3TS = new Vector2D(getRealCoords(37), getRealCoords(242));
 
     /**Action points*/
     //delivery
@@ -1210,21 +1239,21 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
                 preloadPaths.fourPoints(DPS1T, DPC1T, DPCT1T, DPE1T, true, 0.45);
 
-                collect.threePoints(CS1S, CC1S, CE1S);
-                collect.twoPoints(CS2S, CE2S);
-                collect.threePoints(CS3S, CC3S, CE3S, true, 0.8);
+                collect.threePoints(CS1T, CC1T, CE1T);
+                collect.twoPoints(CS2T, CE2T);
+                collect.threePoints(CS3T, CC3T, CE3T, true, 0.8);
 
-                collectSecondStack.threePoints(CS1S, CC1S, CE1S);
-                collectSecondStack.twoPoints(CS2S, CE2S);
-                collectSecondStack.threePoints(CS3SS, CC3SS, CE3SS, true, 0.85);
+                collectSecondStack.threePoints(CS1T, CC1T, CE1T);
+                collectSecondStack.twoPoints(CS2T, CE2T);
+                collectSecondStack.threePoints(CS3TS, CC3TS, CE3TS, true, 0.85);
 
-                deliver.threePoints(DS1S, DC1S, DE1S);
-                deliver.twoPoints(DS2S, DE2S);
-                deliver.threePoints(DS3S, DC3S, DE3S, true);
+                deliver.threePoints(DS1T, DC1T, DE1T);
+                deliver.twoPoints(DS2T, DE2T);
+                deliver.threePoints(DS3T, DC3T, DE3T, true);
 
-                DeliveryEndpoint = DE3S;
-                CollectionEndpoint = CE3S;
-                secondStack = CE3SS;
+                DeliveryEndpoint = DE3T;
+                CollectionEndpoint = CE3T;
+                secondStack = CE3TS;
 
                 buildPaths.reset();
             }
