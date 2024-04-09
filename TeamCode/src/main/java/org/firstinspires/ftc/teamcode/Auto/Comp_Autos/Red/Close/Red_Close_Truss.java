@@ -613,7 +613,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
             if (odometry.X > extendSlidesDelivery.getX()) {
 
-                deliverySlides.DeliverySlides(slidesPosWhitePixels, 1);
+                deliverySlides.DeliverySlides(slidesPosWhitePixels + 200, 1);
                 deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
 
                 delivery.setGripperState(Delivery.GripperState.closed);
@@ -938,7 +938,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
             if (odometry.X > extendSlidesDelivery.getX() && autoTimer.milliseconds() < 28000 && deliverySlides.getCurrentposition() < 50) {
 
-                deliverySlides.DeliverySlides(slidesPosWhitePixels, 1);
+                deliverySlides.DeliverySlides(slidesPosWhitePixels + 400, 1);
                 deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
 
                 delivery.setGripperState(Delivery.GripperState.closed);
