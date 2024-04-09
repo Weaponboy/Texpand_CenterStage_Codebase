@@ -41,7 +41,7 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
     Vector2D DPE2F = new Vector2D(getRealCoords(89), getRealCoords(210));
 
     Vector2D DYS1F = DPE1F;
-    Vector2D DYE1F = new Vector2D(getRealCoords(37), getRealCoords(208));
+    Vector2D DYE1F = new Vector2D(getRealCoords(38), getRealCoords(208));
 
     Vector2D DYS2F = DYE1F;
     Vector2D DYE2F = new Vector2D(getRealCoords(240), getRealCoords(206));
@@ -54,7 +54,7 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
     //purple pixel
     Vector2D DPS1S = startPosition;
     Vector2D DPC1S = new Vector2D(getRealCoords(70), getRealCoords(194));
-    Vector2D DPE1S = new Vector2D(getRealCoords(37), getRealCoords(208));
+    Vector2D DPE1S = new Vector2D(getRealCoords(38), getRealCoords(208));
 
     Vector2D DYS2S = DPE1S;
     Vector2D DYE2S = new Vector2D(getRealCoords(240), getRealCoords(206));
@@ -67,7 +67,7 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
     //purple pixel
     Vector2D DPS1T = startPosition;
     Vector2D DPC1T = new Vector2D(getRealCoords(85), getRealCoords(193));
-    Vector2D DPE1T = new Vector2D(getRealCoords(36), getRealCoords(208));
+    Vector2D DPE1T = new Vector2D(getRealCoords(38), getRealCoords(208));
 
     Vector2D DYS2T = DPE1T;
     Vector2D DYE2T = new Vector2D(getRealCoords(240), getRealCoords(206));
