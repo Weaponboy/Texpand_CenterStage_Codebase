@@ -149,4 +149,94 @@ public interface CycleMethods extends Auto_Methods {
 
     }
 
+    default void collectStraight(ElapsedTime autoTimer, Drivetrain drive, Collection.intakeHeightState firstHeight, Collection.intakeHeightState secondHeight, double sleepLoops) throws InterruptedException {
+
+        boolean reversingIntake = false;
+
+        double intakeNormal = 5500;
+
+        ElapsedTime reverseIntakeTimer = new ElapsedTime();
+
+        Collection.intakePowerState previousState = Collection.intakePowerState.off;
+
+        delivery.setGripperState(Delivery.GripperState.open);
+        delivery.updateGrippers();
+
+        collection.setIntakeHeight(firstHeight);
+        collection.updateIntakeHeight();
+
+        drive.setAllPower(0);
+
+        collection.setState(Collection.intakePowerState.on);
+        collection.updateIntakeState();
+
+        boolean collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
+
+        int counter = 0;
+
+        while (autoTimer.milliseconds() < 26000 && !collectionDone){
+
+            counter++;
+            collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
+
+            if (counter <= (int) (6*sleepLoops)){
+
+                sleep(40);
+
+            } else if (counter > (int) (6*sleepLoops) && counter <= (int) (12*sleepLoops)) {
+
+                collection.setIntakeHeight(secondHeight);
+                collection.updateIntakeHeight();
+
+                sleep(40);
+
+            } else if (counter == (int) (13*sleepLoops)){
+
+                drive.strafeLeft();
+
+                sleep(200);
+
+                drive.setAllPower(0);
+
+            } else if (counter == (int) (14*sleepLoops)){
+
+                drive.strafeRight();
+                sleep(200);
+                drive.setAllPower(0);
+
+            } else if (counter > (int) (14*sleepLoops) && counter <= (int) (20*sleepLoops)) {
+
+                sleep(40);
+
+            } else if (counter > (int) (20*sleepLoops)) {
+
+                collectionDone = true;
+
+            }
+
+            if (collection.getIntakeCurrentUse() > intakeNormal && !reversingIntake){
+                reversingIntake = true;
+                reverseIntakeTimer.reset();
+                previousState = collection.getPowerState();
+                collection.setState(Collection.intakePowerState.reversed);
+                collection.updateIntakeState();
+            }
+
+            if (reversingIntake && reverseIntakeTimer.milliseconds() > 100){
+                collection.setState(previousState);
+                collection.updateIntakeState();
+                reversingIntake = false;
+            }
+
+        }
+
+        delivery.setGripperState(Delivery.GripperState.closed);
+        delivery.updateGrippers();
+
+        sleep(200);
+
+    }
+
+
+
 }

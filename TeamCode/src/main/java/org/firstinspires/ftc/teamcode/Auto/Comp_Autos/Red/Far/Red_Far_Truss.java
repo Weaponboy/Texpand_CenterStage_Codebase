@@ -37,7 +37,7 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
 
     Vector2D DPS2F = DPE1F;
     Vector2D DPC2F = new Vector2D(getRealCoords(70), getRealCoords(300));
-    Vector2D DPE2F = new Vector2D(getRealCoords(38), getRealCoords(267));
+    Vector2D DPE2F = new Vector2D(getRealCoords(40), getRealCoords(267));
 
     //yellow pixel
     Vector2D DYS1F = DPE1F;
@@ -49,7 +49,7 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
 
     Vector2D DYS3F = DYE2F;
     Vector2D DYC3F = new Vector2D(getRealCoords(261), getRealCoords(329));
-    Vector2D DYE3F = new Vector2D(getRealCoords(312), getRealCoords(254));
+    Vector2D DYE3F = new Vector2D(getRealCoords(312), getRealCoords(250));
 
     /**Middle Prop position*/
     //purple pixel
@@ -254,6 +254,7 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
         counter = 0;
 
         while (counter < 20){
+
             counter++;
             sleep(50);
             gotTwo = !sensors.RightClawSensor.isPressed() && !sensors.LeftClawSensor.isPressed();
@@ -275,25 +276,26 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
             if (gotTwo){
                 counter = 45;
             }
+
         }
 
-//        if (counter < 40){
-//            collection.setState(Collection.intakePowerState.reversed);
-//            collection.updateIntakeState();
-//
-//            sleep(100);
-//
-//            collection.setState(Collection.intakePowerState.on);
-//            collection.updateIntakeState();
-//        }
+        if(!gotTwo){
+            drive.strafeLeft();
+
+            sleep(200);
+
+            drive.setAllPower(0);
+        }
 
         while (counter < 40){
+
             counter++;
+
             sleep(50);
 
             collection.IntakeHeightRight.setPosition(collection.getIntakeHeightRight() - 0.005);
 
-            if (collection.getIntakeCurrentUse() > intakeCurrentOne && !reversingIntake){
+            if (collection.getIntakeCurrentUse() > 6000 && !reversingIntake){
                 reversingIntake = true;
                 reverseIntakeTimer.reset();
                 previousState = collection.getPowerState();
@@ -306,27 +308,14 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
                 collection.updateIntakeState();
                 reversingIntake = false;
             }
+
             gotTwo = !sensors.RightClawSensor.isPressed() && !sensors.LeftClawSensor.isPressed();
+
             if (gotTwo){
                 counter = 45;
             }
+
         }
-
-
-        delivery.setGripperState(Delivery.GripperState.closed);
-        delivery.updateGrippers();
-
-        sleep(200);
-
-        delivery.ArmExtension.setPosition(1);
-
-        collection.setState(Collection.intakePowerState.reversed);
-        collection.updateIntakeState();
-
-        sleep(200);
-
-        collection.setState(Collection.intakePowerState.off);
-        collection.updateIntakeState();
 
     }
 
