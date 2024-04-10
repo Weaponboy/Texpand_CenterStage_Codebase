@@ -34,7 +34,7 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
     Vector2D DPS1F = new Vector2D(getRealCoords(210), getRealCoords(337));
     Vector2D DPC1F = new Vector2D(getRealCoords(225), getRealCoords(285));
     Vector2D DPCT1F = new Vector2D(getRealCoords(165), getRealCoords(255));
-    Vector2D DPE1F = new Vector2D(getRealCoords(306), getRealCoords(256));
+    Vector2D DPE1F = new Vector2D(getRealCoords(304), getRealCoords(253));
 
     /**delivery and collection points*/
 
@@ -61,11 +61,11 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
     Vector2D CE2F = new Vector2D(getRealCoords(91), getRealCoords(207));
 
     Vector2D CS3F = CE2F;
-    Vector2D CE3F = new Vector2D(getRealCoords(36), getRealCoords(208));
+    Vector2D CE3F = new Vector2D(getRealCoords(34), getRealCoords(208));
 
     Vector2D CS3FS = CE2F;
     Vector2D CC3FS = new Vector2D(getRealCoords(72), getRealCoords(207));
-    Vector2D CE3FS = new Vector2D(getRealCoords(37), getRealCoords(238));
+    Vector2D CE3FS = new Vector2D(getRealCoords(34), getRealCoords(238));
 
     /**
      * second pos

@@ -34,7 +34,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
     Vector2D DPS1F = new Vector2D(getRealCoords(210), getRealCoords(337));
     Vector2D DPC1F = new Vector2D(getRealCoords(225), getRealCoords(285));
     Vector2D DPCT1F = new Vector2D(getRealCoords(165), getRealCoords(255));
-    Vector2D DPE1F = new Vector2D(getRealCoords(306), getRealCoords(256));
+    Vector2D DPE1F = new Vector2D(getRealCoords(304), getRealCoords(253));
 
     /**delivery and collection points*/
     Vector2D DS1F = new Vector2D(getRealCoords(44), getRealCoords(270));

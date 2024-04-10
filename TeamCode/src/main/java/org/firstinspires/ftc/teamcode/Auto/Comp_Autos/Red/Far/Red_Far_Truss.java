@@ -51,6 +51,31 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
     Vector2D DYC3F = new Vector2D(getRealCoords(261), getRealCoords(329));
     Vector2D DYE3F = new Vector2D(getRealCoords(312), getRealCoords(250));
 
+    /**delivery and collection points*/
+    Vector2D DS1F = new Vector2D(getRealCoords(44), getRealCoords(270));
+    Vector2D DC1F = new Vector2D(getRealCoords(53), getRealCoords(329));
+    Vector2D DE1F = new Vector2D(getRealCoords(119), getRealCoords(321));
+
+    Vector2D DS2F = DE1F;
+    Vector2D DE2F = new Vector2D(getRealCoords(181), getRealCoords(324));
+
+    //segment 3
+    Vector2D DS3F = DE2F;
+    Vector2D DC3F = new Vector2D(getRealCoords(220), getRealCoords(310));
+    Vector2D DE3F = new Vector2D(getRealCoords(320), getRealCoords(295));
+
+    /**collecting paths*/
+    Vector2D CS1F = new Vector2D(getRealCoords(300), getRealCoords(270));
+    Vector2D CC1F = new Vector2D(getRealCoords(265), getRealCoords(322));
+    Vector2D CE1F = new Vector2D(getRealCoords(180), getRealCoords(324));
+
+    Vector2D CS2F = CE1F;
+    Vector2D CE2F = new Vector2D(getRealCoords(119), getRealCoords(328));
+
+    Vector2D CS3F = CE2F;
+    Vector2D CC3F = new Vector2D(getRealCoords(25), getRealCoords(285));
+    Vector2D CE3F = new Vector2D(getRealCoords(36), getRealCoords(262));
+
     /**Middle Prop position*/
     //purple pixel
     Vector2D DPS1S = startPosition;
@@ -76,7 +101,7 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
     Vector2D DE1S = new Vector2D(getRealCoords(119), getRealCoords(324));
 
     Vector2D DS2S = DE1S;
-    Vector2D DE2S = new Vector2D(getRealCoords(181), getRealCoords(327));
+    Vector2D DE2S = new Vector2D(getRealCoords(181), getRealCoords(325));
 
     //segment 3
     Vector2D DS3S = DE2S;
@@ -279,14 +304,6 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
 
         }
 
-        if(!gotTwo){
-            drive.strafeLeft();
-
-            sleep(200);
-
-            drive.setAllPower(0);
-        }
-
         while (counter < 40){
 
             counter++;
@@ -401,30 +418,6 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
             onlyOnce = false;
 
             gotTwo = true;
-
-        }
-
-        if (gripperControl.milliseconds() > (timeChanger+200) && gripperControl.milliseconds() < (timeChanger+400) && gotTwo){
-
-            delivery.setGripperState(Delivery.GripperState.closed);
-            delivery.updateGrippers();
-
-        }
-
-        if (gripperControl.milliseconds() > (timeChanger+400) && gripperControl.milliseconds() < (timeChanger+600) && gotTwo){
-
-            collection.setState(Collection.intakePowerState.reversed);
-            collection.updateIntakeState();
-
-        }
-
-        if (gripperControl.milliseconds() > (timeChanger+600) && gripperControl.milliseconds() < (timeChanger+800) && gotTwo){
-
-            collection.setState(Collection.intakePowerState.off);
-            collection.updateIntakeState();
-
-            delivery.setGripperState(Delivery.GripperState.closed);
-            delivery.updateGrippers();
 
         }
 
@@ -565,6 +558,13 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
 
                 collection.setState(Collection.intakePowerState.reversed);
                 collection.updateIntakeState();
+
+            }
+
+            if (Math.abs(reverseIntake.getX() - odometry.X) < 20 && Math.abs(reverseIntake.getY() - odometry.Y) < 20){
+
+                delivery.setGripperState(Delivery.GripperState.closed);
+                delivery.updateGrippers();
 
             }
 
@@ -737,30 +737,6 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
 
         }
 
-        if (gripperControl.milliseconds() > (timeChanger+200) && gripperControl.milliseconds() < (timeChanger+400) && gotTwo){
-
-            delivery.setGripperState(Delivery.GripperState.closed);
-            delivery.updateGrippers();
-
-        }
-
-        if (gripperControl.milliseconds() > (timeChanger+400) && gripperControl.milliseconds() < (timeChanger+600) && gotTwo){
-
-            collection.setState(Collection.intakePowerState.reversed);
-            collection.updateIntakeState();
-
-        }
-
-        if (gripperControl.milliseconds() > (timeChanger+600) && gripperControl.milliseconds() < (timeChanger+800) && gotTwo){
-
-            collection.setState(Collection.intakePowerState.off);
-            collection.updateIntakeState();
-
-            delivery.setGripperState(Delivery.GripperState.closed);
-            delivery.updateGrippers();
-
-        }
-
         if (delivering){
 
             if (odometry.X > extendSlidesDelivery.getX() && odometry.getVerticalVelocity() < -10) {
@@ -861,6 +837,13 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
 
             }
 
+            if (Math.abs(reverseIntake.getX() - odometry.X) < 20 && Math.abs(reverseIntake.getY() - odometry.Y) < 20){
+
+                delivery.setGripperState(Delivery.GripperState.closed);
+                delivery.updateGrippers();
+
+            }
+
             if (Math.abs(DeliveryEndpoint.getX() - odometry.X) < deliveryError && Math.abs(DeliveryEndpoint.getY() - odometry.Y) < deliveryError && !pathing) {
 
                 drive.setAllPower(0.4);
@@ -911,6 +894,7 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
             collection.updateIntakeHeight();
 
             if (sensors.RightClawSensor.isPressed() || sensors.LeftClawSensor.isPressed()){
+
                 drive.strafeLeft();
 
                 sleep(300);
@@ -920,6 +904,7 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
                 sleep(300);
 
                 drive.setAllPower(0);
+
             }
 
             pathing = true;
@@ -1016,16 +1001,16 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
                 yellow.twoPoints(DYS2F, DYE2F);
                 yellow.threePoints(DYS3F, DYC3F, DYE3F, true, 1);
 
-                collect.threePoints(CS1S, CC1S, CE1S);
-                collect.twoPoints(CS2S, CE2S);
-                collect.threePoints(CS3S, CC3S, new Vector2D(CE3S.getX(), (CE3S.getY()+8)), true, 0.4);
+                collect.threePoints(CS1F, CC1F, CE1F);
+                collect.twoPoints(CS2F, CE2F);
+                collect.threePoints(CS3F, CC3F, CE3F, true, 0.4);
 
-                deliver.threePoints(DS1S, DC1S, DE1S);
-                deliver.twoPoints(DS2S, DE2S);
-                deliver.threePoints(DS3S, DC3S, DE3S, true);
+                deliver.threePoints(DS1F, DC1F, DE1F);
+                deliver.twoPoints(DS2F, DE2F);
+                deliver.threePoints(DS3F, DC3F, DE3F, true);
 
-                DeliveryEndpoint = DE3S;
-                CollectionEndpoint = new Vector2D(CE3S.getX(), (CE3S.getY()+8));
+                DeliveryEndpoint = DE3F;
+                CollectionEndpoint = CE3F;
 
                 buildPaths.reset();
             } else if (buildPaths.seconds() > 2 && propPos == 2){
