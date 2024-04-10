@@ -34,7 +34,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
     Vector2D DPS1F = new Vector2D(getRealCoords(210), getRealCoords(337));
     Vector2D DPC1F = new Vector2D(getRealCoords(225), getRealCoords(285));
     Vector2D DPCT1F = new Vector2D(getRealCoords(165), getRealCoords(255));
-    Vector2D DPE1F = new Vector2D(getRealCoords(308), getRealCoords(260));
+    Vector2D DPE1F = new Vector2D(getRealCoords(306), getRealCoords(256));
 
     /**delivery and collection points*/
     Vector2D DS1F = new Vector2D(getRealCoords(44), getRealCoords(270));
@@ -47,7 +47,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
     //segment 3
     Vector2D DS3F = DE2F;
     Vector2D DC3F = new Vector2D(getRealCoords(220), getRealCoords(307));
-    Vector2D DE3F = new Vector2D(getRealCoords(320), getRealCoords(315));
+    Vector2D DE3F = new Vector2D(getRealCoords(320), getRealCoords(300));
 
     /**collecting paths*/
     Vector2D CS1F = new Vector2D(getRealCoords(300), getRealCoords(270));
@@ -59,11 +59,11 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
     Vector2D CS3F = CE2F;
     Vector2D CC3F = new Vector2D(getRealCoords(78), getRealCoords(320));
-    Vector2D CE3F = new Vector2D(getRealCoords(37), getRealCoords(264));
+    Vector2D CE3F = new Vector2D(getRealCoords(36), getRealCoords(270));
 
     Vector2D CS3FS = CE2F;
     Vector2D CC3FS = new Vector2D(getRealCoords(78), getRealCoords(320));
-    Vector2D CE3FS = new Vector2D(getRealCoords(38), getRealCoords(235));
+    Vector2D CE3FS = new Vector2D(getRealCoords(37), getRealCoords(240));
 
     /**
      * second pos
@@ -271,7 +271,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
     ElapsedTime buildPaths = new ElapsedTime();
 
-    ElapsedTime reverseIntakeTimer = new ElapsedTime();
+    ElapsedTime headingPos1 = new ElapsedTime();
 
     ElapsedTime extendSlidesPreload = new ElapsedTime();
 
@@ -1307,12 +1307,22 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
                             if (Math.abs(oneEightyHeadingF.getX() - odometry.X) < HeadingControlError){
 
-                                p = 0.01;
+                                p = 0.025;
 
-                                targetHeading = 180;
+                                targetHeading = 95;
+
+                                headingPos1.reset();
 
                                 delivery.setGripperState(Delivery.GripperState.closed);
                                 delivery.updateGrippers();
+
+                            }
+
+                            if(headingPos1.milliseconds() > 200 && targetHeading == 95){
+
+                                p = 0.01;
+
+                                targetHeading = 180;
 
                             }
 
