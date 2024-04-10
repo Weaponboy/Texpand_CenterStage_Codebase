@@ -624,7 +624,7 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
                 delivery.setGripperState(Delivery.GripperState.open);
                 delivery.updateGrippers();
 
-                collection.setIntakeHeight(Collection.intakeHeightState.secondPixel);
+                collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
                 collection.updateIntakeHeight();
 
                 collection.setState(Collection.intakePowerState.on);
@@ -812,7 +812,7 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
 
                 armOver = false;
 
-                if (propPos == 1) {
+                if (auto == Auto.four) {
 
                     phase = Phase.finished;
 
@@ -825,8 +825,6 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
                     }
 
                 } else {
-
-                    deliverySlides.DeliverySlides(0, -0.5);
 
                     build = Build.notBuilt;
 
@@ -1302,11 +1300,11 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
 
         autoTimer.reset();
 
-        if (propPos == 1 && auto == Auto.six){
-            auto = Auto.four;
-        }
-
         if (propPos == 1){
+
+            if (auto == Auto.six){
+                auto = Auto.four;
+            }
 
             collection.setIntakeHeight(Collection.intakeHeightState.stowedMiddle);
             collection.updateIntakeHeight();
