@@ -1396,6 +1396,8 @@ public class Blue_Close_Truss extends LinearOpMode implements CycleMethods {
 
             extendSlidesPreload.reset();
 
+            double p = 0.008;
+
             while (!(phase == Phase.finished) && opModeIsActive()){
 
                 switch (phase){
@@ -1418,7 +1420,7 @@ public class Blue_Close_Truss extends LinearOpMode implements CycleMethods {
 
                         if (pathing){
 
-                            pathing = follower.followPathAutoHeading(targetHeading, odometry, drive, 0.008, 2);
+                            pathing = follower.followPathAutoHeading(targetHeading, odometry, drive, p, 2);
 
                             if (Math.abs(leavePurpleHeadingS.getX() - odometry.X) < HeadingControlError && Math.abs(leavePurpleHeadingS.getY() - odometry.Y) < 30 && targetHeading == 270){
 
@@ -1430,6 +1432,8 @@ public class Blue_Close_Truss extends LinearOpMode implements CycleMethods {
                             }
 
                             if (Math.abs(oneEightyHeadingS.getX() - odometry.X) < HeadingControlError && Math.abs(oneEightyHeadingS.getY() - odometry.Y) < HeadingControlError+20){
+
+                                p = 0.015;
 
                                 targetHeading = 180;
 
