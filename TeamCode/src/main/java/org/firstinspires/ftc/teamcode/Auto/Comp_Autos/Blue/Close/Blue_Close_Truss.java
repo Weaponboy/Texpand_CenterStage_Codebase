@@ -215,7 +215,7 @@ public class Blue_Close_Truss extends LinearOpMode implements CycleMethods {
 
     ElapsedTime buildPaths = new ElapsedTime();
 
-    ElapsedTime reverseIntakeTimer = new ElapsedTime();
+    ElapsedTime headingPos1 = new ElapsedTime();
 
     ElapsedTime extendSlidesPreload = new ElapsedTime();
 
@@ -1497,14 +1497,24 @@ public class Blue_Close_Truss extends LinearOpMode implements CycleMethods {
 
                             }
 
-                            if (Math.abs(oneEightyHeadingT.getX() - odometry.X) < HeadingControlError && Math.abs(oneEightyHeadingT.getY() - odometry.Y) < 40){
+                            if (Math.abs(oneEightyHeadingT.getX() - odometry.X) < HeadingControlError){
+
+                                p = 0.025;
+
+                                targetHeading = 265;
+
+                                headingPos1.reset();
+
+                                delivery.setGripperState(Delivery.GripperState.closed);
+                                delivery.updateGrippers();
+
+                            }
+
+                            if(headingPos1.milliseconds() > 200 && targetHeading == 265){
 
                                 p = 0.01;
 
                                 targetHeading = 180;
-
-                                delivery.setGripperState(Delivery.GripperState.closed);
-                                delivery.updateGrippers();
 
                             }
 

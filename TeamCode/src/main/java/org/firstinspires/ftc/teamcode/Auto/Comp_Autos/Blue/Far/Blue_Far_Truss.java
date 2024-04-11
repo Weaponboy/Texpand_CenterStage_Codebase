@@ -169,8 +169,6 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
     Vector2D CE3T = new Vector2D(getRealCoords(45), getRealCoords(95));
 
     /**Action points*/
-
-    //preload
     Vector2D extendSlides = new Vector2D(getRealCoords(224), getRealCoords(32));
 
     //first position
