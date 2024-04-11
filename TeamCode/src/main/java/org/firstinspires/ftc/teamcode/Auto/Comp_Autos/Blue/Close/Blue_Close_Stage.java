@@ -295,7 +295,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
     ElapsedTime buildPaths = new ElapsedTime();
 
-    ElapsedTime reverseIntakeTimer = new ElapsedTime();
+    ElapsedTime headingPos1 = new ElapsedTime();
 
     ElapsedTime extendSlidesPreload = new ElapsedTime();
 
@@ -1805,6 +1805,8 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
             extendSlidesPreload.reset();
 
+            double p = 0.01;
+
             while (!(phase == Phase.finished)){
 
                 switch (phase){
@@ -1826,7 +1828,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                         if (pathing){
 
-                            pathing = follower.followPathAutoHeading(targetHeading, odometry, drive, 0.01);
+                            pathing = follower.followPathAutoHeading(targetHeading, odometry, drive, p);
 
                             if (Math.abs(leavePurpleHeadingT.getX() - odometry.X) < HeadingControlError && Math.abs(leavePurpleHeadingT.getY() - odometry.Y) < HeadingControlError && targetHeading == 270){
                                 targetHeading = 350;
@@ -1834,12 +1836,24 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
                                 collection.updateIntakeHeight();
                             }
 
-                            if (Math.abs(oneEightyHeadingT.getX() - odometry.X) < HeadingControlError && Math.abs(oneEightyHeadingT.getY() - odometry.Y) < HeadingControlError){
+                            if (Math.abs(oneEightyHeadingT.getX() - odometry.X) < HeadingControlError){
 
-                                targetHeading = 180;
+                                p = 0.025;
+
+                                targetHeading = 265;
+
+                                headingPos1.reset();
 
                                 delivery.setGripperState(Delivery.GripperState.closed);
                                 delivery.updateGrippers();
+
+                            }
+
+                            if(headingPos1.milliseconds() > 200 && targetHeading == 265){
+
+                                p = 0.01;
+
+                                targetHeading = 180;
 
                             }
 

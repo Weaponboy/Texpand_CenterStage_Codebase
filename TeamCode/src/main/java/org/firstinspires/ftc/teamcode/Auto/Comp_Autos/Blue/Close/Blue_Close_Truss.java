@@ -96,7 +96,7 @@ public class Blue_Close_Truss extends LinearOpMode implements CycleMethods {
 
     //first position
     Vector2D oneEightyHeadingT = new Vector2D(getRealCoords(245), getRealCoords(60));
-    Vector2D leavePurpleHeadingT = new Vector2D(getRealCoords(220), getRealCoords(90));
+    Vector2D leavePurpleHeadingT = new Vector2D(getRealCoords(220), getRealCoords(80));
 
     //second position
     Vector2D oneEightyHeadingS = new Vector2D(getRealCoords(241), getRealCoords(86));
@@ -1225,7 +1225,7 @@ public class Blue_Close_Truss extends LinearOpMode implements CycleMethods {
                             follower.setPath(preloadPaths.followablePath, preloadPaths.pathingVelocity);
                             pathing = true;
                             build = Build.built;
-                            targetHeading = 90;
+                            targetHeading = 270;
                         }
 
                         if (extendSlidesPreload.milliseconds() > 400 && deliverySlides.getCurrentposition() < 50){
