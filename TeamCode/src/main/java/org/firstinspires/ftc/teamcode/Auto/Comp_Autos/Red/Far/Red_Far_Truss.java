@@ -189,8 +189,9 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
 
     //collection
     Vector2D turnIntakeOn = new Vector2D(getRealCoords(183), getRealCoords(328));
-    Vector2D turnIntakeOff = new Vector2D(getRealCoords(100), getRealCoords(328));
-    Vector2D reverseIntake = new Vector2D(getRealCoords(38), getRealCoords(300));
+    Vector2D turnIntakeOff = new Vector2D(getRealCoords(125), getRealCoords(328));
+    Vector2D restartIntake = new Vector2D(getRealCoords(75), getRealCoords(300));
+    Vector2D reverseIntake = new Vector2D(getRealCoords(45), getRealCoords(300));
 
     /**path objects*/
     GenMethods purple = new GenMethods();
@@ -561,10 +562,13 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (Math.abs(reverseIntake.getX() - odometry.X) < 20 && Math.abs(reverseIntake.getY() - odometry.Y) < 20){
+            if (Math.abs(restartIntake.getX() - odometry.X) < IntakeControlError && Math.abs(restartIntake.getY() - odometry.Y) < 20){
 
-                delivery.setGripperState(Delivery.GripperState.closed);
+                delivery.setGripperState(Delivery.GripperState.open);
                 delivery.updateGrippers();
+
+                collection.setState(Collection.intakePowerState.on);
+                collection.updateIntakeState();
 
             }
 
@@ -837,10 +841,13 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (Math.abs(reverseIntake.getX() - odometry.X) < 20 && Math.abs(reverseIntake.getY() - odometry.Y) < 20){
+            if (Math.abs(restartIntake.getX() - odometry.X) < IntakeControlError && Math.abs(restartIntake.getY() - odometry.Y) < 20){
 
-                delivery.setGripperState(Delivery.GripperState.closed);
+                delivery.setGripperState(Delivery.GripperState.open);
                 delivery.updateGrippers();
+
+                collection.setState(Collection.intakePowerState.on);
+                collection.updateIntakeState();
 
             }
 
@@ -1182,6 +1189,11 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
                                         }
 
                                         sleep(50);
+
+                                        delivery.setLeftGripperState(Delivery.leftGripperState.open);
+                                        delivery.updateGrippers();
+
+                                        sleep(200);
 
                                         delivery.setGripperState(Delivery.GripperState.open);
                                         delivery.updateGrippers();

@@ -151,8 +151,8 @@ public class Blue_Close_Truss extends LinearOpMode implements CycleMethods {
     //collection
     Vector2D turnIntakeOn = new Vector2D(getRealCoords(183), getRealCoords(32));
     Vector2D turnIntakeOff = new Vector2D(getRealCoords(125), getRealCoords(32));
-    Vector2D reverseIntake = new Vector2D(getRealCoords(45), getRealCoords(50));
-    Vector2D restartIntake = new Vector2D(getRealCoords(65), getRealCoords(32));
+    Vector2D reverseIntake = new Vector2D(getRealCoords(45), getRealCoords(60));
+    Vector2D restartIntake = new Vector2D(getRealCoords(75), getRealCoords(32));
 
     //first position
     Vector2D oneEightyHeadingT = new Vector2D(getRealCoords(245), getRealCoords(60));
@@ -1321,6 +1321,11 @@ public class Blue_Close_Truss extends LinearOpMode implements CycleMethods {
                             drive.setAllPower(0);
 
                             if (sensors.armSensor.isPressed()){
+
+                                sleep(200);
+
+                                delivery.setLeftGripperState(Delivery.leftGripperState.open);
+                                delivery.updateGrippers();
 
                                 sleep(200);
 

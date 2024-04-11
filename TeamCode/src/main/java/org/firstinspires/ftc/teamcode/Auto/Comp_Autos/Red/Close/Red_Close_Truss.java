@@ -148,7 +148,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
     Vector2D turnIntakeOn = new Vector2D(getRealCoords(183), getRealCoords(328));
     Vector2D turnIntakeOff = new Vector2D(getRealCoords(125), getRealCoords(328));
     Vector2D reverseIntake = new Vector2D(getRealCoords(45), getRealCoords(300));
-    Vector2D restartIntake = new Vector2D(getRealCoords(65), getRealCoords(330));
+    Vector2D restartIntake = new Vector2D(getRealCoords(75), getRealCoords(330));
 
     //first position
     Vector2D oneEightyHeadingF = new Vector2D(getRealCoords(245), getRealCoords(300));

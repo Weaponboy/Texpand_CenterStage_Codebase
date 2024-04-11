@@ -189,7 +189,8 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
     //collection
     Vector2D turnIntakeOn = new Vector2D(getRealCoords(183), getRealCoords(32));
-    Vector2D turnIntakeOff = new Vector2D(getRealCoords(100), getRealCoords(32));
+    Vector2D turnIntakeOff = new Vector2D(getRealCoords(125), getRealCoords(32));
+    Vector2D restartIntake = new Vector2D(getRealCoords(75), getRealCoords(32));
     Vector2D reverseIntake = new Vector2D(getRealCoords(49), getRealCoords(60));
 
     /**path objects*/
@@ -604,6 +605,16 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
             }
 
+            if (Math.abs(restartIntake.getX() - odometry.X) < IntakeControlError && Math.abs(restartIntake.getY() - odometry.Y) < 20){
+
+                delivery.setGripperState(Delivery.GripperState.open);
+                delivery.updateGrippers();
+
+                collection.setState(Collection.intakePowerState.on);
+                collection.updateIntakeState();
+
+            }
+
             if (Math.abs(DeliveryEndpoint.getX() - odometry.X) < deliveryError && Math.abs(DeliveryEndpoint.getY() - odometry.Y) < deliveryError && !pathing) {
 
                 drive.setAllPower(0.4);
@@ -891,6 +902,16 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
                 delivery.updateGrippers();
 
                 collection.setState(Collection.intakePowerState.reversed);
+                collection.updateIntakeState();
+
+            }
+
+            if (Math.abs(restartIntake.getX() - odometry.X) < IntakeControlError && Math.abs(restartIntake.getY() - odometry.Y) < 20){
+
+                delivery.setGripperState(Delivery.GripperState.open);
+                delivery.updateGrippers();
+
+                collection.setState(Collection.intakePowerState.on);
                 collection.updateIntakeState();
 
             }
