@@ -47,7 +47,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
     Vector2D DYS3F = DYE2F;
     Vector2D DYC3F = new Vector2D(getRealCoords(261), getRealCoords(31));
-    Vector2D DYE3F = new Vector2D(getRealCoords(310), getRealCoords(78));
+    Vector2D DYE3F = new Vector2D(getRealCoords(314), getRealCoords(78));
 
     /**delivery and collection points*/
 
@@ -92,7 +92,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
     Vector2D DYS3S = DYE2S;
     Vector2D DYC3S = new Vector2D(getRealCoords(261), getRealCoords(34));
-    Vector2D DYE3S = new Vector2D(getRealCoords(310), getRealCoords(89));
+    Vector2D DYE3S = new Vector2D(getRealCoords(314), getRealCoords(89));
 
     /**delivery and collection points*/
 
@@ -128,7 +128,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
     Vector2D DPS2T = DPE1T;
     Vector2D DPC2T = new Vector2D(getRealCoords(70), getRealCoords(60));
-    Vector2D DPE2T = new Vector2D(getRealCoords(47), getRealCoords(93));
+    Vector2D DPE2T = new Vector2D(getRealCoords(48), getRealCoords(93));
 
     //yellow pixel
     Vector2D DYS1T = DPE1T;
@@ -140,7 +140,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
     Vector2D DYS3T = DYE2T;
     Vector2D DYC3T = new Vector2D(getRealCoords(261), getRealCoords(31));
-    Vector2D DYE3T = new Vector2D(getRealCoords(312), getRealCoords(108));
+    Vector2D DYE3T = new Vector2D(getRealCoords(316), getRealCoords(108));
 
     /**delivery and collection points*/
 
@@ -166,7 +166,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
     Vector2D CS3T = CE2T;
     Vector2D CC3T = new Vector2D(getRealCoords(63), getRealCoords(35));
-    Vector2D CE3T = new Vector2D(getRealCoords(48), getRealCoords(105));
+    Vector2D CE3T = new Vector2D(getRealCoords(45), getRealCoords(95));
 
     /**Action points*/
 
