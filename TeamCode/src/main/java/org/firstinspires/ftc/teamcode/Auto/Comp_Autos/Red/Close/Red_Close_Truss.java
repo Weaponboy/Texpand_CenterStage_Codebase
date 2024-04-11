@@ -147,8 +147,8 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
     //collection
     Vector2D turnIntakeOn = new Vector2D(getRealCoords(183), getRealCoords(328));
     Vector2D turnIntakeOff = new Vector2D(getRealCoords(125), getRealCoords(328));
-    Vector2D reverseIntake = new Vector2D(getRealCoords(45), getRealCoords(320));
-    Vector2D restartIntake = new Vector2D(getRealCoords(60), getRealCoords(310));
+    Vector2D reverseIntake = new Vector2D(getRealCoords(45), getRealCoords(300));
+    Vector2D restartIntake = new Vector2D(getRealCoords(65), getRealCoords(330));
 
     //first position
     Vector2D oneEightyHeadingF = new Vector2D(getRealCoords(245), getRealCoords(300));
@@ -428,7 +428,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (Math.abs(reverseIntake.getX() - odometry.X) < IntakeControlError && Math.abs(reverseIntake.getY() - odometry.Y) < (IntakeControlError+20)){
+            if (Math.abs(reverseIntake.getX() - odometry.X) < 20+IntakeControlError && Math.abs(reverseIntake.getY() - odometry.Y) < IntakeControlError){
 
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
@@ -759,7 +759,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (Math.abs(reverseIntake.getX() - odometry.X) < IntakeControlError && Math.abs(reverseIntake.getY() - odometry.Y) < (IntakeControlError+20)){
+            if (Math.abs(reverseIntake.getX() - odometry.X) < 20+IntakeControlError && Math.abs(reverseIntake.getY() - odometry.Y) < IntakeControlError){
 
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
@@ -768,6 +768,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
                 collection.updateIntakeState();
 
             }
+
 
             if (Math.abs(restartIntake.getX() - odometry.X) < IntakeControlError && Math.abs(restartIntake.getY() - odometry.Y) < (IntakeControlError+20)){
 
@@ -1068,7 +1069,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (Math.abs(reverseIntake.getX() - odometry.X) < IntakeControlError && Math.abs(reverseIntake.getY() - odometry.Y) < (IntakeControlError+20)){
+            if (Math.abs(reverseIntake.getX() - odometry.X) < 20+IntakeControlError && Math.abs(reverseIntake.getY() - odometry.Y) < IntakeControlError){
 
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
@@ -1141,6 +1142,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
             }else{
                 collectStraight(autoTimer, drive, Collection.intakeHeightState.fifthPixel, Collection.intakeHeightState.forthPixel);
             }
+
             pathing = true;
 
             armOver = false;

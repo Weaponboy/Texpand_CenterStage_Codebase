@@ -45,6 +45,37 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
     Vector2D DYC3F = new Vector2D(getRealCoords(260), getRealCoords(154));
     Vector2D DYE3F = new Vector2D(getRealCoords(310), getRealCoords(84));
 
+    /**delivery and collection points*/
+    //segment 1 deliver straight
+    Vector2D DS1F = new Vector2D(getRealCoords(46), getRealCoords(135));
+    Vector2D DC1F = new Vector2D(getRealCoords(47), getRealCoords(151));
+    Vector2D DE1F = new Vector2D(getRealCoords(106), getRealCoords(152));
+
+    //segment 2
+    Vector2D DS2F = DE1F;
+    Vector2D DE2F = new Vector2D(getRealCoords(206), getRealCoords(154));
+
+    //segment 3
+    Vector2D DS3F = DE2F;
+    Vector2D DC3F = new Vector2D(getRealCoords(220), getRealCoords(137));
+    Vector2D DE3F = new Vector2D(getRealCoords(320), getRealCoords(120));
+
+    /**collecting paths*/
+
+    Vector2D CS1F = new Vector2D(getRealCoords(300), getRealCoords(90));
+    Vector2D CC1F = new Vector2D(getRealCoords(312), getRealCoords(162));
+    Vector2D CE1F = new Vector2D(getRealCoords(220), getRealCoords(156));
+
+    Vector2D CS2F = CE1F;
+    Vector2D CE2F = new Vector2D(getRealCoords(91), getRealCoords(153));
+
+    Vector2D CS3F = CE2F;
+    Vector2D CE3F = new Vector2D(getRealCoords(35.5), getRealCoords(150));
+
+    Vector2D CS3FS = CE3F;
+    Vector2D CC3FS = new Vector2D(getRealCoords(72), getRealCoords(153));
+    Vector2D CE3FS = new Vector2D(getRealCoords(36), getRealCoords(120));
+
     /**Middle Prop position*/
     //purple pixel
     Vector2D DPS1S = startPosition;
@@ -57,6 +88,37 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
     Vector2D DYS3S = DYE2S;
     Vector2D DYC3S = new Vector2D(getRealCoords(275), getRealCoords(158));
     Vector2D DYE3S = new Vector2D(getRealCoords(310), getRealCoords(97));
+
+    /**delivery and collection points*/
+    //segment 1 deliver straight
+    Vector2D DS1S = new Vector2D(getRealCoords(46), getRealCoords(135));
+    Vector2D DC1S = new Vector2D(getRealCoords(47), getRealCoords(151));
+    Vector2D DE1S = new Vector2D(getRealCoords(106), getRealCoords(152));
+
+    //segment 2
+    Vector2D DS2S = DE1S;
+    Vector2D DE2S = new Vector2D(getRealCoords(206), getRealCoords(154));
+
+    //segment 3
+    Vector2D DS3S = DE2S;
+    Vector2D DC3S = new Vector2D(getRealCoords(220), getRealCoords(137));
+    Vector2D DE3S = new Vector2D(getRealCoords(320), getRealCoords(120));
+
+    /**collecting paths*/
+
+    Vector2D CS1S = new Vector2D(getRealCoords(300), getRealCoords(90));
+    Vector2D CC1S = new Vector2D(getRealCoords(312), getRealCoords(162));
+    Vector2D CE1S = new Vector2D(getRealCoords(220), getRealCoords(156));
+
+    Vector2D CS2S = CE1S;
+    Vector2D CE2S = new Vector2D(getRealCoords(91), getRealCoords(153));
+
+    Vector2D CS3S = CE2S;
+    Vector2D CE3S = new Vector2D(getRealCoords(35.5), getRealCoords(150));
+
+    Vector2D CS3SS = CE3S;
+    Vector2D CC3SS = new Vector2D(getRealCoords(72), getRealCoords(153));
+    Vector2D CE3SS = new Vector2D(getRealCoords(36), getRealCoords(120));
 
     /**Right Prop position*/
     //purple pixel
@@ -78,7 +140,6 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
     Vector2D DYE3T = new Vector2D(getRealCoords(310), getRealCoords(106));
 
     /**delivery and collection points*/
-
     //segment 1 deliver straight
     Vector2D DS1T = new Vector2D(getRealCoords(46), getRealCoords(135));
     Vector2D DC1T = new Vector2D(getRealCoords(47), getRealCoords(151));
@@ -127,7 +188,7 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
 
     //collection
     Vector2D turnIntakeOn = new Vector2D(getRealCoords(180), getRealCoords(150));
-    Vector2D turnIntakeOff = new Vector2D(getRealCoords(100), getRealCoords(150));
+    Vector2D turnIntakeOff = new Vector2D(getRealCoords(125), getRealCoords(150));
     Vector2D reverseIntake = new Vector2D(getRealCoords(45), getRealCoords(150));
     Vector2D restartIntake = new Vector2D(getRealCoords(65), getRealCoords(150));
 
@@ -556,8 +617,13 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
 
         }else if (Math.abs(CollectionEndpoint.getX() - odometry.X) < collectionError && Math.abs(CollectionEndpoint.getY() - odometry.Y) < collectionError - 2){
 
-            collectStraight(autoTimer, drive, Collection.intakeHeightState.fifthPixel, Collection.intakeHeightState.forthPixel);
-
+            if(auto == Auto.two){
+                collectStraight(autoTimer, drive, Collection.intakeHeightState.fifthPixel, Collection.intakeHeightState.forthPixel, 2);
+            } else if (auto == Auto.four) {
+                collectStraight(autoTimer, drive, Collection.intakeHeightState.fifthPixel, Collection.intakeHeightState.forthPixel, 1.5);
+            }else if (auto == Auto.six) {
+                collectStraight(autoTimer, drive, Collection.intakeHeightState.fifthPixel, Collection.intakeHeightState.forthPixel, 0.8);
+            }
             pathing = true;
 
             armOver = false;
@@ -835,8 +901,13 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
 
         }else if (Math.abs(CollectionEndpoint.getX() - odometry.X) < collectionError && Math.abs(CollectionEndpoint.getY() - odometry.Y) < collectionError - 2){
 
-            collectStraight(autoTimer, drive, Collection.intakeHeightState.secondAndHalf, Collection.intakeHeightState.firstPixel);
-
+            if(auto == Auto.two){
+                collectStraight(autoTimer, drive, Collection.intakeHeightState.secondAndHalf, Collection.intakeHeightState.firstPixel, 2);
+            } else if (auto == Auto.four) {
+                collectStraight(autoTimer, drive, Collection.intakeHeightState.secondAndHalf, Collection.intakeHeightState.firstPixel, 1.5);
+            }else if (auto == Auto.six) {
+                collectStraight(autoTimer, drive, Collection.intakeHeightState.secondAndHalf, Collection.intakeHeightState.firstPixel, 0.8);
+            }
             pathing = true;
 
             armOver = false;
@@ -1182,11 +1253,11 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
             telemetry.update();
 
             if (gamepad1.a){
-                auto = Blue_Far_Stage.Auto.two;
+                auto = Auto.two;
             } else if (gamepad1.b) {
-                auto = Blue_Far_Stage.Auto.four;
+                auto = Auto.four;
             } else if (gamepad1.y) {
-                auto = Blue_Far_Stage.Auto.preload;
+                auto = Auto.preload;
             }else if (gamepad1.left_bumper) {
                 auto = Auto.six;
             }else if (gamepad1.x) {
@@ -1206,21 +1277,21 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
                 yellow.twoPoints(DYS2F, DYE2F);
                 yellow.threePoints(DYS3F, DYC3F, DYE3F, true, 1);
 
-                collect.threePoints(CS1T, CC1T, CE1T);
-                collect.twoPoints(CS2T, CE2T);
-                collect.twoPoints(CS3T, CE3T, true, 0.55);
+                collect.threePoints(CS1F, CC1F, CE1F);
+                collect.twoPoints(CS2F, CE2F);
+                collect.twoPoints(CS3F, CE3F, true, 0.55);
 
-                collectSecond.threePoints(CS1T, CC1T, CE1T);
-                collectSecond.twoPoints(CS2T, CE2T);
-                collectSecond.threePoints(CS3TS, CC3TS, CE3TS, true, 0.6);
+                collectSecond.threePoints(CS1F, CC1F, CE1F);
+                collectSecond.twoPoints(CS2F, CE2F);
+                collectSecond.threePoints(CS3FS, CC3FS, CE3FS, true, 0.6);
 
-                deliver.threePoints(DS1T, DC1T, DE1T);
-                deliver.twoPoints(DS2T, DE2T);
-                deliver.threePoints(DS3T, DC3T, DE3T, true);
+                deliver.threePoints(DS1F, DC1F, DE1F);
+                deliver.twoPoints(DS2F, DE2F);
+                deliver.threePoints(DS3F, DC3F, DE3F, true);
 
-                DeliveryEndpoint = DE3T;
-                CollectionEndpoint = CE3T;
-                lastStack = CE3TS;
+                DeliveryEndpoint = DE3F;
+                CollectionEndpoint = CE3F;
+                lastStack = CE3FS;
 
                 buildPaths.reset();
 
@@ -1233,21 +1304,21 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
                 yellow.twoPoints(DYS2S, DYE2S);
                 yellow.threePoints(DYS3S, DYC3S, DYE3S, true, 1);
 
-                collect.threePoints(CS1T, CC1T, CE1T);
-                collect.twoPoints(CS2T, CE2T);
-                collect.twoPoints(CS3T, CE3T, true, 0.55);
+                collect.threePoints(CS1S, CC1S, CE1S);
+                collect.twoPoints(CS2S, CE2S);
+                collect.twoPoints(CS3S, CE3S, true, 0.55);
 
-                collectSecond.threePoints(CS1T, CC1T, CE1T);
-                collectSecond.twoPoints(CS2T, CE2T);
-                collectSecond.threePoints(CS3TS, CC3TS, CE3TS, true, 0.6);
+                collectSecond.threePoints(CS1S, CC1S, CE1S);
+                collectSecond.twoPoints(CS2S, CE2S);
+                collectSecond.threePoints(CS3SS, CC3SS, CE3SS, true, 0.6);
 
-                deliver.threePoints(DS1T, DC1T, DE1T);
-                deliver.twoPoints(DS2T, DE2T);
-                deliver.threePoints(DS3T, DC3T, DE3T, true);
+                deliver.threePoints(DS1S, DC1S, DE1S);
+                deliver.twoPoints(DS2S, DE2S);
+                deliver.threePoints(DS3S, DC3S, DE3S, true);
 
-                DeliveryEndpoint = DE3T;
-                CollectionEndpoint = CE3T;
-                lastStack = CE3TS;
+                DeliveryEndpoint = DE3S;
+                CollectionEndpoint = CE3S;
+                lastStack = CE3SS;
 
                 buildPaths.reset();
 
@@ -1261,8 +1332,8 @@ public class Blue_Far_Stage extends LinearOpMode implements CycleMethods {
 
                 whitePixelSeg2.twoPoints(DYS1T, DYE1T, true, 1);
 
-                yellow.twoPoints(DYS2F, DYE2F);
-                yellow.threePoints(DYS3F, DYC3F, DYE3F, true, 0.9);
+                yellow.twoPoints(DYS2T, DYE2T);
+                yellow.threePoints(DYS3T, DYC3T, DYE3T, true, 0.9);
 
                 collect.threePoints(CS1T, CC1T, CE1T);
                 collect.twoPoints(CS2T, CE2T);
