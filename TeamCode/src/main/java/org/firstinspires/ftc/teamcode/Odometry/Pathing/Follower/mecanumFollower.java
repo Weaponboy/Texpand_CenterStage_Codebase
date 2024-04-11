@@ -1182,7 +1182,7 @@ public class mecanumFollower {
 
         if (rotdist < -180) {
             rotdist = (360 + rotdist);
-        } else if (rotdist > 360) {
+        } else if (rotdist > 180) {
             rotdist = (rotdist - 360);
         }
 
@@ -1201,7 +1201,7 @@ public class mecanumFollower {
 
         if (rotdist < -180) {
             rotdist = (360 + rotdist);
-        } else if (rotdist > 360) {
+        } else if (rotdist > 180) {
             rotdist = (rotdist - 360);
         }
 
@@ -1220,7 +1220,7 @@ public class mecanumFollower {
 
         if (rotdist < -180) {
             rotdist = (360 + rotdist);
-        } else if (rotdist > 360) {
+        } else if (rotdist > 180) {
             rotdist = (rotdist - 360);
         }
 
