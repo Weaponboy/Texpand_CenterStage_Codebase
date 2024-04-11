@@ -47,7 +47,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
     Vector2D DYS3F = DYE2F;
     Vector2D DYC3F = new Vector2D(getRealCoords(261), getRealCoords(31));
-    Vector2D DYE3F = new Vector2D(getRealCoords(314), getRealCoords(78));
+    Vector2D DYE3F = new Vector2D(getRealCoords(314), getRealCoords(77));
 
     /**delivery and collection points*/
 
