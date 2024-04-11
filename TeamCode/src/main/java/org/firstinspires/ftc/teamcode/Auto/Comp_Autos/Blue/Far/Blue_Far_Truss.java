@@ -47,7 +47,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
     Vector2D DYS3F = DYE2F;
     Vector2D DYC3F = new Vector2D(getRealCoords(261), getRealCoords(31));
-    Vector2D DYE3F = new Vector2D(getRealCoords(314), getRealCoords(77));
+    Vector2D DYE3F = new Vector2D(getRealCoords(314), getRealCoords(76));
 
     /**delivery and collection points*/
 
@@ -92,7 +92,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
     Vector2D DYS3S = DYE2S;
     Vector2D DYC3S = new Vector2D(getRealCoords(261), getRealCoords(34));
-    Vector2D DYE3S = new Vector2D(getRealCoords(314), getRealCoords(89));
+    Vector2D DYE3S = new Vector2D(getRealCoords(316), getRealCoords(89));
 
     /**delivery and collection points*/
 
@@ -140,7 +140,7 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
 
     Vector2D DYS3T = DYE2T;
     Vector2D DYC3T = new Vector2D(getRealCoords(261), getRealCoords(31));
-    Vector2D DYE3T = new Vector2D(getRealCoords(316), getRealCoords(108));
+    Vector2D DYE3T = new Vector2D(getRealCoords(318), getRealCoords(102));
 
     /**delivery and collection points*/
 
@@ -1215,6 +1215,11 @@ public class Blue_Far_Truss extends LinearOpMode implements CycleMethods {
                                         }
 
                                         sleep(50);
+
+                                        delivery.setLeftGripperState(Delivery.leftGripperState.open);
+                                        delivery.updateGrippers();
+
+                                        sleep(200);
 
                                         delivery.setGripperState(Delivery.GripperState.open);
                                         delivery.updateGrippers();
