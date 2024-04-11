@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.Auto.Comp_Autos.Red.Far.Red_Far_Stage;
 import org.firstinspires.ftc.teamcode.Auto.Methods.CycleMethods;
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.Follower.mecanumFollower;
@@ -77,8 +78,8 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
      * second pos
      * */
     Vector2D DPS1S = new Vector2D(getRealCoords(210), getRealCoords(23));
-    Vector2D DPC1S = new Vector2D(getRealCoords(221), getRealCoords(63));
-    Vector2D DPCT1S = new Vector2D(getRealCoords(183), getRealCoords(101));
+    Vector2D DPC1S = new Vector2D(getRealCoords(220), getRealCoords(71));
+    Vector2D DPCT1S = new Vector2D(getRealCoords(170), getRealCoords(62));
     Vector2D DPE1S = new Vector2D(getRealCoords(314), getRealCoords(91));
 
     /**delivery and collection points*/
@@ -114,11 +115,11 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
     Vector2D CS3S = CE2S;
 //    Vector2D CC3S = new Vector2D(getRealCoords(43), getRealCoords(175));
-    Vector2D CE3S = new Vector2D(getRealCoords(42), getRealCoords(150));
+    Vector2D CE3S = new Vector2D(getRealCoords(41), getRealCoords(150));
 
     Vector2D CS3SS = CE2S;
     Vector2D CC3SS = new Vector2D(getRealCoords(72), getRealCoords(153));
-    Vector2D CE3SS = new Vector2D(getRealCoords(44), getRealCoords(120));
+    Vector2D CE3SS = new Vector2D(getRealCoords(43), getRealCoords(120));
 
     /**
      * Third position
@@ -562,7 +563,13 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
         }else if (Math.abs(CollectionEndpoint.getX() - odometry.X) < collectionError && Math.abs(CollectionEndpoint.getY() - odometry.Y) < collectionError - 2){
 
-            collectStraight(autoTimer, drive, Collection.intakeHeightState.fifthPixel, Collection.intakeHeightState.forthPixel);
+            if(auto == Auto.two){
+                collectStraight(autoTimer, drive, Collection.intakeHeightState.fifthPixel, Collection.intakeHeightState.forthPixel, 2);
+            } else if (auto == Auto.four) {
+                collectStraight(autoTimer, drive, Collection.intakeHeightState.fifthPixel, Collection.intakeHeightState.forthPixel, 1.5);
+            }else if (auto == Auto.six) {
+                collectStraight(autoTimer, drive, Collection.intakeHeightState.fifthPixel, Collection.intakeHeightState.forthPixel, 0.8);
+            }
 
             pathing = true;
 
@@ -576,7 +583,6 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
         }
 
-        System.out.println("current draw intake" + collection.getIntakeCurrentUse());
     }
 
     public void delivery_and_collect_4() throws InterruptedException{
@@ -878,7 +884,14 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
         }else if (Math.abs(CollectionEndpoint.getX() - odometry.X) < collectionError && Math.abs(CollectionEndpoint.getY() - odometry.Y) < collectionError - 2){
 
-            collectStraight(autoTimer, drive, Collection.intakeHeightState.secondAndHalf, Collection.intakeHeightState.firstPixel);
+            if(auto == Auto.two){
+                collectStraight(autoTimer, drive, Collection.intakeHeightState.secondAndHalf, Collection.intakeHeightState.firstPixel, 2);
+            } else if (auto == Auto.four) {
+                collectStraight(autoTimer, drive, Collection.intakeHeightState.secondAndHalf, Collection.intakeHeightState.firstPixel, 1.5);
+            }else if (auto == Auto.six) {
+                collectStraight(autoTimer, drive, Collection.intakeHeightState.secondAndHalf, Collection.intakeHeightState.firstPixel, 0.8);
+            }
+
 
             pathing = true;
 
@@ -1160,7 +1173,13 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
         }else if (Math.abs(secondStack.getX() - odometry.X) < collectionError && Math.abs(secondStack.getY() - odometry.Y) < collectionError - 2){
 
-            collectStraight(autoTimer, drive, Collection.intakeHeightState.fifthPixel, Collection.intakeHeightState.forthPixel);
+            if(auto == Auto.two){
+                collectStraight(autoTimer, drive, Collection.intakeHeightState.fifthPixel, Collection.intakeHeightState.forthPixel, 2);
+            } else if (auto == Auto.four) {
+                collectStraight(autoTimer, drive, Collection.intakeHeightState.fifthPixel, Collection.intakeHeightState.forthPixel, 1.5);
+            }else if (auto == Auto.six) {
+                collectStraight(autoTimer, drive, Collection.intakeHeightState.fifthPixel, Collection.intakeHeightState.forthPixel, 0.8);
+            }
 
             pathing = true;
 

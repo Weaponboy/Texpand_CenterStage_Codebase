@@ -175,6 +175,7 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
         whitePixelSeg2.ClearAll();
         deliver.ClearAll();
         collect.ClearAll();
+        collectSecond.ClearAll();
     }
 
     /**booleans*/
@@ -718,12 +719,26 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
 
                 sensorTouched = true;
 
-                phase = Phase.finished;
+                if (auto == Auto.four) {
 
-                drive.setAllPower(0);
+                    phase = Phase.finished;
 
-                while (!(delivery.getArmState() == Delivery.armState.collect) || deliverySlides.getCurrentposition() > 20){
-                    delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
+                    deliverySlides.DeliverySlides(0, -0.5);
+
+                    drive.setAllPower(0);
+
+                    while (!(delivery.getArmState() == Delivery.armState.collect) || deliverySlides.getCurrentposition() > 20){
+                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
+                    }
+
+                } else {
+
+                    build = Build.notBuilt;
+
+                    delivering = false;
+
+                    phase = Phase.third2;
+
                 }
 
 
@@ -749,14 +764,27 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
 
                 armOver = false;
 
-                phase = Phase.finished;
+                if (auto == Auto.four) {
 
-                drive.setAllPower(0);
+                    phase = Phase.finished;
 
-                while (!(delivery.getArmState() == Delivery.armState.collect) || deliverySlides.getCurrentposition() > 20){
-                    delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
+                    deliverySlides.DeliverySlides(0, -0.5);
+
+                    drive.setAllPower(0);
+
+                    while (!(delivery.getArmState() == Delivery.armState.collect) || deliverySlides.getCurrentposition() > 20){
+                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
+                    }
+
+                } else {
+
+                    build = Build.notBuilt;
+
+                    delivering = false;
+
+                    phase = Phase.third2;
+
                 }
-
             }
 
             if (Math.abs(turnIntakeOff.getX() - odometry.X) < IntakeControlError && Math.abs(turnIntakeOff.getY() - odometry.Y) < (IntakeControlError+20)) {

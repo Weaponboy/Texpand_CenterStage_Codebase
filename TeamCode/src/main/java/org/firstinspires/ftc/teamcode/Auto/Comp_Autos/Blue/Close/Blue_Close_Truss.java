@@ -60,7 +60,7 @@ public class Blue_Close_Truss extends LinearOpMode implements CycleMethods {
 
     Vector2D CS3F = CE2F;
     Vector2D CC3F = new Vector2D(getRealCoords(81), getRealCoords(40));
-    Vector2D CE3F = new Vector2D(getRealCoords(41), getRealCoords(90));
+    Vector2D CE3F = new Vector2D(getRealCoords(42), getRealCoords(90));
 
     Vector2D CS3FS = CE2F;
     Vector2D CC3FS = new Vector2D(getRealCoords(84), getRealCoords(40));
@@ -72,7 +72,7 @@ public class Blue_Close_Truss extends LinearOpMode implements CycleMethods {
     Vector2D DPS1S = new Vector2D(getRealCoords(210), getRealCoords(23));
     Vector2D DPC1S = new Vector2D(getRealCoords(220), getRealCoords(71));
     Vector2D DPCT1S = new Vector2D(getRealCoords(170), getRealCoords(62));
-    Vector2D DPE1S = new Vector2D(getRealCoords(308), getRealCoords(96));
+    Vector2D DPE1S = new Vector2D(getRealCoords(312), getRealCoords(96));
 
     /**
      * Third position
@@ -340,7 +340,7 @@ public class Blue_Close_Truss extends LinearOpMode implements CycleMethods {
 
                     drive.setAllPower(0);
 
-                    deliverySlides.DeliverySlides(0, -0.2);
+                    deliverySlides.DeliverySlides(0, -0.5);
 
                     while (!(delivery.getArmState() == Delivery.armState.collect) || deliverySlides.getCurrentposition() > 20){
                         delivery.setArmTargetState(Delivery.armState.collect);
@@ -413,7 +413,7 @@ public class Blue_Close_Truss extends LinearOpMode implements CycleMethods {
 
                     phase = Phase.finished;
 
-                    deliverySlides.DeliverySlides(0, -0.2);
+                    deliverySlides.DeliverySlides(0, -0.5);
 
                     drive.setAllPower(0);
 
@@ -1336,7 +1336,7 @@ public class Blue_Close_Truss extends LinearOpMode implements CycleMethods {
 
                             if (Math.abs(leavePurpleHeadingS.getX() - odometry.X) < HeadingControlError && Math.abs(leavePurpleHeadingS.getY() - odometry.Y) < 30 && targetHeading == 270){
 
-                                targetHeading = 320;
+                                targetHeading = 310;
 
                                 delivery.setGripperState(Delivery.GripperState.closed);
                                 delivery.updateGrippers();

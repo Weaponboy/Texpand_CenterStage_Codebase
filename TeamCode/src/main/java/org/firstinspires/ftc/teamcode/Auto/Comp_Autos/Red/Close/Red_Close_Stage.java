@@ -1040,7 +1040,7 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
 
         if (delivering){
 
-            if (odometry.X > extendSlidesDelivery.getX()) {
+            if (odometry.X > extendSlidesDelivery.getX() && autoTimer.milliseconds() < 28000 && deliverySlides.getVelocity() < 20) {
 
                 deliverySlides.DeliverySlides(slidesPosWhitePixels, 1);
                 deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
@@ -1048,6 +1048,13 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
 
+            } else if (odometry.X > extendSlidesDelivery.getX() && autoTimer.milliseconds() > 28000 && deliverySlides.getVelocity() > 20) {
+
+                sleep(400);
+
+                drive.setAllPower(0);
+
+                phase = Phase.finished;
             }
 
             if (deliverySlides.getCurrentposition() > 150 && !armOver && odometry.X > armOverPosition.getX()){
@@ -1325,7 +1332,7 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
 
         if (delivering){
 
-            if (odometry.X > extendSlidesDelivery.getX() && autoTimer.milliseconds() < 28000 && deliverySlides.getCurrentposition() < 50) {
+            if (odometry.X > extendSlidesDelivery.getX() && autoTimer.milliseconds() < 28000 && deliverySlides.getVelocity() < 20) {
 
                 deliverySlides.DeliverySlides(slidesPosWhitePixels, 1);
                 deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
@@ -1333,7 +1340,7 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
 
-            } else if (odometry.X > extendSlidesDelivery.getX() && autoTimer.milliseconds() > 28000 && deliverySlides.getCurrentposition() < 50) {
+            } else if (odometry.X > extendSlidesDelivery.getX() && autoTimer.milliseconds() > 28000 && deliverySlides.getVelocity() > 20) {
 
                 sleep(400);
 
