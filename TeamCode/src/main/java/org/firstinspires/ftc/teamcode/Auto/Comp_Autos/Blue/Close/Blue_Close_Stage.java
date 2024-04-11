@@ -1831,12 +1831,12 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
                             pathing = follower.followPathAutoHeading(targetHeading, odometry, drive, p);
 
                             if (Math.abs(leavePurpleHeadingT.getX() - odometry.X) < HeadingControlError && Math.abs(leavePurpleHeadingT.getY() - odometry.Y) < HeadingControlError && targetHeading == 270){
-                                targetHeading = 350;
+                                targetHeading = 355;
                                 collection.setIntakeHeight(Collection.intakeHeightState.stowed);
                                 collection.updateIntakeHeight();
                             }
 
-                            if (Math.abs(oneEightyHeadingT.getX() - odometry.X) < HeadingControlError){
+                            if (Math.abs(oneEightyHeadingT.getX() - odometry.X) < HeadingControlError && targetHeading == 355){
 
                                 p = 0.025;
 

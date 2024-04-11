@@ -1307,7 +1307,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
                             }
 
-                            if (Math.abs(oneEightyHeadingF.getX() - odometry.X) < HeadingControlError){
+                            if (Math.abs(oneEightyHeadingF.getX() - odometry.X) < HeadingControlError && targetHeading == 5){
 
                                 p = 0.025;
 

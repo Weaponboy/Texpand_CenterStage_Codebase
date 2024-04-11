@@ -49,7 +49,7 @@ public class Blue_Close_Truss extends LinearOpMode implements CycleMethods {
     //segment 3
     Vector2D DS3F = DE2F;
     Vector2D DC3F = new Vector2D(getRealCoords(220), getRealCoords(53));
-    Vector2D DE3F = new Vector2D(getRealCoords(320), getRealCoords(67));
+    Vector2D DE3F = new Vector2D(getRealCoords(320), getRealCoords(62));
 
     /**collecting paths*/
     Vector2D CS1F = new Vector2D(getRealCoords(300), getRealCoords(90));
@@ -75,6 +75,36 @@ public class Blue_Close_Truss extends LinearOpMode implements CycleMethods {
     Vector2D DPCT1S = new Vector2D(getRealCoords(170), getRealCoords(62));
     Vector2D DPE1S = new Vector2D(getRealCoords(312), getRealCoords(96));
 
+    /**delivery and collection points*/
+
+    Vector2D DS1S = new Vector2D(getRealCoords(44), getRealCoords(92));
+    Vector2D DC1S = new Vector2D(getRealCoords(53), getRealCoords(31));
+    Vector2D DE1S = new Vector2D(getRealCoords(119), getRealCoords(39));
+
+    Vector2D DS2S = DE1S;
+    Vector2D DE2S = new Vector2D(getRealCoords(181), getRealCoords(38));
+
+    //segment 3
+    Vector2D DS3S = DE2S;
+    Vector2D DC3S = new Vector2D(getRealCoords(220), getRealCoords(53));
+    Vector2D DE3S = new Vector2D(getRealCoords(320), getRealCoords(62));
+
+    /**collecting paths*/
+    Vector2D CS1S = new Vector2D(getRealCoords(300), getRealCoords(90));
+    Vector2D CC1S = new Vector2D(getRealCoords(265), getRealCoords(33));
+    Vector2D CE1S = new Vector2D(getRealCoords(180), getRealCoords(38));
+
+    Vector2D CS2S = CE1S;
+    Vector2D CE2S = new Vector2D(getRealCoords(119), getRealCoords(36));
+
+    Vector2D CS3S = CE2S;
+    Vector2D CC3S = new Vector2D(getRealCoords(81), getRealCoords(40));
+    Vector2D CE3S = new Vector2D(getRealCoords(42), getRealCoords(95));
+
+    Vector2D CS3SS = CE2S;
+    Vector2D CC3SS = new Vector2D(getRealCoords(84), getRealCoords(40));
+    Vector2D CE3SS = new Vector2D(getRealCoords(41), getRealCoords(120));
+
     /**
      * Third position
      * */
@@ -82,6 +112,36 @@ public class Blue_Close_Truss extends LinearOpMode implements CycleMethods {
     Vector2D DPC1T = new Vector2D(getRealCoords(225), getRealCoords(75));
     Vector2D DPCT1T = new Vector2D(getRealCoords(165), getRealCoords(105));
     Vector2D DPE1T = new Vector2D(getRealCoords(308), getRealCoords(115));
+
+    /**delivery and collection points*/
+
+    Vector2D DS1T = new Vector2D(getRealCoords(44), getRealCoords(92));
+    Vector2D DC1T = new Vector2D(getRealCoords(53), getRealCoords(31));
+    Vector2D DE1T = new Vector2D(getRealCoords(119), getRealCoords(39));
+
+    Vector2D DS2T = DE1T;
+    Vector2D DE2T = new Vector2D(getRealCoords(181), getRealCoords(38));
+
+    //segment 3
+    Vector2D DS3T = DE2T;
+    Vector2D DC3T = new Vector2D(getRealCoords(220), getRealCoords(53));
+    Vector2D DE3T = new Vector2D(getRealCoords(320), getRealCoords(67));
+
+    /**collecting paths*/
+    Vector2D CS1T = new Vector2D(getRealCoords(300), getRealCoords(90));
+    Vector2D CC1T = new Vector2D(getRealCoords(265), getRealCoords(33));
+    Vector2D CE1T = new Vector2D(getRealCoords(180), getRealCoords(38));
+
+    Vector2D CS2T = CE1T;
+    Vector2D CE2T = new Vector2D(getRealCoords(119), getRealCoords(36));
+
+    Vector2D CS3T = CE2T;
+    Vector2D CC3T = new Vector2D(getRealCoords(81), getRealCoords(40));
+    Vector2D CE3T = new Vector2D(getRealCoords(42), getRealCoords(90));
+
+    Vector2D CS3TS = CE2T;
+    Vector2D CC3TS = new Vector2D(getRealCoords(84), getRealCoords(40));
+    Vector2D CE3TS = new Vector2D(getRealCoords(41), getRealCoords(120));
 
     /**Action points*/
     //delivery
@@ -100,7 +160,7 @@ public class Blue_Close_Truss extends LinearOpMode implements CycleMethods {
 
     //second position
     Vector2D oneEightyHeadingS = new Vector2D(getRealCoords(241), getRealCoords(86));
-    Vector2D leavePurpleHeadingS = new Vector2D(getRealCoords(214), getRealCoords(60));
+    Vector2D leavePurpleHeadingS = new Vector2D(getRealCoords(214), getRealCoords(70));
 
     //third position
     Vector2D oneEightyHeadingF = new Vector2D(getRealCoords(227), getRealCoords(105));
@@ -1159,21 +1219,21 @@ public class Blue_Close_Truss extends LinearOpMode implements CycleMethods {
 
                 preloadPaths.fourPoints(DPS1S, DPC1S, DPCT1S, DPE1S, true);
 
-                collect.threePoints(CS1F, CC1F, CE1F);
-                collect.twoPoints(CS2F, CE2F);
-                collect.threePoints(CS3F, CC3F, CE3F, true, 0.6);
+                collect.threePoints(CS1S, CC1S, CE1S);
+                collect.twoPoints(CS2S, CE2S);
+                collect.threePoints(CS3S, CC3S, CE3S, true, 0.6);
 
-                collectSecondStack.threePoints(CS1F, CC1F, CE1F);
-                collectSecondStack.twoPoints(CS2F, CE2F);
-                collectSecondStack.threePoints(CS3FS, CC3FS, CE3FS, true, 0.65);
+                collectSecondStack.threePoints(CS1S, CC1S, CE1S);
+                collectSecondStack.twoPoints(CS2S, CE2S);
+                collectSecondStack.threePoints(CS3SS, CC3SS, CE3SS, true, 0.65);
 
-                deliver.threePoints(DS1F, DC1F, DE1F);
-                deliver.twoPoints(DS2F, DE2F);
-                deliver.threePoints(DS3F, DC3F, DE3F, true);
+                deliver.threePoints(DS1S, DC1S, DE1S);
+                deliver.twoPoints(DS2S, DE2S);
+                deliver.threePoints(DS3S, DC3S, DE3S, true);
 
-                DeliveryEndpoint = DE3F;
-                CollectionEndpoint = CE3F;
-                secondStack = CE3FS;
+                DeliveryEndpoint = DE3S;
+                CollectionEndpoint = CE3FS;
+                secondStack = CE3SS;
 
                 buildPaths.reset();
 
@@ -1183,21 +1243,21 @@ public class Blue_Close_Truss extends LinearOpMode implements CycleMethods {
 
                 preloadPaths.fourPoints(DPS1T, DPC1T, DPCT1T, DPE1T, true, 0.45);
 
-                collect.threePoints(CS1F, CC1F, CE1F);
-                collect.twoPoints(CS2F, CE2F);
-                collect.threePoints(CS3F, CC3F, CE3F, true, 0.6);
+                collect.threePoints(CS1T, CC1T, CE1T);
+                collect.twoPoints(CS2T, CE2T);
+                collect.threePoints(CS3T, CC3T, CE3T, true, 0.6);
 
-                collectSecondStack.threePoints(CS1F, CC1F, CE1F);
-                collectSecondStack.twoPoints(CS2F, CE2F);
-                collectSecondStack.threePoints(CS3FS, CC3FS, CE3FS, true, 0.65);
+                collectSecondStack.threePoints(CS1T, CC1T, CE1T);
+                collectSecondStack.twoPoints(CS2T, CE2T);
+                collectSecondStack.threePoints(CS3TS, CC3TS, CE3TS, true, 0.65);
 
-                deliver.threePoints(DS1F, DC1F, DE1F);
-                deliver.twoPoints(DS2F, DE2F);
-                deliver.threePoints(DS3F, DC3F, DE3F, true);
+                deliver.threePoints(DS1T, DC1T, DE1T);
+                deliver.twoPoints(DS2T, DE2T);
+                deliver.threePoints(DS3T, DC3T, DE3T, true);
 
-                DeliveryEndpoint = DE3F;
-                CollectionEndpoint = CE3F;
-                secondStack = CE3FS;
+                DeliveryEndpoint = DE3T;
+                CollectionEndpoint = CE3T;
+                secondStack = CE3TS;
 
                 buildPaths.reset();
             }
@@ -1219,7 +1279,7 @@ public class Blue_Close_Truss extends LinearOpMode implements CycleMethods {
                     case preload:
 
                         odometry.update();
-                        delivery.updateArm(deliverySlides.getCurrentposition(), false,  Delivery.PixelsAuto.yellow3Blue, odometry);
+                        delivery.updateArm(deliverySlides.getCurrentposition(), false,  Delivery.PixelsAuto.yellow1Blue, odometry);
 
                         if (build == Build.notBuilt){
                             follower.setPath(preloadPaths.followablePath, preloadPaths.pathingVelocity);
@@ -1497,7 +1557,7 @@ public class Blue_Close_Truss extends LinearOpMode implements CycleMethods {
 
                             }
 
-                            if (Math.abs(oneEightyHeadingT.getX() - odometry.X) < HeadingControlError){
+                            if (Math.abs(oneEightyHeadingT.getX() - odometry.X) < HeadingControlError && targetHeading == 355){
 
                                 p = 0.025;
 
