@@ -234,6 +234,8 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
     }
 
     /**booleans*/
+    boolean timerSet = false;
+
     boolean lockIn = false;
 
     boolean pathing = false;
@@ -245,6 +247,7 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
     boolean onlyOnce = true;
 
     /**doubles*/
+    long waitYellow = 0;
     double targetHeading = 0;
 
     double timeChanger;
@@ -974,6 +977,23 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
 
         buildPaths.reset();
 
+        while (!timerSet){
+            telemetry.addData("time to wait for yellow preload", waitYellow);
+            telemetry.addData("press d pad up to increase", "");
+            telemetry.addData("press d pad down to decrease", "");
+            telemetry.addData("press x to lock in!!!!", "");
+            telemetry.update();
+
+            if (gamepad1.dpad_down){
+                waitYellow -= 50;
+            } else if (gamepad1.dpad_up) {
+                waitYellow += 50;
+            }else if (gamepad1.x) {
+                timerSet = true;
+            }
+
+        }
+
         while(!lockIn){
 
             telemetry.addData("Auto activated", auto);
@@ -1129,6 +1149,8 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
                                     collectOnePixel();
 
                                     build = Build.notBuilt;
+
+                                    sleep(waitYellow);
 
                                     preload = Preload.yellow;
 
@@ -1310,6 +1332,8 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
 
                                     build = Build.notBuilt;
 
+                                    sleep(waitYellow);
+
                                     preload = Preload.yellow;
 
                                 }
@@ -1470,6 +1494,8 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
                                     collectOnePixel();
 
                                     build = Build.notBuilt;
+
+                                    sleep(waitYellow);
 
                                     preload = Preload.yellow;
 
