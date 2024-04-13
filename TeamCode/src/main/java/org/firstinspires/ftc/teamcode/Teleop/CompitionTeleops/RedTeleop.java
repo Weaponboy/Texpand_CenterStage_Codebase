@@ -503,6 +503,7 @@ public class RedTeleop extends OpMode implements TeleopPathing {
                 }
 
                 break;
+
             default:
 
         }
