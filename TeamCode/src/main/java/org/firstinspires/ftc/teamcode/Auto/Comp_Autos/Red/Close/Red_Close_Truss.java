@@ -26,7 +26,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
      * S = start point, C = control point, CT = control point two, E = end point
      * 1 = first segment, 2 = second segment, 3 = third segment
      * F = first prop pos, S = second prop pos, T = third prop pos
-     * */
+     **/
 
     /**
      * drop preload pixels
@@ -407,6 +407,48 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
                 } else {
 
                     deliverySlides.DeliverySlides(0, -0.5);
+
+                    build = Build.notBuilt;
+
+                    delivering = false;
+
+                    phase = Phase.second2;
+
+                }
+
+            }
+
+            if(pathing && Math.abs(odometry.getVerticalVelocity()) < 5 && !sensors.armSensor.isPressed() && deliverySlides.getCurrentposition() > 200 && odometry.X > 200){
+
+                drive.setAllPower(0.4);
+                delivery.setGripperState(Delivery.GripperState.open);
+
+                delivery.updateGrippers();
+
+                sleep(200);
+
+                delivery.setArmTargetState(Delivery.armState.collect);
+                delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardRight, odometry);
+
+                deliverySlides.DeliverySlides(0, -0.5);
+
+                pathing = true;
+
+                gotTwo = false;
+
+                armOver = false;
+
+                if (auto == Auto.two) {
+
+                    phase = Phase.finished;
+
+                    drive.setAllPower(0);
+
+                    while (!(delivery.getArmState() == Delivery.armState.collect) || deliverySlides.getCurrentposition() > 20){
+                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardRight, odometry);
+                    }
+
+                } else {
 
                     build = Build.notBuilt;
 
@@ -966,7 +1008,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
         if (delivering){
 
-            if (odometry.X > extendSlidesDelivery.getX() && autoTimer.milliseconds() < 28000 && deliverySlides.getCurrentposition() < 50) {
+            if (odometry.X > extendSlidesDelivery.getX() && autoTimer.milliseconds() < 28000 && deliverySlides.getCurrentposition() < 30) {
 
                 deliverySlides.DeliverySlides(slidesPosWhitePixels + 400, 1);
                 deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
@@ -974,7 +1016,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
 
-            } else if (odometry.X > extendSlidesDelivery.getX() && autoTimer.milliseconds() > 28000 && deliverySlides.getCurrentposition() < 50) {
+            } else if (odometry.X > extendSlidesDelivery.getX() && autoTimer.milliseconds() > 28000 && deliverySlides.getCurrentposition() < 30) {
 
                 sleep(400);
 
@@ -1028,7 +1070,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
             }
 
-            if(pathing && Math.abs(odometry.getVerticalVelocity()) < 10 && !sensors.armSensor.isPressed() && deliverySlides.getCurrentposition() > 200 && odometry.X > 200){
+            if(pathing && Math.abs(odometry.getVerticalVelocity()) < 5 && !sensors.armSensor.isPressed() && deliverySlides.getCurrentposition() > 200 && odometry.X > 200){
 
                 drive.setAllPower(0.4);
 
