@@ -478,7 +478,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
         }
 
-        if (gamepad2.b || gamepad1.b) {
+        if (gamepad2.b) {
 
             if (Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.collect){
 
@@ -692,28 +692,12 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
             collection.updateIntakeState();
         }
 
-//        if (gamepad1.b){
-//            sensors.getDetections(telemetry);
-//            resetOdo();
-//        }
+        if (gamepad1.b){
+            sensors.getDetections(telemetry);
+            resetOdo();
+        }
 
         odometry.update();
-
-//       update collection state
-//        collection.updateIntakeHeight();
-//
-//        if (collection.getIntakeCurrentUse() > 5500 && !reversingIntake){
-//            reversingIntake = true;
-//            reverseIntake.reset();
-//            previousState = collection.getPowerState();
-//            collection.setState(Collection.intakePowerState.reversed);
-//        }
-//
-//        if (reversingIntake && reverseIntake.milliseconds() > 100){
-//            collection.setState(previousState);
-//            reversingIntake = false;
-//        }
-
         collection.updateIntakeState();
 
         //update delivery state
