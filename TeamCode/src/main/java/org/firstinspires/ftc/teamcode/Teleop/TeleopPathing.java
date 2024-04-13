@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.Teleop;
 
 import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.UsefulMethods.getRealCoords;
-import static org.firstinspires.ftc.teamcode.Teleop.CompitionTeleops.RedTeleop.targetPoint;
 
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 
