@@ -33,7 +33,7 @@ import java.util.Objects;
 
 
 @TeleOp
-public class BlueTeleop extends OpMode implements TeleopPathing {
+public class BlueTeleopMiddle extends OpMode implements TeleopPathing {
 
     Drivetrain drive = new Drivetrain();
 
@@ -736,7 +736,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         elapsedTime.reset();
 
         collection.init(hardwareMap);
-        delivery.init(hardwareMap);
+        delivery.initArmMiddle(hardwareMap);
         deliverySlides.init(hardwareMap);
 
         drive.init(hardwareMap);

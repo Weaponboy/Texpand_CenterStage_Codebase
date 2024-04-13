@@ -752,6 +752,87 @@ public class Delivery {
 
     }
 
+    public void initArmMiddle(HardwareMap hardwareMap){
+
+        hmap = hardwareMap;
+
+        pivotMoveTimeDelivery.reset();
+        pivotMoveTimeCollection.reset();
+
+        sensors.init(hardwareMap);
+
+        /**servos init*/
+
+        secondPivotLeft = hardwareMap.get(ServoImplEx.class, "RightPivot");
+        secondPivotRight = hardwareMap.get(ServoImplEx.class, "LeftPivot");
+
+        secondPivotRight.setDirection(Servo.Direction.REVERSE);
+
+        secondPivotLeft.setPwmRange(new PwmControl.PwmRange(600, 2500));
+        secondPivotRight.setPwmRange(new PwmControl.PwmRange(600, 2500));
+
+        RightClaw = hardwareMap.get(ServoImplEx.class, "RightClaw");
+        LeftClaw = hardwareMap.get(ServoImplEx.class, "LeftClaw");
+
+        RightClaw.setDirection(Servo.Direction.FORWARD);
+        LeftClaw.setDirection(Servo.Direction.REVERSE);
+
+        RightClaw.setPwmRange(new PwmControl.PwmRange(600, 2500));
+        LeftClaw.setPwmRange(new PwmControl.PwmRange(600, 2500));
+
+        mainPivotLeft = hardwareMap.get(ServoImplEx.class, "leftmain");
+        mainPivotRight = hardwareMap.get(ServoImplEx.class, "rightmain");
+
+        mainPivotLeft.setDirection(Servo.Direction.REVERSE);
+
+        mainPivotLeft.setPwmRange(new PwmControl.PwmRange(650, 2500));
+        mainPivotRight.setPwmRange(new PwmControl.PwmRange(650, 2500));
+
+        RotateClaw = hardwareMap.get(ServoImplEx.class, "ClawRotate");
+
+        RotateClaw.setDirection(Servo.Direction.FORWARD);
+
+        RotateClaw.setPwmRange(new PwmControl.PwmRange(700, 2300));
+
+        secondRotate = hardwareMap.get(ServoImplEx.class, "secondRotate");
+
+        secondRotate.setPwmRange(new PwmControl.PwmRange(600, 2500));
+
+        RotateArm  = hardwareMap.get(Servo.class,"RotateArm");
+
+        secondRotate.setPwmRange(new PwmControl.PwmRange(900, 2200));
+
+        ArmExtension = hardwareMap.get(ServoImplEx.class, "ArmExtension");
+
+        ArmExtension.setDirection(Servo.Direction.REVERSE);
+
+        ArmExtension.setPwmRange(new PwmControl.PwmRange(600, 2400));
+
+        RotateArm.setPosition(ArmPositionMid);
+
+        ArmExtension.setPosition(ArmExtensionHome);
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        setMainPivot(collectTopPivotPos);
+
+        secondRotate.setPosition(secondRotateMiddleCollect);
+
+        setSecondPivot(collectSecondPivot);
+
+        RotateClaw.setPosition(rotateCollect);
+
+        RightClaw.setPosition(clawOpen);
+        LeftClaw.setPosition(clawOpen);
+
+        setGripperState(GripperState.open);
+
+    }
+
     public void setRotateClaw(double position){
         RotateClaw.setPosition(position);
     }

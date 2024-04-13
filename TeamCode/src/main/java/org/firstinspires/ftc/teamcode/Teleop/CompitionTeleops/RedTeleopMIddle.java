@@ -33,7 +33,7 @@ import java.util.Objects;
 
 
 @TeleOp
-public class BlueTeleop extends OpMode implements TeleopPathing {
+public class RedTeleopMIddle extends OpMode implements TeleopPathing {
 
     Drivetrain drive = new Drivetrain();
 
@@ -156,24 +156,6 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
         }
 
-//        if (gamepad1.left_trigger > 0.5 && odometry.X > 205){
-//
-//            double xerror = Math.abs(getRealCoords(250) - robotPos.getX());
-//
-//            if (xerror < 4){
-//
-//            }else {
-//
-//                droneLauncher.buildPathLine(robotPos, new Vector2D(getRealCoords(250), robotPos.getY()));
-//
-//                follower.setPath(droneLauncher.followablePath, droneLauncher.pathingVelocity);
-//
-//                pathing = true;
-//
-//            }
-//
-//        }
-
         if (gamepad1.dpad_left){
             headingLock = true;
         } else if (gamepad1.dpad_right) {
@@ -186,12 +168,6 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
             xCounter = 0;
             lastX = odometry.X;
         }
-
-//        if (odometry.X < 240 && lastX > 240 && headingLock){
-//            headingLock = false;
-//        } else if (odometry.Y > 150 && lastY < 150 && headingLock) {
-//            headingLock = false;
-//        }
 
         inBackboardArea = odometry.X > 210 && odometry.Y < 150 && odometry.X < 340;
 
@@ -678,11 +654,6 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
         }
 
-//        if (sensors.armSensor.isPressed() && delivery.getArmState() == Delivery.armState.delivery){
-//            delivery.setGripperState(Delivery.GripperState.openDeliver);
-//            delivery.setArmTargetState(Delivery.armState.collect);
-//        }
-
         if (gamepad1.right_bumper){
             collection.setState(Collection.intakePowerState.onHalf);
             collection.updateIntakeState();
@@ -736,7 +707,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         elapsedTime.reset();
 
         collection.init(hardwareMap);
-        delivery.init(hardwareMap);
+        delivery.initArmMiddle(hardwareMap);
         deliverySlides.init(hardwareMap);
 
         drive.init(hardwareMap);
@@ -870,7 +841,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
         if (!(sensors.rightTag == null)){
 
-            if (sensors.rightTag.id == 1 || sensors.rightTag.id == 2 || sensors.rightTag.id == 3){
+            if (sensors.rightTag.id == 4 || sensors.rightTag.id == 5 || sensors.rightTag.id == 6){
 
                 double NewY;
                 double NewX;
@@ -879,12 +850,12 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
                 Vector2D newPosition;
 
-                if (sensors.rightTag.id == 1){
-                    aprilTagOffset = getRealCoords(75);
-                }else if (sensors.rightTag.id == 2){
-                    aprilTagOffset = getRealCoords(90);
+                if (sensors.rightTag.id == 4){
+                    aprilTagOffset = getRealCoords(255);
+                }else if (sensors.rightTag.id == 5){
+                    aprilTagOffset = getRealCoords(270);
                 }else{
-                    aprilTagOffset = getRealCoords(105);
+                    aprilTagOffset = getRealCoords(285);
                 }
 
                 double realNewX = (sensors.rightTag.ftcPose.y * 0.1);
