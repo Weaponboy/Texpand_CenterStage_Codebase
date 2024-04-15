@@ -203,29 +203,29 @@ public class mecanumFollower {
         double vertical2 = vertical;
         double horizontal2 = horizontal;
 
-        if (closestPos > 100) {
-
-            if (Math.abs(xPower - odometry.getVerticalVelocity()) > 100 && Math.abs(yPower - odometry.getHorizontalVelocity()) > 80 && reverse.milliseconds() > 300) {
-
-                System.out.println("vertical " + Math.abs(xPower - odometry.getVerticalVelocity()));
-                System.out.println("horizontal " + Math.abs(yPower - odometry.getHorizontalVelocity()));
-
-                reverse.reset();
-            }
-
-            if (reverse.milliseconds() < 200) {
+//        if (closestPos > 100) {
 //
-//                vertical2 = -vertical;
-//                horizontal2 = -horizontal;
-
-            } else if (reverse.milliseconds() > 200 && reverse.milliseconds() < 300) {
-
-//                vertical = 0;
-//                horizontal = 0;
-
-            }
-
-        }
+//            if (Math.abs(xPower - odometry.getVerticalVelocity()) > 100 && Math.abs(yPower - odometry.getHorizontalVelocity()) > 80 && reverse.milliseconds() > 300) {
+//
+//                System.out.println("vertical " + Math.abs(xPower - odometry.getVerticalVelocity()));
+//                System.out.println("horizontal " + Math.abs(yPower - odometry.getHorizontalVelocity()));
+//
+//                reverse.reset();
+//            }
+//
+//            if (reverse.milliseconds() < 200) {
+////
+////                vertical2 = -vertical;
+////                horizontal2 = -horizontal;
+//
+//            } else if (reverse.milliseconds() > 200 && reverse.milliseconds() < 300) {
+//
+////                vertical = 0;
+////                horizontal = 0;
+//
+//            }
+//
+//        }
 
         actualPathingPower.set(xPowerC + vertical2, yPowerC + horizontal2);
 
@@ -1146,11 +1146,17 @@ public class mecanumFollower {
         double denominator = Math.max(Math.abs(vertical) + Math.abs(horizontal) + Math.abs(pivot), 1);
 
         System.out.println("vertical before set" + vertical);
+        System.out.println("horizontal before set" + horizontal);
 
         double left_Front = (vertical + horizontal + pivot) / denominator;
         double left_Back = (vertical - horizontal + pivot) / denominator;
         double right_Front = (vertical - horizontal - pivot) / denominator;
         double right_Back = (vertical + horizontal - pivot) / denominator;
+
+        System.out.println("left_Front before set" + left_Front);
+        System.out.println("left_Back before set" + left_Back);
+        System.out.println("right_Front before set" + right_Front);
+        System.out.println("right_Back before set" + right_Back);
 
         drive.RF.setPower(right_Front);
         drive.RB.setPower(right_Back);

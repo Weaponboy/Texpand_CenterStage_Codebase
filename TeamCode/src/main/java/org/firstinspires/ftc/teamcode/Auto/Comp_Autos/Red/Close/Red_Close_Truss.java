@@ -71,11 +71,13 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
     Vector2D DPS1S = new Vector2D(getRealCoords(210), getRealCoords(337));
     Vector2D DPC1S = new Vector2D(getRealCoords(220), getRealCoords(289));
     Vector2D DPCT1S = new Vector2D(getRealCoords(170), getRealCoords(298));
-    Vector2D DPE1S = new Vector2D(getRealCoords(308), getRealCoords(268));
+    Vector2D DPE1S = new Vector2D(getRealCoords(308), getRealCoords(266));
 
     /**delivery and collection points*/
-    Vector2D DS1S = new Vector2D(getRealCoords(44), getRealCoords(270));
-    Vector2D DC1S = new Vector2D(getRealCoords(53), getRealCoords(329));
+
+    Vector2D DS1S = new Vector2D(getRealCoords(44), getRealCoords(255));
+    Vector2D DC1S = new Vector2D(getRealCoords(41), getRealCoords(326));
+    Vector2D DC1SS = new Vector2D(getRealCoords(40), getRealCoords(335));
     Vector2D DE1S = new Vector2D(getRealCoords(119), getRealCoords(321));
 
     Vector2D DS2S = DE1S;
@@ -147,15 +149,15 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
     //collection
     Vector2D turnIntakeOn = new Vector2D(getRealCoords(183), getRealCoords(328));
     Vector2D turnIntakeOff = new Vector2D(getRealCoords(125), getRealCoords(328));
-    Vector2D reverseIntake = new Vector2D(getRealCoords(45), getRealCoords(300));
-    Vector2D restartIntake = new Vector2D(getRealCoords(75), getRealCoords(330));
+    Vector2D reverseIntake = new Vector2D(getRealCoords(45), getRealCoords(280));
+    Vector2D restartIntake = new Vector2D(getRealCoords(65), getRealCoords(330));
 
     //first position
-    Vector2D oneEightyHeadingF = new Vector2D(getRealCoords(245), getRealCoords(300));
+    Vector2D oneEightyHeadingF = new Vector2D(getRealCoords(225), getRealCoords(300));
     Vector2D leavePurpleHeadingF = new Vector2D(getRealCoords(220), getRealCoords(280));
 
     //second position
-    Vector2D oneEightyHeadingS = new Vector2D(getRealCoords(241), getRealCoords(274));
+    Vector2D oneEightyHeadingS = new Vector2D(getRealCoords(231), getRealCoords(274));
     Vector2D leavePurpleHeadingS = new Vector2D(getRealCoords(214), getRealCoords(300));
 
     //third position
@@ -1257,7 +1259,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
 
                 clearAll();
 
-                preloadPaths.fourPoints(DPS1S, DPC1S, DPCT1S, DPE1S, true);
+                preloadPaths.fourPoints(DPS1S, DPC1S, DPCT1S, DPE1S, true, 0.5);
 
                 collect.threePoints(CS1S, CC1S, CE1S);
                 collect.twoPoints(CS2S, CE2S);
@@ -1267,7 +1269,7 @@ public class Red_Close_Truss extends LinearOpMode implements CycleMethods {
                 collectSecondStack.twoPoints(CS2S, CE2S);
                 collectSecondStack.threePoints(CS3SS, CC3SS, CE3SS, true, 0.85);
 
-                deliver.threePoints(DS1S, DC1S, DE1S);
+                deliver.fourPoints(DS1S, DC1S, DC1SS, DE1S);
                 deliver.twoPoints(DS2S, DE2S);
                 deliver.threePoints(DS3S, DC3S, DE3S, true);
 

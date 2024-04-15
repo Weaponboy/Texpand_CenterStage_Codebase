@@ -50,7 +50,7 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
     //segment 3
     Vector2D DS3F = DE2F;
     Vector2D DC3F = new Vector2D(getRealCoords(220), getRealCoords(223));
-    Vector2D DE3F = new Vector2D(getRealCoords(320), getRealCoords(250));
+    Vector2D DE3F = new Vector2D(getRealCoords(320), getRealCoords(230));
 
     /**collecting paths*/
     Vector2D CS1F = new Vector2D(getRealCoords(300), getRealCoords(270));
@@ -61,11 +61,11 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
     Vector2D CE2F = new Vector2D(getRealCoords(91), getRealCoords(207));
 
     Vector2D CS3F = CE2F;
-    Vector2D CE3F = new Vector2D(getRealCoords(34), getRealCoords(208));
+    Vector2D CE3F = new Vector2D(getRealCoords(28), getRealCoords(210));
 
     Vector2D CS3FS = CE2F;
     Vector2D CC3FS = new Vector2D(getRealCoords(72), getRealCoords(207));
-    Vector2D CE3FS = new Vector2D(getRealCoords(34), getRealCoords(238));
+    Vector2D CE3FS = new Vector2D(getRealCoords(30), getRealCoords(240));
 
     /**
      * second pos
@@ -94,10 +94,10 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
 
     Vector2D CS1S = new Vector2D(getRealCoords(300), getRealCoords(270));
     Vector2D CC1S = new Vector2D(getRealCoords(312), getRealCoords(198));
-    Vector2D CE1S = new Vector2D(getRealCoords(220), getRealCoords(204));
+    Vector2D CE1S = new Vector2D(getRealCoords(220), getRealCoords(206));
 
     Vector2D CS2S = CE1S;
-    Vector2D CE2S = new Vector2D(getRealCoords(91), getRealCoords(207));
+    Vector2D CE2S = new Vector2D(getRealCoords(91), getRealCoords(210));
 
     Vector2D CS3S = CE2S;
     Vector2D CE3S = new Vector2D(getRealCoords(35), getRealCoords(210));
@@ -1340,7 +1340,7 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
 
-            } else if (odometry.X > extendSlidesDelivery.getX() && autoTimer.milliseconds() > 28000 && deliverySlides.getVelocity() > 30) {
+            } else if (odometry.X > extendSlidesDelivery.getX() && autoTimer.milliseconds() > 28000 && deliverySlides.getVelocity() < 30) {
 
                 sleep(400);
 
@@ -1808,11 +1808,11 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
 
                         if (pathing){
 
-                            pathing = follower.followPathAutoHeading(targetHeading, odometry, drive, 0.008, 2);
+                            pathing = follower.followPathAutoHeading(targetHeading, odometry, drive, 0.01, 2);
 
                             if (Math.abs(leavePurpleHeadingS.getX() - odometry.X) < 30 && Math.abs(leavePurpleHeadingS.getY() - odometry.Y) < HeadingControlError && targetHeading == 90){
 
-                                targetHeading = 30;
+                                targetHeading = 50;
 
                                 delivery.setGripperState(Delivery.GripperState.closed);
                                 delivery.updateGrippers();

@@ -271,7 +271,7 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
 
             sleep(50);
 
-            collection.IntakeHeightRight.setPosition(collection.getIntakeHeightRight() - 0.005);
+            collection.IntakeHeightRight.setPosition(collection.getIntakeHeightRight() + 0.005);
 
             if (collection.getIntakeCurrentUse() > 6000 && !reversingIntake){
                 reversingIntake = true;
@@ -1217,14 +1217,14 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
             telemetry.addData("time to wait for yellow preload", waitYellow);
             telemetry.addData("press d pad up to increase", "");
             telemetry.addData("press d pad down to decrease", "");
-            telemetry.addData("press x to lock in!!!!", "");
+            telemetry.addData("press dpad_left to lock in!!!!", "");
             telemetry.update();
 
             if (gamepad1.dpad_down){
                 waitYellow -= 50;
             } else if (gamepad1.dpad_up) {
                 waitYellow += 50;
-            }else if (gamepad1.x) {
+            }else if (gamepad1.dpad_left) {
                 timerSet = true;
             }
 

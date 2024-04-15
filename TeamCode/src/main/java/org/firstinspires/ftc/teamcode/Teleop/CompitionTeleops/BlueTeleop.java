@@ -403,37 +403,37 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
         }
 
-//        if (currentGamepad1.left_trigger > 0 && !(previousGamepad1.left_trigger > 0)) {
-//
-////            collection.IntakeHeightRight.setPosition(collection.IntakeHeightRight.getPosition() - 0.005);
-//
-//        }
+        if (currentGamepad1.left_trigger > 0 && !(previousGamepad1.left_trigger > 0)) {
+
+            collection.IntakeHeightRight.setPosition(collection.IntakeHeightRight.getPosition() - 0.005);
+
+        }
 
         if (currentGamepad1.right_trigger > 0 && !(previousGamepad1.right_trigger > 0)){
 
-//            collection.IntakeHeightRight.setPosition(collection.IntakeHeightRight.getPosition()+0.005);
-
-            pivotIntakePos++;
-
-            if (pivotIntakePos == 5){
-                pivotIntakePos = 0;
-            }
-
-            if(pivotIntakePos == 0){
-                collection.setIntakeHeight(Collection.intakeHeightState.fifthPixel);
-            }
-            else if(pivotIntakePos == 1){
-                collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
-            }
-            else if(pivotIntakePos == 2){
-                collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
-            }
-            else if(pivotIntakePos == 3){
-                collection.setIntakeHeight(Collection.intakeHeightState.secondPixel);
-            }
-            else if(pivotIntakePos == 4){
-                collection.setIntakeHeight(Collection.intakeHeightState.firstPixel);
-            }
+            collection.IntakeHeightRight.setPosition(collection.IntakeHeightRight.getPosition()+0.005);
+//
+//            pivotIntakePos++;
+//
+//            if (pivotIntakePos == 5){
+//                pivotIntakePos = 0;
+//            }
+//
+//            if(pivotIntakePos == 0){
+//                collection.setIntakeHeight(Collection.intakeHeightState.fifthPixel);
+//            }
+//            else if(pivotIntakePos == 1){
+//                collection.setIntakeHeight(Collection.intakeHeightState.forthPixel);
+//            }
+//            else if(pivotIntakePos == 2){
+//                collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
+//            }
+//            else if(pivotIntakePos == 3){
+//                collection.setIntakeHeight(Collection.intakeHeightState.secondPixel);
+//            }
+//            else if(pivotIntakePos == 4){
+//                collection.setIntakeHeight(Collection.intakeHeightState.firstPixel);
+//            }
 
         }
 
