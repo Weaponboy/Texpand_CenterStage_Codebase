@@ -79,6 +79,8 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
     boolean firstSnap = false;
 
+    boolean sensorsOn = true;
+
     boolean RightTrigger = false;
 
     int snapPos;
@@ -538,7 +540,15 @@ public class RedTeleop extends OpMode implements TeleopPathing {
 
         }
 
-        if(collection.getIntakePower() > 0 && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.collect){
+        if (gamepad1.a){
+            sensorsOn = true;
+        }
+
+        if (gamepad1.x){
+            sensorsOn = false;
+        }
+
+        if(collection.getIntakePower() > 0 && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.collect && sensorsOn){
 
             if (sensors.RightClawSensor.isPressed()){
                 closeRight.reset();
@@ -708,7 +718,7 @@ public class RedTeleop extends OpMode implements TeleopPathing {
         elapsedTime.reset();
 
         collection.init(hardwareMap);
-        delivery.init(hardwareMap);
+        delivery.initArmMiddle(hardwareMap);
         deliverySlides.init(hardwareMap);
 
         drive.init(hardwareMap);

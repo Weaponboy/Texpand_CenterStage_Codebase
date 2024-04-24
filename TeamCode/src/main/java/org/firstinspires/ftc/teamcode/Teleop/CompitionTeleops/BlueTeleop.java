@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
@@ -63,6 +64,8 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
     Sensors sensors = new Sensors();
 
+    boolean slow = false;
+
     boolean pathing = false;
 
     boolean headingLock = false;
@@ -80,6 +83,8 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
     boolean firstSnap = false;
 
     boolean RightTrigger = false;
+
+    boolean sensorsOn = true;
 
     int snapPos;
 
@@ -134,6 +139,12 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         previousGamepad2.copy(currentGamepad2);
 
         currentGamepad2.copy(gamepad2);
+
+        if (slow && gamepad1.b){
+            slow = false;
+        } else if (!slow && gamepad1.b) {
+            slow = true;
+        }
 
         /**drive code*/
 
@@ -205,141 +216,136 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
             pathing = false;
         }
 
-        if(gamepad1.left_trigger > 0){
-            collection.setIntakeHeight(Collection.intakeHeightState.stowed);
-            collection.updateIntakeState();
-        }
-
-        if ((snapToBackboard && gamepad1.right_bumper) || (snapToBackboard && gamepad1.left_bumper) || firstSnap){
-
-            if (currentGamepad1.right_bumper && !(previousGamepad1.right_bumper)) {
-                snapPos++;
-            }
-
-            if (currentGamepad1.left_bumper && !(previousGamepad1.left_bumper)) {
-                snapPos--;
-            }
-
-            if (snapPos > 7){
-                snapPos = 1;
-            }
-
-            if (snapPos < 1){
-                snapPos = 7;
-            }
-
-        }
-
-        if (snapToBackboard && !pathing){
-
-            if(snapPos == 1){
-
-                double xerror = Math.abs(threeLeftBlue.getX() - robotPos.getX());
-                double yerror = Math.abs(threeLeftBlue.getY() - robotPos.getY());
-
-                if (xerror < 2 && yerror < 2){
-
-                }else {
-                    path1.buildPathLine(robotPos, threeLeftBlue);
-
-                    follower.setPath(path1.followablePath, path1.pathingVelocity);
-
-                    pathing = true;
-                }
-
-            }else if(snapPos == 2){
-
-                double xerror = Math.abs(twoLeftBlue.getX() - robotPos.getX());
-                double yerror = Math.abs(twoLeftBlue.getY() - robotPos.getY());
-
-                if (xerror < 2 && yerror < 2){
-
-                }else {
-                    path2.buildPathLine(robotPos, twoLeftBlue);
-
-                    follower.setPath(path2.followablePath, path2.pathingVelocity);
-
-                    pathing = true;
-                }
-
-            }else if(snapPos == 3){
-
-                double xerror = Math.abs(oneLeftBlue.getX() - robotPos.getX());
-                double yerror = Math.abs(oneLeftBlue.getY() - robotPos.getY());
-
-                if (xerror < 2 && yerror < 2){
-
-                }else {
-                    path3.buildPathLine(robotPos, oneLeftBlue);
-
-                    follower.setPath(path3.followablePath, path3.pathingVelocity);
-
-                    pathing = true;
-                }
-
-            }else if(snapPos == 4){
-
-                double xerror = Math.abs(middleBlue.getX() - robotPos.getX());
-                double yerror = Math.abs(middleBlue.getY() - robotPos.getY());
-
-                if (xerror < 2 && yerror < 2){
-
-                }else {
-                    path4.buildPathLine(robotPos, middleBlue);
-
-                    follower.setPath(path4.followablePath, path4.pathingVelocity);
-
-                    pathing = true;
-                }
-
-            }else if(snapPos == 5){
-
-                double xerror = Math.abs(oneRightBlue.getX() - robotPos.getX());
-                double yerror = Math.abs(oneRightBlue.getY() - robotPos.getY());
-
-                if (xerror < 2 && yerror < 2){
-
-                }else {
-                    path5.buildPathLine(robotPos, oneRightBlue);
-
-                    follower.setPath(path5.followablePath, path5.pathingVelocity);
-
-                    pathing = true;
-                }
-
-            }else if(snapPos == 6){
-
-                double xerror = Math.abs(twoRightBlue.getX() - robotPos.getX());
-                double yerror = Math.abs(twoRightBlue.getY() - robotPos.getY());
-
-                if (xerror < 2 && yerror < 2){
-
-                }else {
-                    path6.buildPathLine(robotPos, twoRightBlue);
-
-                    follower.setPath(path6.followablePath, path6.pathingVelocity);
-
-                    pathing = true;
-                }
-
-            }else if(snapPos == 7){
-
-                double xerror = Math.abs(threeRightBlue.getX() - robotPos.getX());
-                double yerror = Math.abs(threeRightBlue.getY() - robotPos.getY());
-
-                if (xerror < 2 && yerror < 2){
-
-                }else {
-                    path7.buildPathLine(robotPos, threeRightBlue);
-
-                    follower.setPath(path7.followablePath, path7.pathingVelocity);
-
-                    pathing = true;
-                }
-
-            }
-
-        }
+//        if ((snapToBackboard && gamepad1.right_bumper) || (snapToBackboard && gamepad1.left_bumper) || firstSnap){
+//
+//            if (currentGamepad1.right_bumper && !(previousGamepad1.right_bumper)) {
+//                snapPos++;
+//            }
+//
+//            if (currentGamepad1.left_bumper && !(previousGamepad1.left_bumper)) {
+//                snapPos--;
+//            }
+//
+//            if (snapPos > 7){
+//                snapPos = 1;
+//            }
+//
+//            if (snapPos < 1){
+//                snapPos = 7;
+//            }
+//
+//        }
+//
+//        if (snapToBackboard && !pathing){
+//
+//            if(snapPos == 1){
+//
+//                double xerror = Math.abs(threeLeftBlue.getX() - robotPos.getX());
+//                double yerror = Math.abs(threeLeftBlue.getY() - robotPos.getY());
+//
+//                if (xerror < 2 && yerror < 2){
+//
+//                }else {
+//                    path1.buildPathLine(robotPos, threeLeftBlue);
+//
+//                    follower.setPath(path1.followablePath, path1.pathingVelocity);
+//
+//                    pathing = true;
+//                }
+//
+//            }else if(snapPos == 2){
+//
+//                double xerror = Math.abs(twoLeftBlue.getX() - robotPos.getX());
+//                double yerror = Math.abs(twoLeftBlue.getY() - robotPos.getY());
+//
+//                if (xerror < 2 && yerror < 2){
+//
+//                }else {
+//                    path2.buildPathLine(robotPos, twoLeftBlue);
+//
+//                    follower.setPath(path2.followablePath, path2.pathingVelocity);
+//
+//                    pathing = true;
+//                }
+//
+//            }else if(snapPos == 3){
+//
+//                double xerror = Math.abs(oneLeftBlue.getX() - robotPos.getX());
+//                double yerror = Math.abs(oneLeftBlue.getY() - robotPos.getY());
+//
+//                if (xerror < 2 && yerror < 2){
+//
+//                }else {
+//                    path3.buildPathLine(robotPos, oneLeftBlue);
+//
+//                    follower.setPath(path3.followablePath, path3.pathingVelocity);
+//
+//                    pathing = true;
+//                }
+//
+//            }else if(snapPos == 4){
+//
+//                double xerror = Math.abs(middleBlue.getX() - robotPos.getX());
+//                double yerror = Math.abs(middleBlue.getY() - robotPos.getY());
+//
+//                if (xerror < 2 && yerror < 2){
+//
+//                }else {
+//                    path4.buildPathLine(robotPos, middleBlue);
+//
+//                    follower.setPath(path4.followablePath, path4.pathingVelocity);
+//
+//                    pathing = true;
+//                }
+//
+//            }else if(snapPos == 5){
+//
+//                double xerror = Math.abs(oneRightBlue.getX() - robotPos.getX());
+//                double yerror = Math.abs(oneRightBlue.getY() - robotPos.getY());
+//
+//                if (xerror < 2 && yerror < 2){
+//
+//                }else {
+//                    path5.buildPathLine(robotPos, oneRightBlue);
+//
+//                    follower.setPath(path5.followablePath, path5.pathingVelocity);
+//
+//                    pathing = true;
+//                }
+//
+//            }else if(snapPos == 6){
+//
+//                double xerror = Math.abs(twoRightBlue.getX() - robotPos.getX());
+//                double yerror = Math.abs(twoRightBlue.getY() - robotPos.getY());
+//
+//                if (xerror < 2 && yerror < 2){
+//
+//                }else {
+//                    path6.buildPathLine(robotPos, twoRightBlue);
+//
+//                    follower.setPath(path6.followablePath, path6.pathingVelocity);
+//
+//                    pathing = true;
+//                }
+//
+//            }else if(snapPos == 7){
+//
+//                double xerror = Math.abs(threeRightBlue.getX() - robotPos.getX());
+//                double yerror = Math.abs(threeRightBlue.getY() - robotPos.getY());
+//
+//                if (xerror < 2 && yerror < 2){
+//
+//                }else {
+//                    path7.buildPathLine(robotPos, threeRightBlue);
+//
+//                    follower.setPath(path7.followablePath, path7.pathingVelocity);
+//
+//                    pathing = true;
+//                }
+//
+//            }
+//
+//        }
 
         if (pathing && atRest(gamepad1)){
 
@@ -368,6 +374,11 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
                 pivot = slowPivot;
             } else if (pivot < -slowPivot) {
                 pivot = -slowPivot;
+            }
+
+            if (slow){
+                vertical = Range.clip(vertical, -0.5, 0.5);
+                horizontal = Range.clip(horizontal, -0.5, 0.5);
             }
 
             double denominator = Math.max(Math.abs(horizontal) + Math.abs(vertical) + Math.abs(pivot), 1);
@@ -405,7 +416,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
 //        if (currentGamepad1.left_trigger > 0 && !(previousGamepad1.left_trigger > 0)) {
 //
-////            collection.IntakeHeightRight.setPosition(collection.IntakeHeightRight.getPosition() - 0.005);
+//            collection.IntakeHeightRight.setPosition(collection.IntakeHeightRight.getPosition() - 0.005);
 //
 //        }
 
@@ -561,7 +572,15 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
         }
 
-        if(collection.getIntakePower() > 0 && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.collect){
+        if (gamepad1.a){
+            sensorsOn = true;
+        }
+
+        if (gamepad1.x){
+            sensorsOn = false;
+        }
+
+        if(collection.getIntakePower() > 0 && Objects.requireNonNull(delivery.getArmState()) == Delivery.armState.collect && sensorsOn){
 
             if (sensors.RightClawSensor.isPressed()){
                 closeRight.reset();
@@ -643,7 +662,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 //
 //        }
 
-        if (currentGamepad2.right_stick_button && !previousGamepad2.right_stick_button) {
+        if (gamepad1.left_bumper && gamepad1.right_bumper) {
             planelauncher.setTrigger(0.2);
         }
 
@@ -666,7 +685,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 
         if (resettingSlides){
 
-            if (deliverySlides.getCurrentDraw() >= 2000){
+            if (deliverySlides.getCurrentDraw() >= 2600){
 
                 deliverySlides.SlidesBothPower(0);
                 resettingSlides = false;
@@ -683,9 +702,9 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
 //            delivery.setArmTargetState(Delivery.armState.collect);
 //        }
 
-        if (gamepad1.right_bumper){
-            collection.setState(Collection.intakePowerState.onHalf);
-            collection.updateIntakeState();
+        if (gamepad1.left_trigger > 0){
+            collection.setIntakeHeight(Collection.intakeHeightState.stowedMiddle);
+            collection.updateIntakeHeight();
         }
 
         if (gamepad1.b){
@@ -706,7 +725,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         telemetry.addData("Y", odometry.Y);
         telemetry.addData("heading", odometry.heading);
 
-        telemetry.addData("intake current draw", collection.getIntakeCurrentUse());
+        telemetry.addData("intake current draw", deliverySlides.getCurrentDraw());
         telemetry.addData("loop time", loopTime);
         telemetry.addData("backboard sensor", sensors.armSensor.isPressed());
 
@@ -714,7 +733,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         telemetry.addData("intake height servo", collection.getIntakeHeightRight());
 
         telemetry.addData("main pivot pos",delivery.getMainPivotPosition());
-        telemetry.addData("second rotate", delivery.getSecondRotatePosition());
+        telemetry.addData("second pivot position", delivery.getSecondPivotPosition());
         telemetry.addData("slides position", deliverySlides.getCurrentposition());
         telemetry.addData("right slides position", deliverySlides.Right_Slide.getCurrentPosition());
         telemetry.addData("left slides position", deliverySlides.Left_Slide.getCurrentPosition());
@@ -736,7 +755,7 @@ public class BlueTeleop extends OpMode implements TeleopPathing {
         elapsedTime.reset();
 
         collection.init(hardwareMap);
-        delivery.init(hardwareMap);
+        delivery.initArmMiddle(hardwareMap);
         deliverySlides.init(hardwareMap);
 
         drive.init(hardwareMap);

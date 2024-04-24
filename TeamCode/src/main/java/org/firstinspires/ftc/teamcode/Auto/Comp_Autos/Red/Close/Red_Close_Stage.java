@@ -34,82 +34,81 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
     Vector2D DPS1F = new Vector2D(getRealCoords(210), getRealCoords(337));
     Vector2D DPC1F = new Vector2D(getRealCoords(225), getRealCoords(285));
     Vector2D DPCT1F = new Vector2D(getRealCoords(165), getRealCoords(255));
-    Vector2D DPE1F = new Vector2D(getRealCoords(304), getRealCoords(253));
+    Vector2D DPE1F = new Vector2D(getRealCoords(304), getRealCoords(249));
 
     /**delivery and collection points*/
 
     //segment 1 deliver straight
     Vector2D DS1F = new Vector2D(getRealCoords(46), getRealCoords(225));
     Vector2D DC1F = new Vector2D(getRealCoords(47), getRealCoords(209));
-    Vector2D DE1F = new Vector2D(getRealCoords(106), getRealCoords(208));
+    Vector2D DE1F = new Vector2D(getRealCoords(106), getRealCoords(202));
 
     //segment 2
     Vector2D DS2F = DE1F;
-    Vector2D DE2F = new Vector2D(getRealCoords(206), getRealCoords(206));
+    Vector2D DE2F = new Vector2D(getRealCoords(206), getRealCoords(202));
 
     //segment 3
     Vector2D DS3F = DE2F;
-    Vector2D DC3F = new Vector2D(getRealCoords(220), getRealCoords(223));
-    Vector2D DE3F = new Vector2D(getRealCoords(320), getRealCoords(250));
+    Vector2D DC3F = new Vector2D(getRealCoords(240), getRealCoords(218));
+    Vector2D DE3F = new Vector2D(getRealCoords(320), getRealCoords(240));
 
     /**collecting paths*/
     Vector2D CS1F = new Vector2D(getRealCoords(300), getRealCoords(270));
     Vector2D CC1F = new Vector2D(getRealCoords(312), getRealCoords(198));
-    Vector2D CE1F = new Vector2D(getRealCoords(220), getRealCoords(204));
+    Vector2D CE1F = new Vector2D(getRealCoords(220), getRealCoords(201));
 
     Vector2D CS2F = CE1F;
-    Vector2D CE2F = new Vector2D(getRealCoords(91), getRealCoords(207));
+    Vector2D CE2F = new Vector2D(getRealCoords(91), getRealCoords(204));
 
     Vector2D CS3F = CE2F;
-    Vector2D CE3F = new Vector2D(getRealCoords(34), getRealCoords(208));
+    Vector2D CE3F = new Vector2D(getRealCoords(32), getRealCoords(206));
 
     Vector2D CS3FS = CE2F;
     Vector2D CC3FS = new Vector2D(getRealCoords(72), getRealCoords(207));
-    Vector2D CE3FS = new Vector2D(getRealCoords(34), getRealCoords(238));
+    Vector2D CE3FS = new Vector2D(getRealCoords(32), getRealCoords(236));
 
     /**
      * second pos
      * */
     Vector2D DPS1S = new Vector2D(getRealCoords(210), getRealCoords(337));
-    Vector2D DPC1S = new Vector2D(getRealCoords(220), getRealCoords(289));
-    Vector2D DPCT1S = new Vector2D(getRealCoords(170), getRealCoords(298));
-    Vector2D DPE1S = new Vector2D(getRealCoords(307), getRealCoords(264));
+    Vector2D DPC1S = new Vector2D(getRealCoords(220), getRealCoords(290));
+    Vector2D DPCT1S = new Vector2D(getRealCoords(170), getRealCoords(300));
+    Vector2D DPE1S = new Vector2D(getRealCoords(307), getRealCoords(260));
 
     /**delivery and collection points*/
     //segment 1 deliver straight
     Vector2D DS1S = new Vector2D(getRealCoords(46), getRealCoords(225));
     Vector2D DC1S = new Vector2D(getRealCoords(47), getRealCoords(209));
-    Vector2D DE1S = new Vector2D(getRealCoords(106), getRealCoords(208));
+    Vector2D DE1S = new Vector2D(getRealCoords(106), getRealCoords(202));
 
     //segment 2
     Vector2D DS2S = DE1S;
-    Vector2D DE2S = new Vector2D(getRealCoords(206), getRealCoords(206));
+    Vector2D DE2S = new Vector2D(getRealCoords(206), getRealCoords(200));
 
     //segment 3
     Vector2D DS3S = DE2S;
-    Vector2D DC3S = new Vector2D(getRealCoords(220), getRealCoords(223));
-    Vector2D DE3S = new Vector2D(getRealCoords(320), getRealCoords(240));
+    Vector2D DC3S = new Vector2D(getRealCoords(240), getRealCoords(213));
+    Vector2D DE3S = new Vector2D(getRealCoords(320), getRealCoords(230));
 
     /**collecting paths*/
 
     Vector2D CS1S = new Vector2D(getRealCoords(300), getRealCoords(270));
     Vector2D CC1S = new Vector2D(getRealCoords(312), getRealCoords(198));
-    Vector2D CE1S = new Vector2D(getRealCoords(220), getRealCoords(204));
+    Vector2D CE1S = new Vector2D(getRealCoords(220), getRealCoords(209));
 
     Vector2D CS2S = CE1S;
-    Vector2D CE2S = new Vector2D(getRealCoords(91), getRealCoords(207));
+    Vector2D CE2S = new Vector2D(getRealCoords(91), getRealCoords(209));
 
     Vector2D CS3S = CE2S;
-    Vector2D CE3S = new Vector2D(getRealCoords(35), getRealCoords(210));
+    Vector2D CE3S = new Vector2D(getRealCoords(36), getRealCoords(205));
 
     Vector2D CS3SS = CE2S;
     Vector2D CC3SS = new Vector2D(getRealCoords(72), getRealCoords(207));
-    Vector2D CE3SS = new Vector2D(getRealCoords(36), getRealCoords(241));
+    Vector2D CE3SS = new Vector2D(getRealCoords(37), getRealCoords(235));
 
     /**
      * Third position
      * */
-
     Vector2D DPS1T = new Vector2D(getRealCoords(210), getRealCoords(337));
     Vector2D DPC1T = new Vector2D(getRealCoords(241), getRealCoords(318));
     Vector2D DPCT1T = new Vector2D(getRealCoords(188), getRealCoords(282));
@@ -144,7 +143,7 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
 
     Vector2D CS3TS = CE2T;
     Vector2D CC3TS = new Vector2D(getRealCoords(72), getRealCoords(207));
-    Vector2D CE3TS = new Vector2D(getRealCoords(35), getRealCoords(241));
+    Vector2D CE3TS = new Vector2D(getRealCoords(33), getRealCoords(241));
 
     /**
      * Action points*
@@ -160,15 +159,17 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
 
     //second position
     Vector2D oneEightyHeadingS = new Vector2D(getRealCoords(241), getRealCoords(274));
-    Vector2D leavePurpleHeadingS = new Vector2D(getRealCoords(214), getRealCoords(300));
+    Vector2D leavePurpleHeadingS = new Vector2D(getRealCoords(214), getRealCoords(310));
 
     //third position
     Vector2D oneEightyHeadingT = new Vector2D(getRealCoords(245), getRealCoords(280));
     Vector2D leavePurpleHeadingT = new Vector2D(getRealCoords(215), getRealCoords(310));
 
     //delivery
-    Vector2D extendSlidesDelivery = new Vector2D(getRealCoords(150), getRealCoords(180));
-    Vector2D armOverPosition = new Vector2D(getRealCoords(180), getRealCoords(180));
+    Vector2D extendSlidesDelivery = new Vector2D(getRealCoords(130), getRealCoords(180));
+    Vector2D armOverPosition = new Vector2D(getRealCoords(160), getRealCoords(180));
+    Vector2D extendSlidesDeliverySafe = new Vector2D(getRealCoords(150), getRealCoords(180));
+    Vector2D armOverPositionSafe = new Vector2D(getRealCoords(180), getRealCoords(180));
 
     Vector2D DeliveryEndpoint;
     Vector2D CollectionEndpoint;
@@ -359,7 +360,15 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
 
         if (delivering){
 
-            if (odometry.X > extendSlidesDelivery.getX()) {
+            if (odometry.X > extendSlidesDelivery.getX() && odometry.getVerticalVelocity() < -100) {
+
+                deliverySlides.DeliverySlides(slidesPosWhitePixels, 1);
+                deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
+
+                delivery.setGripperState(Delivery.GripperState.closed);
+                delivery.updateGrippers();
+
+            } else if (odometry.X > extendSlidesDeliverySafe.getX()) {
 
                 deliverySlides.DeliverySlides(slidesPosWhitePixels, 1);
                 deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
@@ -369,7 +378,17 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (deliverySlides.getCurrentposition() > 150 && !armOver && odometry.X > armOverPosition.getX()){
+            if (deliverySlides.getCurrentposition() > 150 && !armOver && odometry.X > armOverPosition.getX() && odometry.getVerticalVelocity() < -100){
+
+                delivery.setGripperState(Delivery.GripperState.closed);
+                delivery.updateGrippers();
+
+                delivery.setArmTargetState(Delivery.armState.deliverAuto);
+                delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
+
+                armOver = true;
+
+            } else if (deliverySlides.getCurrentposition() > 150 && !armOver && odometry.X > armOverPositionSafe.getX()){
 
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
@@ -380,6 +399,7 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
                 armOver = true;
 
             }
+
 
             if (sensors.armSensor.isPressed() && deliverySlides.getCurrentposition() > 200){
 
@@ -698,7 +718,16 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
 
         if (delivering){
 
-            if (odometry.X > extendSlidesDelivery.getX()) {
+
+            if (odometry.X > extendSlidesDelivery.getX() && odometry.getVerticalVelocity() < -100) {
+
+                deliverySlides.DeliverySlides(slidesPosWhitePixels, 1);
+                deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
+
+                delivery.setGripperState(Delivery.GripperState.closed);
+                delivery.updateGrippers();
+
+            } else if (odometry.X > extendSlidesDeliverySafe.getX()) {
 
                 deliverySlides.DeliverySlides(slidesPosWhitePixels, 1);
                 deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
@@ -708,7 +737,17 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
 
             }
 
-            if (deliverySlides.getCurrentposition() > 150 && !armOver && odometry.X > armOverPosition.getX()){
+            if (deliverySlides.getCurrentposition() > 150 && !armOver && odometry.X > armOverPosition.getX() && odometry.getVerticalVelocity() < -100){
+
+                delivery.setGripperState(Delivery.GripperState.closed);
+                delivery.updateGrippers();
+
+                delivery.setArmTargetState(Delivery.armState.deliverAuto);
+                delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
+
+                armOver = true;
+
+            } else if (deliverySlides.getCurrentposition() > 150 && !armOver && odometry.X > armOverPositionSafe.getX()){
 
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
@@ -719,6 +758,7 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
                 armOver = true;
 
             }
+
 
             if (sensors.armSensor.isPressed() && deliverySlides.getCurrentposition() > 200){
 
@@ -1040,7 +1080,7 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
 
         if (delivering){
 
-            if (odometry.X > extendSlidesDelivery.getX() && autoTimer.milliseconds() < 28000 && deliverySlides.getVelocity() < 30) {
+            if (odometry.X > extendSlidesDelivery.getX() && odometry.getVerticalVelocity() < -100 && autoTimer.milliseconds() < 28000 && deliverySlides.getVelocity() < 30) {
 
                 deliverySlides.DeliverySlides(slidesPosWhitePixels, 1);
                 deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
@@ -1048,7 +1088,15 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
 
-            } else if (odometry.X > extendSlidesDelivery.getX() && autoTimer.milliseconds() > 28000 && deliverySlides.getVelocity() > 30) {
+            } else if (odometry.X > extendSlidesDeliverySafe.getX() && autoTimer.milliseconds() < 28000 && deliverySlides.getVelocity() < 30) {
+
+                deliverySlides.DeliverySlides(slidesPosWhitePixels, 1);
+                deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
+
+                delivery.setGripperState(Delivery.GripperState.closed);
+                delivery.updateGrippers();
+
+            } else if (odometry.X > extendSlidesDeliverySafe.getX() && autoTimer.milliseconds() > 28000 && deliverySlides.getVelocity() > 30) {
 
                 sleep(400);
 
@@ -1057,7 +1105,17 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
                 phase = Phase.finished;
             }
 
-            if (deliverySlides.getCurrentposition() > 150 && !armOver && odometry.X > armOverPosition.getX()){
+            if (deliverySlides.getCurrentposition() > 150 && !armOver && odometry.X > armOverPosition.getX() && odometry.getVerticalVelocity() < -100){
+
+                delivery.setGripperState(Delivery.GripperState.closed);
+                delivery.updateGrippers();
+
+                delivery.setArmTargetState(Delivery.armState.deliverAuto);
+                delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
+
+                armOver = true;
+
+            } else if (deliverySlides.getCurrentposition() > 150 && !armOver && odometry.X > armOverPositionSafe.getX()){
 
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
@@ -1332,7 +1390,7 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
 
         if (delivering){
 
-            if (odometry.X > extendSlidesDelivery.getX() && autoTimer.milliseconds() < 28000 && deliverySlides.getVelocity() < 30) {
+            if (odometry.X > extendSlidesDelivery.getX() && odometry.getVerticalVelocity() < -100 && autoTimer.milliseconds() < 28000 && deliverySlides.getCurrentposition() < 30) {
 
                 deliverySlides.DeliverySlides(slidesPosWhitePixels, 1);
                 deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
@@ -1340,7 +1398,15 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
 
-            } else if (odometry.X > extendSlidesDelivery.getX() && autoTimer.milliseconds() > 28000 && deliverySlides.getVelocity() > 30) {
+            } else if (odometry.X > extendSlidesDeliverySafe.getX() && autoTimer.milliseconds() < 28000 && deliverySlides.getCurrentposition() < 30) {
+
+                deliverySlides.DeliverySlides(slidesPosWhitePixels, 1);
+                deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
+
+                delivery.setGripperState(Delivery.GripperState.closed);
+                delivery.updateGrippers();
+
+            } else if (odometry.X > extendSlidesDeliverySafe.getX() && autoTimer.milliseconds() > 28000 && deliverySlides.getCurrentposition() < 30) {
 
                 sleep(400);
 
@@ -1349,7 +1415,17 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
                 phase = Phase.finished;
             }
 
-            if (deliverySlides.getCurrentposition() > 150 && !armOver && odometry.X > armOverPosition.getX()){
+            if (deliverySlides.getCurrentposition() > 150 && !armOver && odometry.X > armOverPosition.getX() && odometry.getVerticalVelocity() < -100){
+
+                delivery.setGripperState(Delivery.GripperState.closed);
+                delivery.updateGrippers();
+
+                delivery.setArmTargetState(Delivery.armState.deliverAuto);
+                delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
+
+                armOver = true;
+
+            } else if (deliverySlides.getCurrentposition() > 150 && !armOver && odometry.X > armOverPositionSafe.getX()){
 
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
@@ -1567,7 +1643,7 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
 
                 collectSecondStack.threePoints(CS1F, CC1F, CE1F);
                 collectSecondStack.twoPoints(CS2F, CE2F);
-                collectSecondStack.threePoints(CS3FS, CC3FS, CE3FS, true, 0.6);
+                collectSecondStack.threePoints(CS3FS, CC3FS, CE3FS, true, 0.5);
 
                 deliver.threePoints(DS1F, DC1F, DE1F);
                 deliver.twoPoints(DS2F, DE2F);
@@ -1591,7 +1667,7 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
 
                 collectSecondStack.threePoints(CS1S, CC1S, CE1S);
                 collectSecondStack.twoPoints(CS2S, CE2S);
-                collectSecondStack.threePoints(CS3SS, CC3SS, CE3SS, true, 0.6);
+                collectSecondStack.threePoints(CS3SS, CC3SS, CE3SS, true, 0.5);
 
                 deliver.threePoints(DS1S, DC1S, DE1S);
                 deliver.twoPoints(DS2S, DE2S);
@@ -1615,7 +1691,7 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
 
                 collectSecondStack.threePoints(CS1T, CC1T, CE1T);
                 collectSecondStack.twoPoints(CS2T, CE2T);
-                collectSecondStack.threePoints(CS3TS, CC3TS, CE3TS, true, 0.6);
+                collectSecondStack.threePoints(CS3TS, CC3TS, CE3TS, true, 0.5);
 
                 deliver.threePoints(DS1T, DC1T, DE1T);
                 deliver.twoPoints(DS2T, DE2T);
@@ -1808,11 +1884,11 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
 
                         if (pathing){
 
-                            pathing = follower.followPathAutoHeading(targetHeading, odometry, drive, 0.008, 2);
+                            pathing = follower.followPathAutoHeading(targetHeading, odometry, drive, 0.02, 2);
 
                             if (Math.abs(leavePurpleHeadingS.getX() - odometry.X) < 30 && Math.abs(leavePurpleHeadingS.getY() - odometry.Y) < HeadingControlError && targetHeading == 90){
 
-                                targetHeading = 30;
+                                targetHeading = 50;
 
                                 delivery.setGripperState(Delivery.GripperState.closed);
                                 delivery.updateGrippers();
@@ -1849,7 +1925,7 @@ public class  Red_Close_Stage extends LinearOpMode implements CycleMethods {
                             }else {
 
                                 while (delivery.getMainPivotPosition() < 0.95 && !(sensors.armSensor.isPressed())){
-                                    delivery.setMainPivot(delivery.getMainPivotPosition() + 0.005);
+                                    delivery.setMainPivot(delivery.getMainPivotPosition() + 0.012);
 
                                     sleep(10);
                                 }

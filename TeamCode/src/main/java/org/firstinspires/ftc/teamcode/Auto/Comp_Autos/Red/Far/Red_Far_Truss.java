@@ -41,15 +41,15 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
 
     //yellow pixel
     Vector2D DYS1F = DPE1F;
-    Vector2D DYC1F = new Vector2D(getRealCoords(40), getRealCoords(292));
-    Vector2D DYE1F = new Vector2D(getRealCoords(90), getRealCoords(321));
+    Vector2D DYC1F = new Vector2D(getRealCoords(40), getRealCoords(288));
+    Vector2D DYE1F = new Vector2D(getRealCoords(90), getRealCoords(316));
 
     Vector2D DYS2F = DYE1F;
-    Vector2D DYE2F = new Vector2D(getRealCoords(210), getRealCoords(328));
+    Vector2D DYE2F = new Vector2D(getRealCoords(210), getRealCoords(317));
 
     Vector2D DYS3F = DYE2F;
-    Vector2D DYC3F = new Vector2D(getRealCoords(261), getRealCoords(329));
-    Vector2D DYE3F = new Vector2D(getRealCoords(312), getRealCoords(250));
+    Vector2D DYC3F = new Vector2D(getRealCoords(261), getRealCoords(323));
+    Vector2D DYE3F = new Vector2D(getRealCoords(312), getRealCoords(254));
 
     /**delivery and collection points*/
     Vector2D DS1F = new Vector2D(getRealCoords(44), getRealCoords(270));
@@ -67,10 +67,10 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
     /**collecting paths*/
     Vector2D CS1F = new Vector2D(getRealCoords(300), getRealCoords(270));
     Vector2D CC1F = new Vector2D(getRealCoords(265), getRealCoords(322));
-    Vector2D CE1F = new Vector2D(getRealCoords(180), getRealCoords(324));
+    Vector2D CE1F = new Vector2D(getRealCoords(180), getRealCoords(320));
 
     Vector2D CS2F = CE1F;
-    Vector2D CE2F = new Vector2D(getRealCoords(119), getRealCoords(328));
+    Vector2D CE2F = new Vector2D(getRealCoords(119), getRealCoords(323));
 
     Vector2D CS3F = CE2F;
     Vector2D CC3F = new Vector2D(getRealCoords(25), getRealCoords(285));
@@ -93,7 +93,7 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
 
     Vector2D DYS3S = DYE2S;
     Vector2D DYC3S = new Vector2D(getRealCoords(261), getRealCoords(326));
-    Vector2D DYE3S = new Vector2D(getRealCoords(310), getRealCoords(265));
+    Vector2D DYE3S = new Vector2D(getRealCoords(310), getRealCoords(262));
 
     /**delivery and collection points*/
     Vector2D DS1S = new Vector2D(getRealCoords(44), getRealCoords(270));
@@ -111,14 +111,14 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
     /**collecting paths*/
     Vector2D CS1S = new Vector2D(getRealCoords(300), getRealCoords(270));
     Vector2D CC1S = new Vector2D(getRealCoords(265), getRealCoords(322));
-    Vector2D CE1S = new Vector2D(getRealCoords(180), getRealCoords(324));
+    Vector2D CE1S = new Vector2D(getRealCoords(180), getRealCoords(322));
 
     Vector2D CS2S = CE1S;
-    Vector2D CE2S = new Vector2D(getRealCoords(119), getRealCoords(328));
+    Vector2D CE2S = new Vector2D(getRealCoords(119), getRealCoords(322));
 
     Vector2D CS3S = CE2S;
     Vector2D CC3S = new Vector2D(getRealCoords(25), getRealCoords(285));
-    Vector2D CE3S = new Vector2D(getRealCoords(35), getRealCoords(255));
+    Vector2D CE3S = new Vector2D(getRealCoords(37), getRealCoords(265));
 
     /**Right Prop position*/
 
@@ -126,7 +126,7 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
     Vector2D DPS1T = startPosition;
     Vector2D DPC1T = new Vector2D(getRealCoords(86), getRealCoords(210));
     Vector2D DPCT1T = new Vector2D(getRealCoords(58), getRealCoords(277));
-    Vector2D DPE1T = new Vector2D(getRealCoords(35), getRealCoords(267));
+    Vector2D DPE1T = new Vector2D(getRealCoords(36), getRealCoords(267));
 
     //yellow pixel
     Vector2D DYS1T = DPE1T;
@@ -134,37 +134,37 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
     Vector2D DYE1T = new Vector2D(getRealCoords(90), getRealCoords(321));
 
     Vector2D DYS2T = DYE1T;
-    Vector2D DYE2T = new Vector2D(getRealCoords(210), getRealCoords(328));
+    Vector2D DYE2T = new Vector2D(getRealCoords(210), getRealCoords(323));
 
     Vector2D DYS3T = DYE2T;
-    Vector2D DYC3T = new Vector2D(getRealCoords(255), getRealCoords(328));
-    Vector2D DYE3T = new Vector2D(getRealCoords(310), getRealCoords(278));
+    Vector2D DYC3T = new Vector2D(getRealCoords(255), getRealCoords(324));
+    Vector2D DYE3T = new Vector2D(getRealCoords(310), getRealCoords(276));
 
     /**delivery and collection points*/
 
-    Vector2D DS1T = new Vector2D(getRealCoords(46), getRealCoords(270));
-    Vector2D DC1T = new Vector2D(getRealCoords(55), getRealCoords(326));
-    Vector2D DE1T = new Vector2D(getRealCoords(119), getRealCoords(325));
+    Vector2D DS1T = new Vector2D(getRealCoords(44), getRealCoords(270));
+    Vector2D DC1T = new Vector2D(getRealCoords(53), getRealCoords(326));
+    Vector2D DE1T = new Vector2D(getRealCoords(119), getRealCoords(321));
 
     Vector2D DS2T = DE1T;
-    Vector2D DE2T = new Vector2D(getRealCoords(181), getRealCoords(327));
+    Vector2D DE2T = new Vector2D(getRealCoords(181), getRealCoords(322));
 
     //segment 3
     Vector2D DS3T = DE2T;
-    Vector2D DC3T = new Vector2D(getRealCoords(220), getRealCoords(306));
-    Vector2D DE3T = new Vector2D(getRealCoords(320), getRealCoords(294));
+    Vector2D DC3T = new Vector2D(getRealCoords(220), getRealCoords(310));
+    Vector2D DE3T = new Vector2D(getRealCoords(320), getRealCoords(295));
 
     /**collecting paths*/
     Vector2D CS1T = new Vector2D(getRealCoords(300), getRealCoords(265));
     Vector2D CC1T = new Vector2D(getRealCoords(265), getRealCoords(319));
-    Vector2D CE1T = new Vector2D(getRealCoords(180), getRealCoords(322));
+    Vector2D CE1T = new Vector2D(getRealCoords(180), getRealCoords(321));
 
     Vector2D CS2T = CE1T;
-    Vector2D CE2T = new Vector2D(getRealCoords(119), getRealCoords(326));
+    Vector2D CE2T = new Vector2D(getRealCoords(119), getRealCoords(322));
 
     Vector2D CS3T = CE2T;
-    Vector2D CC3T = new Vector2D(getRealCoords(63), getRealCoords(325));
-    Vector2D CE3T = new Vector2D(getRealCoords(43), getRealCoords(255));
+    Vector2D CC3T = new Vector2D(getRealCoords(25), getRealCoords(285));
+    Vector2D CE3T = new Vector2D(getRealCoords(37), getRealCoords(265));
 
     /**Action points*/
 
@@ -191,7 +191,7 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
     Vector2D turnIntakeOn = new Vector2D(getRealCoords(183), getRealCoords(328));
     Vector2D turnIntakeOff = new Vector2D(getRealCoords(125), getRealCoords(328));
     Vector2D restartIntake = new Vector2D(getRealCoords(75), getRealCoords(300));
-    Vector2D reverseIntake = new Vector2D(getRealCoords(45), getRealCoords(300));
+    Vector2D reverseIntake = new Vector2D(getRealCoords(45), getRealCoords(280));
 
     /**path objects*/
     GenMethods purple = new GenMethods();
@@ -214,7 +214,7 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
 
     int slidesPosWhitePixels = 1000;
 
-    int slidesPosYellowPixel = 400;
+    int slidesPosYellowPixel = 500;
 
     /**hardware objects*/
     Odometry odometry = new Odometry(startPosition.getX(), startPosition.getY(), 90);
@@ -308,13 +308,25 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
 
         }
 
+        if(!gotTwo){
+            drive.strafeLeft();
+
+            sleep(200);
+
+            drive.strafeRight();
+
+            sleep(200);
+
+            drive.setAllPower(0);
+        }
+
         while (counter < 40){
 
             counter++;
 
             sleep(50);
 
-            collection.IntakeHeightRight.setPosition(collection.getIntakeHeightRight() - 0.005);
+            collection.IntakeHeightRight.setPosition(collection.getIntakeHeightRight() + 0.005);
 
             if (collection.getIntakeCurrentUse() > 6000 && !reversingIntake){
                 reversingIntake = true;
@@ -662,6 +674,9 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
 
             follower.resetClosestPoint(new Vector2D(odometry.X, odometry.Y));
 
+            collection.setIntakeHeight(Collection.intakeHeightState.fifthPixel);
+            collection.updateIntakeState();
+
         }
     }
 
@@ -929,6 +944,9 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
 
             follower.resetClosestPoint(new Vector2D(odometry.X, odometry.Y));
 
+            collection.setIntakeHeight(Collection.intakeHeightState.fifthPixel);
+            collection.updateIntakeState();
+
         }
     }
 
@@ -981,14 +999,14 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
             telemetry.addData("time to wait for yellow preload", waitYellow);
             telemetry.addData("press d pad up to increase", "");
             telemetry.addData("press d pad down to decrease", "");
-            telemetry.addData("press x to lock in!!!!", "");
+            telemetry.addData("press left_bumper to lock in!!!!", "");
             telemetry.update();
 
             if (gamepad1.dpad_down){
                 waitYellow -= 50;
             } else if (gamepad1.dpad_up) {
                 waitYellow += 50;
-            }else if (gamepad1.x) {
+            }else if (gamepad1.left_bumper) {
                 timerSet = true;
             }
 
@@ -1074,16 +1092,16 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
                 yellow.twoPoints(DYS2T, DYE2T);
                 yellow.threePoints(DYS3T, DYC3T, DYE3T, true, 1.1);
 
-                collect.threePoints(CS1S, CC1S, CE1S);
-                collect.twoPoints(CS2S, CE2S);
-                collect.threePoints(CS3S, CC3S, CE3S, true, 0.4);
+                collect.threePoints(CS1T, CC1T, CE1T);
+                collect.twoPoints(CS2T, CE2T);
+                collect.threePoints(CS3T, CC3T, CE3T, true, 0.4);
 
-                deliver.threePoints(DS1S, DC1S, DE1S);
-                deliver.twoPoints(DS2S, DE2S);
-                deliver.threePoints(DS3S, DC3S, DE3S, true);
+                deliver.threePoints(DS1T, DC1T, DE1T);
+                deliver.twoPoints(DS2T, DE2T);
+                deliver.threePoints(DS3T, DC3T, DE3T, true);
 
-                DeliveryEndpoint = DE3S;
-                CollectionEndpoint = CE3S;
+                DeliveryEndpoint = DE3T;
+                CollectionEndpoint = CE3T;
 
                 buildPaths.reset();
             }
@@ -1189,6 +1207,36 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
 
                                     }
 
+                                    if (Math.abs(turnIntakeOff.getX() - odometry.X) < IntakeControlError && Math.abs(turnIntakeOff.getY() - odometry.Y) < IntakeControlError) {
+
+                                        delivery.setGripperState(Delivery.GripperState.closed);
+                                        delivery.updateGrippers();
+
+                                        collection.setState(Collection.intakePowerState.off);
+                                        collection.updateIntakeState();
+
+                                    }
+
+                                    if (Math.abs(reverseIntake.getX() - odometry.X) < 20 && Math.abs(reverseIntake.getY() - odometry.Y) < IntakeControlError){
+
+                                        delivery.setGripperState(Delivery.GripperState.closed);
+                                        delivery.updateGrippers();
+
+                                        collection.setState(Collection.intakePowerState.reversed);
+                                        collection.updateIntakeState();
+
+                                    }
+
+                                    if (Math.abs(restartIntake.getX() - odometry.X) < IntakeControlError && Math.abs(restartIntake.getY() - odometry.Y) < 20){
+
+                                        delivery.setGripperState(Delivery.GripperState.open);
+                                        delivery.updateGrippers();
+
+                                        collection.setState(Collection.intakePowerState.on);
+                                        collection.updateIntakeState();
+
+                                    }
+
                                 }else if (Math.abs(DYE3F.getX() - odometry.X) < deliveryError && Math.abs(DYE3F.getY() - odometry.Y) < deliveryError && !pathing){
 
                                     drive.setAllPower(0);
@@ -1205,7 +1253,7 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
                                     }else {
 
                                         while (delivery.getMainPivotPosition() < 0.95 && !(sensors.armSensor.isPressed())){
-                                            delivery.setMainPivot(delivery.getMainPivotPosition() + 0.008);
+                                            delivery.setMainPivot(delivery.getMainPivotPosition() + 0.01);
 
                                             sleep(10);
                                         }
@@ -1375,6 +1423,36 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
 
                                     }
 
+                                    if (Math.abs(turnIntakeOff.getX() - odometry.X) < IntakeControlError && Math.abs(turnIntakeOff.getY() - odometry.Y) < IntakeControlError) {
+
+                                        delivery.setGripperState(Delivery.GripperState.closed);
+                                        delivery.updateGrippers();
+
+                                        collection.setState(Collection.intakePowerState.off);
+                                        collection.updateIntakeState();
+
+                                    }
+
+                                    if (Math.abs(reverseIntake.getX() - odometry.X) < 20 && Math.abs(reverseIntake.getY() - odometry.Y) < IntakeControlError){
+
+                                        delivery.setGripperState(Delivery.GripperState.closed);
+                                        delivery.updateGrippers();
+
+                                        collection.setState(Collection.intakePowerState.reversed);
+                                        collection.updateIntakeState();
+
+                                    }
+
+                                    if (Math.abs(restartIntake.getX() - odometry.X) < IntakeControlError && Math.abs(restartIntake.getY() - odometry.Y) < 20){
+
+                                        delivery.setGripperState(Delivery.GripperState.open);
+                                        delivery.updateGrippers();
+
+                                        collection.setState(Collection.intakePowerState.on);
+                                        collection.updateIntakeState();
+
+                                    }
+
                                 }else if (Math.abs(DYE3S.getX() - odometry.X) < deliveryError && Math.abs(DYE3S.getY() - odometry.Y) < deliveryError && !pathing){
 
 
@@ -1535,6 +1613,36 @@ public class Red_Far_Truss extends LinearOpMode implements CycleMethods {
 
                                         delivery.setArmTargetState(Delivery.armState.delivery);
                                         delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.yellow3Blue, odometry);
+
+                                    }
+
+                                    if (Math.abs(turnIntakeOff.getX() - odometry.X) < IntakeControlError && Math.abs(turnIntakeOff.getY() - odometry.Y) < IntakeControlError) {
+
+                                        delivery.setGripperState(Delivery.GripperState.closed);
+                                        delivery.updateGrippers();
+
+                                        collection.setState(Collection.intakePowerState.off);
+                                        collection.updateIntakeState();
+
+                                    }
+
+                                    if (Math.abs(reverseIntake.getX() - odometry.X) < 20 && Math.abs(reverseIntake.getY() - odometry.Y) < IntakeControlError){
+
+                                        delivery.setGripperState(Delivery.GripperState.closed);
+                                        delivery.updateGrippers();
+
+                                        collection.setState(Collection.intakePowerState.reversed);
+                                        collection.updateIntakeState();
+
+                                    }
+
+                                    if (Math.abs(restartIntake.getX() - odometry.X) < IntakeControlError && Math.abs(restartIntake.getY() - odometry.Y) < 20){
+
+                                        delivery.setGripperState(Delivery.GripperState.open);
+                                        delivery.updateGrippers();
+
+                                        collection.setState(Collection.intakePowerState.on);
+                                        collection.updateIntakeState();
 
                                     }
 

@@ -41,43 +41,106 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
     Vector2D DPE2F = new Vector2D(getRealCoords(89), getRealCoords(210));
 
     Vector2D DYS1F = DPE1F;
-    Vector2D DYE1F = new Vector2D(getRealCoords(38), getRealCoords(208));
+    Vector2D DYE1F = new Vector2D(getRealCoords(37), getRealCoords(208));
 
     Vector2D DYS2F = DYE1F;
     Vector2D DYE2F = new Vector2D(getRealCoords(240), getRealCoords(206));
 
     Vector2D DYS3F = DYE2F;
     Vector2D DYC3F = new Vector2D(getRealCoords(265), getRealCoords(206));
-    Vector2D DYE3F = new Vector2D(getRealCoords(310), getRealCoords(254));
+    Vector2D DYE3F = new Vector2D(getRealCoords(312), getRealCoords(249));
+
+    /**delivery and collection points*/
+    //segment 1 deliver straight
+    Vector2D DS1F = new Vector2D(getRealCoords(46), getRealCoords(225));
+    Vector2D DC1F = new Vector2D(getRealCoords(47), getRealCoords(209));
+    Vector2D DE1F = new Vector2D(getRealCoords(106), getRealCoords(208));
+
+    //segment 2
+    Vector2D DS2F = DE1F;
+    Vector2D DE2F = new Vector2D(getRealCoords(206), getRealCoords(206));
+
+    //segment 3
+    Vector2D DS3F = DE2F;
+    Vector2D DC3F = new Vector2D(getRealCoords(220), getRealCoords(223));
+    Vector2D DE3F = new Vector2D(getRealCoords(320), getRealCoords(235));
+
+    /**collecting paths*/
+
+    Vector2D CS1F = new Vector2D(getRealCoords(300), getRealCoords(270));
+    Vector2D CC1F = new Vector2D(getRealCoords(312), getRealCoords(198));
+    Vector2D CE1F = new Vector2D(getRealCoords(220), getRealCoords(204));
+
+    Vector2D CS2F = CE1F;
+    Vector2D CE2F = new Vector2D(getRealCoords(91), getRealCoords(207));
+
+    Vector2D CS3F = CE2F;
+    Vector2D CE3F = new Vector2D(getRealCoords(35.5), getRealCoords(206));
+
+    Vector2D CS3FS = CE2F;
+    Vector2D CC3FS = new Vector2D(getRealCoords(72), getRealCoords(207));
+    Vector2D CE3FS = new Vector2D(getRealCoords(36), getRealCoords(240));
+
 
     /**Middle Prop position*/
     //purple pixel
     Vector2D DPS1S = startPosition;
     Vector2D DPC1S = new Vector2D(getRealCoords(70), getRealCoords(194));
-    Vector2D DPE1S = new Vector2D(getRealCoords(38), getRealCoords(208));
+    Vector2D DPE1S = new Vector2D(getRealCoords(36), getRealCoords(208));
 
     Vector2D DYS2S = DPE1S;
     Vector2D DYE2S = new Vector2D(getRealCoords(240), getRealCoords(206));
 
     Vector2D DYS3S = DYE2S;
     Vector2D DYC3S = new Vector2D(getRealCoords(275), getRealCoords(202));
-    Vector2D DYE3S = new Vector2D(getRealCoords(310), getRealCoords(263));
+    Vector2D DYE3S = new Vector2D(getRealCoords(310), getRealCoords(257));
+
+    /**delivery and collection points*/
+    //segment 1 deliver straight
+    Vector2D DS1S = new Vector2D(getRealCoords(46), getRealCoords(225));
+    Vector2D DC1S = new Vector2D(getRealCoords(47), getRealCoords(209));
+    Vector2D DE1S = new Vector2D(getRealCoords(106), getRealCoords(208));
+
+    //segment 2
+    Vector2D DS2S = DE1S;
+    Vector2D DE2S = new Vector2D(getRealCoords(206), getRealCoords(206));
+
+    //segment 3
+    Vector2D DS3S = DE2S;
+    Vector2D DC3S= new Vector2D(getRealCoords(220), getRealCoords(223));
+    Vector2D DE3S = new Vector2D(getRealCoords(320), getRealCoords(250));
+
+    /**collecting paths*/
+
+    Vector2D CS1S = new Vector2D(getRealCoords(300), getRealCoords(270));
+    Vector2D CC1S = new Vector2D(getRealCoords(312), getRealCoords(198));
+    Vector2D CE1S = new Vector2D(getRealCoords(220), getRealCoords(204));
+
+    Vector2D CS2S = CE1S;
+    Vector2D CE2S = new Vector2D(getRealCoords(91), getRealCoords(207));
+
+    Vector2D CS3S = CE2S;
+    Vector2D CE3S = new Vector2D(getRealCoords(35.5), getRealCoords(206));
+
+    Vector2D CS3SS = CE2S;
+    Vector2D CC3SS = new Vector2D(getRealCoords(72), getRealCoords(207));
+    Vector2D CE3SS = new Vector2D(getRealCoords(36), getRealCoords(240));
+
 
     /**Right Prop position*/
     //purple pixel
     Vector2D DPS1T = startPosition;
     Vector2D DPC1T = new Vector2D(getRealCoords(85), getRealCoords(193));
-    Vector2D DPE1T = new Vector2D(getRealCoords(38), getRealCoords(208));
+    Vector2D DPE1T = new Vector2D(getRealCoords(37), getRealCoords(206));
 
     Vector2D DYS2T = DPE1T;
     Vector2D DYE2T = new Vector2D(getRealCoords(240), getRealCoords(206));
 
     Vector2D DYS3T = DYE2T;
     Vector2D DYC3T = new Vector2D(getRealCoords(260), getRealCoords(206));
-    Vector2D DYE3T = new Vector2D(getRealCoords(310), getRealCoords(279));
+    Vector2D DYE3T = new Vector2D(getRealCoords(313), getRealCoords(275));
 
     /**delivery and collection points*/
-
     //segment 1 deliver straight
     Vector2D DS1T = new Vector2D(getRealCoords(46), getRealCoords(225));
     Vector2D DC1T = new Vector2D(getRealCoords(47), getRealCoords(209));
@@ -90,7 +153,7 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
     //segment 3
     Vector2D DS3T = DE2T;
     Vector2D DC3T = new Vector2D(getRealCoords(220), getRealCoords(223));
-    Vector2D DE3T = new Vector2D(getRealCoords(320), getRealCoords(250));
+    Vector2D DE3T = new Vector2D(getRealCoords(320), getRealCoords(235));
 
     /**collecting paths*/
 
@@ -260,7 +323,11 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
         if(!gotTwo){
             drive.strafeLeft();
 
-            sleep(200);
+            sleep(400);
+
+            drive.strafeRight();
+
+            sleep(400);
 
             drive.setAllPower(0);
         }
@@ -271,7 +338,7 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
 
             sleep(50);
 
-            collection.IntakeHeightRight.setPosition(collection.getIntakeHeightRight() - 0.005);
+            collection.IntakeHeightRight.setPosition(collection.getIntakeHeightRight() + 0.005);
 
             if (collection.getIntakeCurrentUse() > 6000 && !reversingIntake){
                 reversingIntake = true;
@@ -294,6 +361,9 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
             }
 
         }
+
+        delivery.setRightGripperState(Delivery.rightGripperState.closed);
+        delivery.updateGrippers();
 
     }
 
@@ -333,7 +403,7 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
                 delivery.setGripperState(Delivery.GripperState.open);
                 delivery.updateGrippers();
 
-                collection.setIntakeHeight(Collection.intakeHeightState.fifthAndHalf);
+                collection.setIntakeHeight(Collection.intakeHeightState.forthAndHalf);
                 collection.updateIntakeHeight();
 
                 collection.setState(Collection.intakePowerState.on);
@@ -438,50 +508,50 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
 
             }
 
-//            if(pathing && Math.abs(odometry.getVerticalVelocity()) < 10 && !sensors.armSensor.isPressed() && deliverySlides.getCurrentposition() > 200 && odometry.X > 200){
-//
-//                drive.setAllPower(0.4);
-//
-//                delivery.setGripperState(Delivery.GripperState.open);
-//
-//                delivery.updateGrippers();
-//
-//                sleep(200);
-//
-//                delivery.setArmTargetState(Delivery.armState.collect);
-//                delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
-//
-//                pathing = true;
-//
-//                gotTwo = false;
-//
-//                armOver = false;
-//
-//                if (auto == Auto.two) {
-//
-//                    phase = Phase.finished;
-//
-//                    drive.setAllPower(0);
-//
-//                    deliverySlides.DeliverySlides(0, -0.2);
-//
-//                    while (!(delivery.getArmState() == Delivery.armState.collect) || deliverySlides.getCurrentposition() > 20){
-//                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
-//                    }
-//
-//                } else {
-//
-//                    deliverySlides.DeliverySlides(0, -0.5);
-//
-//                    build = Build.notBuilt;
-//
-//                    delivering = false;
-//
-//                    phase = Phase.second2;
-//
-//                }
-//
-//            }
+            if(pathing && Math.abs(odometry.getVerticalVelocity()) < 5 && !sensors.armSensor.isPressed() && deliverySlides.getCurrentposition() > 200 && odometry.X > 200){
+
+                drive.setAllPower(0.4);
+
+                delivery.setGripperState(Delivery.GripperState.open);
+
+                delivery.updateGrippers();
+
+                sleep(200);
+
+                delivery.setArmTargetState(Delivery.armState.collect);
+                delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
+
+                pathing = true;
+
+                gotTwo = false;
+
+                armOver = false;
+
+                if (auto == Auto.two) {
+
+                    phase = Phase.finished;
+
+                    drive.setAllPower(0);
+
+                    deliverySlides.DeliverySlides(0, -0.5);
+
+                    while (!(delivery.getArmState() == Delivery.armState.collect) || deliverySlides.getCurrentposition() > 20){
+                        delivery.updateArm(deliverySlides.getCurrentposition(), false, Delivery.PixelsAuto.backboardLeft, odometry);
+                    }
+
+                } else {
+
+                    deliverySlides.DeliverySlides(0, -0.5);
+
+                    build = Build.notBuilt;
+
+                    delivering = false;
+
+                    phase = Phase.second2;
+
+                }
+
+            }
 
             if (Math.abs(turnIntakeOff.getX() - odometry.X) < IntakeControlError && Math.abs(turnIntakeOff.getY() - odometry.Y) < (IntakeControlError+20)) {
 
@@ -572,11 +642,11 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
         }else if (Math.abs(CollectionEndpoint.getX() - odometry.X) < collectionError && Math.abs(CollectionEndpoint.getY() - odometry.Y) < collectionError - 2){
 
             if(auto == Auto.two){
-                collectStraight(autoTimer, drive, Collection.intakeHeightState.fifthPixel, Collection.intakeHeightState.forthPixel, 2);
+                collectStraight(autoTimer, drive, Collection.intakeHeightState.forthPixel, Collection.intakeHeightState.thirdPixel, 2);
             } else if (auto == Auto.four) {
-                collectStraight(autoTimer, drive, Collection.intakeHeightState.fifthPixel, Collection.intakeHeightState.forthPixel, 1.5);
+                collectStraight(autoTimer, drive, Collection.intakeHeightState.forthPixel, Collection.intakeHeightState.thirdPixel, 1.5);
             }else if (auto == Auto.six) {
-                collectStraight(autoTimer, drive, Collection.intakeHeightState.fifthPixel, Collection.intakeHeightState.forthPixel, 0.8);
+                collectStraight(autoTimer, drive, Collection.intakeHeightState.forthPixel, Collection.intakeHeightState.thirdPixel, 0.8);
             }
 
             pathing = true;
@@ -628,7 +698,7 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
                 delivery.setGripperState(Delivery.GripperState.open);
                 delivery.updateGrippers();
 
-                collection.setIntakeHeight(Collection.intakeHeightState.thirdPixel);
+                collection.setIntakeHeight(Collection.intakeHeightState.firstAndHalf);
                 collection.updateIntakeHeight();
 
                 collection.setState(Collection.intakePowerState.on);
@@ -881,11 +951,11 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
         }else if (Math.abs(CollectionEndpoint.getX() - odometry.X) < collectionError && Math.abs(CollectionEndpoint.getY() - odometry.Y) < collectionError - 2){
 
             if(auto == Auto.two){
-                collectStraight(autoTimer, drive, Collection.intakeHeightState.secondAndHalf, Collection.intakeHeightState.firstPixel, 2);
+                collectStraight(autoTimer, drive, Collection.intakeHeightState.firstAndHalf, Collection.intakeHeightState.firstPixel, 2);
             } else if (auto == Auto.four) {
-                collectStraight(autoTimer, drive, Collection.intakeHeightState.secondAndHalf, Collection.intakeHeightState.firstPixel, 1.5);
+                collectStraight(autoTimer, drive, Collection.intakeHeightState.firstAndHalf, Collection.intakeHeightState.firstPixel, 1.5);
             }else if (auto == Auto.six) {
-                collectStraight(autoTimer, drive, Collection.intakeHeightState.secondAndHalf, Collection.intakeHeightState.firstPixel, 0.8);
+                collectStraight(autoTimer, drive, Collection.intakeHeightState.firstAndHalf, Collection.intakeHeightState.firstPixel, 0.8);
             }
 
             pathing = true;
@@ -1217,16 +1287,18 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
             telemetry.addData("time to wait for yellow preload", waitYellow);
             telemetry.addData("press d pad up to increase", "");
             telemetry.addData("press d pad down to decrease", "");
-            telemetry.addData("press x to lock in!!!!", "");
+            telemetry.addData("press left_bumper to lock in!!!!", "");
             telemetry.update();
 
             if (gamepad1.dpad_down){
-                waitYellow -= 50;
+                waitYellow -= 100;
             } else if (gamepad1.dpad_up) {
-                waitYellow += 50;
-            }else if (gamepad1.x) {
+                waitYellow += 100;
+            }else if (gamepad1.left_bumper) {
                 timerSet = true;
             }
+
+            sleep(50);
 
         }
 
@@ -1277,12 +1349,12 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
                 collectSecond.twoPoints(CS2T, CE2T);
                 collectSecond.threePoints(CS3TS, CC3TS, CE3TS, true, 0.6);
 
-                deliver.threePoints(DS1T, DC1T, DE1T);
-                deliver.twoPoints(DS2T, DE2T);
-                deliver.threePoints(DS3T, DC3T, DE3T, true);
+                deliver.threePoints(DS1F, DC1F, DE1F);
+                deliver.twoPoints(DS2F, DE2F);
+                deliver.threePoints(DS3F, DC3F, DE3F, true);
 
-                DeliveryEndpoint = DE3T;
-                CollectionEndpoint = CE3T;
+                DeliveryEndpoint = DE3F;
+                CollectionEndpoint = CE3F;
                 lastStack = CE3TS;
 
                 buildPaths.reset();
@@ -1413,9 +1485,10 @@ public class Red_Far_Stage extends LinearOpMode implements CycleMethods {
 
                                     collectOnePixel();
 
-                                    build = Build.notBuilt;
+                                    collection.setState(Collection.intakePowerState.off);
+                                    collection.updateIntakeState();
 
-                                    sleep(waitYellow);
+                                    build = Build.notBuilt;
 
                                     preload = Preload.yellow;
 

@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoImplEx;
 
@@ -13,29 +14,29 @@ public class Collection {
 
     DcMotorEx Intake;
 
-    public Servo IntakeHeightLeft;
-    public Servo IntakeHeightRight;
+    public ServoImplEx IntakeHeightLeft;
+    public ServoImplEx IntakeHeightRight;
 
     ServoImplEx sweeper;
 
     HardwareMap hmap;
 
-    double collect = 0.19;
-    double startingBox = 0.95;
-    double stowedMiddle = 0.55;
-    double stowed = 0.25;
-    double letClawThrough = 0.25;
+    double collect = 0.96;
+    double startingBox = 0.4;
+    double stowedMiddle = 0.5;
+    double stowed = 0.7;
+    double letClawThrough = 0.6;
 
-    double firstPixel = 0.19;
-    double firstAndHalf = 0.215;
-    double secondPixel = 0.230;
-    double secondAndHalf = 0.260;
-    double thirdPixel = 0.29;
-    double thirdAndHalf = 0.302;
-    double forthPixel = 0.315;
-    double forthAndHalf = 0.335;
-    double fifthPixel = 0.365;
-    double fifthAndHalf = 0.395;
+    double firstPixel = 0.96;
+    double firstAndHalf = 0.905;
+    double secondPixel = 0.905;
+    double secondAndHalf = 0.875;
+    double thirdPixel = 0.876;
+    double thirdAndHalf = 0.835;
+    double forthPixel = 0.845;
+    double forthAndHalf = 0.795;
+    double fifthPixel = 0.782;
+    double fifthAndHalf = 0.725;
 
     intakePowerState statePower = intakePowerState.off;
     intakeHeightState heightState = intakeHeightState.startingBox;
@@ -183,13 +184,17 @@ public class Collection {
 
         Intake = hardwareMap.get(DcMotorEx.class, "Intake");
 
+
+
 //        sweeper = hardwareMap.get(ServoImplEx.class, "sweeper");
 //
 //        sweeper.setPwmRange(new PwmControl.PwmRange(600, 2400));
 //
 //        sweeper.setPosition(0.13);
 
-        IntakeHeightRight = hardwareMap.get(Servo.class, "IntakeServoRight");
+        IntakeHeightRight = hardwareMap.get(ServoImplEx.class, "IntakeServoRight");
+
+        IntakeHeightRight.setPwmRange(new PwmControl.PwmRange(600, 2500));
 
         IntakeHeightRight.setDirection(Servo.Direction.FORWARD);
 

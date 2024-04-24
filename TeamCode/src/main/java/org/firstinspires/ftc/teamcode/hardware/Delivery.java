@@ -53,8 +53,8 @@ public class Delivery {
 
     double timePerDegree = 5;
 
-    public double ArmPositionMid = 0.5;
-    double collectTopPivotPos = 0.188;
+    public double ArmPositionMid = 0.508;
+    double collectTopPivotPos = 0.179;
     double intermediateTopPivot = 0.3;
     double deliveryTopPivot = 0.7;
     double deliveryTopPivotNew = 1;
@@ -64,7 +64,7 @@ public class Delivery {
     double deliverySecondPivotAuto = 0.2;
     double distancecalc;
     double avoidIntakeSecondPivot = 0.8;
-    double collectSecondPivot = 0.84;
+    double collectSecondPivot = 0.85;
     double deliverySecondPivot = -0.1;
     double lowdeliveryTopPivot = 1;
 
@@ -72,8 +72,8 @@ public class Delivery {
     double clawOpen = 0.6;
     double clawClosed = 1;
 
-    double rotateCollect = 0.55;
-    double rotateDeliver = 0.55;
+    double rotateCollect = 0.51;
+    double rotateDeliver = 0.51;
     double rotateRight = 1;
 
     double secondRotateMiddle = 0.5;

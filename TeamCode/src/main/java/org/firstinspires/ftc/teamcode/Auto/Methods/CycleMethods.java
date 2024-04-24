@@ -181,7 +181,7 @@ public interface CycleMethods extends Auto_Methods {
 
             if (counter <= 6){
 
-                sleep(40);
+                sleep(20);
 
             } else if (counter > 6 && counter <= 12) {
 
@@ -265,11 +265,12 @@ public interface CycleMethods extends Auto_Methods {
         while (autoTimer.milliseconds() < 26000 && !collectionDone){
 
             counter++;
+
             collectionDone = !sensors.LeftClawSensor.isPressed() && !sensors.RightClawSensor.isPressed();
 
             if (counter <= (int) (6*sleepLoops)){
 
-                sleep(40);
+                sleep(20);
 
             } else if (counter > (int) (6*sleepLoops) && counter <= (int) (12*sleepLoops)) {
 

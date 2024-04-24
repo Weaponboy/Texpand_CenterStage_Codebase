@@ -58,12 +58,15 @@ public class  Delivery_Slides {
 
                 if (gamepad2.right_stick_y < -0.7 && !SlideSafetyHeight) {
                     SlideSafetyHeight = Left_Slide.getCurrentPosition() > 3000;
-                    SlidesBothPower(0.4);
+                    SlidesBothPower(0.6);
                 } else if (gamepad2.right_stick_y > 0.7 && !SlideSafetyBottom) {
                     SlideSafetyBottom = Left_Slide.getCurrentPosition() < 15;
-                    SlidesBothPower(-0.4);
+                    SlidesBothPower(-0.6);
                 }else {
-                    if (getCurrentposition() < 30){
+                    if (getCurrentposition() > 20 && getCurrentposition() < 50){
+                        Right_Slide.setPower(-0.5);
+                        Left_Slide.setPower(-0.5);
+                    }else if (getCurrentposition() < 20){
                         SlidesBothPower(0);
                     }else {
                         SlidesBothPower(0.0005);

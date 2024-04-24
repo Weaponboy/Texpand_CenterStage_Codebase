@@ -57,8 +57,8 @@ public class Odometry {
     public int currentLeftPod = 0;
     public int currentCenterPod = 0;
 
-    public static double degreesToCmRightPod =  0.3478;
-    public static double degreesToCmCenterPod =  0.2683138;
+    public static double degreesToCmRightPod =  0.315590933;
+    public static double degreesToCmCenterPod =  0.2874356;
 
     public int oldRightPod = 0;
     public int oldLeftPod = 0;

@@ -41,12 +41,6 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
     Vector2D DPE1F = new Vector2D(getRealCoords(314), getRealCoords(76));
 
     /**delivery and collection points*/
-
-    Vector2D DS1FC = new Vector2D(getRealCoords(46), getRealCoords(152));
-    Vector2D DC1FC = new Vector2D(getRealCoords(50), getRealCoords(162));
-    Vector2D DCC1FC = new Vector2D(getRealCoords(38), getRealCoords(160));
-    Vector2D DE1FC = new Vector2D(getRealCoords(106), getRealCoords(152));
-
     Vector2D DS1F = new Vector2D(getRealCoords(46), getRealCoords(135));
     Vector2D DC1F = new Vector2D(getRealCoords(47), getRealCoords(151));
     Vector2D DE1F = new Vector2D(getRealCoords(106), getRealCoords(152));
@@ -56,8 +50,8 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
     //segment 3
     Vector2D DS3F = DE2F;
-    Vector2D DC3F = new Vector2D(getRealCoords(245), getRealCoords(157));
-    Vector2D DE3F = new Vector2D(getRealCoords(315), getRealCoords(120));
+    Vector2D DC3F = new Vector2D(getRealCoords(220), getRealCoords(137));
+    Vector2D DE3F = new Vector2D(getRealCoords(320), getRealCoords(120));
 
     /**collecting paths*/
     Vector2D CS1F = new Vector2D(getRealCoords(300), getRealCoords(90));
@@ -69,11 +63,11 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
     Vector2D CS3F = CE2F;
     Vector2D CC3F = new Vector2D(getRealCoords(40), getRealCoords(175));
-    Vector2D CE3F = new Vector2D(getRealCoords(40), getRealCoords(135));
+    Vector2D CE3F = new Vector2D(getRealCoords(40), getRealCoords(150));
 
     Vector2D CS3FS = CE2F;
     Vector2D CC3FS = new Vector2D(getRealCoords(52), getRealCoords(160));
-    Vector2D CE3FS = new Vector2D(getRealCoords(42), getRealCoords(115));
+    Vector2D CE3FS = new Vector2D(getRealCoords(42), getRealCoords(120));
 
     /**
      * second pos
@@ -81,15 +75,9 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
     Vector2D DPS1S = new Vector2D(getRealCoords(210), getRealCoords(23));
     Vector2D DPC1S = new Vector2D(getRealCoords(220), getRealCoords(71));
     Vector2D DPCT1S = new Vector2D(getRealCoords(170), getRealCoords(62));
-    Vector2D DPE1S = new Vector2D(getRealCoords(314), getRealCoords(91));
+    Vector2D DPE1S = new Vector2D(getRealCoords(310), getRealCoords(91));
 
     /**delivery and collection points*/
-
-    Vector2D DS1SC = new Vector2D(getRealCoords(40), getRealCoords(135));
-    Vector2D DC1SC = new Vector2D(getRealCoords(44), getRealCoords(162));
-    Vector2D DCC1SC = new Vector2D(getRealCoords(38), getRealCoords(160));
-    Vector2D DE1SC = new Vector2D(getRealCoords(106), getRealCoords(152));
-
     //segment 1 deliver straight
     Vector2D DS1S = new Vector2D(getRealCoords(46), getRealCoords(135));
     Vector2D DC1S = new Vector2D(getRealCoords(47), getRealCoords(151));
@@ -102,7 +90,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
     //segment 3
     Vector2D DS3S = DE2S;
     Vector2D DC3S = new Vector2D(getRealCoords(220), getRealCoords(137));
-    Vector2D DE3S = new Vector2D(getRealCoords(320), getRealCoords(120));
+    Vector2D DE3S = new Vector2D(getRealCoords(320), getRealCoords(118));
 
     /**collecting paths*/
 
@@ -114,11 +102,11 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
     Vector2D CE2S = new Vector2D(getRealCoords(91), getRealCoords(153));
 
     Vector2D CS3S = CE2S;
-    Vector2D CE3S = new Vector2D(getRealCoords(41), getRealCoords(150));
+    Vector2D CE3S = new Vector2D(getRealCoords(40), getRealCoords(150));
 
     Vector2D CS3SS = CE2S;
     Vector2D CC3SS = new Vector2D(getRealCoords(72), getRealCoords(153));
-    Vector2D CE3SS = new Vector2D(getRealCoords(43), getRealCoords(120));
+    Vector2D CE3SS = new Vector2D(getRealCoords(40), getRealCoords(120));
 
     /**
      * Third position
@@ -127,23 +115,23 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
     Vector2D DPS1T = new Vector2D(getRealCoords(210), getRealCoords(23));
     Vector2D DPC1T = new Vector2D(getRealCoords(220), getRealCoords(79));
     Vector2D DPCT1T = new Vector2D(getRealCoords(160), getRealCoords(110));
-    Vector2D DPE1T = new Vector2D(getRealCoords(314), getRealCoords(115));
+    Vector2D DPE1T = new Vector2D(getRealCoords(314), getRealCoords(110));
 
     /**delivery and collection points*/
 
     //segment 1 deliver straight
     Vector2D DS1T = new Vector2D(getRealCoords(46), getRealCoords(135));
     Vector2D DC1T = new Vector2D(getRealCoords(47), getRealCoords(151));
-    Vector2D DE1T = new Vector2D(getRealCoords(106), getRealCoords(152));
+    Vector2D DE1T = new Vector2D(getRealCoords(106), getRealCoords(156));
 
     //segment 2
     Vector2D DS2T = DE1T;
-    Vector2D DE2T = new Vector2D(getRealCoords(206), getRealCoords(154));
+    Vector2D DE2T = new Vector2D(getRealCoords(206), getRealCoords(156));
 
     //segment 3
     Vector2D DS3T = DE2T;
     Vector2D DC3T = new Vector2D(getRealCoords(220), getRealCoords(137));
-    Vector2D DE3T = new Vector2D(getRealCoords(320), getRealCoords(120));
+    Vector2D DE3T = new Vector2D(getRealCoords(320), getRealCoords(130));
 
     /**collecting paths*/
 
@@ -152,14 +140,14 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
     Vector2D CE1T = new Vector2D(getRealCoords(220), getRealCoords(156));
 
     Vector2D CS2T = CE1T;
-    Vector2D CE2T = new Vector2D(getRealCoords(91), getRealCoords(153));
+    Vector2D CE2T = new Vector2D(getRealCoords(91), getRealCoords(156));
 
     Vector2D CS3T = CE2T;
-    Vector2D CE3T = new Vector2D(getRealCoords(41), getRealCoords(150));
+    Vector2D CE3T = new Vector2D(getRealCoords(42), getRealCoords(156));
 
     Vector2D CS3TS = CE2T;
-    Vector2D CC3TS = new Vector2D(getRealCoords(72), getRealCoords(153));
-    Vector2D CE3TS = new Vector2D(getRealCoords(43), getRealCoords(120));
+    Vector2D CC3TS = new Vector2D(getRealCoords(85), getRealCoords(153));
+    Vector2D CE3TS = new Vector2D(getRealCoords(43), getRealCoords(125));
 
     /**Action points*/
     Vector2D turnIntakeOn = new Vector2D(getRealCoords(180), getRealCoords(155));
@@ -169,15 +157,15 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
     //first position
     Vector2D oneEightyHeadingF = new Vector2D(getRealCoords(245), getRealCoords(80));
-    Vector2D leavePurpleHeadingF = new Vector2D(getRealCoords(220), getRealCoords(60));
+    Vector2D leavePurpleHeadingF = new Vector2D(getRealCoords(223), getRealCoords(60));
 
     //second position
     Vector2D oneEightyHeadingS = new Vector2D(getRealCoords(241), getRealCoords(86));
-    Vector2D leavePurpleHeadingS = new Vector2D(getRealCoords(214), getRealCoords(60));
+    Vector2D leavePurpleHeadingS = new Vector2D(getRealCoords(214), getRealCoords(75));
 
     //third position
     Vector2D oneEightyHeadingT = new Vector2D(getRealCoords(227), getRealCoords(105));
-    Vector2D leavePurpleHeadingT = new Vector2D(getRealCoords(210), getRealCoords(45));
+    Vector2D leavePurpleHeadingT = new Vector2D(getRealCoords(210), getRealCoords(42));
 
     //delivery
     Vector2D extendSlidesDelivery = new Vector2D(getRealCoords(150), getRealCoords(180));
@@ -419,7 +407,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                     drive.setAllPower(0);
 
-                    deliverySlides.DeliverySlides(0, -0.2);
+                    deliverySlides.DeliverySlides(0, -0.5);
 
                     while (!(delivery.getArmState() == Delivery.armState.collect) || deliverySlides.getCurrentposition() > 20){
                         delivery.setArmTargetState(Delivery.armState.collect);
@@ -476,7 +464,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                     delivering = false;
 
-                    phase = Phase.third2;
+                    phase = Phase.second2;
 
                 }
 
@@ -587,6 +575,11 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
             follower.setPath(deliver.followablePath, deliver.pathingVelocity);
 
             follower.resetClosestPoint(new Vector2D(odometry.X, odometry.Y));
+
+            sleep(4000);
+
+            collection.setState(Collection.intakePowerState.off);
+            collection.updateIntakeState();
 
         }
 
@@ -1235,7 +1228,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
         if (delivering){
 
-            if (odometry.X > extendSlidesDelivery.getX() && autoTimer.milliseconds() < 28000 && deliverySlides.getCurrentposition() < 30) {
+            if (odometry.X > extendSlidesDelivery.getX() && autoTimer.milliseconds() < 28000 && deliverySlides.getCurrentposition() < 10) {
 
                 deliverySlides.DeliverySlides(slidesPosWhitePixels, 1);
                 deliverySlides.setSlideState(Delivery_Slides.SlideState.moving);
@@ -1243,7 +1236,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
                 delivery.setGripperState(Delivery.GripperState.closed);
                 delivery.updateGrippers();
 
-            } else if (odometry.X > extendSlidesDelivery.getX() && autoTimer.milliseconds() > 28000 && deliverySlides.getCurrentposition() < 30) {
+            } else if (odometry.X > extendSlidesDelivery.getX() && autoTimer.milliseconds() > 28000 && deliverySlides.getCurrentposition() < 10) {
 
                 sleep(400);
 
@@ -1471,7 +1464,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                 collectSecondStack.threePoints(CS1F, CC1F, CE1F);
                 collectSecondStack.twoPoints(CS2F, CE2F);
-                collectSecondStack.threePoints(CS3FS, CC3FS, CE3FS, true, 0.45);
+                collectSecondStack.threePoints(CS3FS, CC3FS, CE3FS, true, 0.5);
 
                 deliver.threePoints(DS1F, DC1F, DE1F);
                 deliver.twoPoints(DS2F, DE2F);
@@ -1495,7 +1488,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                 collectSecondStack.threePoints(CS1S, CC1S, CE1S);
                 collectSecondStack.twoPoints(CS2S, CE2S);
-                collectSecondStack.threePoints(CS3SS, CC3SS, CE3SS, true, 0.45);
+                collectSecondStack.threePoints(CS3SS, CC3SS, CE3SS, true, 0.5);
 
                 deliver.threePoints(DS1S, DC1S, DE1S);
                 deliver.twoPoints(DS2S, DE2S);
@@ -1519,7 +1512,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                 collectSecondStack.threePoints(CS1T, CC1T, CE1T);
                 collectSecondStack.twoPoints(CS2T, CE2T);
-                collectSecondStack.threePoints(CS3TS, CC3TS, CE3TS, true, 0.45);
+                collectSecondStack.threePoints(CS3TS, CC3TS, CE3TS, true, 0.5);
 
                 deliver.threePoints(DS1T, DC1T, DE1T);
                 deliver.twoPoints(DS2T, DE2T);
@@ -1697,7 +1690,7 @@ public class Blue_Close_Stage extends LinearOpMode implements CycleMethods {
 
                             if (Math.abs(leavePurpleHeadingS.getX() - odometry.X) < HeadingControlError && Math.abs(leavePurpleHeadingS.getY() - odometry.Y) < 30 && targetHeading == 270){
 
-                                targetHeading = 310;
+                                targetHeading = 320;
 
                                 delivery.setGripperState(Delivery.GripperState.closed);
                                 delivery.updateGrippers();

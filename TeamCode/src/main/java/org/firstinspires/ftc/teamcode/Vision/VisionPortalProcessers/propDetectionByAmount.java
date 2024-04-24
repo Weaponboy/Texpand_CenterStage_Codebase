@@ -58,7 +58,7 @@ public class propDetectionByAmount implements VisionProcessor {
         telemetryBool = false;
     }
 
-    public Scalar MIN_THRESH_BLUE = new Scalar(16, 50, 50);
+    public Scalar MIN_THRESH_BLUE = new Scalar(5, 100, 100);
     public Scalar MAX_THRESH_BLUE = new Scalar(50, 255, 255);
 
     public Scalar MIN_THRESH_RED = new Scalar(110, 20, 50);
