@@ -1,8 +1,7 @@
 package org.firstinspires.ftc.teamcode.Odometry.Pathing.PathGeneration;
 
-import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.maxYAcceleration;
-import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.velocityDecreasePerPoint;
-import static org.firstinspires.ftc.teamcode.hardware._.Odometry.getMaxVelocity;
+import static org.firstinspires.ftc.teamcode.Constants_and_Setpoints.Constants.maxXAcceleration;
+import static org.firstinspires.ftc.teamcode.hardware.Odometry.getMaxVelocity;
 
 import org.firstinspires.ftc.teamcode.Odometry.ObjectAvoidance.old.Vector2D;
 import org.firstinspires.ftc.teamcode.Odometry.Pathing.PathingUtility.PathingVelocity;
@@ -105,34 +104,60 @@ public class pathBuilderMain {
 
         double deltaTime;
 
-        double decelerationNumber = 0;
+        int decelerationNumber = 0;
 
         double pathLength = calculateTotalDistance(followablePath);
 
-        double acceleration_dt = (getMaxVelocity() * getMaxVelocity()) / (maxYAcceleration * 2);
+        double acceleration_dt = (double) getMaxVelocity() / maxXAcceleration;
 
         // If we can't accelerate to max velocity in the given distance, we'll accelerate as much as possible
-        double halfway_distance = pathLength / 2;
+        double halfway_distance = pathLength / 1.2;
 
-        if (acceleration_dt > halfway_distance){
-            acceleration_dt = halfway_distance;
+        double acceleration_distance;
+
+        acceleration_distance = 0.5 * maxXAcceleration * acceleration_dt * 2;
+
+        if (acceleration_distance > halfway_distance){
+            acceleration_dt = (halfway_distance / maxXAcceleration);
         }
 
-        double new_max_velocity = ((acceleration_dt*0.25)*2.5);
+        acceleration_distance = 0.5 * maxXAcceleration * acceleration_dt * 2;
 
-        double deceleration_dt = acceleration_dt;
+        double max_velocity = maxXAcceleration * acceleration_dt;
 
-        double decIndex = deceleration_dt/2.5;
+        double deceleration_dt = acceleration_distance;
 
-        double velocitySlope = new_max_velocity/getMaxVelocity();
+        int decIndex;
+
+        if (pathLength > 150){
+            decIndex = (int) (deceleration_dt/0.45);
+        }else {
+            decIndex = (int) (deceleration_dt/0.5);
+        }
+
+        System.out.println(acceleration_distance);
+        System.out.println(acceleration_dt);
+        System.out.println(max_velocity);
+        System.out.println(decIndex);
+        System.out.println(pathLength);
+
+        int range;
+
+//        if(decIndex > halfway_distance){
+//            decIndex = (int) halfway_distance;
+//        }
 
         for (int i = 0; i < followablePath.size() - 1; i++) {
 
             if (i + decIndex >= followablePath.size()){
 
-                velocitySlope -= velocityDecreasePerPoint;
+                decelerationNumber += 1;
 
-                decelerationNumber = decelerationNumber/deceleration_dt;
+                range = Math.abs(decIndex - decelerationNumber);
+
+                double DecSlope = (double) range / (double) Math.abs(decIndex) * 100;
+
+                DecSlope = DecSlope*0.01;
 
                 Vector2D currentPoint = followablePath.get(i);
                 Vector2D nextPoint = followablePath.get(i + 1);
@@ -140,43 +165,162 @@ public class pathBuilderMain {
                 double deltaX = nextPoint.getX() - currentPoint.getX();
                 double deltaY = nextPoint.getY() - currentPoint.getY();
 
-                deltaTime = Math.hypot(deltaY, deltaX) / getMaxVelocity();
+                double percentSum = (Math.abs(deltaX)/0.25)+(Math.abs(deltaY)/0.25);
 
-                double velocityXValue = (deltaX / deltaTime) * decelerationNumber;
-                double velocityYValue = (deltaY / deltaTime) * decelerationNumber;
+                double Xfactor = (deltaX/0.25) * (1/percentSum);
+                double Yfactor = (deltaY/0.25) * (1/percentSum);
 
-                pathVelo = new PathingVelocity(velocityXValue, velocityYValue);
+                double velocityXValue = (Xfactor * max_velocity) * DecSlope;
+                double velocityYValue = (Yfactor * max_velocity) * DecSlope;
+
+                System.out.println("Vector dec " + (Math.abs(velocityYValue)+Math.abs(velocityXValue)));
+                System.out.println("X current" + currentPoint.getX());
+                System.out.println("Y current" + currentPoint.getY());
+
+                pathVelo = new PathingVelocity(velocityXValue,velocityYValue);
 
                 pathingVelocity.add(pathVelo);
 
             }else {
+
                 Vector2D currentPoint = followablePath.get(i);
                 Vector2D nextPoint = followablePath.get(i + 1);
-
-                decelerationNumber = velocitySlope;
 
                 double deltaX = nextPoint.getX() - currentPoint.getX();
                 double deltaY = nextPoint.getY() - currentPoint.getY();
 
-                deltaTime = Math.hypot(deltaY, deltaX) / getMaxVelocity();
+                double percentSum = (Math.abs(deltaX)/0.25)+(Math.abs(deltaY)/0.25);
 
-                double velocityXValue = (deltaX / deltaTime) * decelerationNumber;
-                double velocityYValue = (deltaY / deltaTime) * decelerationNumber;
+                double Xfactor = (deltaX/0.25) * (1/percentSum);
+                double Yfactor = (deltaY/0.25) * (1/percentSum);
+
+                double velocityXValue = (Xfactor) * max_velocity;
+                double velocityYValue = (Yfactor) * max_velocity;
+
+                System.out.println("Vector " + (Math.abs(velocityYValue)+Math.abs(velocityXValue)));
+                System.out.println("X current" + currentPoint.getX());
+                System.out.println("Y current" + currentPoint.getY());
 
                 pathVelo = new PathingVelocity(velocityXValue, velocityYValue);
 
                 pathingVelocity.add(pathVelo);
+
             }
 
         }
 
-        return new_max_velocity;
+        return 0;
 
     }
 
-    public Vector2D findPoint(){
-        Vector2D point = new Vector2D();
-        return point;
+    public double motionProfile(double deceleration){
+
+        PathingVelocity pathVelo;
+
+        double deltaTime;
+
+        int decelerationNumber = 0;
+
+        double pathLength = calculateTotalDistance(followablePath);
+
+        double acceleration_dt = (double) getMaxVelocity() / maxXAcceleration;
+
+        // If we can't accelerate to max velocity in the given distance, we'll accelerate as much as possible
+        double halfway_distance = pathLength / 1.2;
+
+        double acceleration_distance;
+
+        acceleration_distance = 0.5 * maxXAcceleration * acceleration_dt * 2;
+
+        if (acceleration_distance > halfway_distance){
+            acceleration_dt = (halfway_distance / maxXAcceleration);
+        }
+
+        acceleration_distance = 0.5 * maxXAcceleration * acceleration_dt * 2;
+
+        double max_velocity = maxXAcceleration * acceleration_dt;
+
+        double deceleration_dt = acceleration_distance;
+
+        int decIndex = (int) (deceleration_dt/deceleration);
+
+
+        System.out.println(acceleration_distance);
+        System.out.println(acceleration_dt);
+        System.out.println(max_velocity);
+        System.out.println(decIndex);
+        System.out.println(pathLength);
+
+        int range;
+
+//        if(decIndex > halfway_distance){
+//            decIndex = (int) halfway_distance;
+//        }
+
+        for (int i = 0; i < followablePath.size() - 1; i++) {
+
+            if (i + decIndex >= followablePath.size()){
+
+                decelerationNumber += 1;
+
+                range = Math.abs(decIndex - decelerationNumber);
+
+                double DecSlope = (double) range / (double) Math.abs(decIndex) * 100;
+
+                DecSlope = DecSlope*0.01;
+
+                Vector2D currentPoint = followablePath.get(i);
+                Vector2D nextPoint = followablePath.get(i + 1);
+
+                double deltaX = nextPoint.getX() - currentPoint.getX();
+                double deltaY = nextPoint.getY() - currentPoint.getY();
+
+                double percentSum = (Math.abs(deltaX)/0.25)+(Math.abs(deltaY)/0.25);
+
+                double Xfactor = (deltaX/0.25) * (1/percentSum);
+                double Yfactor = (deltaY/0.25) * (1/percentSum);
+
+                double velocityXValue = (Xfactor * max_velocity) * DecSlope;
+                double velocityYValue = (Yfactor * max_velocity) * DecSlope;
+
+                System.out.println("Vector dec " + (Math.abs(velocityYValue)+Math.abs(velocityXValue)));
+                System.out.println("X current" + currentPoint.getX());
+                System.out.println("Y current" + currentPoint.getY());
+
+                pathVelo = new PathingVelocity(velocityXValue,velocityYValue);
+
+                pathingVelocity.add(pathVelo);
+
+            }else {
+
+                Vector2D currentPoint = followablePath.get(i);
+                Vector2D nextPoint = followablePath.get(i + 1);
+
+                double deltaX = nextPoint.getX() - currentPoint.getX();
+                double deltaY = nextPoint.getY() - currentPoint.getY();
+
+                double percentSum = (Math.abs(deltaX)/0.25)+(Math.abs(deltaY)/0.25);
+
+                double Xfactor = (deltaX/0.25) * (1/percentSum);
+                double Yfactor = (deltaY/0.25) * (1/percentSum);
+
+                double velocityXValue = (Xfactor) * max_velocity;
+                double velocityYValue = (Yfactor) * max_velocity;
+
+                System.out.println("Vector " + (Math.abs(velocityYValue)+Math.abs(velocityXValue)));
+                System.out.println("X current" + currentPoint.getX());
+                System.out.println("Y current" + currentPoint.getY());
+
+                pathVelo = new PathingVelocity(velocityXValue, velocityYValue);
+
+                pathingVelocity.add(pathVelo);
+
+            }
+
+        }
+
+        return 0;
+
     }
 
     public double calculateTotalDistance(List<Vector2D> path) {
