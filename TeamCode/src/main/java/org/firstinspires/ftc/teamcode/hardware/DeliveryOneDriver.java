@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
-
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.Constants_and_Setpoints.RobotArm;
 import java.util.Objects;
 
 
-public class Delivery {
+public class DeliveryOneDriver {
 
     ServoImplEx secondPivotLeft;
     ServoImplEx secondPivotRight;
@@ -195,7 +195,7 @@ public class Delivery {
 
     boolean sideMoving;
 
-    public void updateArm (double slidesPos, Odometry odometry, Gamepad gamepad1){
+    public void updateArm (double slidesPos, Odometry odometry, Gamepad gamepad2){
 
         switch (armstateTarget){
 
@@ -299,11 +299,11 @@ public class Delivery {
 
                 odometry.update();
 
-                if (gamepad1.dpad_left || (gamepad1.left_stick_button && gamepad1.left_stick_x > 0.1)) {
-                    mainPivotOffSet = mainPivotOffSet + gamepad1.left_stick_x/53;
+                if (gamepad1.dpad_left || (gamepad1.left_stick_button && gamepad1.left_stick_y > 0.1)) {
+                    mainPivotOffSet = mainPivotOffSet + gamepad1.left_stick_y/53;
 
-                } else if (gamepad1.dpad_right || (gamepad1.left_stick_button && gamepad1.left_stick_x < -0.1)) {
-                    mainPivotOffSet = mainPivotOffSet + gamepad1.left_stick_x/53;
+                } else if (gamepad1.dpad_right || (gamepad1.left_stick_button && gamepad1.left_stick_y < -0.1)) {
+                    mainPivotOffSet = mainPivotOffSet + gamepad1.left_stick_y/53;
                 }
 
 //                if (gamepad2.left_stick_y < -0.1){
@@ -312,10 +312,10 @@ public class Delivery {
 //                    mainPivotVertOffSet = mainPivotVertOffSet + gamepad2.left_stick_y/100;
 //                }
 
-                if (gamepad1.left_stick_x > 0.05 && !(gamepad1.left_stick_button) && RotateArm.getPosition() > 0.3 ) {
-                    RotateArm.setPosition(RotateArm.getPosition() - gamepad1.left_stick_x/80);
-                }else if (gamepad1.left_stick_x < -0.05 && !(gamepad1.left_stick_button) && RotateArm.getPosition() < 0.66 ) {
-                    RotateArm.setPosition(RotateArm.getPosition() - gamepad1.left_stick_x/80);
+                if (gamepad1.left_stick_x > 0.05 && RotateArm.getPosition() > 0.3 ) {
+                    RotateArm.setPosition(RotateArm.getPosition() - gamepad2.left_stick_x/80);
+                }else if (gamepad1.left_stick_x < -0.05 && RotateArm.getPosition() < 0.66 ) {
+                    RotateArm.setPosition(RotateArm.getPosition() - gamepad2.left_stick_x/80);
                 }
 
                 targetMainPivot = deliveryTopPivot - slidesPos * servoPosPerTick + mainPivotOffSet;
